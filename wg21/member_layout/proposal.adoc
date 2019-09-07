@@ -1,0 +1,377 @@
+= Member Layout Control
+:copyright: Copyright 2019 Rene Rivera
+:author: Rene Rivera
+:email: grafikrobot@gmail.com
+:docnumber: D1605
+:revnumber: {docnumber}R0
+:revdate: {docdate}
+:version-label!:
+:reproducible:
+:nofooter:
+:sectanchors:
+:sectnums:
+:sectnumlevels: 5
+:source-highlighter: highlightjs
+:source-language: c++
+:toc: left
+:toclevels: 1
+:caution-caption: ⚑
+:important-caption: ‼
+:note-caption: ℹ
+:tip-caption: ☀
+:warning-caption: ⚠
+:CPP: C++
+:PP: ++
+:P: +
+
+ifdef::backend-html5[]
+++++
+<style>
+include::../std.css[]
+</style>
+++++
+endif::[]
+
+[horizontal]
+Document number:: ISO/IEC/JTC1/SC22/WG21/{revnumber}
+Date:: {revdate}
+Reply-to:: {author}, {email}
+Audience:: WG21
+
+== Abstract
+
+This proposes to add a core language facility to control the class data member
+order layout without otherwise impacting class definitions.
+
+== Changes
+
+=== R0 (Initial)
+
+Initial content without standard wording.
+
+== Introduction
+
+In many domains where C++ thrives there is a contention with the desire
+for optimal data and code vs clear definitions. It is a desire that is
+hampered by the member layout rules in C++. Developers are given the faced
+with the choice of having well grouped and relevant information in class
+definitions and suboptimal memory use, or having memory use and incoherent
+class definitions. This proposal aims to add a facility to reconcile both
+goals of class design. This proposal hopes to achieve these goals:
+
+* Fine grain member layout control.
+* Keep member access control for access control.
+
+To solve the problem we need to first see the problem. We can use a working
+example to work through what we need to address. Let start with a common
+use case of having a class with flags and values to enable/disable
+different features of it (highly abstracted):
+
+[source]
+----
+include::sample0.cpp[tag=sample_class]
+----
+
+We can also look at a likely function that uses the members to do a
+calculation. In this case we'll look at minimal function:
+
+[source]
+----
+include::sample0.cpp[tag=sample_function]
+----
+
+As expected the resulting assembly code for this is minimal and efficient:
+
+[source,x86asm]
+----
+A_q(A const&):
+  mov eax, DWORD PTR [rdi+4]
+  add eax, DWORD PTR [rdi+12]
+  ret
+----
+
+The problem comes in when we look at the data size of the class:
+
+[.text-center]
+`sizeof(A) == 16`
+
+Sixteen bytes might seem small. But if we are dealing with a large number
+items the data size becomes a serious consideration:
+
+[.text-center]
+`sizeof(A[1024*1024]) = 16,777,216`
+
+When faced with that result and the constraints of some systems, say an
+embedded system with only 64MiB of total RAM, having one data structure
+take up 1/3 of your system is not acceptable. And programmers have used
+various techniques to ameliorate such waste. The most common being rearranging
+members to minimize the alignment padding. For our example we can place the
+`bool` members last and together to allow all the members to be packed:
+
+[.compare-before]
+[source]
+----
+include::sample1.cpp[tag=compare_before]
+----
+
+[.compare-after]
+[source]
+----
+include::sample1.cpp[tag=compare_after]
+----
+
+With that arrangement we still have the minimal, optimal, access for our
+prototypical `A_q` function:
+
+[.compare-before]
+[source,x86asm]
+----
+A_q(A const&):
+  mov eax, DWORD PTR [rdi+4]
+  add eax, DWORD PTR [rdi+12]
+  ret
+----
+
+[.compare-after]
+[source,x86asm]
+----
+A_q(A const&):
+  mov eax, DWORD PTR [rdi]
+  add eax, DWORD PTR [rdi+4]
+  ret
+----
+
+But more importantly we've reduced the overall size of the structure.
+
+[.compare-before.text-center]
+`sizeof(A) == 16`
+
+[.compare-after.text-center]
+`sizeof(A) == 12`
+
+[.compare-before.text-center]
+`sizeof(A[1024*1024]) = 16777216`
+
+[.compare-after.text-center]
+`sizeof(A[1024*1024]) = 12582912`
+
+This only works when we restrict ourselves to follow the
+ORDERRULE footnote:ORDERRULE[
+  link:http://eel.is/c++draft/class.mem#19[class.mem p19] --
+  Non-static data members of a (non-union) class with the same access 
+  control and non-zero size ([intro.object\]) are allocated so that later 
+  members have higher addresses within a class object. The order of allocation 
+  of non-static data members with different access control is unspecified. 
+  Implementation alignment requirements might cause two adjacent members not to 
+  be allocated immediately after each other; so might requirements for space for managing virtual functions ([class.virtual\]) and virtual base classes
+  ([class.mi\]).
+].
+Which is not always possible, and almost always not desired. We can go further 
+in our space saving though. We can turn the data structure into a bitfield
+since we know the numerical limits of at our data members. And with some
+trial and error, and some knowledge of what compiler and system we are
+supporting can further optimize not just the size but minimize the impact
+this will have on the generated code. We can therefore do the following:
+
+[.compare-before]
+[source]
+----
+include::sample2.cpp[tag=compare_before]
+----
+
+[.compare-after]
+[source]
+----
+include::sample2.cpp[tag=compare_after]
+----
+
+[.compare-before]
+[source,x86asm]
+----
+A_q(A const&):
+  mov eax, DWORD PTR [rdi+4]
+  add eax, DWORD PTR [rdi+12]
+  ret
+----
+
+[.compare-after]
+[source,x86asm]
+----
+AA_q(A const&):
+  movzx eax, WORD PTR [rdi+2]
+  movzx edx, WORD PTR [rdi]
+  and eax, 16383
+  add eax, edx
+  ret
+----
+
+Even though we've added some instructions to deal with the bit field we are
+still rather optimal in our access. What do we gain in terms of size?
+
+[.compare-before.text-center]
+`sizeof(A) == 16`
+
+[.compare-after.text-center]
+`sizeof(A) == 4`
+
+[.compare-before.text-center]
+`sizeof(A[1024*1024]) = 16777216`
+
+[.compare-after.text-center]
+`sizeof(A[1024*1024]) = 4194304`
+
+This is a now in the palatable range.. We are tracking 1MiB objects in 4MiB.
+This, of course, comes at a price. We have now entirely detached the
+documentation in the class with the members they refer to. And making it even
+worse, the members are seemingly randomly arranged for the casual observer.
+This is ripe for causing all kinds of future maintenance problems for
+whomever is trying to understand this code.
+
+There has been at least one previous attempt to solve this problem. P1112
+footnote:P1112[
+  link:https://wg21.link/p1112[P1112] --
+  _Language support for class layout control_, Pal Balog]
+proposes a class level attribute to classify the kind of member layout to 
+apply.
+
+== Proposal
+
+We propose adding an optional `layout:` section to class definitions wherein
+one list the order of the members, already declared, in the class. The order
+in which the members are listed in the `layout:` section is used to layout
+the members in the same sequence in the class layout.
+
+To continue with our example from above, the new class declaration could be:
+
+[.compare-before]
+[source]
+----
+include::sample3.cpp[tag=compare_before]
+----
+
+[.compare-after]
+[source]
+----
+include::sample3.cpp[tag=compare_after]
+----
+
+[.compare-before]
+[source,x86asm]
+----
+A_q(A const&):
+  movzx eax, WORD PTR [rdi+2]
+  movzx edx, WORD PTR [rdi]
+  and eax, 16383
+  add eax, edx
+  ret
+----
+
+[.compare-after]
+[source,x86asm]
+----
+A_q(A const&):
+  movzx eax, WORD PTR [rdi+2]
+  movzx edx, WORD PTR [rdi]
+  and eax, 16383
+  add eax, edx
+  ret
+----
+
+[.compare-before.text-center]
+`sizeof(A) == 4`
+
+[.compare-after.text-center]
+`sizeof(A) == 4`
+
+[.compare-before.text-center]
+`sizeof(A[1024*1024]) = 4194304`
+
+[.compare-after.text-center]
+`sizeof(A[1024*1024]) = 4194304`
+
+As we can see the effect of optimizing the layout for the application use case
+is preserved. But the drawbacks of the optimization are removed. The `layout:`
+now contains the the members of the class in the order we require they be in.
+
+Features of this proposal:
+
+* Puts the control of member layout where it matters, in the user's hands. 
+  Where the particular tradeoffs of memory vs. performance can be made.
+* The layout can't be ignored by the compiler and hence provides ABI stability
+  across compiler version and possibly across compilers.
+* Coexists with existing `#pragma pack` compiler feature as it makes the
+  ordering orthogonal from the packing.
+* Doesn't override alignment and addressing requirements, again, because
+  the ordering control is orthogonal. For example from use of `alignas`.
+* Simple, minimal, and clear syntax makes it easy to understand intent and
+  effect.
+* Allows control of individual bit-field members within the same syntax as
+  other members.
+* The layout declarations can be easily documented to provide rationales for
+  users of the class.
+* Does not, definitionally, force override ordering of all members and hence 
+  allows for minimal targeted optimizations.
+
+== Impact on the Standard
+
+The impact on the standard is minimal as to syntax and effect. There could be
+an impact on class member reflection as it might be beneficial to be able to
+inspect the layout order of the members separately from the declaration order.
+
+// == Technical Specifications
+
+// ???
+
+== Proposed Wording
+
+To be determined.
+
+// === Core Wording
+
+// ???
+
+// === Library Wording
+
+// ???
+
+== Design Decisions and Considerations
+
+=== Should alignment control be allowed in the layout declarations?
+
+We need to consider if other member data specifications that affect size of
+the class should be consolidated, i.e. allowed, in the layout declaration 
+section. For example `alignas` could be allowed as such:
+
+[source,C++]
+----
+class A
+{
+    public:
+
+    bool a_f;
+    int a;
+    bool b_f;
+    int b;
+
+    layout:
+
+    a;
+    alignas(16) b;
+    a_f;
+    b_f;
+};
+----
+
+=== Should layout order be reflect-ed?
+
+There needs to be some thought and consideration given to how layout ordering
+can or should be available through reflection.
+
+== Acknowledgements
+
+Thanks to Michael Shoel who, through varied lunch conversations, provided the
+impetus for this proposal.
+
+// == References
+
+// ???
