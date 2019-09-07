@@ -168,7 +168,7 @@ ORDERRULE footnote:ORDERRULE[
 ].
 Which is not always possible, and almost always not desired. We can go further 
 in our space saving though. We can turn the data structure into a bitfield
-since we know the numerical limits of at our data members. And with some
+since we know the numerical limits of all our data members. And with some
 trial and error, and some knowledge of what compiler and system we are
 supporting can further optimize not just the size but minimize the impact
 this will have on the generated code. We can therefore do the following:
