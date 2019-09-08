@@ -369,7 +369,7 @@ can or should be available through reflection.
 
 == Acknowledgements
 
-Thanks to Michael Shoel who, through varied lunch conversations, provided the
+Thanks to Michael Shoell who, through varied lunch conversations, provided the
 impetus for this proposal.
 
 // == References
