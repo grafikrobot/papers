@@ -52,9 +52,9 @@ Initial content without standard wording.
 
 == Introduction
 
-In many domains where C++ thrives there is a contention with the desire
+In many domains where {CPP} thrives there is a contention with the desire
 for optimal data and code vs clear definitions. It is a desire that is
-hampered by the member layout rules in C++. Developers are given the faced
+hampered by the member layout rules in {CPP}. Developers are given the faced
 with the choice of having well grouped and relevant information in class
 definitions and suboptimal memory use, or having memory use and incoherent
 class definitions. This proposal aims to add a facility to reconcile both
