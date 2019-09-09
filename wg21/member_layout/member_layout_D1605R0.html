@@ -454,10 +454,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_changes">2. Changes</a></li>
 <li><a href="#_introduction">3. Introduction</a></li>
 <li><a href="#_proposal">4. Proposal</a></li>
-<li><a href="#_impact_on_the_standard">5. Impact on the Standard</a></li>
-<li><a href="#_proposed_wording">6. Proposed Wording</a></li>
-<li><a href="#_design_decisions_and_considerations">7. Design Decisions and Considerations</a></li>
-<li><a href="#_acknowledgements">8. Acknowledgements</a></li>
+<li><a href="#_proposed_wording">5. Proposed Wording</a></li>
+<li><a href="#_design_decisions_and_considerations">6. Design Decisions and Considerations</a></li>
+<li><a href="#_acknowledgements">7. Acknowledgements</a></li>
 </ul>
 </div>
 </div>
@@ -899,13 +898,26 @@ apply.</p>
 <h2 id="_proposal"><a class="anchor" href="#_proposal"></a>4. Proposal</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We propose adding an optional <code>layout:</code> section to class definitions wherein
-one list the order of the members, already declared, in the class. The order
-in which the members are listed in the <code>layout:</code> section is used to layout
-the members in the same sequence in the class layout.</p>
+<p>We propose adding an optional <code>layout:</code> labeled section to class definitions
+wherein one list the order of members, already declared, in the class. The
+<code>layout:</code> section would:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>List the names of any members one wishes to specific the order of.</p>
+</li>
+<li>
+<p>Members listed would come first in the class member layout.</p>
+</li>
+<li>
+<p>Members not listed would follow with the existing layout rules.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>To continue with our example from above, the new class declaration could be:</p>
+<p>To continue with our example from above, the new class declaration using this
+feature could be:</p>
 </div>
 <div class="listingblock compare-before">
 <div class="content">
@@ -1054,17 +1066,7 @@ allows for minimal targeted optimizations.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_impact_on_the_standard"><a class="anchor" href="#_impact_on_the_standard"></a>5. Impact on the Standard</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The impact on the standard is minimal as to syntax and effect. There could be
-an impact on class member reflection as it might be beneficial to be able to
-inspect the layout order of the members separately from the declaration order.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_proposed_wording"><a class="anchor" href="#_proposed_wording"></a>6. Proposed Wording</h2>
+<h2 id="_proposed_wording"><a class="anchor" href="#_proposed_wording"></a>5. Proposed Wording</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To be determined.</p>
@@ -1072,10 +1074,22 @@ inspect the layout order of the members separately from the declaration order.</
 </div>
 </div>
 <div class="sect1">
-<h2 id="_design_decisions_and_considerations"><a class="anchor" href="#_design_decisions_and_considerations"></a>7. Design Decisions and Considerations</h2>
+<h2 id="_design_decisions_and_considerations"><a class="anchor" href="#_design_decisions_and_considerations"></a>6. Design Decisions and Considerations</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_should_alignment_control_be_allowed_in_the_layout_declarations"><a class="anchor" href="#_should_alignment_control_be_allowed_in_the_layout_declarations"></a>7.1. Should alignment control be allowed in the layout declarations?</h3>
+<h3 id="_why_not_have_algorithmic_layouts"><a class="anchor" href="#_why_not_have_algorithmic_layouts"></a>6.1. Why not have algorithmic layouts?</h3>
+<div class="paragraph">
+<p><a href="#P1112">[P1112]</a> proposes a mechanism to have "smart" algorithmic layout control.
+It proposes to add a <code>[[layout(?)]]</code> attribute to the class to select from
+an existing set of algorithmic layouts like: <code>smallest</code>, <code>declorder</code>,
+<code>cacheline</code>, and so on. A key problem with an algorithmic approach is the
+increased risk of ABI violations as pointed out in <a href="#P1112">[P1112]</a>. Dealing with
+the C++ ABI is difficult enough as it is. We would like to avoid adding
+to the uncertainly and complexity of the C++ ABI.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_should_alignment_control_be_allowed_in_the_layout_declarations"><a class="anchor" href="#_should_alignment_control_be_allowed_in_the_layout_declarations"></a>6.2. Should alignment control be allowed in the layout declarations?</h3>
 <div class="paragraph">
 <p>We need to consider if other member data specifications that affect size of
 the class should be consolidated, i.e. allowed, in the layout declaration
@@ -1103,16 +1117,24 @@ section. For example <code>alignas</code> could be allowed as such:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_should_layout_order_be_reflect_ed"><a class="anchor" href="#_should_layout_order_be_reflect_ed"></a>7.2. Should layout order be reflect-ed?</h3>
+<h3 id="_should_layout_order_be_reflect_ed"><a class="anchor" href="#_should_layout_order_be_reflect_ed"></a>6.3. Should layout order be reflect-ed?</h3>
 <div class="paragraph">
 <p>There needs to be some thought and consideration given to how layout ordering
 can or should be available through reflection.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_should_we_additionally_specify_padding_options"><a class="anchor" href="#_should_we_additionally_specify_padding_options"></a>6.4. Should we additionally specify padding options?</h3>
+<div class="paragraph">
+<p>It would be interesting to consider adding syntax to formalize both general
+and specific inter-member padding. I.e. it could be of benefit to extend this
+proposal to formalize and improve the common <code>#pragma pack</code> feature.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_acknowledgements"><a class="anchor" href="#_acknowledgements"></a>8. Acknowledgements</h2>
+<h2 id="_acknowledgements"><a class="anchor" href="#_acknowledgements"></a>7. Acknowledgements</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Thanks to Michael Shoell who, through varied lunch conversations, provided the

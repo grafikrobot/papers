@@ -236,12 +236,16 @@ apply.
 
 == Proposal
 
-We propose adding an optional `layout:` section to class definitions wherein
-one list the order of the members, already declared, in the class. The order
-in which the members are listed in the `layout:` section is used to layout
-the members in the same sequence in the class layout.
+We propose adding an optional `layout:` labeled section to class definitions
+wherein one list the order of members, already declared, in the class. The
+`layout:` section would:
 
-To continue with our example from above, the new class declaration could be:
+* List the names of any members one wishes to specific the order of.
+* Members listed would come first in the class member layout.
+* Members not listed would follow with the existing layout rules.
+
+To continue with our example from above, the new class declaration using this
+feature could be:
 
 [.compare-before]
 [source]
@@ -312,15 +316,11 @@ Features of this proposal:
 * Does not, definitionally, force override ordering of all members and hence 
   allows for minimal targeted optimizations.
 
-== Impact on the Standard
+// == Impact on the Standard
 
-The impact on the standard is minimal as to syntax and effect. There could be
-an impact on class member reflection as it might be beneficial to be able to
-inspect the layout order of the members separately from the declaration order.
-
-// == Technical Specifications
-
-// ???
+// The impact on the standard is minimal as to syntax and effect. There could be
+// an impact on class member reflection as it might be beneficial to be able to
+// inspect the layout order of the members separately from the declaration order.
 
 == Proposed Wording
 
@@ -335,6 +335,16 @@ To be determined.
 // ???
 
 == Design Decisions and Considerations
+
+=== Why not have algorithmic layouts?
+
+<<P1112>> proposes a mechanism to have "smart" algorithmic layout control.
+It proposes to add a `[[layout(?)]]` attribute to the class to select from
+an existing set of algorithmic layouts like: `smallest`, `declorder`,
+`cacheline`, and so on. A key problem with an algorithmic approach is the
+increased risk of ABI violations as pointed out in <<P1112>>. Dealing with
+the {CPP} ABI is difficult enough as it is. We would like to avoid adding
+to the uncertainly and complexity of the {CPP} ABI.
 
 === Should alignment control be allowed in the layout declarations?
 
@@ -366,6 +376,12 @@ class A
 
 There needs to be some thought and consideration given to how layout ordering
 can or should be available through reflection.
+
+=== Should we additionally specify padding options?
+
+It would be interesting to consider adding syntax to formalize both general
+and specific inter-member padding. I.e. it could be of benefit to extend this
+proposal to formalize and improve the common `#pragma pack` feature.
 
 == Acknowledgements
 
