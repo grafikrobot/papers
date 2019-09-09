@@ -445,7 +445,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <span id="author" class="author">Rene Rivera</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> D1605R0,</span>
-<span id="revdate">2019-09-08</span>
+<span id="revdate">2019-09-09</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -543,7 +543,7 @@ Document number
 Date
 </td>
 <td class="hdlist2">
-<p>2019-09-08</p>
+<p>2019-09-09</p>
 </td>
 </tr>
 <tr>
@@ -616,30 +616,30 @@ different features of it (highly abstracted):</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="c++" class="language-c++ hljs">class A
-{
-    public:
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">class</span> <span class="tok-nc">A</span>
+<span class="tok-p">{</span>
+    <span class="tok-k">public</span><span class="tok-o">:</span>
 
-    // Feature A allows for using A.
-    // This feature is optional and
-    // is used when feature_a_enabled
-    // == true. The feature_a_value
-    // is a value in the range
-    // [0,15000].
+    <span class="tok-c1">// Feature A allows for using A.</span>
+    <span class="tok-c1">// This feature is optional and</span>
+    <span class="tok-c1">// is used when feature_a_enabled</span>
+    <span class="tok-c1">// == true. The feature_a_value</span>
+    <span class="tok-c1">// is a value in the range</span>
+    <span class="tok-c1">// [0,15000].</span>
 
-    bool feature_a_enabled;
-    unsigned int feature_a_value;
+    <span class="tok-kt">bool</span> <span class="tok-n">feature_a_enabled</span><span class="tok-p">;</span>
+    <span class="tok-kt">unsigned</span> <span class="tok-kt">int</span> <span class="tok-n">feature_a_value</span><span class="tok-p">;</span>
 
-    // Feature B allows for using B.
-    // This feature is optional and
-    // is used when feature_b_enabled
-    // == true. The feature_b_value
-    // is a value in the range
-    // [0,60000].
+    <span class="tok-c1">// Feature B allows for using B.</span>
+    <span class="tok-c1">// This feature is optional and</span>
+    <span class="tok-c1">// is used when feature_b_enabled</span>
+    <span class="tok-c1">// == true. The feature_b_value</span>
+    <span class="tok-c1">// is a value in the range</span>
+    <span class="tok-c1">// [0,60000].</span>
 
-    bool feature_b_enabled;
-    unsigned int feature_b_value;
-};</code></pre>
+    <span class="tok-kt">bool</span> <span class="tok-n">feature_b_enabled</span><span class="tok-p">;</span>
+    <span class="tok-kt">unsigned</span> <span class="tok-kt">int</span> <span class="tok-n">feature_b_value</span><span class="tok-p">;</span>
+<span class="tok-p">};</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -648,10 +648,10 @@ calculation. In this case we&#8217;ll look at minimal function:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="c++" class="language-c++ hljs">unsigned int A_q(A const &amp; a)
-{
-    return a.feature_a_value + a.feature_b_value;
-}</code></pre>
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-kt">unsigned</span> <span class="tok-kt">int</span> <span class="tok-nf">A_q</span><span class="tok-p">(</span><span class="tok-n">A</span> <span class="tok-k">const</span> <span class="tok-o">&amp;</span> <span class="tok-n">a</span><span class="tok-p">)</span>
+<span class="tok-p">{</span>
+    <span class="tok-k">return</span> <span class="tok-n">a</span><span class="tok-p">.</span><span class="tok-n">feature_a_value</span> <span class="tok-o">+</span> <span class="tok-n">a</span><span class="tok-p">.</span><span class="tok-n">feature_b_value</span><span class="tok-p">;</span>
+<span class="tok-p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -659,24 +659,28 @@ calculation. In this case we&#8217;ll look at minimal function:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="x86asm" class="language-x86asm hljs">A_q(A const&amp;):
-  mov eax, DWORD PTR [rdi+4]
-  add eax, DWORD PTR [rdi+12]
-  ret</code></pre>
+<pre class="pygments highlight"><code data-lang="nasm"><span></span><span class="tok-nf">A_q</span><span class="tok-p">(</span><span class="tok-nv">A</span> <span class="tok-nv">const</span><span class="tok-o">&amp;</span><span class="tok-p">):</span>
+  <span class="tok-nf">mov</span> <span class="tok-nb">eax</span><span class="tok-p">,</span> <span class="tok-kt">DWORD</span> <span class="tok-nv">PTR</span> <span class="tok-p">[</span><span class="tok-nb">rdi</span><span class="tok-o">+</span><span class="tok-mi">4</span><span class="tok-p">]</span>
+  <span class="tok-nf">add</span> <span class="tok-nb">eax</span><span class="tok-p">,</span> <span class="tok-kt">DWORD</span> <span class="tok-nv">PTR</span> <span class="tok-p">[</span><span class="tok-nb">rdi</span><span class="tok-o">+</span><span class="tok-mi">12</span><span class="tok-p">]</span>
+  <span class="tok-nf">ret</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>The problem comes in when we look at the data size of the class:</p>
 </div>
-<div class="paragraph text-center">
-<p><code>sizeof(A) == 16</code></p>
+<div class="listingblock text-center">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">sizeof</span><span class="tok-p">(</span><span class="tok-n">A</span><span class="tok-p">)</span> <span class="tok-o">==</span> <span class="tok-mi">16</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Sixteen bytes might seem small. But if we are dealing with a large number
 items the data size becomes a serious consideration:</p>
 </div>
-<div class="paragraph text-center">
-<p><code>sizeof(A[1024*1024]) = 16,777,216</code></p>
+<div class="listingblock text-center">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">sizeof</span><span class="tok-p">(</span><span class="tok-n">A</span><span class="tok-p">[</span><span class="tok-mi">1024</span><span class="tok-o">*</span><span class="tok-mi">1024</span><span class="tok-p">])</span> <span class="tok-o">==</span> <span class="tok-mi">16777216</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>When faced with that result and the constraints of some systems, say an
@@ -688,59 +692,59 @@ members to minimize the alignment padding. For our example we can place the
 </div>
 <div class="listingblock compare-before">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="c++" class="language-c++ hljs">class A
-{
-    public:
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">class</span> <span class="tok-nc">A</span>
+<span class="tok-p">{</span>
+    <span class="tok-k">public</span><span class="tok-o">:</span>
 
-    // Feature A allows for using A.
-    // This feature is optional and
-    // is used when feature_a_enabled
-    // == true. The feature_a_value
-    // is a value in the range
-    // [0,15000].
+    <span class="tok-c1">// Feature A allows for using A.</span>
+    <span class="tok-c1">// This feature is optional and</span>
+    <span class="tok-c1">// is used when feature_a_enabled</span>
+    <span class="tok-c1">// == true. The feature_a_value</span>
+    <span class="tok-c1">// is a value in the range</span>
+    <span class="tok-c1">// [0,15000].</span>
 
-    bool feature_a_enabled;
-    unsigned int feature_a_value;
+    <span class="tok-kt">bool</span> <span class="tok-n">feature_a_enabled</span><span class="tok-p">;</span>
+    <span class="tok-kt">unsigned</span> <span class="tok-kt">int</span> <span class="tok-n">feature_a_value</span><span class="tok-p">;</span>
 
-    // Feature B allows for using B.
-    // This feature is optional and
-    // is used when feature_b_enabled
-    // == true. The feature_b_value
-    // is a value in the range
-    // [0,60000].
+    <span class="tok-c1">// Feature B allows for using B.</span>
+    <span class="tok-c1">// This feature is optional and</span>
+    <span class="tok-c1">// is used when feature_b_enabled</span>
+    <span class="tok-c1">// == true. The feature_b_value</span>
+    <span class="tok-c1">// is a value in the range</span>
+    <span class="tok-c1">// [0,60000].</span>
 
-    bool feature_b_enabled;
-    unsigned int feature_b_value;
-};</code></pre>
+    <span class="tok-kt">bool</span> <span class="tok-n">feature_b_enabled</span><span class="tok-p">;</span>
+    <span class="tok-kt">unsigned</span> <span class="tok-kt">int</span> <span class="tok-n">feature_b_value</span><span class="tok-p">;</span>
+<span class="tok-p">};</span></code></pre>
 </div>
 </div>
 <div class="listingblock compare-after">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="c++" class="language-c++ hljs">class A
-{
-    public:
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">class</span> <span class="tok-nc">A</span>
+<span class="tok-p">{</span>
+    <span class="tok-k">public</span><span class="tok-o">:</span>
 
-    // Feature A allows for using A.
-    // This feature is optional and
-    // is used when feature_a_enabled
-    // == true. The feature_a_value
-    // is a value in the range
-    // [0,15000].
+    <span class="tok-c1">// Feature A allows for using A.</span>
+    <span class="tok-c1">// This feature is optional and</span>
+    <span class="tok-c1">// is used when feature_a_enabled</span>
+    <span class="tok-c1">// == true. The feature_a_value</span>
+    <span class="tok-c1">// is a value in the range</span>
+    <span class="tok-c1">// [0,15000].</span>
 
-    unsigned int feature_a_value;
+    <span class="tok-kt">unsigned</span> <span class="tok-kt">int</span> <span class="tok-n">feature_a_value</span><span class="tok-p">;</span>
 
-    // Feature B allows for using B.
-    // This feature is optional and
-    // is used when feature_b_enabled
-    // == true. The feature_b_value
-    // is a value in the range
-    // [0,60000].
+    <span class="tok-c1">// Feature B allows for using B.</span>
+    <span class="tok-c1">// This feature is optional and</span>
+    <span class="tok-c1">// is used when feature_b_enabled</span>
+    <span class="tok-c1">// == true. The feature_b_value</span>
+    <span class="tok-c1">// is a value in the range</span>
+    <span class="tok-c1">// [0,60000].</span>
 
-    unsigned int feature_b_value;
+    <span class="tok-kt">unsigned</span> <span class="tok-kt">int</span> <span class="tok-n">feature_b_value</span><span class="tok-p">;</span>
 
-    bool feature_a_enabled;
-    bool feature_b_enabled;
-};</code></pre>
+    <span class="tok-kt">bool</span> <span class="tok-n">feature_a_enabled</span><span class="tok-p">;</span>
+    <span class="tok-kt">bool</span> <span class="tok-n">feature_b_enabled</span><span class="tok-p">;</span>
+<span class="tok-p">};</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -749,34 +753,42 @@ prototypical <code>A_q</code> function:</p>
 </div>
 <div class="listingblock compare-before">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="x86asm" class="language-x86asm hljs">A_q(A const&amp;):
-  mov eax, DWORD PTR [rdi+4]
-  add eax, DWORD PTR [rdi+12]
-  ret</code></pre>
+<pre class="pygments highlight"><code data-lang="nasm"><span></span><span class="tok-nf">A_q</span><span class="tok-p">(</span><span class="tok-nv">A</span> <span class="tok-nv">const</span><span class="tok-o">&amp;</span><span class="tok-p">):</span>
+  <span class="tok-nf">mov</span> <span class="tok-nb">eax</span><span class="tok-p">,</span> <span class="tok-kt">DWORD</span> <span class="tok-nv">PTR</span> <span class="tok-p">[</span><span class="tok-nb">rdi</span><span class="tok-o">+</span><span class="tok-mi">4</span><span class="tok-p">]</span>
+  <span class="tok-nf">add</span> <span class="tok-nb">eax</span><span class="tok-p">,</span> <span class="tok-kt">DWORD</span> <span class="tok-nv">PTR</span> <span class="tok-p">[</span><span class="tok-nb">rdi</span><span class="tok-o">+</span><span class="tok-mi">12</span><span class="tok-p">]</span>
+  <span class="tok-nf">ret</span></code></pre>
 </div>
 </div>
 <div class="listingblock compare-after">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="x86asm" class="language-x86asm hljs">A_q(A const&amp;):
-  mov eax, DWORD PTR [rdi]
-  add eax, DWORD PTR [rdi+4]
-  ret</code></pre>
+<pre class="pygments highlight"><code data-lang="nasm"><span></span><span class="tok-nf">A_q</span><span class="tok-p">(</span><span class="tok-nv">A</span> <span class="tok-nv">const</span><span class="tok-o">&amp;</span><span class="tok-p">):</span>
+  <span class="tok-nf">mov</span> <span class="tok-nb">eax</span><span class="tok-p">,</span> <span class="tok-kt">DWORD</span> <span class="tok-nv">PTR</span> <span class="tok-p">[</span><span class="tok-nb">rdi</span><span class="tok-p">]</span>
+  <span class="tok-nf">add</span> <span class="tok-nb">eax</span><span class="tok-p">,</span> <span class="tok-kt">DWORD</span> <span class="tok-nv">PTR</span> <span class="tok-p">[</span><span class="tok-nb">rdi</span><span class="tok-o">+</span><span class="tok-mi">4</span><span class="tok-p">]</span>
+  <span class="tok-nf">ret</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>But more importantly we&#8217;ve reduced the overall size of the structure.</p>
 </div>
-<div class="paragraph compare-before text-center">
-<p><code>sizeof(A) == 16</code></p>
+<div class="listingblock compare-before text-center">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">sizeof</span><span class="tok-p">(</span><span class="tok-n">A</span><span class="tok-p">)</span> <span class="tok-o">==</span> <span class="tok-mi">16</span></code></pre>
 </div>
-<div class="paragraph compare-after text-center">
-<p><code>sizeof(A) == 12</code></p>
 </div>
-<div class="paragraph compare-before text-center">
-<p><code>sizeof(A[1024*1024]) = 16777216</code></p>
+<div class="listingblock compare-after text-center">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">sizeof</span><span class="tok-p">(</span><span class="tok-n">A</span><span class="tok-p">)</span> <span class="tok-o">==</span> <span class="tok-mi">12</span></code></pre>
 </div>
-<div class="paragraph compare-after text-center">
-<p><code>sizeof(A[1024*1024]) = 12582912</code></p>
+</div>
+<div class="listingblock compare-before text-center">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">sizeof</span><span class="tok-p">(</span><span class="tok-n">A</span><span class="tok-p">[</span><span class="tok-mi">1024</span><span class="tok-o">*</span><span class="tok-mi">1024</span><span class="tok-p">])</span> <span class="tok-o">==</span> <span class="tok-mi">16777216</span></code></pre>
+</div>
+</div>
+<div class="listingblock compare-after text-center">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">sizeof</span><span class="tok-p">(</span><span class="tok-n">A</span><span class="tok-p">[</span><span class="tok-mi">1024</span><span class="tok-o">*</span><span class="tok-mi">1024</span><span class="tok-p">])</span> <span class="tok-o">==</span> <span class="tok-mi">12582912</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>This only works when we restrict ourselves to follow the
@@ -790,93 +802,101 @@ this will have on the generated code. We can therefore do the following:</p>
 </div>
 <div class="listingblock compare-before">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="c++" class="language-c++ hljs">class A
-{
-    public:
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">class</span> <span class="tok-nc">A</span>
+<span class="tok-p">{</span>
+    <span class="tok-k">public</span><span class="tok-o">:</span>
 
-    // Feature A allows for using A.
-    // This feature is optional and
-    // is used when feature_a_enabled
-    // == true. The feature_a_value
-    // is a value in the range
-    // [0,15000].
+    <span class="tok-c1">// Feature A allows for using A.</span>
+    <span class="tok-c1">// This feature is optional and</span>
+    <span class="tok-c1">// is used when feature_a_enabled</span>
+    <span class="tok-c1">// == true. The feature_a_value</span>
+    <span class="tok-c1">// is a value in the range</span>
+    <span class="tok-c1">// [0,15000].</span>
 
-    bool feature_a_enabled;
-    unsigned int feature_a_value;
+    <span class="tok-kt">bool</span> <span class="tok-n">feature_a_enabled</span><span class="tok-p">;</span>
+    <span class="tok-kt">unsigned</span> <span class="tok-kt">int</span> <span class="tok-n">feature_a_value</span><span class="tok-p">;</span>
 
-    // Feature B allows for using B.
-    // This feature is optional and
-    // is used when feature_b_enabled
-    // == true. The feature_b_value
-    // is a value in the range
-    // [0,60000].
+    <span class="tok-c1">// Feature B allows for using B.</span>
+    <span class="tok-c1">// This feature is optional and</span>
+    <span class="tok-c1">// is used when feature_b_enabled</span>
+    <span class="tok-c1">// == true. The feature_b_value</span>
+    <span class="tok-c1">// is a value in the range</span>
+    <span class="tok-c1">// [0,60000].</span>
 
-    bool feature_b_enabled;
-    unsigned int feature_b_value;
-};</code></pre>
+    <span class="tok-kt">bool</span> <span class="tok-n">feature_b_enabled</span><span class="tok-p">;</span>
+    <span class="tok-kt">unsigned</span> <span class="tok-kt">int</span> <span class="tok-n">feature_b_value</span><span class="tok-p">;</span>
+<span class="tok-p">};</span></code></pre>
 </div>
 </div>
 <div class="listingblock compare-after">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="c++" class="language-c++ hljs">class A
-{
-    public:
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">class</span> <span class="tok-nc">A</span>
+<span class="tok-p">{</span>
+    <span class="tok-k">public</span><span class="tok-o">:</span>
 
-    // Feature A allows for using A.
-    // This feature is optional and
-    // is used when feature_a_enabled
-    // == true. The feature_a_value
-    // is a value in the range
-    // [0,15000].
+    <span class="tok-c1">// Feature A allows for using A.</span>
+    <span class="tok-c1">// This feature is optional and</span>
+    <span class="tok-c1">// is used when feature_a_enabled</span>
+    <span class="tok-c1">// == true. The feature_a_value</span>
+    <span class="tok-c1">// is a value in the range</span>
+    <span class="tok-c1">// [0,15000].</span>
 
 
-    // Feature B allows for using B.
-    // This feature is optional and
-    // is used when feature_b_enabled
-    // == true. The feature_b_value
-    // is a value in the range
-    // [0,60000].
+    <span class="tok-c1">// Feature B allows for using B.</span>
+    <span class="tok-c1">// This feature is optional and</span>
+    <span class="tok-c1">// is used when feature_b_enabled</span>
+    <span class="tok-c1">// == true. The feature_b_value</span>
+    <span class="tok-c1">// is a value in the range</span>
+    <span class="tok-c1">// [0,60000].</span>
 
-    unsigned int feature_b_value:16;
-    unsigned int feature_a_value:14;
-    bool feature_a_enabled:1;
-    bool feature_b_enabled:1;
-};</code></pre>
+    <span class="tok-kt">unsigned</span> <span class="tok-kt">int</span> <span class="tok-nl">feature_b_value</span><span class="tok-p">:</span><span class="tok-mi">16</span><span class="tok-p">;</span>
+    <span class="tok-kt">unsigned</span> <span class="tok-kt">int</span> <span class="tok-nl">feature_a_value</span><span class="tok-p">:</span><span class="tok-mi">14</span><span class="tok-p">;</span>
+    <span class="tok-kt">bool</span> <span class="tok-nl">feature_a_enabled</span><span class="tok-p">:</span><span class="tok-mi">1</span><span class="tok-p">;</span>
+    <span class="tok-kt">bool</span> <span class="tok-nl">feature_b_enabled</span><span class="tok-p">:</span><span class="tok-mi">1</span><span class="tok-p">;</span>
+<span class="tok-p">};</span></code></pre>
 </div>
 </div>
 <div class="listingblock compare-before">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="x86asm" class="language-x86asm hljs">A_q(A const&amp;):
-  mov eax, DWORD PTR [rdi+4]
-  add eax, DWORD PTR [rdi+12]
-  ret</code></pre>
+<pre class="pygments highlight"><code data-lang="nasm"><span></span><span class="tok-nf">A_q</span><span class="tok-p">(</span><span class="tok-nv">A</span> <span class="tok-nv">const</span><span class="tok-o">&amp;</span><span class="tok-p">):</span>
+  <span class="tok-nf">mov</span> <span class="tok-nb">eax</span><span class="tok-p">,</span> <span class="tok-kt">DWORD</span> <span class="tok-nv">PTR</span> <span class="tok-p">[</span><span class="tok-nb">rdi</span><span class="tok-o">+</span><span class="tok-mi">4</span><span class="tok-p">]</span>
+  <span class="tok-nf">add</span> <span class="tok-nb">eax</span><span class="tok-p">,</span> <span class="tok-kt">DWORD</span> <span class="tok-nv">PTR</span> <span class="tok-p">[</span><span class="tok-nb">rdi</span><span class="tok-o">+</span><span class="tok-mi">12</span><span class="tok-p">]</span>
+  <span class="tok-nf">ret</span></code></pre>
 </div>
 </div>
 <div class="listingblock compare-after">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="x86asm" class="language-x86asm hljs">AA_q(A const&amp;):
-  movzx eax, WORD PTR [rdi+2]
-  movzx edx, WORD PTR [rdi]
-  and eax, 16383
-  add eax, edx
-  ret</code></pre>
+<pre class="pygments highlight"><code data-lang="nasm"><span></span><span class="tok-nf">AA_q</span><span class="tok-p">(</span><span class="tok-nv">A</span> <span class="tok-nv">const</span><span class="tok-o">&amp;</span><span class="tok-p">):</span>
+  <span class="tok-nf">movzx</span> <span class="tok-nb">eax</span><span class="tok-p">,</span> <span class="tok-kt">WORD</span> <span class="tok-nv">PTR</span> <span class="tok-p">[</span><span class="tok-nb">rdi</span><span class="tok-o">+</span><span class="tok-mi">2</span><span class="tok-p">]</span>
+  <span class="tok-nf">movzx</span> <span class="tok-nb">edx</span><span class="tok-p">,</span> <span class="tok-kt">WORD</span> <span class="tok-nv">PTR</span> <span class="tok-p">[</span><span class="tok-nb">rdi</span><span class="tok-p">]</span>
+  <span class="tok-nf">and</span> <span class="tok-nb">eax</span><span class="tok-p">,</span> <span class="tok-mi">16383</span>
+  <span class="tok-nf">add</span> <span class="tok-nb">eax</span><span class="tok-p">,</span> <span class="tok-nb">edx</span>
+  <span class="tok-nf">ret</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Even though we&#8217;ve added some instructions to deal with the bit field we are
 still rather optimal in our access. What do we gain in terms of size?</p>
 </div>
-<div class="paragraph compare-before text-center">
-<p><code>sizeof(A) == 16</code></p>
+<div class="listingblock compare-before text-center">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">sizeof</span><span class="tok-p">(</span><span class="tok-n">A</span><span class="tok-p">)</span> <span class="tok-o">==</span> <span class="tok-mi">16</span></code></pre>
 </div>
-<div class="paragraph compare-after text-center">
-<p><code>sizeof(A) == 4</code></p>
 </div>
-<div class="paragraph compare-before text-center">
-<p><code>sizeof(A[1024*1024]) = 16777216</code></p>
+<div class="listingblock compare-after text-center">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">sizeof</span><span class="tok-p">(</span><span class="tok-n">A</span><span class="tok-p">)</span> <span class="tok-o">==</span> <span class="tok-mi">4</span></code></pre>
 </div>
-<div class="paragraph compare-after text-center">
-<p><code>sizeof(A[1024*1024]) = 4194304</code></p>
+</div>
+<div class="listingblock compare-before text-center">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">sizeof</span><span class="tok-p">(</span><span class="tok-n">A</span><span class="tok-p">[</span><span class="tok-mi">1024</span><span class="tok-o">*</span><span class="tok-mi">1024</span><span class="tok-p">])</span> <span class="tok-o">==</span> <span class="tok-mi">16777216</span></code></pre>
+</div>
+</div>
+<div class="listingblock compare-after text-center">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">sizeof</span><span class="tok-p">(</span><span class="tok-n">A</span><span class="tok-p">[</span><span class="tok-mi">1024</span><span class="tok-o">*</span><span class="tok-mi">1024</span><span class="tok-p">])</span> <span class="tok-o">==</span> <span class="tok-mi">4194304</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>This is a now in the palatable range.. We are tracking 1MiB objects in 4MiB.
@@ -921,103 +941,111 @@ feature could be:</p>
 </div>
 <div class="listingblock compare-before">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="c++" class="language-c++ hljs">class A
-{
-    public:
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">class</span> <span class="tok-nc">A</span>
+<span class="tok-p">{</span>
+    <span class="tok-k">public</span><span class="tok-o">:</span>
 
-    // Feature A allows for using A.
-    // This feature is optional and
-    // is used when feature_a_enabled
-    // == true. The feature_a_value
-    // is a value in the range
-    // [0,15000].
+    <span class="tok-c1">// Feature A allows for using A.</span>
+    <span class="tok-c1">// This feature is optional and</span>
+    <span class="tok-c1">// is used when feature_a_enabled</span>
+    <span class="tok-c1">// == true. The feature_a_value</span>
+    <span class="tok-c1">// is a value in the range</span>
+    <span class="tok-c1">// [0,15000].</span>
 
-    // Feature B allows for using B.
-    // This feature is optional and
-    // is used when feature_b_enabled
-    // == true. The feature_b_value
-    // is a value in the range
-    // [0,60000].
+    <span class="tok-c1">// Feature B allows for using B.</span>
+    <span class="tok-c1">// This feature is optional and</span>
+    <span class="tok-c1">// is used when feature_b_enabled</span>
+    <span class="tok-c1">// == true. The feature_b_value</span>
+    <span class="tok-c1">// is a value in the range</span>
+    <span class="tok-c1">// [0,60000].</span>
 
-    unsigned int feature_b_value:16;
-    unsigned int feature_a_value:14;
-    bool feature_a_enabled:1;
-    bool feature_b_enabled:1;
-};</code></pre>
+    <span class="tok-kt">unsigned</span> <span class="tok-kt">int</span> <span class="tok-nl">feature_b_value</span><span class="tok-p">:</span><span class="tok-mi">16</span><span class="tok-p">;</span>
+    <span class="tok-kt">unsigned</span> <span class="tok-kt">int</span> <span class="tok-nl">feature_a_value</span><span class="tok-p">:</span><span class="tok-mi">14</span><span class="tok-p">;</span>
+    <span class="tok-kt">bool</span> <span class="tok-nl">feature_a_enabled</span><span class="tok-p">:</span><span class="tok-mi">1</span><span class="tok-p">;</span>
+    <span class="tok-kt">bool</span> <span class="tok-nl">feature_b_enabled</span><span class="tok-p">:</span><span class="tok-mi">1</span><span class="tok-p">;</span>
+<span class="tok-p">};</span></code></pre>
 </div>
 </div>
 <div class="listingblock compare-after">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="c++" class="language-c++ hljs">class A
-{
-    public:
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">class</span> <span class="tok-nc">A</span>
+<span class="tok-p">{</span>
+    <span class="tok-k">public</span><span class="tok-o">:</span>
 
-    // Feature A allows for using A.
-    // This feature is optional and
-    // is used when feature_a_enabled
-    // == true. The feature_a_value
-    // is a value in the range
-    // [0,15000].
+    <span class="tok-c1">// Feature A allows for using A.</span>
+    <span class="tok-c1">// This feature is optional and</span>
+    <span class="tok-c1">// is used when feature_a_enabled</span>
+    <span class="tok-c1">// == true. The feature_a_value</span>
+    <span class="tok-c1">// is a value in the range</span>
+    <span class="tok-c1">// [0,15000].</span>
 
-    bool feature_a_enabled:1;
-    unsigned int feature_a_value:14;
+    <span class="tok-kt">bool</span> <span class="tok-nl">feature_a_enabled</span><span class="tok-p">:</span><span class="tok-mi">1</span><span class="tok-p">;</span>
+    <span class="tok-kt">unsigned</span> <span class="tok-kt">int</span> <span class="tok-nl">feature_a_value</span><span class="tok-p">:</span><span class="tok-mi">14</span><span class="tok-p">;</span>
 
-    // Feature B allows for using B.
-    // This feature is optional and
-    // is used when feature_b_enabled
-    // == true. The feature_b_value
-    // is a value in the range
-    // [0,60000].
+    <span class="tok-c1">// Feature B allows for using B.</span>
+    <span class="tok-c1">// This feature is optional and</span>
+    <span class="tok-c1">// is used when feature_b_enabled</span>
+    <span class="tok-c1">// == true. The feature_b_value</span>
+    <span class="tok-c1">// is a value in the range</span>
+    <span class="tok-c1">// [0,60000].</span>
 
-    bool feature_b_enabled:1;
-    unsigned int feature_b_value:16;
+    <span class="tok-kt">bool</span> <span class="tok-nl">feature_b_enabled</span><span class="tok-p">:</span><span class="tok-mi">1</span><span class="tok-p">;</span>
+    <span class="tok-kt">unsigned</span> <span class="tok-kt">int</span> <span class="tok-nl">feature_b_value</span><span class="tok-p">:</span><span class="tok-mi">16</span><span class="tok-p">;</span>
 
-    layout:
+    <span class="tok-nl">layout</span><span class="tok-p">:</span>
 
-    // This layout gives us a 4 byte
-    // structure size with minimal
-    // additional access instructions.
-    // When compiling with x86-64
-    // gcc 9.2 with -O3.
+    <span class="tok-c1">// This layout gives us a 4 byte</span>
+    <span class="tok-c1">// structure size with minimal</span>
+    <span class="tok-c1">// additional access instructions.</span>
+    <span class="tok-c1">// When compiling with x86-64</span>
+    <span class="tok-c1">// gcc 9.2 with -O3.</span>
 
-    feature_b_value;
-    feature_a_value;
-    feature_a_enabled;
-    feature_b_enabled;
-};</code></pre>
+    <span class="tok-n">feature_b_value</span><span class="tok-p">;</span>
+    <span class="tok-n">feature_a_value</span><span class="tok-p">;</span>
+    <span class="tok-n">feature_a_enabled</span><span class="tok-p">;</span>
+    <span class="tok-n">feature_b_enabled</span><span class="tok-p">;</span>
+<span class="tok-p">};</span></code></pre>
 </div>
 </div>
 <div class="listingblock compare-before">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="x86asm" class="language-x86asm hljs">A_q(A const&amp;):
-  movzx eax, WORD PTR [rdi+2]
-  movzx edx, WORD PTR [rdi]
-  and eax, 16383
-  add eax, edx
-  ret</code></pre>
+<pre class="pygments highlight"><code data-lang="nasm"><span></span><span class="tok-nf">A_q</span><span class="tok-p">(</span><span class="tok-nv">A</span> <span class="tok-nv">const</span><span class="tok-o">&amp;</span><span class="tok-p">):</span>
+  <span class="tok-nf">movzx</span> <span class="tok-nb">eax</span><span class="tok-p">,</span> <span class="tok-kt">WORD</span> <span class="tok-nv">PTR</span> <span class="tok-p">[</span><span class="tok-nb">rdi</span><span class="tok-o">+</span><span class="tok-mi">2</span><span class="tok-p">]</span>
+  <span class="tok-nf">movzx</span> <span class="tok-nb">edx</span><span class="tok-p">,</span> <span class="tok-kt">WORD</span> <span class="tok-nv">PTR</span> <span class="tok-p">[</span><span class="tok-nb">rdi</span><span class="tok-p">]</span>
+  <span class="tok-nf">and</span> <span class="tok-nb">eax</span><span class="tok-p">,</span> <span class="tok-mi">16383</span>
+  <span class="tok-nf">add</span> <span class="tok-nb">eax</span><span class="tok-p">,</span> <span class="tok-nb">edx</span>
+  <span class="tok-nf">ret</span></code></pre>
 </div>
 </div>
 <div class="listingblock compare-after">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="x86asm" class="language-x86asm hljs">A_q(A const&amp;):
-  movzx eax, WORD PTR [rdi+2]
-  movzx edx, WORD PTR [rdi]
-  and eax, 16383
-  add eax, edx
-  ret</code></pre>
+<pre class="pygments highlight"><code data-lang="nasm"><span></span><span class="tok-nf">A_q</span><span class="tok-p">(</span><span class="tok-nv">A</span> <span class="tok-nv">const</span><span class="tok-o">&amp;</span><span class="tok-p">):</span>
+  <span class="tok-nf">movzx</span> <span class="tok-nb">eax</span><span class="tok-p">,</span> <span class="tok-kt">WORD</span> <span class="tok-nv">PTR</span> <span class="tok-p">[</span><span class="tok-nb">rdi</span><span class="tok-o">+</span><span class="tok-mi">2</span><span class="tok-p">]</span>
+  <span class="tok-nf">movzx</span> <span class="tok-nb">edx</span><span class="tok-p">,</span> <span class="tok-kt">WORD</span> <span class="tok-nv">PTR</span> <span class="tok-p">[</span><span class="tok-nb">rdi</span><span class="tok-p">]</span>
+  <span class="tok-nf">and</span> <span class="tok-nb">eax</span><span class="tok-p">,</span> <span class="tok-mi">16383</span>
+  <span class="tok-nf">add</span> <span class="tok-nb">eax</span><span class="tok-p">,</span> <span class="tok-nb">edx</span>
+  <span class="tok-nf">ret</span></code></pre>
 </div>
 </div>
-<div class="paragraph compare-before text-center">
-<p><code>sizeof(A) == 4</code></p>
+<div class="listingblock compare-before text-center">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">sizeof</span><span class="tok-p">(</span><span class="tok-n">A</span><span class="tok-p">)</span> <span class="tok-o">==</span> <span class="tok-mi">4</span></code></pre>
 </div>
-<div class="paragraph compare-after text-center">
-<p><code>sizeof(A) == 4</code></p>
 </div>
-<div class="paragraph compare-before text-center">
-<p><code>sizeof(A[1024*1024]) = 4194304</code></p>
+<div class="listingblock compare-after text-center">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">sizeof</span><span class="tok-p">(</span><span class="tok-n">A</span><span class="tok-p">)</span> <span class="tok-o">==</span> <span class="tok-mi">4</span></code></pre>
 </div>
-<div class="paragraph compare-after text-center">
-<p><code>sizeof(A[1024*1024]) = 4194304</code></p>
+</div>
+<div class="listingblock compare-before text-center">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">sizeof</span><span class="tok-p">(</span><span class="tok-n">A</span><span class="tok-p">[</span><span class="tok-mi">1024</span><span class="tok-o">*</span><span class="tok-mi">1024</span><span class="tok-p">])</span> <span class="tok-o">==</span> <span class="tok-mi">4194304</span></code></pre>
+</div>
+</div>
+<div class="listingblock compare-after text-center">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">sizeof</span><span class="tok-p">(</span><span class="tok-n">A</span><span class="tok-p">[</span><span class="tok-mi">1024</span><span class="tok-o">*</span><span class="tok-mi">1024</span><span class="tok-p">])</span> <span class="tok-o">==</span> <span class="tok-mi">4194304</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>As we can see the effect of optimizing the layout for the application use case
@@ -1079,13 +1107,13 @@ allows for minimal targeted optimizations.</p>
 <div class="sect2">
 <h3 id="_why_not_have_algorithmic_layouts"><a class="anchor" href="#_why_not_have_algorithmic_layouts"></a>6.1. Why not have algorithmic layouts?</h3>
 <div class="paragraph">
-<p><a href="#P1112">[P1112]</a> proposes a mechanism to have "smart" algorithmic layout control.
-It proposes to add a <code>[[layout(?)]]</code> attribute to the class to select from
-an existing set of algorithmic layouts like: <code>smallest</code>, <code>declorder</code>,
+<p>P1112 <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup> proposes a mechanism to have "smart" algorithmic layout
+control. It proposes to add a <code>[[layout(?)]]</code> attribute to the class to select
+from an existing set of algorithmic layouts like: <code>smallest</code>, <code>declorder</code>,
 <code>cacheline</code>, and so on. A key problem with an algorithmic approach is the
-increased risk of ABI violations as pointed out in <a href="#P1112">[P1112]</a>. Dealing with
-the C++ ABI is difficult enough as it is. We would like to avoid adding
-to the uncertainly and complexity of the C++ ABI.</p>
+increased risk of ABI violations as pointed out in P1112.<sup class="footnoteref">[<a class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup>
+Dealing with the C++ ABI is difficult enough as it is. We would like to
+avoid adding to the uncertainly and complexity of the C++ ABI.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1097,22 +1125,22 @@ section. For example <code>alignas</code> could be allowed as such:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="C++" class="language-C++ hljs">class A
-{
-    public:
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">class</span> <span class="tok-nc">A</span>
+<span class="tok-p">{</span>
+    <span class="tok-k">public</span><span class="tok-o">:</span>
 
-    bool a_f;
-    int a;
-    bool b_f;
-    int b;
+    <span class="tok-kt">bool</span> <span class="tok-n">a_f</span><span class="tok-p">;</span>
+    <span class="tok-kt">int</span> <span class="tok-n">a</span><span class="tok-p">;</span>
+    <span class="tok-kt">bool</span> <span class="tok-n">b_f</span><span class="tok-p">;</span>
+    <span class="tok-kt">int</span> <span class="tok-n">b</span><span class="tok-p">;</span>
 
-    layout:
+    <span class="tok-nl">layout</span><span class="tok-p">:</span>
 
-    a;
-    alignas(16) b;
-    a_f;
-    b_f;
-};</code></pre>
+    <span class="tok-n">a</span><span class="tok-p">;</span>
+    <span class="tok-k">alignas</span><span class="tok-p">(</span><span class="tok-mi">16</span><span class="tok-p">)</span> <span class="tok-n">b</span><span class="tok-p">;</span>
+    <span class="tok-n">a_f</span><span class="tok-p">;</span>
+    <span class="tok-n">b_f</span><span class="tok-p">;</span>
+<span class="tok-p">};</span></code></pre>
 </div>
 </div>
 </div>
@@ -1152,8 +1180,76 @@ impetus for this proposal.</p>
 <a href="#_footnoteref_2">2</a>. <a href="https://wg21.link/p1112">P1112</a>&#8201;&#8212;&#8201;  <em>Language support for class layout control</em>, Pal Balog
 </div>
 </div>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
+<style>
+pre.pygments .hll { background-color: #ffffcc }
+pre.pygments  { background: #f0f0f0; }
+pre.pygments .tok-c { color: #60a0b0; font-style: italic } /* Comment */
+pre.pygments .tok-err { border: 1px solid #FF0000 } /* Error */
+pre.pygments .tok-k { color: #007020; font-weight: bold } /* Keyword */
+pre.pygments .tok-o { color: #666666 } /* Operator */
+pre.pygments .tok-ch { color: #60a0b0; font-style: italic } /* Comment.Hashbang */
+pre.pygments .tok-cm { color: #60a0b0; font-style: italic } /* Comment.Multiline */
+pre.pygments .tok-cp { color: #007020 } /* Comment.Preproc */
+pre.pygments .tok-cpf { color: #60a0b0; font-style: italic } /* Comment.PreprocFile */
+pre.pygments .tok-c1 { color: #60a0b0; font-style: italic } /* Comment.Single */
+pre.pygments .tok-cs { color: #60a0b0; background-color: #fff0f0 } /* Comment.Special */
+pre.pygments .tok-gd { color: #A00000 } /* Generic.Deleted */
+pre.pygments .tok-ge { font-style: italic } /* Generic.Emph */
+pre.pygments .tok-gr { color: #FF0000 } /* Generic.Error */
+pre.pygments .tok-gh { color: #000080; font-weight: bold } /* Generic.Heading */
+pre.pygments .tok-gi { color: #00A000 } /* Generic.Inserted */
+pre.pygments .tok-go { color: #888888 } /* Generic.Output */
+pre.pygments .tok-gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
+pre.pygments .tok-gs { font-weight: bold } /* Generic.Strong */
+pre.pygments .tok-gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+pre.pygments .tok-gt { color: #0044DD } /* Generic.Traceback */
+pre.pygments .tok-kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+pre.pygments .tok-kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+pre.pygments .tok-kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+pre.pygments .tok-kp { color: #007020 } /* Keyword.Pseudo */
+pre.pygments .tok-kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+pre.pygments .tok-kt { color: #902000 } /* Keyword.Type */
+pre.pygments .tok-m { color: #40a070 } /* Literal.Number */
+pre.pygments .tok-s { color: #4070a0 } /* Literal.String */
+pre.pygments .tok-na { color: #4070a0 } /* Name.Attribute */
+pre.pygments .tok-nb { color: #007020 } /* Name.Builtin */
+pre.pygments .tok-nc { color: #0e84b5; font-weight: bold } /* Name.Class */
+pre.pygments .tok-no { color: #60add5 } /* Name.Constant */
+pre.pygments .tok-nd { color: #555555; font-weight: bold } /* Name.Decorator */
+pre.pygments .tok-ni { color: #d55537; font-weight: bold } /* Name.Entity */
+pre.pygments .tok-ne { color: #007020 } /* Name.Exception */
+pre.pygments .tok-nf { color: #06287e } /* Name.Function */
+pre.pygments .tok-nl { color: #002070; font-weight: bold } /* Name.Label */
+pre.pygments .tok-nn { color: #0e84b5; font-weight: bold } /* Name.Namespace */
+pre.pygments .tok-nt { color: #062873; font-weight: bold } /* Name.Tag */
+pre.pygments .tok-nv { color: #bb60d5 } /* Name.Variable */
+pre.pygments .tok-ow { color: #007020; font-weight: bold } /* Operator.Word */
+pre.pygments .tok-w { color: #bbbbbb } /* Text.Whitespace */
+pre.pygments .tok-mb { color: #40a070 } /* Literal.Number.Bin */
+pre.pygments .tok-mf { color: #40a070 } /* Literal.Number.Float */
+pre.pygments .tok-mh { color: #40a070 } /* Literal.Number.Hex */
+pre.pygments .tok-mi { color: #40a070 } /* Literal.Number.Integer */
+pre.pygments .tok-mo { color: #40a070 } /* Literal.Number.Oct */
+pre.pygments .tok-sa { color: #4070a0 } /* Literal.String.Affix */
+pre.pygments .tok-sb { color: #4070a0 } /* Literal.String.Backtick */
+pre.pygments .tok-sc { color: #4070a0 } /* Literal.String.Char */
+pre.pygments .tok-dl { color: #4070a0 } /* Literal.String.Delimiter */
+pre.pygments .tok-sd { color: #4070a0; font-style: italic } /* Literal.String.Doc */
+pre.pygments .tok-s2 { color: #4070a0 } /* Literal.String.Double */
+pre.pygments .tok-se { color: #4070a0; font-weight: bold } /* Literal.String.Escape */
+pre.pygments .tok-sh { color: #4070a0 } /* Literal.String.Heredoc */
+pre.pygments .tok-si { color: #70a0d0; font-style: italic } /* Literal.String.Interpol */
+pre.pygments .tok-sx { color: #c65d09 } /* Literal.String.Other */
+pre.pygments .tok-sr { color: #235388 } /* Literal.String.Regex */
+pre.pygments .tok-s1 { color: #4070a0 } /* Literal.String.Single */
+pre.pygments .tok-ss { color: #517918 } /* Literal.String.Symbol */
+pre.pygments .tok-bp { color: #007020 } /* Name.Builtin.Pseudo */
+pre.pygments .tok-fm { color: #06287e } /* Name.Function.Magic */
+pre.pygments .tok-vc { color: #bb60d5 } /* Name.Variable.Class */
+pre.pygments .tok-vg { color: #bb60d5 } /* Name.Variable.Global */
+pre.pygments .tok-vi { color: #bb60d5 } /* Name.Variable.Instance */
+pre.pygments .tok-vm { color: #bb60d5 } /* Name.Variable.Magic */
+pre.pygments .tok-il { color: #40a070 } /* Literal.Number.Integer.Long */
+</style>
 </body>
 </html>

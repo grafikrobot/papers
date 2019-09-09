@@ -11,7 +11,8 @@
 :sectanchors:
 :sectnums:
 :sectnumlevels: 5
-:source-highlighter: highlightjs
+:source-highlighter: pygments
+:pygments-style: friendly
 :source-language: c++
 :toc: left
 :toclevels: 1
@@ -82,7 +83,7 @@ include::sample0.cpp[tag=sample_function]
 
 As expected the resulting assembly code for this is minimal and efficient:
 
-[source,x86asm]
+[source,nasm]
 ----
 A_q(A const&):
   mov eax, DWORD PTR [rdi+4]
@@ -93,13 +94,19 @@ A_q(A const&):
 The problem comes in when we look at the data size of the class:
 
 [.text-center]
-`sizeof(A) == 16`
+[source]
+----
+sizeof(A) == 16
+----
 
 Sixteen bytes might seem small. But if we are dealing with a large number
 items the data size becomes a serious consideration:
 
 [.text-center]
-`sizeof(A[1024*1024]) = 16,777,216`
+[source]
+----
+sizeof(A[1024*1024]) == 16777216
+----
 
 When faced with that result and the constraints of some systems, say an
 embedded system with only 64MiB of total RAM, having one data structure
@@ -124,7 +131,7 @@ With that arrangement we still have the minimal, optimal, access for our
 prototypical `A_q` function:
 
 [.compare-before]
-[source,x86asm]
+[source,nasm]
 ----
 A_q(A const&):
   mov eax, DWORD PTR [rdi+4]
@@ -133,7 +140,7 @@ A_q(A const&):
 ----
 
 [.compare-after]
-[source,x86asm]
+[source,nasm]
 ----
 A_q(A const&):
   mov eax, DWORD PTR [rdi]
@@ -144,16 +151,28 @@ A_q(A const&):
 But more importantly we've reduced the overall size of the structure.
 
 [.compare-before.text-center]
-`sizeof(A) == 16`
+[source]
+----
+sizeof(A) == 16
+----
 
 [.compare-after.text-center]
-`sizeof(A) == 12`
+[source]
+----
+sizeof(A) == 12
+----
 
 [.compare-before.text-center]
-`sizeof(A[1024*1024]) = 16777216`
+[source]
+----
+sizeof(A[1024*1024]) == 16777216
+----
 
 [.compare-after.text-center]
-`sizeof(A[1024*1024]) = 12582912`
+[source]
+----
+sizeof(A[1024*1024]) == 12582912
+----
 
 This only works when we restrict ourselves to follow the
 ORDERRULE footnote:ORDERRULE[
@@ -186,7 +205,7 @@ include::sample2.cpp[tag=compare_after]
 ----
 
 [.compare-before]
-[source,x86asm]
+[source,nasm]
 ----
 A_q(A const&):
   mov eax, DWORD PTR [rdi+4]
@@ -195,7 +214,7 @@ A_q(A const&):
 ----
 
 [.compare-after]
-[source,x86asm]
+[source,nasm]
 ----
 AA_q(A const&):
   movzx eax, WORD PTR [rdi+2]
@@ -209,16 +228,28 @@ Even though we've added some instructions to deal with the bit field we are
 still rather optimal in our access. What do we gain in terms of size?
 
 [.compare-before.text-center]
-`sizeof(A) == 16`
+[source]
+----
+sizeof(A) == 16
+----
 
 [.compare-after.text-center]
-`sizeof(A) == 4`
+[source]
+----
+sizeof(A) == 4
+----
 
 [.compare-before.text-center]
-`sizeof(A[1024*1024]) = 16777216`
+[source]
+----
+sizeof(A[1024*1024]) == 16777216
+----
 
 [.compare-after.text-center]
-`sizeof(A[1024*1024]) = 4194304`
+[source]
+----
+sizeof(A[1024*1024]) == 4194304
+----
 
 This is a now in the palatable range.. We are tracking 1MiB objects in 4MiB.
 This, of course, comes at a price. We have now entirely detached the
@@ -260,7 +291,7 @@ include::sample3.cpp[tag=compare_after]
 ----
 
 [.compare-before]
-[source,x86asm]
+[source,nasm]
 ----
 A_q(A const&):
   movzx eax, WORD PTR [rdi+2]
@@ -271,7 +302,7 @@ A_q(A const&):
 ----
 
 [.compare-after]
-[source,x86asm]
+[source,nasm]
 ----
 A_q(A const&):
   movzx eax, WORD PTR [rdi+2]
@@ -282,16 +313,28 @@ A_q(A const&):
 ----
 
 [.compare-before.text-center]
-`sizeof(A) == 4`
+[source]
+----
+sizeof(A) == 4
+----
 
 [.compare-after.text-center]
-`sizeof(A) == 4`
+[source]
+----
+sizeof(A) == 4
+----
 
 [.compare-before.text-center]
-`sizeof(A[1024*1024]) = 4194304`
+[source]
+----
+sizeof(A[1024*1024]) == 4194304
+----
 
 [.compare-after.text-center]
-`sizeof(A[1024*1024]) = 4194304`
+[source]
+----
+sizeof(A[1024*1024]) == 4194304
+----
 
 As we can see the effect of optimizing the layout for the application use case
 is preserved. But the drawbacks of the optimization are removed. The `layout:`
@@ -338,13 +381,13 @@ To be determined.
 
 === Why not have algorithmic layouts?
 
-<<P1112>> proposes a mechanism to have "smart" algorithmic layout control.
-It proposes to add a `[[layout(?)]]` attribute to the class to select from
-an existing set of algorithmic layouts like: `smallest`, `declorder`,
+P1112 footnote:P1112[] proposes a mechanism to have "smart" algorithmic layout
+control. It proposes to add a `[[layout(?)]]` attribute to the class to select
+from an existing set of algorithmic layouts like: `smallest`, `declorder`,
 `cacheline`, and so on. A key problem with an algorithmic approach is the
-increased risk of ABI violations as pointed out in <<P1112>>. Dealing with
-the {CPP} ABI is difficult enough as it is. We would like to avoid adding
-to the uncertainly and complexity of the {CPP} ABI.
+increased risk of ABI violations as pointed out in P1112.footnote:P1112[]
+Dealing with the {CPP} ABI is difficult enough as it is. We would like to
+avoid adding to the uncertainly and complexity of the {CPP} ABI.
 
 === Should alignment control be allowed in the layout declarations?
 
@@ -352,7 +395,7 @@ We need to consider if other member data specifications that affect size of
 the class should be consolidated, i.e. allowed, in the layout declaration 
 section. For example `alignas` could be allowed as such:
 
-[source,C++]
+[source]
 ----
 class A
 {
