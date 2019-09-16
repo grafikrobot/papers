@@ -274,6 +274,7 @@ wherein one list the order of members, already declared, in the class. The
 * List the names of any members one wishes to specific the order of.
 * Members listed would come first in the class member layout.
 * Members not listed would follow with the existing layout rules.
+* Member layout order does not alter initialization.
 
 To continue with our example from above, the new class declaration using this
 feature could be:
@@ -415,6 +416,11 @@ class A
 };
 ----
 
+// *Conclusion*: Given the strong relation between alignment and layout it seems
+// prudent to support this use case directly.
+
+*Poll*: Should alignment control be allowed in the layout section?
+
 === Should layout order be reflect-ed?
 
 There needs to be some thought and consideration given to how layout ordering
@@ -425,6 +431,10 @@ can or should be available through reflection.
 It would be interesting to consider adding syntax to formalize both general
 and specific inter-member padding. I.e. it could be of benefit to extend this
 proposal to formalize and improve the common `#pragma pack` feature.
+
+// *Conclusion*: Like the alignment consideration, padding also has a very strong
+// relation with layout of the class. And hence we should find a way to specify
+// padding options for members.
 
 == Acknowledgements
 
