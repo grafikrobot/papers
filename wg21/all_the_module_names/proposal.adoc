@@ -74,6 +74,13 @@ Allow for as many syntactic characters in modules names as possible. This means
 allowing the following as part of module names: `~`, `!`, `@`, `$`, `%`, `^`,
 `&`, `*`, `-`, `=`, `+`, `|`, `,`, `.`, `?`, `/`, `(`, `)`, `[`, `]`, `<`, `>`.
 
+This can lead to some useful categorizations for modules. For example...
+
+Expressing both organization and optional grouped sub-modules::
+    `boost/math`, `boost/math(common_factor)`, `boost/math(octonion)`,
+    `boost/math(quaternion)`, `boost/math(special_functions)`,
+    `boost/math(statistical_distributions)`
+
 == Wording
 
 === [module.unit]
