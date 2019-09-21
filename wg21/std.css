@@ -61,3 +61,6 @@ div.compare-after {
     display: inline-block;
     vertical-align: top;
 }
+.delete {
+    text-decoration: line-through;
+}

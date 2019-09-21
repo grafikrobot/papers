@@ -1,0 +1,98 @@
+= All The Module Names
+:copyright: Copyright 2019 Rene Rivera
+:author: Rene Rivera
+:email: grafikrobot@gmail.com
+:docnumber: D1876
+:revnumber: {docnumber}R0
+:revdate: {docdate}
+:version-label!:
+:reproducible:
+:nofooter:
+:sectanchors:
+:sectnums:
+:sectnumlevels: 5
+:source-highlighter: pygments
+:pygments-style: friendly
+:source-language: c++
+:toc: left
+:toclevels: 1
+:caution-caption: ⚑
+:important-caption: ‼
+:note-caption: ℹ
+:tip-caption: ☀
+:warning-caption: ⚠
+:CPP: C++
+:PP: ++
+:P: +
+
+ifdef::backend-html5[]
+++++
+<style>
+include::../std.css[]
+</style>
+++++
+endif::[]
+
+[horizontal]
+Document number:: ISO/IEC/JTC1/SC22/WG21/{revnumber}
+Date:: {revdate}
+Reply-to:: {author}, {email}
+Audience:: WG21
+
+== Abstract
+
+This proposes to make module names as flexible as possible for maximal user
+flexibility to choose their ideal module organization.
+
+== Changes
+
+=== R0 (Initial)
+
+Initial content.
+
+== Introduction
+
+In D1873 footnote:D1873[
+    link:http://wg21.link/D1873[D1873] -- remove.dots.in.module.names
+]
+Michael Spencer proposes to remove the "`.`" from modules names. The rationale
+being that since the `.`s do have any current semantic they should be removed.
+With the goal that in some future standard the `.`s can be added with the
+desired semantics.
+
+The status quo counters that leaving the `.`s provides users the ability to
+use `.`s as a means to structure modules, through naming, to fit their
+organizational needs.
+
+If we are allowing users the limited flexibility to use `.`s we should strive
+to give users the maximal flexibility to use module names to express their
+desired structural, and other, meanings.
+
+== Proposal
+
+Allow for as many syntactic characters in modules names as possible. This means
+allowing the following as part of module names: `~`, `!`, `@`, `$`, `%`, `^`,
+`&`, `*`, `-`, `=`, `+`, `|`, `,`, `.`, `?`, `/`, `(`, `)`, `[`, `]`, `<`, `>`.
+
+== Wording
+
+=== [module.unit]
+
+****
+_module-declaration:_ ::
+    `export`~_opt_~ `module` _module-name_ _module-partition_~_opt_~ _attribute-specifier-seq_~_opt_~ `;`
+
+_module-name:_ ::
+    _module-name-qualifier_~_opt_~ _identifier_
+
+_module-partition:_ ::
+    `:` _module-name-qualifier_~_opt_~ _identifier_
+
+_module-name-qualifier:_ ::
+    _identifier_ [.delete]#`.`# _module-name-delimiter_ +
+    _module-name-qualifier_ _identifier_ [.delete]#`.`# _module-name-delimiter_
+
+_module-name-delimiter:_ one of::
+    `~` `!` `@` `$` `%` `^` `&` `*` `-` `=` `+` `|` `,` `.` `?` `/` +
+    `(` `)` `[` `]`
+****

@@ -1,0 +1,29 @@
+#|
+Copyright Rene Rivera 2019
+Use, modification and distribution are subject to the
+Boost Software License, Version 1.0. (See accompanying file
+LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+|#
+
+using asciidoctor ;
+using testing ;
+
+local name = all_the_module_names ;
+local xxxx = 1876 ;
+
+project /wg21_$(name)
+    :   requirements
+        <cxxstd>17
+    ;
+
+
+html $(name)_D$(xxxx)R0.html : proposal.adoc ;
+install html : $(name)_D$(xxxx)R0.html : <location>. ;
+
+local samples ;
+for local sample in [ glob sample*.cpp ]
+{
+    samples += [ run $(sample) ] ;
+    explicit $(sample) ;
+}
+alias samples : $(samples) ;
