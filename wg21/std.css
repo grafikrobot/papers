@@ -61,6 +61,12 @@ div.compare-after {
     display: inline-block;
     vertical-align: top;
 }
-.delete {
-    text-decoration: line-through;
+.del, .del code {
+    text-decoration: line-through !important;
+    background-color: #FFA0A0 !important;
+}
+.ins, .ins code {
+    background-color: rgb(200, 250, 200) !important;
+    /* color: rgb(0, 136, 0) !important; */
+    text-decoration: underline !important;
 }

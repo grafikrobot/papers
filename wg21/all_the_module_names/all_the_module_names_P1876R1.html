@@ -444,8 +444,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Rene Rivera</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
-<span id="revnumber"> D1876R0,</span>
-<span id="revdate">2019-09-21</span>
+<span id="revnumber"> P1876R1,</span>
+<span id="revdate">2019-10-03</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -455,6 +455,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_introduction">3. Introduction</a></li>
 <li><a href="#_proposal">4. Proposal</a></li>
 <li><a href="#_wording">5. Wording</a></li>
+<li><a href="#_review">6. Review</a></li>
 </ul>
 </div>
 </div>
@@ -525,8 +526,14 @@ div.compare-after {
     display: inline-block;
     vertical-align: top;
 }
-.delete {
-    text-decoration: line-through;
+.del, .del code {
+    text-decoration: line-through !important;
+    background-color: #FFA0A0 !important;
+}
+.ins, .ins code {
+    background-color: rgb(200, 250, 200) !important;
+    /* color: rgb(0, 136, 0) !important; */
+    text-decoration: underline !important;
 }
 </style>
 <div class="hdlist">
@@ -536,7 +543,7 @@ div.compare-after {
 Document number
 </td>
 <td class="hdlist2">
-<p>ISO/IEC/JTC1/SC22/WG21/D1876R0</p>
+<p>ISO/IEC/JTC1/SC22/WG21/P1876R1</p>
 </td>
 </tr>
 <tr>
@@ -544,7 +551,7 @@ Document number
 Date
 </td>
 <td class="hdlist2">
-<p>2019-09-21</p>
+<p>2019-10-03</p>
 </td>
 </tr>
 <tr>
@@ -560,7 +567,7 @@ Reply-to
 Audience
 </td>
 <td class="hdlist2">
-<p>WG21</p>
+<p>SG2</p>
 </td>
 </tr>
 </table>
@@ -572,7 +579,7 @@ Audience
 <div class="sectionbody">
 <div class="paragraph">
 <p>This proposes to make module names as flexible as possible for maximal user
-flexibility to choose their ideal module organization.</p>
+utility to choose their ideal module organization.</p>
 </div>
 </div>
 </div>
@@ -580,7 +587,15 @@ flexibility to choose their ideal module organization.</p>
 <h2 id="_changes"><a class="anchor" href="#_changes"></a>2. Changes</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_r0_initial"><a class="anchor" href="#_r0_initial"></a>2.1. R0 (Initial)</h3>
+<h3 id="_r1"><a class="anchor" href="#_r1"></a>2.1. R1</h3>
+<div class="paragraph">
+<p>Minor typo fixes, additional and compelling examples, slight grammar change
+to allow repeated delimiters, and results from SG15 CppCon 2019 meeting
+discussion.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_r0_initial"><a class="anchor" href="#_r0_initial"></a>2.2. R0 (Initial)</h3>
 <div class="paragraph">
 <p>Initial content.</p>
 </div>
@@ -591,11 +606,11 @@ flexibility to choose their ideal module organization.</p>
 <h2 id="_introduction"><a class="anchor" href="#_introduction"></a>3. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In D1873 <sup class="footnote" id="_footnote_D1873">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>
+<p>In P1873 <sup class="footnote" id="_footnote_P1873">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>
 Michael Spencer proposes to remove the &#8220;.&#8221; from modules names. The rationale
-being that since the `.`s do have any current semantic they should be removed.
-With the goal that in some future standard the `.`s can be added with the
-desired semantics.</p>
+being that since the `.`s do not have any current semantic they should be
+removed. With the goal that in some future standard the `.`s can be added with
+the desired semantics.</p>
 </div>
 <div class="paragraph">
 <p>The status quo counters that leaving the `.`s provides users the ability to
@@ -615,20 +630,75 @@ desired structural, and other, meanings.</p>
 <div class="paragraph">
 <p>Allow for as many syntactic characters in modules names as possible. This means
 allowing the following as part of module names: <code>~</code>, <code>!</code>, <code>@</code>, <code>$</code>, <code>%</code>, <code>^</code>,
-<code>&amp;</code>, <code>*</code>, <code>-</code>, <code>=</code>, <code>+</code>, <code>|</code>, <code>,</code>, <code>.</code>, <code>?</code>, <code>/</code>, <code>(</code>, <code>)</code>, <code>[</code>, <code>]</code>, <code>&lt;</code>, <code>&gt;</code>.</p>
+<code>&amp;</code>, <code>*</code>, <code>-</code>, <code>=</code>, <code>+</code>, <code>|</code>, <code>,</code>, <code>.</code>, <code>?</code>, <code>/</code>, <code>(</code>, <code>)</code>, <code>[</code>, <code>]</code>.</p>
 </div>
 <div class="paragraph">
 <p>This can lead to some useful categorizations for modules. For example&#8230;&#8203;</p>
 </div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Expressing both organization and optional grouped sub-modules</dt>
-<dd>
-<p><code>boost/math</code>, <code>boost/math(common_factor)</code>, <code>boost/math(octonion)</code>,
-<code>boost/math(quaternion)</code>, <code>boost/math(special_functions)</code>,
-<code>boost/math(statistical_distributions)</code></p>
-</dd>
-</dl>
+<div class="paragraph">
+<p>Expressing both organization and optional grouped modules:</p>
+</div>
+<div class="sidebarblock compare-before">
+<div class="content">
+<div class="paragraph">
+<p><code>boost.mp11</code><br>
+<code>boost.math</code><br>
+<code>boost.math.core</code><br>
+<code>boost.math.common_factor</code><br>
+<code>boost.math.octonion</code><br>
+<code>boost.math.quaternion</code><br>
+<code>boost.math.special_functions</code><br>
+<code>boost.math.statistical_distributions</code></p>
+</div>
+</div>
+</div>
+<div class="sidebarblock compare-after">
+<div class="content">
+<div class="paragraph">
+<p><code>boost/mp11</code><br>
+<code>boost/math</code><br>
+<code>boost/math.core</code><br>
+<code>boost/math.common_factor</code><br>
+<code>boost/math.octonion</code><br>
+<code>boost/math.quaternion</code><br>
+<code>boost/math.special_functions</code><br>
+<code>boost/math.statistical_distributions</code></p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>In that we have both the high-level <code>boost/&#8230;&#8203;</code> modules which are all
+encompassing for the particular library. But we also have alternatives of
+smaller grouped modules of <code>boost/math.octonion</code> which allow for
+limited code use (in this case only the <code>octonion</code> functionality from
+Boost Math library). While the difference is not that significant between
+the status-quo and the expanded names in that example; The advantages to
+the expanded names becomes apparent when the organization is not
+strictly hierarchical. For example..</p>
+</div>
+<div class="paragraph">
+<p>It could also express common combinations of grouped modules:</p>
+</div>
+<div class="sidebarblock compare-before">
+<div class="content">
+<div class="paragraph">
+<p><code>boost.math.octonion.quaternion</code><br>
+<code>boost.math.special_functions.statistical_distribution</code></p>
+</div>
+</div>
+</div>
+<div class="sidebarblock compare-after">
+<div class="content">
+<div class="paragraph">
+<p><code>boost/math(octonion+quaternion)</code><br>
+<code>boost/math(special_functions+statistical_distribution)</code></p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>This gives programmers domain specific useful groupings to fit their
+application context. And avoids confusion in the meaning placed on the
+<code>.</code> delimiter.</p>
 </div>
 </div>
 </div>
@@ -655,10 +725,14 @@ allowing the following as part of module names: <code>~</code>, <code>!</code>, 
 </dd>
 <dt class="hdlist1"><em>module-name-qualifier:</em> </dt>
 <dd>
-<p><em>identifier</em> <span class="delete"><code>.</code></span> <em>module-name-delimiter</em><br>
-<em>module-name-qualifier</em> <em>identifier</em> <span class="delete"><code>.</code></span> <em>module-name-delimiter</em></p>
+<p><em>identifier</em> <span class="del"><code>.</code></span> <span class="ins"><em>module-name-delimiter</em></span><br>
+<em>module-name-qualifier</em> <em>identifier</em> <span class="del"><code>.</code></span> <span class="ins"><em>module-name-delimiter</em></span></p>
 </dd>
-<dt class="hdlist1"><em>module-name-delimiter:</em> one of</dt>
+</dl>
+</div>
+<div class="dlist ins">
+<dl>
+<dt class="hdlist1"><em>module-name-delimiter:</em> one or more of</dt>
 <dd>
 <p><code>~</code> <code>!</code> <code>@</code> <code>$</code> <code>%</code> <code>^</code> <code>&amp;</code> <code>*</code> <code>-</code> <code>=</code> <code>+</code> <code>|</code> <code>,</code> <code>.</code> <code>?</code> <code>/</code><br>
 <code>(</code> <code>)</code> <code>[</code> <code>]</code></p>
@@ -670,11 +744,85 @@ allowing the following as part of module names: <code>~</code>, <code>!</code>, 
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_review"><a class="anchor" href="#_review"></a>6. Review</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_sg15_cppcon_2019"><a class="anchor" href="#_sg15_cppcon_2019"></a>6.1. SG15, CppCon 2019</h3>
+<div class="paragraph">
+<p>An early draft of this paper was reviewed by SG15 in CppCon 2019 (2010-09-21).
+The discussion centered around what, if any, advantages and disadvantages there
+would be for tooling to have the extra delimiters. To that end there where two
+polls taken:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">POLL: Tooling suffers if we remove dots from module names. Attendance: 18</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Strongly For</th>
+<th class="tableblock halign-center valign-top">Weakly For</th>
+<th class="tableblock halign-center valign-top">Neutral</th>
+<th class="tableblock halign-center valign-top">Weakly Against</th>
+<th class="tableblock halign-center valign-top">Strongly Against</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">POLL: Post C++20, tooling wants more module name delimiters than just dots. Attendance: 18</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Strongly For</th>
+<th class="tableblock halign-center valign-top">Weakly For</th>
+<th class="tableblock halign-center valign-top">Neutral</th>
+<th class="tableblock halign-center valign-top">Weakly Against</th>
+<th class="tableblock halign-center valign-top">Strongly Against</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">3</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>We decisively conclude that there is no consensus on wether the ideas expressed
+in this proposal.</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footnotes">
 <hr>
 <div class="footnote" id="_footnotedef_1">
-<a href="#_footnoteref_1">1</a>. <a href="http://wg21.link/D1873">D1873</a>&#8201;&#8212;&#8201;remove.dots.in.module.names
+<a href="#_footnoteref_1">1</a>. <a href="http://wg21.link/P1873">P1873</a>&#8201;&#8212;&#8201;remove.dots.in.module.names
 </div>
 </div>
 </body>
