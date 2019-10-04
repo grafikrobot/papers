@@ -9,7 +9,7 @@ using asciidoctor ;
 using testing ;
 
 local name = all_the_module_names ;
-local xxxx = 1876 ;
+local xxxx = P1876R0 ;
 
 project /wg21_$(name)
     :   requirements
@@ -17,8 +17,8 @@ project /wg21_$(name)
     ;
 
 
-html $(name)_D$(xxxx)R0.html : proposal.adoc ;
-install html : $(name)_D$(xxxx)R0.html : <location>. ;
+html $(name)_$(xxxx).html : proposal.adoc ;
+install html : $(name)_$(xxxx).html : <location>. ;
 
 local samples ;
 for local sample in [ glob sample*.cpp ]
