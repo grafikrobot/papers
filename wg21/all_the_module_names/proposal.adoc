@@ -3,7 +3,7 @@
 :author: Rene Rivera
 :email: grafikrobot@gmail.com
 :docnumber: P1876
-:revnumber: {docnumber}R0
+:revnumber: {docnumber}R1
 :revdate: {docdate}
 :version-label!:
 :reproducible:
@@ -37,14 +37,20 @@ endif::[]
 Document number:: ISO/IEC/JTC1/SC22/WG21/{revnumber}
 Date:: {revdate}
 Reply-to:: {author}, {email}
-Audience:: WG21
+Audience:: SG2
 
 == Abstract
 
 This proposes to make module names as flexible as possible for maximal user
-flexibility to choose their ideal module organization.
+utility to choose their ideal module organization.
 
 == Changes
+
+=== R1
+
+Minor typo fixes, additional and compelling examples, slight grammar change
+to allow repeated delimiters, and results from SG15 CppCon 2019 meeting
+discussion.
 
 === R0 (Initial)
 
@@ -52,19 +58,19 @@ Initial content.
 
 == Introduction
 
-In D1873 footnote:D1873[
-    link:http://wg21.link/D1873[D1873] -- remove.dots.in.module.names
+In P1873 footnote:P1873[
+    link:http://wg21.link/P1873[P1873] -- remove.dots.in.module.names
 ]
 Michael Spencer proposes to remove the "`.`" from modules names. The rationale
-being that since the `.`s do have any current semantic they should be removed.
-With the goal that in some future standard the `.`s can be added with the
-desired semantics.
+being that since the ``.``'s do not have any current semantic they should be
+removed. With the goal that in some future standard the ``.``'s can be added with
+the desired semantics.
 
-The status quo counters that leaving the `.`s provides users the ability to
-use `.`s as a means to structure modules, through naming, to fit their
+The status quo counters that leaving the ``.``'s provides users the ability to
+use ``.``'s as a means to structure modules, through naming, to fit their
 organizational needs.
 
-If we are allowing users the limited flexibility to use `.`s we should strive
+If we are allowing users the limited flexibility to use ``.``'s we should strive
 to give users the maximal flexibility to use module names to express their
 desired structural, and other, meanings.
 
@@ -72,14 +78,62 @@ desired structural, and other, meanings.
 
 Allow for as many syntactic characters in modules names as possible. This means
 allowing the following as part of module names: `~`, `!`, `@`, `$`, `%`, `^`,
-`&`, `*`, `-`, `=`, `+`, `|`, `,`, `.`, `?`, `/`, `(`, `)`, `[`, `]`, `<`, `>`.
+`&`, `*`, `-`, `=`, `+`, `|`, `,`, `.`, `?`, `/`, `(`, `)`, `[`, `]`.
 
 This can lead to some useful categorizations for modules. For example...
 
-Expressing both organization and optional grouped sub-modules::
-    `boost/math`, `boost/math(common_factor)`, `boost/math(octonion)`,
-    `boost/math(quaternion)`, `boost/math(special_functions)`,
-    `boost/math(statistical_distributions)`
+Expressing both organization and optional grouped modules:
+
+[.compare-before]
+****
+`boost.mp11` +
+`boost.math` +
+`boost.math.core` +
+`boost.math.common_factor` +
+`boost.math.octonion` +
+`boost.math.quaternion` +
+`boost.math.special_functions` +
+`boost.math.statistical_distributions`
+****
+
+[.compare-after]
+****
+`boost/mp11` +
+`boost/math` +
+`boost/math.core` +
+`boost/math.common_factor` +
+`boost/math.octonion` +
+`boost/math.quaternion` +
+`boost/math.special_functions` +
+`boost/math.statistical_distributions`
+****
+
+In that we have both the high-level `boost/...` modules which are all
+encompassing for the particular library. But we also have alternatives of
+smaller grouped modules of `boost/math.octonion` which allow for
+limited code use (in this case only the `octonion` functionality from
+Boost Math library). While the difference is not that significant between
+the status-quo and the expanded names in that example; The advantages to
+the expanded names becomes apparent when the organization is not
+strictly hierarchical. For example..
+
+It could also express common combinations of grouped modules:
+
+[.compare-before]
+****
+`boost.math.octonion.quaternion` +
+`boost.math.special_functions.statistical_distribution`
+****
+
+[.compare-after]
+****
+`boost/math(octonion+quaternion)` +
+`boost/math(special_functions+statistical_distribution)`
+****
+
+This gives programmers domain specific useful groupings to fit their
+application context. And avoids confusion in the meaning placed on the
+`.` delimiter.
 
 == Wording
 
@@ -96,10 +150,37 @@ _module-partition:_ ::
     `:` _module-name-qualifier_~_opt_~ _identifier_
 
 _module-name-qualifier:_ ::
-    _identifier_ [.delete]#`.`# _module-name-delimiter_ +
-    _module-name-qualifier_ _identifier_ [.delete]#`.`# _module-name-delimiter_
+    _identifier_ [.del]#`.`# [.ins]#_module-name-delimiter_# +
+    _module-name-qualifier_ _identifier_ [.del]#`.`# [.ins]#_module-name-delimiter_#
 
-_module-name-delimiter:_ one of::
+[.ins]
+_module-name-delimiter:_ one or more of::
     `~` `!` `@` `$` `%` `^` `&` `*` `-` `=` `+` `|` `,` `.` `?` `/` +
     `(` `)` `[` `]`
 ****
+
+== Review
+
+=== SG15, CppCon 2019
+
+An early draft of this paper was reviewed by SG15 in CppCon 2019 (2010-09-21).
+The discussion centered around what, if any, advantages and disadvantages there
+would be for tooling to have the extra delimiters. To that end there where two
+polls taken:
+
+[cols="^,^,^,^,^",options="header",caption=]
+.POLL: Tooling suffers if we remove dots from module names. Attendance: 18
+|===
+| Strongly For | Weakly For | Neutral | Weakly Against | Strongly Against
+| 4 | 7 | 5 | 0 | 0
+|===
+
+[cols="^,^,^,^,^",options="header",caption=]
+.POLL: Post C++20, tooling wants more module name delimiters than just dots. Attendance: 18
+|===
+| Strongly For | Weakly For | Neutral | Weakly Against | Strongly Against
+| 2 | 4 | 4 | 4 | 3
+|===
+
+We decisively conclude that there is no consensus on wether the ideas expressed
+in this proposal.
