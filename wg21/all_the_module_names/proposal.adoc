@@ -62,15 +62,15 @@ In P1873 footnote:P1873[
     link:http://wg21.link/P1873[P1873] -- remove.dots.in.module.names
 ]
 Michael Spencer proposes to remove the "`.`" from modules names. The rationale
-being that since the `.`s do not have any current semantic they should be
-removed. With the goal that in some future standard the `.`s can be added with
+being that since the ``.``'s do not have any current semantic they should be
+removed. With the goal that in some future standard the ``.``'s can be added with
 the desired semantics.
 
-The status quo counters that leaving the `.`s provides users the ability to
-use `.`s as a means to structure modules, through naming, to fit their
+The status quo counters that leaving the ``.``'s provides users the ability to
+use ``.``'s as a means to structure modules, through naming, to fit their
 organizational needs.
 
-If we are allowing users the limited flexibility to use `.`s we should strive
+If we are allowing users the limited flexibility to use ``.``'s we should strive
 to give users the maximal flexibility to use module names to express their
 desired structural, and other, meanings.
 
