@@ -163,7 +163,7 @@ _module-name-delimiter:_ one or more of::
 
 === SG15, CppCon 2019
 
-An early draft of this paper was reviewed by SG15 in CppCon 2019 (2010-09-21).
+An early draft of this paper was reviewed by SG15 in CppCon 2019 (2019-09-21).
 The discussion centered around what, if any, advantages and disadvantages there
 would be for tooling to have the extra delimiters. To that end there where two
 polls taken:
