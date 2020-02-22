@@ -1,5 +1,5 @@
 #|
-Copyright Rene Rivera 2019
+Copyright Rene Rivera 2019-2020
 Use, modification and distribution are subject to the
 Boost Software License, Version 1.0. (See accompanying file
 LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -14,10 +14,10 @@ project /wg21_member_layout
         <define>LAYOUT_PACKED=
     ;
 
-local xxxx = 1605 ;
+local docnumber = P1605R0 ;
 
-html member_layout_D$(xxxx)R0.html : proposal.adoc ;
-install html : member_layout_D$(xxxx)R0.html : <location>. ;
+html member_layout_$(docnumber).html : proposal.adoc : <asciidoctor-attribute>docnumber=$(docnumber) ;
+install html : member_layout_$(docnumber).html : <location>. ;
 
 local samples ;
 for local sample in [ glob sample*.cpp ]

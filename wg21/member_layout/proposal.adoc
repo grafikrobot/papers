@@ -2,8 +2,8 @@
 :copyright: Copyright 2019 Rene Rivera
 :author: Rene Rivera
 :email: grafikrobot@gmail.com
-:docnumber: D1605
-:revnumber: {docnumber}R0
+:docnumber: P1605R0
+:revnumber: {docnumber}
 :revdate: {docdate}
 :version-label!:
 :reproducible:
@@ -419,8 +419,8 @@ class A
 // *Conclusion*: Given the strong relation between alignment and layout it seems
 // prudent to support this use case directly.
 
-*Poll*: Should alignment control be allowed in the layout section, in this proposal?
-*Poll*: Should alignment control be allowed in the layout section, in a different proposal?
+// *Poll*: Should alignment control be allowed in the layout section, in this proposal?
+// *Poll*: Should alignment control be allowed in the layout section, in a different proposal?
 
 === Should layout order be reflect-ed?
 
@@ -437,8 +437,8 @@ proposal to formalize and improve the common `#pragma pack` feature.
 // relation with layout of the class. And hence we should find a way to specify
 // padding options for members.
 
-*Poll*: Should padding specifications, in some form, be added to this proposal?
-*Poll*: Should padding specifications, in some form, be added to a different proposal?
+// *Poll*: Should padding specifications, in some form, be added to this proposal?
+// *Poll*: Should padding specifications, in some form, be added to a different proposal?
 
 == Acknowledgements
 
