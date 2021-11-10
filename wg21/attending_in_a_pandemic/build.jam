@@ -1,0 +1,34 @@
+#|
+Copyright Rene Rivera 2021
+Use, modification and distribution are subject to the
+Boost Software License, Version 1.0. (See accompanying file
+LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+|#
+
+using asciidoctor ;
+using testing ;
+
+local name = attending_in_a_pandemic ;
+local paper_num = P2492 ;
+local paper_rev = R0 ;
+local paper_fn = $(name)_$(paper_num)$(paper_rev) ;
+
+project /wg21_$(name)
+    :   requirements
+        <cxxstd>17
+    ;
+
+local samples ;
+for local sample in [ glob sample*.cpp ]
+{
+    samples += [ run $(sample) ] ;
+    explicit $(sample) ;
+}
+alias samples : $(samples) ;
+
+html $(paper_fn).html : paper.adoc
+	:	<dependency>samples
+		<flags>--attribute=paper_num=$(paper_num)
+		<flags>--attribute=paper_rev=$(paper_rev)
+	;
+install html : $(paper_fn).html : <location>. ;

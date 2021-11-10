@@ -1,0 +1,123 @@
+= Attending {cpp} Standards Committee Meetings During a Pandemic
+:copyright: Copyright 2021 René Ferdinand Rivera Morell
+:author: René Ferdinand Rivera Morell
+:email: grafikrobot@gmail.com
+:docnumber: {paper_num}
+:revnumber: {paper_num}{paper_rev}
+:revdate: {docdate}
+:version-label!:
+:reproducible:
+:nofooter:
+:sectanchors:
+:sectnums:
+:sectnumlevels: 5
+:source-highlighter: rouge
+:source-language: {cpp}
+:toc: left
+:toclevels: 1
+:caution-caption: ⚑
+:important-caption: ‼
+:note-caption: ℹ
+:tip-caption: ☀
+:warning-caption: ⚠
+
+ifdef::backend-html5[]
+++++
+<style>
+include::../std.css[]
+</style>
+++++
+endif::[]
+
+[horizontal]
+Document number:: ISO/IEC/JTC1/SC22/WG21/{revnumber}
+Date:: {revdate}
+Reply-to:: {author}, {email}
+Audience:: WG21
+
+== Abstract
+
+This is an exposition of my personal experience attending WG21 over the years
+and the impact the COVID-19 pandemic had. It is a mostly direct copy-paste
+of a Reddit post I made on 2021-11-08
+(https://www.reddit.com/r/cpp/comments/qpdh05/attending_c_standards_committee_meetings_during_a/).
+
+== Changes
+
+=== R0 (Initial)
+
+Copy of Reddit post with some grammar and spelling corrections.
+
+== Introduction
+
+This paper is a result of a request from a committee chair to share my experience as expressed in the Reddit post. My only goal in presenting this view point is to advocate for the increased access of involvement in WG21 that the pandemic has precipitated. What follows below is the full, but cleaned up, version of the original post.
+
+== Attending {cpp} Standards Committee Meetings During a Pandemic (2021-11-08)
+
+I've been thinking about some comments made at the recent CppCon 2021 https://www.youtube.com/watch?v=plQMssXeCpc["C++ Standards Committee - Firesiade Chat Panel"] and I'm somewhat concerned about some of the opinions on the impact of remote versus in-person meetings for the {cpp} Standards Committee (WG21).
+
+Some history about my WG21 involvement... I've been attending meetings since 2007. How many meetings I attend has varied over time. This post is mainly about why my attendance has varied. And why I consider the move to virtual meetings spurred by the pandemic as a net positive. My attendance from 2007 to 2015 was limited to a total of two (2) meetings for a net total of 3 days in 8 years. My attendance from 2015 until the pandemic started was about ten (10) remote meetings per year and a total of two (2) in-person meetings (although only a total of 4 days). And finally during the pandemic it's averaging about 2 remote meetings a week that I can attend.
+
+As you can see there's a gigantic increase in participation during the pandemic for me. Why the big change? Well, let me back up a little and explain the calculus as to how I can attend meetings. My day job is spent doing consulting developing AAA games for large clients but in a small private company. My current night and weekend time is spent with family, maintaining open-source tools and libraries, and duties in the {cpp} Alliance board, usually in that order. Before my current job I ran my own very low budget consulting company, spent time with family, and did open-source maintenance.
+
+Some key aspects of that as it pertains to WG21 meetings: My employers, present and past, do not pay me to attend WG21 meetings. I obviously prefer to spend most free time with my family. My personal hobby is doing open-source work as it helps keep me educated in my profession but, as a hobby, it doesn’t pay. Hence the resources I spend in WG21 are “on my own dime”. That is, going to an in-person meeting has disadvantages for me:
+
+* Need to spend a bunch of money on airfare, accommodations, and food (I don’t normally eat at restaurants).
+* Usually need to take vacation time, which is a limited resource.
+* Less time with family.
+* Since I’m not at work, it means some juggling to make sure work tasks are done and duties taken care of right before the meeting.
+* Because of that preparation for not working, it means I don’t have time to read WG21 papers ahead of the meetings. And as has been pointed out in the past that reading can amount to many hundreds of pages.
+* During the meetings themselves much of my time is unproductive because I’m not sufficiently prepared.
+* I can only contribute to the papers that are sufficiently important to me to have prepared ahead of time.
+
+Contrast this to the benefits of attending the remote meetings and related participation:
+
+* Zero cost for travel, accommodations, and food.
+* No need to take vacation. Instead I shift work time and duties to accommodate WG21 as best as I can.
+* No lost time with family.
+* I can prepare for the remote meetings as the demand on reading is incremental and doesn’t impact work. Although it does impact open-source related time.
+* I can read many more WG21 papers ahead of meetings.
+* During the meetings I have enough knowledge about the papers to vote in confidence, voice concerns, ask questions, i.e. being engaged.
+* I can contribute to papers and topics I otherwise would not. Which currently includes things like low-latency, networking, machine learning, linear algebra, tooling, and random other aspects.
+
+In addition to those directly parallel benefits I also find that:
+
+* The time between remote meetings gives me time to study and contemplate papers.
+* Gives me time to discuss issues with other WG21 members in chat across time zones.
+* Allows me to compose emails for the reflector (I’m slow and methodical at composing emails.)
+* I am better informed as to the general progress of WG21.
+* I find that papers progress through the process with less friction.
+* Gives me time to discuss papers with non-WG21 colleagues.
+
+You may now be wondering.. What are the downsides to remote meetings or upsides to in-person meetings? From my point of view there is only one: you get to socially interact with other like minded programmers over dinner and drinks when in-person. And guess what.. I find that conferences are better suited for that than WG21 meetings.
+
+In summary, I only see advantages to remote WG21 meetings. And the comments by the WG21 members during the fireside chat make me worry that the remote meeting necessity of the pandemic will come to an end. And people like me, who are at a disadvantage in attending in-person meetings, will be once again pushed to the sidelines.
+
+I’m thankful to the WG21 chairs that have managed to make it possible for me to attend and be productive in WG21 during the pandemic. And I’m publicly pleading, please, please, do not abandon the opportunities that remote meetings provide to underrepresented {cpp} programmers like myself when the pandemic is over.
+
+---
+
+For context here are some quotes from the Fireside Chat on this that I found particularly problematic in characterizing either the benefits of in-person meetings or the detriments of remote meetings.
+
+> it has definitely slowed down progress
+
+> dealing with integrating a very large feature is very difficult to do online
+
+> lock a bunch of people who don't agree in a room .. you'd better finish having an agreement .. and that works
+
+> those of us who are trying to keep abreast of the language as a whole are at a great disadvantage
+
+> watching the body language of other people in the room
+
+> where we like to be face to face and use a white board
+
+> you can't see other people's reactions to what is being said
+
+> was in the pipeline and didn't make it into 20 because we were behind the curve, there was so much content in 20
+
+> WG21 meetings are not eight hour days. How about 16 for starters for people who don't have key roles and have to work even harder.
+
+> With the way we were doing things before of meeting for a week long we had already spent a lot of time doing that so we had kind of optimized the process and gotten used to it.
+
+> we are there full time otherwise we lose out too much, we are too ineffective, too interrupted
+
