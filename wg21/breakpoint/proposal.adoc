@@ -1,0 +1,48 @@
+= `std::breakpoint`
+:copyright: Copyright 2021 René Ferdinand Rivera Morell
+:author: René Ferdinand Rivera Morell
+:email: grafikrobot@gmail.com
+:revdate: {docdate}
+:version-label!:
+:reproducible:
+:nofooter:
+:sectanchors:
+:sectnums:
+:sectnumlevels: 5
+:source-highlighter: rouge
+:source-language: c++
+:toc: left
+:toclevels: 1
+:caution-caption: ⚑
+:important-caption: ‼
+:note-caption: ℹ
+:tip-caption: ☀
+:warning-caption: ⚠
+
+Document number:: ISO/IEC/JTC1/SC22/WG21/{revnumber}
+Date:: {revdate}
+Audience:: SG15
+Reply-to:: {author}, {email}
+Project:: ISO/IEC JTC1/SC22/WG21 14882: Programming Language — {CPP}
+
+== Abstract
+
+== Revision History
+
+== Introduction
+
+== Motivation and Scope
+
+== Design Decisions
+
+=== Impact On the Standard
+
+=== FAQ
+
+== Implementation Experience
+
+== Wording
+
+== Acknowledgements
+
+== References
