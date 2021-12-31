@@ -1,7 +1,8 @@
 = `std::breakpoint`
 :copyright: Copyright 2021 René Ferdinand Rivera Morell
-:author: René Ferdinand Rivera Morell
 :email: grafikrobot@gmail.com
+:authors: René Ferdinand Rivera Morell, Isabella Muerte
+:audience: SG15, LEWG
 :revdate: {docdate}
 :version-label!:
 :reproducible:
@@ -19,30 +20,138 @@
 :tip-caption: ☀
 :warning-caption: ⚠
 
-Document number:: ISO/IEC/JTC1/SC22/WG21/{revnumber}
-Date:: {revdate}
-Audience:: SG15
-Reply-to:: {author}, {email}
-Project:: ISO/IEC JTC1/SC22/WG21 14882: Programming Language — {CPP}
+++++
+<style>
+.ins {
+	border-left: solid 0.4em green;
+	padding-left: 1em;
+	text-decoration: underline solid green;
+}
+</style>
+++++
+
+Document number: :: ISO/IEC/JTC1/SC22/WG21/{revnumber}
+Date: :: {revdate}
+Audience: :: {audience}
+Reply-to: :: {author}, {email}
+Project: :: ISO/IEC JTC1/SC22/WG21 14882: Programming Language — {CPP}
 
 == Abstract
 
+This paper proposes a new function, `std::breakpoint`, that causes a program to
+stop or "break" execution when it is being debugged to aid in software
+development.
+
+This is a successor paper to P1279.
+footnote:P1279[P1279 std::breakpoint, _Isabella Muerte_ 2018-10-05 (https://wg21.link/P1279)]
+
 == Revision History
 
-== Introduction
+=== Revision 0 (January 2022)
 
-== Motivation and Scope
+Initial text based on P1279.
+footnote:P1279[]
+
+== Motivation
+
+Setting breakpoints inside of a debugger can be difficult and confusing for
+newcomers to {CPP}. Rather than having to learn {CPP}, they have to learn a special
+syntax just to place a breakpoint in the exact spot they want, or rely on the
+interface of an IDE. At the end of the day, an average programmer just wants to
+place a breakpoint so that their program stops when under the watchful eye of a
+debugger.
+
+Having this facility also helps in advanced software development environments
+as it allows for runtime control of breakpoints beyond what might be available
+from a debugger. In particular to allow programmatic control on what runtime
+sensitive conditions to break into the debugger.
 
 == Design Decisions
 
+The goal of the `std::breakpoint` function is to "break" when being debugged
+but to act as though it is a no-op when it is executing normally. This might
+seem difficult in practice, but nearly every platform and various debuggers
+supports something to this effect. However, some platforms have caveats that
+make implementing this "break when being debugged" behavior hard to implement
+correctly.
+
+The `std::breakpoint` function is intended to go into a `<debugging>` header.
+
 === Impact On the Standard
 
-=== FAQ
+This proposal adds a utility header and a single function the implementation
+of which is widely available across compilers and platforms.
 
 == Implementation Experience
 
+In addition to the prototype implementation
+footnote:[Debugging prototype implementation (https://github.com/grafikrobot/debugging)]
+there are the following, full or partial, equivalent implementations:
+
+* The Microsoft Visual compiler provides a `+__debugbreak+` function that
+  implements an unconditional break.
+  footnote:[Microsoft compiler `+__debugbreak+` intrinsic (https://docs.microsoft.com/en-us/cpp/intrinsics/debugbreak)]
+* GNU Compiler Collection provides a `+__builtin_trap+` function that
+  implements an unconditional break.
+  footnote:[GNU GCC Other Built-in Functions Provided by GCC (https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html)]
+* Clang provides a `+__builtin_debugtrap+` function that implements an
+  unconditional break.
+* The arm Keil armcc compiler provides a `+__breakpoint+` function that
+  implements an unconditional break.
+  footnote:[armKEIL `+__breakpoint+` intrinsic (https://www.keil.com/support/man/docs/armcc/armcc_chr1359124993371.htm)]
+* Unreal Engine 4 implements a similar facility as a macro.
+
 == Wording
+
+Wording is relative to link:https://wg21.link/N4868[N4868].
+footnote:[N4868 Working Draft, Standard for Programming Language C++ 2020-10-18 (https://wg21.link/N4868)]
+
+=== Library
+
+Add a new entry to General utilities library summary [utilities.summary] table.
+
+[.ins.text-justify]
+--
+|===
+| [debugging] | Debugging | `<debugging>`
+|===
+--
+
+Add section to General utilities library [utilities].
+
+[.ins.text-justify][#dbg,reftext=debugging]
+==== Debugging [.right]#[<<dbg>>]#
+
+[#dbg-gen,reftext=debugging.general]
+===== In general [.right]#[<<dbg-gen>>]#
+
+Subclause [debugging] describes the debugging library that provides functionality
+to introspect and interact with a debugger that is executing and monitoring the
+running program.
+
+[#dbg-syn,reftext=debugging.syn]
+===== Header `<debugging>` synopsis [.right]#[<<dbg-syn>>]#
+
+[source]
+----
+namespace std {
+	// [debugging.utility], utility
+	void breakpoint() noexcept;
+}
+----
+
+[#dbg-util,reftext=debugging.utility]
+===== Utility [.right]#[<<dbg-util>>]#
+
+`void breakpoint() noexcept;`
+
+_Remarks_: When this function is executed, it first must perform an
+implementation defined check to see if the program is currently running under a
+debugger. If it is, the program's execution is temporarily halted and execution
+is handed to the debugger until such a time as: the program is terminated by
+the debugger or, the debugger hands execution back to the program.
 
 == Acknowledgements
 
-== References
+Thank you Isabella Muerte for the initial proposal from which this paper steals
+a good amount of the text.

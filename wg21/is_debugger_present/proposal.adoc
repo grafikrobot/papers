@@ -2,6 +2,7 @@
 :copyright: Copyright 2021 René Ferdinand Rivera Morell
 :author: René Ferdinand Rivera Morell
 :email: grafikrobot@gmail.com
+:audience: SG15, LEWG
 :revdate: {docdate}
 :version-label!:
 :reproducible:
@@ -19,30 +20,127 @@
 :tip-caption: ☀
 :warning-caption: ⚠
 
-Document number:: ISO/IEC/JTC1/SC22/WG21/{revnumber}
-Date:: {revdate}
-Audience:: SG15
-Reply-to:: {author}, {email}
-Project:: ISO/IEC JTC1/SC22/WG21 14882: Programming Language — {CPP}
+++++
+<style>
+.ins {
+	border-left: solid 0.4em green;
+	padding-left: 1em;
+	text-decoration: underline solid green;
+}
+</style>
+++++
+
+Document number: :: ISO/IEC/JTC1/SC22/WG21/{revnumber}
+Date: :: {revdate}
+Audience: :: {audience}
+Reply-to: :: {author}, {email}
+Project: :: ISO/IEC JTC1/SC22/WG21 14882: Programming Language — {CPP}
 
 == Abstract
 
+This paper proposes a new function, `std::is_debugger_present`, that checks if
+a program is being debugged to aid in software development.
+
 == Revision History
 
-== Introduction
+=== Revision 0 (January 2022)
 
-== Motivation and Scope
+Initial text.
+
+== Motivation
+
+There are many scenarios where doing something special when your program is
+running in a debugger is important. That can take the form of:
+
+* allowing printing out extra output to help diagnose problems,
+* executing extra test code,
+* displaying an extra user interface to help in debugging,
+* and more.
+
+This is something that appears in many development environments but is hard to
+do as it requires intimate platform knowledge. Making this facility available
+would improve the program debugging experience of the average user. And spare
+them the burden of acquiring arcane platform knowledge to implement, over
+and over, this functionality.
 
 == Design Decisions
 
+The goal of the `std::is_debugger_present` function is to inform when a program
+is executing under the control of a debugger monitoring program. The interface
+is minimally simple to avoid having to reduce the user from having to know the
+intricacies of debugger operation. This is a feature that requires arcane
+platform knowledge for most platforms. But it is knowledge that is readily
+available to the platform tooling implementors.
+
+The `std::is_debugger_present` function is intended to go into a `<debugging>`
+header.
+
 === Impact On the Standard
 
-=== FAQ
+This proposal adds a utility header and a single function the implementation
+of which is readily available to the platform tooling implementors.
 
 == Implementation Experience
 
+In addition to the prototype implementation
+footnote:[Debugging prototype implementation (https://github.com/grafikrobot/debugging)]
+there are the following, full or partial, equivalent implementations:
+
+* Windows provides a `IsDebuggerPresent` function in the OS with the same
+  functionality.
+  footnote:[Win32 IsDebuggerPresent (https://docs.microsoft.com/en-us/windows/win32/api/debugapi/nf-debugapi-isdebuggerpresent)]
+* Unreal Engine 4 implements the same as a `IsDebuggerPresent` function for a
+  variety of platforms.
+* Catch2 implements the same as a `isDebuggerActive` function.
+  footnote:[Catch2 isDebuggerActive (https://github.com/catchorg/Catch2/blob/devel/src/catch2/internal/catch_debugger.cpp)]
+
 == Wording
 
-== Acknowledgements
+Wording is relative to link:https://wg21.link/N4868[N4868].
+footnote:[N4868 Working Draft, Standard for Programming Language C++ 2020-10-18 (https://wg21.link/N4868)]
 
-== References
+=== Library
+
+Add a new entry to General utilities library summary [utilities.summary] table.
+
+[.ins.text-justify]
+--
+|===
+| [debugging] | Debugging | `<debugging>`
+|===
+--
+
+Add section to General utilities library [utilities].
+
+[.ins.text-justify][#dbg,reftext=debugging]
+==== Debugging [.right]#[<<dbg>>]#
+
+[#dbg-gen,reftext=debugging.general]
+===== In general [.right]#[<<dbg-gen>>]#
+
+Subclause [debugging] describes the debugging library that provides functionality
+to introspect and interact with a debugger that is executing and monitoring the
+running program.
+
+[#dbg-syn,reftext=debugging.syn]
+===== Header `<debugging>` synopsis [.right]#[<<dbg-syn>>]#
+
+[source]
+----
+namespace std {
+	// [debugging.utility], utility
+	bool is_debugger_present() noexcept;
+}
+----
+
+[#dbg-util,reftext=debugging.utility]
+===== Utility [.right]#[<<dbg-util>>]#
+
+`bool is_debugger_present() noexcept;`
+
+_Returns_: If the program is currently running under a debugger it returns
+`true`, otherwise `false`.
+
+_Remarks_: If not supported by the implementation it returns `false`.
+
+== Acknowledgements
