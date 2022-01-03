@@ -8,7 +8,7 @@ http://www.boost.org/LICENSE_1_0.txt)
 import asciidoctor ;
 
 local name = breakpoint ;
-local docn = D2514 ;
+local docn = P2514 ;
 local docr = R0 ;
 local xxxx = $(docn)$(docr) ;
 
