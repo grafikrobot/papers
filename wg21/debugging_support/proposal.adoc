@@ -2,7 +2,7 @@
 :copyright: Copyright 2021 René Ferdinand Rivera Morell
 :email: grafikrobot@gmail.com
 :authors: René Ferdinand Rivera Morell
-:audience: SG15, LEWG
+:audience: LEWG
 :revdate: {docdate}
 :version-label!:
 :reproducible:
@@ -62,6 +62,12 @@ footnote:P1279[P1279 `std::breakpoint`, _Isabella Muerte_ 2018-10-05
 (https://wg21.link/P1279)]
 
 == Revision History
+
+=== Revision 1 (April 2022)
+
+* Remove suggested do nothing breakpoint implementation comments per SG15
+  feedback.
+* Add poll results from SG15.
 
 === Revision 0 (February 2022)
 
@@ -125,9 +131,6 @@ as possible for the platform. For example, on X86 it's expected that this
 produces a single `INT3` instruction. The goal in this expectation is to place
 the debugger as close as possible in the caller of `breakpoint()` to
 improve the debugging experience for users.
-
-If an implementation is unable to implement the breakpoint function it's
-preferred for the implementation to do nothing and return.
 
 === Conditional Breakpoint
 
@@ -339,6 +342,14 @@ crash reporting, and to present GUI elements only when debugging.
 
 == Polls
 
+=== SG15: P2546 (2022-02-18)
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+| 3  | 4 | 0 | 0 | 0
+|===
+
 === SG15: P2514R0 and P2515R0 (2022-01-21)
 
 SG15 approves of the design direction of P2514R0 and P2515R0 with the suggested
@@ -437,11 +448,6 @@ When the function is invoked it is expected that the program's execution
 temporarily halts and execution is handed to the debugger until such a time
 as: the program is terminated by the debugger or, the debugger resumes
 execution of the program as if the function was not invoked.
- -- _end note_ +]+
-
-+[+ _Note 1_:
-Implementations should prefer doing nothing, instead of terminating, if they
-can't provide the desired effect of halting the debugger.
  -- _end note_ +]+
 --
 
