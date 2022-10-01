@@ -1,0 +1,150 @@
+= C++ Ecosystem International Standard
+:copyright: Copyright 2022 René Ferdinand Rivera Morell
+:email: grafikrobot@gmail.com
+:authors: René Ferdinand Rivera Morell, et al.
+:audience: WG21
+:revdate: {docdate}
+:version-label!:
+:reproducible:
+:nofooter:
+:sectanchors:
+:sectnums:
+:sectnumlevels: 5
+:source-highlighter: rouge
+:source-language: c++
+:toc: left
+:toclevels: 2
+:caution-caption: ⚑
+:important-caption: ‼
+:note-caption: ℹ
+:tip-caption: ☀
+:warning-caption: ⚠
+:table-caption: Table 
+
+++++
+<style>
+.sectionbody > div > .ins {
+  border-left: solid 0.4em green;
+  padding-left: 1em;
+  text-decoration: underline solid green;
+  text-underline-offset: 0.3em;
+}
+.def > .content :first-child {
+  margin-left: 0;
+}
+.def > .content > * {
+  margin-left: 3em;
+}
+.icon .title {
+  font-size: 250%;
+}
+</style>
+++++
+
+Document number: :: ISO/IEC/JTC1/SC22/WG21/{revnumber}
+Date: :: {revdate}
+Audience: :: {audience}
+Reply-to: ::
+René Ferdinand Rivera Morell - grafikrobot@gmail.com - B2 Maintainer
+
+== Abstract
+
+We propose to publish an International Standard that specifies formats,
+processes, definitions, and so on, that facilitates the interoperation of the
+tools and systems that implement, and interface with, the {CPP} International
+Standard (ISO/IEC 14882).
+
+== Revision History
+
+=== Revision 0 (October 2022)
+
+Initial text.
+
+== Motivation
+
+At a time when the {CPP} Language is advancing, the community is struggling to
+manage the challenges of the complexity and variability of the tools,
+technologies, and systems that make {CPP} possible (i.e. the {CPP} ecosystem).
+In the view of users the {CPP} ecosystem is fractured in ways that hinder its
+successful advancement.
+
+The continued success of {CPP} is tied not solely to the language, but to the 
+{CPP} ecosystem. The interoperability within that ecosystem is key to
+surmounting the challenges of further growth of the language for the benefit of
+users. It is therefore critical that we expand the specifications that WG21 produces to bring coherence to the {CPP} ecosystem.
+
+== Scope
+
+This new standard, like other standards, aims to codify established practice in
+a common way. It can contain various aspects of the {CPP} Ecosystem:
+
+. _Definitions_ :
+We will need a common language to refer to the many components
+and aspects of the ecosystem. With a shared understanding of components like:
+compilers, linkers, analyzers, debuggers, package managers, preprocessors,
+source files, object files, library files, shared library files, executables, 
+and more, we can subsequently formulate specifications for them.
+. _Format Specifications_ :
+The tools that make up the ecosystem work by consuming and producing a variety
+of data in a variety of formats. We will need to specify those formats such that
+the tools, components can operate effectively.
+. _Operation Specifications_ :
+It's not enough to know what the information that the ecosystem contains, we
+also need to specify how that data is consumed and produced to aid in
+inter-operation of the variety of use cases in the {CPP} ecosystem.
+
+== Goals
+
+Like the {CPP} Language Standard this one will never be complete or finished.
+And it will take time and effort to provide coverage of the specifications
+needed to put together a good basic picture of the ecosystem. While the scope
+above defines an ideal completion, the goals for a first revision of this
+standard could include some modest items:
+
+. Definitions
+. Format Specifications :
+.. Build System <==> Package Manager Interoperation
+.. File Names
+
+=== Definitions
+
+We will need some basic definitions as needed to circumscribe the specifications
+included in this first standard.
+
+=== Build System <==> Package Manager Interoperation
+
+Specification of formats and operation of interoperability between build
+systems and package managers. Current and previous work on this:
+
+* The CppCon 2022 presentation "The Case For a Standardized Package Description
+Format",
+footnote:[CppCon 2022: The Case For a Standardized Package Description Format, _Luis Caro Campos_ (https://cppcon.digital-medium.co.uk/session/2022/the-case-for-a-standardized-package-description-format/)]
+prompted ongoing work to specify standard communication format between package
+managers and build systems.
+* P2577 {CPP} Modules Discovery in Prebuilt Library Releases
+footnote:P2577[{CPP} Modules Discovery in Prebuilt Library Releases, _Daniel Ruoso_ (https://github.com/cplusplus/papers/issues/1232)]
+* P2536 Distributing {CPP} Module Libraries with dependencies json files.
+footnote:P2536[Distributing {CPP} Module Libraries with dependencies json files. _Olga Arkhipova_ (https://github.com/cplusplus/papers/issues/1199)]
+* P2473 Distributing {CPP} Module Libraries.
+footnote:P2473[Distributing {CPP} Module Libraries. _Daniel Ruoso_ (https://github.com/cplusplus/papers/issues/1131)]
+* P1767 Packaging {CPP} Modules.
+footnote:P1767[Packaging {CPP} Modules. _Richard Smith_ (https://github.com/cplusplus/papers/issues/522)]
+* `libman`, A Dependency Manager ➔ Build System Bridge
+footnote:libman[`libman`, A Dependency Manager ➔ Build System Bridge _Colby Pike_ (https://api.csswg.org/bikeshed/?force=1&url=https://raw.githubusercontent.com/vector-of-bool/libman/develop/data/spec.bs)]
+* P1313 Let's Talk About Package Specification.
+footnote:P1313[Let's Talk About Package Specification. _Matthew Woehlke_ (https://wg21.link/p1313)]
+* P1177 Package Ecosystem Plan.
+footnote:P1177[Package Ecosystem Plan. _René Ferdinand Rivera Morell_ (https://github.com/cplusplus/papers/issues/48)]
+
+=== File Names
+
+Specification of a minimal set of file names understood, and for what they
+are understood, by the various tools in the ecosystem. Current and previous
+work on this:
+
+* P1838 Modules User-Facing Lexicon and File Extensions.
+footnote:[Modules User-Facing Lexicon and File Extensions. _Bryce Adelstein Lelbach_, _Boris Kolpackov_ (https://github.com/cplusplus/papers/issues/727)]
+* P1177 Package Ecosystem Plan.
+footnote:P1177[]
+
+== Acknowledgements
