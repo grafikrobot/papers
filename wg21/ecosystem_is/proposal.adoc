@@ -45,7 +45,8 @@ Document number: :: ISO/IEC/JTC1/SC22/WG21/{revnumber}
 Date: :: {revdate}
 Audience: :: {audience}
 Reply-to: ::
-René Ferdinand Rivera Morell - grafikrobot@gmail.com - B2 Maintainer
+René Ferdinand Rivera Morell - _grafikrobot at gmail dot com_ - B2 Maintainer +
+Ben Craig - _ben dot craig at gmail dot com_
 
 == Abstract
 
@@ -62,21 +63,27 @@ Initial text.
 
 == Motivation
 
-At a time when the {CPP} Language is advancing, the community is struggling to
-manage the challenges of the complexity and variability of the tools,
-technologies, and systems that make {CPP} possible (i.e. the {CPP} ecosystem).
-In the view of users the {CPP} ecosystem is fractured in ways that hinder its
-successful advancement.
+Interoperability is a challenge in today's {CPP} ecosystem. At a time when the
+{CPP} language is advancing, the community is struggling to manage the
+challenges of the complexity and variability of the tools, technologies, and
+systems that make {CPP} possible. In the view of users the {CPP} ecosystem is
+fractured in ways that hinder its successful advancement.
 
-The continued success of {CPP} is tied not solely to the language, but to the 
+The continued success of {CPP} is tied not solely to the language, but to the
 {CPP} ecosystem. The interoperability within that ecosystem is key to
 surmounting the challenges of further growth of the language for the benefit of
 users. It is therefore critical that we expand the specifications that WG21 produces to bring coherence to the {CPP} ecosystem.
 
+Users should be able to mix and match their preferred build systems, compilers,
+linkers, package managers, static analyzers, runtime analyzers, debuggers,
+profilers, etc. without needing the tools to have vendor specific knowledge of
+each other. Vendors should be able to focus on direct tool improvements, rather
+than figuring out how to interact with yet another proprietary interface.
+
 == Scope
 
-This new standard, like other standards, aims to codify established practice in
-a common way. It can contain various aspects of the {CPP} Ecosystem:
+This new standard, like other standards, aims to clarify practice in a common
+way. It can contain various aspects of the {CPP} Ecosystem:
 
 . _Definitions_ :
 We will need a common language to refer to the many components
@@ -84,14 +91,33 @@ and aspects of the ecosystem. With a shared understanding of components like:
 compilers, linkers, analyzers, debuggers, package managers, preprocessors,
 source files, object files, library files, shared library files, executables, 
 and more, we can subsequently formulate specifications for them.
+
 . _Format Specifications_ :
 The tools that make up the ecosystem work by consuming and producing a variety
 of data in a variety of formats. We will need to specify those formats such that
 the tools, components can operate effectively.
+
 . _Operation Specifications_ :
 It's not enough to know what the information that the ecosystem contains, we
 also need to specify how that data is consumed and produced to aid in
 inter-operation of the variety of use cases in the {CPP} ecosystem.
+
+This new standard, like the {CPP} Language Standard, will not:
+
+. _Mandate any single vendor tools_ :
+It is not a goal to seek single "blessed" tools in the ecosystem. We have a
+wide variety of good tools in the ecosystem. And we look forward to those tools
+cooperating with each other.
+
+. _Prohibit vendor extensions_ :
+It is not a goal to prevent vendor innovation in what the ecosystem tools can
+achieve. As such we welcome extensions and look towards the advancement that
+such extensions bring.
+
+. _Modify the {CPP} Language Standard_ :
+It is not a goal to alter, in any way, the {CPP} Language Standard. It is
+important that how we define the tools of the {CPP} ecosystem evolves
+independent of the language.
 
 == Goals
 
@@ -146,5 +172,3 @@ work on this:
 footnote:[Modules User-Facing Lexicon and File Extensions. _Bryce Adelstein Lelbach_, _Boris Kolpackov_ (https://github.com/cplusplus/papers/issues/727)]
 * P1177 Package Ecosystem Plan.
 footnote:P1177[]
-
-== Acknowledgements

@@ -757,7 +757,7 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 <span id="author" class="author">René Ferdinand Rivera Morell, et al.</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> D2656R0,</span>
-<span id="revdate">2022-10-01</span>
+<span id="revdate">2022-10-05</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -777,7 +777,6 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 <li><a href="#_file_names">5.3. File Names</a></li>
 </ul>
 </li>
-<li><a href="#_acknowledgements">6. Acknowledgements</a></li>
 </ul>
 </div>
 </div>
@@ -809,7 +808,7 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 </dd>
 <dt class="hdlist1">Date: </dt>
 <dd>
-<p>2022-10-01</p>
+<p>2022-10-05</p>
 </dd>
 <dt class="hdlist1">Audience: </dt>
 <dd>
@@ -817,7 +816,8 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 </dd>
 <dt class="hdlist1">Reply-to: </dt>
 <dd>
-<p>René Ferdinand Rivera Morell - <a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a> - B2 Maintainer</p>
+<p>René Ferdinand Rivera Morell - <em>grafikrobot at gmail dot com</em> - B2 Maintainer<br>
+Ben Craig - <em>ben dot craig at gmail dot com</em></p>
 </dd>
 </dl>
 </div>
@@ -849,11 +849,11 @@ Standard (ISO/IEC 14882).</p>
 <h2 id="_motivation"><a class="anchor" href="#_motivation"></a>3. Motivation</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>At a time when the C&#43;&#43; Language is advancing, the community is struggling to
-manage the challenges of the complexity and variability of the tools,
-technologies, and systems that make C&#43;&#43; possible (i.e. the C&#43;&#43; ecosystem).
-In the view of users the C&#43;&#43; ecosystem is fractured in ways that hinder its
-successful advancement.</p>
+<p>Interoperability is a challenge in today&#8217;s C&#43;&#43; ecosystem. At a time when the
+C&#43;&#43; language is advancing, the community is struggling to manage the
+challenges of the complexity and variability of the tools, technologies, and
+systems that make C&#43;&#43; possible. In the view of users the C&#43;&#43; ecosystem is
+fractured in ways that hinder its successful advancement.</p>
 </div>
 <div class="paragraph">
 <p>The continued success of C&#43;&#43; is tied not solely to the language, but to the
@@ -861,14 +861,21 @@ C&#43;&#43; ecosystem. The interoperability within that ecosystem is key to
 surmounting the challenges of further growth of the language for the benefit of
 users. It is therefore critical that we expand the specifications that WG21 produces to bring coherence to the C&#43;&#43; ecosystem.</p>
 </div>
+<div class="paragraph">
+<p>Users should be able to mix and match their preferred build systems, compilers,
+linkers, package managers, static analyzers, runtime analyzers, debuggers,
+profilers, etc. without needing the tools to have vendor specific knowledge of
+each other. Vendors should be able to focus on direct tool improvements, rather
+than figuring out how to interact with yet another proprietary interface.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_scope"><a class="anchor" href="#_scope"></a>4. Scope</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This new standard, like other standards, aims to codify established practice in
-a common way. It can contain various aspects of the C&#43;&#43; Ecosystem:</p>
+<p>This new standard, like other standards, aims to clarify practice in a common
+way. It can contain various aspects of the C&#43;&#43; Ecosystem:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -891,6 +898,31 @@ the tools, components can operate effectively.</p>
 It&#8217;s not enough to know what the information that the ecosystem contains, we
 also need to specify how that data is consumed and produced to aid in
 inter-operation of the variety of use cases in the C&#43;&#43; ecosystem.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This new standard, like the C&#43;&#43; Language Standard, will not:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><em>Mandate any single vendor tools</em> :
+It is not a goal to seek single "blessed" tools in the ecosystem. We have a
+wide variety of good tools in the ecosystem. And we look forward to those tools
+cooperating with each other.</p>
+</li>
+<li>
+<p><em>Prohibit vendor extensions</em> :
+It is not a goal to prevent vendor innovation in what the ecosystem tools can
+achieve. As such we welcome extensions and look towards the advancement that
+such extensions bring.</p>
+</li>
+<li>
+<p><em>Modify the C&#43;&#43; Language Standard</em> :
+It is not a goal to alter, in any way, the C&#43;&#43; Language Standard. It is
+important that how we define the tools of the C&#43;&#43; ecosystem evolves
+independent of the language.</p>
 </li>
 </ol>
 </div>
@@ -999,12 +1031,6 @@ work on this:</p>
 </ul>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_acknowledgements"><a class="anchor" href="#_acknowledgements"></a>6. Acknowledgements</h2>
-<div class="sectionbody">
-
 </div>
 </div>
 </div>
