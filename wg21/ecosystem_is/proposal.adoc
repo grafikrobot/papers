@@ -102,7 +102,7 @@ It's not enough to know what the information that the ecosystem contains, we
 also need to specify how that data is consumed and produced to aid in
 inter-operation of the variety of use cases in the {CPP} ecosystem.
 
-This new standard, like the {CPP} Language Standard, will not:
+This new standard will not:
 
 . _Mandate any single vendor tools_ :
 It is not a goal to seek single "blessed" tools in the ecosystem. We have a
