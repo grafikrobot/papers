@@ -82,7 +82,7 @@ than figuring out how to interact with yet another proprietary interface.
 
 == Scope
 
-This new standard, like other standards, aims to clarify practice in a common
+This new standard aims to clarify practice in a common
 way. It can contain various aspects of the {CPP} Ecosystem:
 
 . _Definitions_ :
@@ -95,10 +95,10 @@ and more, we can subsequently formulate specifications for them.
 . _Format Specifications_ :
 The tools that make up the ecosystem work by consuming and producing a variety
 of data in a variety of formats. We will need to specify those formats such that
-the tools, components can operate effectively.
+the tools and components can operate effectively.
 
 . _Operation Specifications_ :
-It's not enough to know what the information that the ecosystem contains, we
+It's not enough to know what the information the ecosystem contains, we
 also need to specify how that data is consumed and produced to aid in
 inter-operation of the variety of use cases in the {CPP} ecosystem.
 
