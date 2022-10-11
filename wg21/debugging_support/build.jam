@@ -9,7 +9,7 @@ import asciidoctor ;
 
 local name = debugging_support ;
 local docn = P2546 ;
-local docr = R1 ;
+local docr = R2 ;
 local xxxx = $(docn)$(docr) ;
 
 project /wg21_$(name)

@@ -2,7 +2,7 @@
 :copyright: Copyright 2021 René Ferdinand Rivera Morell
 :email: grafikrobot@gmail.com
 :authors: René Ferdinand Rivera Morell
-:audience: LEWG
+:audience: EWG
 :revdate: {docdate}
 :version-label!:
 :reproducible:
@@ -62,6 +62,10 @@ footnote:P1279[P1279 `std::breakpoint`, _Isabella Muerte_ 2018-10-05
 (https://wg21.link/P1279)]
 
 == Revision History
+
+=== Revision 2 (October 2022)
+
+* Add freestanding comment to wording per Ben Craig's feedback.
 
 === Revision 1 (April 2022)
 
@@ -427,6 +431,7 @@ commonly such a tracing program would be a debugger.
 
 [source]
 ----
+// all freestanding
 namespace std {
 	// [debugging.utility], utility
 	void breakpoint() noexcept;
