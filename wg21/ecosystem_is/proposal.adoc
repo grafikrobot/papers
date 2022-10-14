@@ -142,6 +142,8 @@ included in this first standard.
 Specification of formats and operation of interoperability between build
 systems and package managers. Current and previous work on this:
 
+* P2673 Common Description Format for {CPP} Libraries and Packages
+footnote:[Common Description Format for {CPP} Libraries and Packages (https://wg21.link/p2673r0)]
 * The CppCon 2022 presentation "The Case For a Standardized Package Description
 Format",
 footnote:[CppCon 2022: The Case For a Standardized Package Description Format, _Luis Caro Campos_ (https://cppcon.digital-medium.co.uk/session/2022/the-case-for-a-standardized-package-description-format/)]

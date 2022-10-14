@@ -757,7 +757,7 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 <span id="author" class="author">René Ferdinand Rivera Morell, et al.</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> P2656R0,</span>
-<span id="revdate">2022-10-06</span>
+<span id="revdate">2022-10-13</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -808,7 +808,7 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 </dd>
 <dt class="hdlist1">Date: </dt>
 <dd>
-<p>2022-10-06</p>
+<p>2022-10-13</p>
 </dd>
 <dt class="hdlist1">Audience: </dt>
 <dd>
@@ -974,39 +974,43 @@ systems and package managers. Current and previous work on this:</p>
 <div class="ulist">
 <ul>
 <li>
+<p>P2673 Common Description Format for C&#43;&#43; Libraries and Packages
+<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup></p>
+</li>
+<li>
 <p>The CppCon 2022 presentation "The Case For a Standardized Package Description
 Format",
-<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>
+<sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup>
 prompted ongoing work to specify standard communication format between package
 managers and build systems.</p>
 </li>
 <li>
 <p>P2577 C&#43;&#43; Modules Discovery in Prebuilt Library Releases
-<sup class="footnote" id="_footnote_P2577">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup></p>
+<sup class="footnote" id="_footnote_P2577">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup></p>
 </li>
 <li>
 <p>P2536 Distributing C&#43;&#43; Module Libraries with dependencies json files.
-<sup class="footnote" id="_footnote_P2536">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup></p>
+<sup class="footnote" id="_footnote_P2536">[<a id="_footnoteref_4" class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup></p>
 </li>
 <li>
 <p>P2473 Distributing C&#43;&#43; Module Libraries.
-<sup class="footnote" id="_footnote_P2473">[<a id="_footnoteref_4" class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup></p>
+<sup class="footnote" id="_footnote_P2473">[<a id="_footnoteref_5" class="footnote" href="#_footnotedef_5" title="View footnote.">5</a>]</sup></p>
 </li>
 <li>
 <p>P1767 Packaging C&#43;&#43; Modules.
-<sup class="footnote" id="_footnote_P1767">[<a id="_footnoteref_5" class="footnote" href="#_footnotedef_5" title="View footnote.">5</a>]</sup></p>
+<sup class="footnote" id="_footnote_P1767">[<a id="_footnoteref_6" class="footnote" href="#_footnotedef_6" title="View footnote.">6</a>]</sup></p>
 </li>
 <li>
 <p><code>libman</code>, A Dependency Manager ➔ Build System Bridge
-<sup class="footnote" id="_footnote_libman">[<a id="_footnoteref_6" class="footnote" href="#_footnotedef_6" title="View footnote.">6</a>]</sup></p>
+<sup class="footnote" id="_footnote_libman">[<a id="_footnoteref_7" class="footnote" href="#_footnotedef_7" title="View footnote.">7</a>]</sup></p>
 </li>
 <li>
 <p>P1313 Let&#8217;s Talk About Package Specification.
-<sup class="footnote" id="_footnote_P1313">[<a id="_footnoteref_7" class="footnote" href="#_footnotedef_7" title="View footnote.">7</a>]</sup></p>
+<sup class="footnote" id="_footnote_P1313">[<a id="_footnoteref_8" class="footnote" href="#_footnotedef_8" title="View footnote.">8</a>]</sup></p>
 </li>
 <li>
 <p>P1177 Package Ecosystem Plan.
-<sup class="footnote" id="_footnote_P1177">[<a id="_footnoteref_8" class="footnote" href="#_footnotedef_8" title="View footnote.">8</a>]</sup></p>
+<sup class="footnote" id="_footnote_P1177">[<a id="_footnoteref_9" class="footnote" href="#_footnotedef_9" title="View footnote.">9</a>]</sup></p>
 </li>
 </ul>
 </div>
@@ -1022,11 +1026,11 @@ work on this:</p>
 <ul>
 <li>
 <p>P1838 Modules User-Facing Lexicon and File Extensions.
-<sup class="footnote">[<a id="_footnoteref_9" class="footnote" href="#_footnotedef_9" title="View footnote.">9</a>]</sup></p>
+<sup class="footnote">[<a id="_footnoteref_10" class="footnote" href="#_footnotedef_10" title="View footnote.">10</a>]</sup></p>
 </li>
 <li>
 <p>P1177 Package Ecosystem Plan.
-<sup class="footnoteref">[<a class="footnote" href="#_footnotedef_8" title="View footnote.">8</a>]</sup></p>
+<sup class="footnoteref">[<a class="footnote" href="#_footnotedef_9" title="View footnote.">9</a>]</sup></p>
 </li>
 </ul>
 </div>
@@ -1037,31 +1041,34 @@ work on this:</p>
 <div id="footnotes">
 <hr>
 <div class="footnote" id="_footnotedef_1">
-<a href="#_footnoteref_1">1</a>. CppCon 2022: The Case For a Standardized Package Description Format, <em>Luis Caro Campos</em> (<a href="https://cppcon.digital-medium.co.uk/session/2022/the-case-for-a-standardized-package-description-format/" class="bare">https://cppcon.digital-medium.co.uk/session/2022/the-case-for-a-standardized-package-description-format/</a>)
+<a href="#_footnoteref_1">1</a>. Common Description Format for C&#43;&#43; Libraries and Packages (<a href="https://wg21.link/p2673r0" class="bare">https://wg21.link/p2673r0</a>)
 </div>
 <div class="footnote" id="_footnotedef_2">
-<a href="#_footnoteref_2">2</a>. C&#43;&#43; Modules Discovery in Prebuilt Library Releases, <em>Daniel Ruoso</em> (<a href="https://github.com/cplusplus/papers/issues/1232" class="bare">https://github.com/cplusplus/papers/issues/1232</a>)
+<a href="#_footnoteref_2">2</a>. CppCon 2022: The Case For a Standardized Package Description Format, <em>Luis Caro Campos</em> (<a href="https://cppcon.digital-medium.co.uk/session/2022/the-case-for-a-standardized-package-description-format/" class="bare">https://cppcon.digital-medium.co.uk/session/2022/the-case-for-a-standardized-package-description-format/</a>)
 </div>
 <div class="footnote" id="_footnotedef_3">
-<a href="#_footnoteref_3">3</a>. Distributing C&#43;&#43; Module Libraries with dependencies json files. <em>Olga Arkhipova</em> (<a href="https://github.com/cplusplus/papers/issues/1199" class="bare">https://github.com/cplusplus/papers/issues/1199</a>)
+<a href="#_footnoteref_3">3</a>. C&#43;&#43; Modules Discovery in Prebuilt Library Releases, <em>Daniel Ruoso</em> (<a href="https://github.com/cplusplus/papers/issues/1232" class="bare">https://github.com/cplusplus/papers/issues/1232</a>)
 </div>
 <div class="footnote" id="_footnotedef_4">
-<a href="#_footnoteref_4">4</a>. Distributing C&#43;&#43; Module Libraries. <em>Daniel Ruoso</em> (<a href="https://github.com/cplusplus/papers/issues/1131" class="bare">https://github.com/cplusplus/papers/issues/1131</a>)
+<a href="#_footnoteref_4">4</a>. Distributing C&#43;&#43; Module Libraries with dependencies json files. <em>Olga Arkhipova</em> (<a href="https://github.com/cplusplus/papers/issues/1199" class="bare">https://github.com/cplusplus/papers/issues/1199</a>)
 </div>
 <div class="footnote" id="_footnotedef_5">
-<a href="#_footnoteref_5">5</a>. Packaging C&#43;&#43; Modules. <em>Richard Smith</em> (<a href="https://github.com/cplusplus/papers/issues/522" class="bare">https://github.com/cplusplus/papers/issues/522</a>)
+<a href="#_footnoteref_5">5</a>. Distributing C&#43;&#43; Module Libraries. <em>Daniel Ruoso</em> (<a href="https://github.com/cplusplus/papers/issues/1131" class="bare">https://github.com/cplusplus/papers/issues/1131</a>)
 </div>
 <div class="footnote" id="_footnotedef_6">
-<a href="#_footnoteref_6">6</a>. <code>libman</code>, A Dependency Manager ➔ Build System Bridge <em>Colby Pike</em> (<a href="https://api.csswg.org/bikeshed/?force=1&amp;url=https://raw.githubusercontent.com/vector-of-bool/libman/develop/data/spec.bs" class="bare">https://api.csswg.org/bikeshed/?force=1&amp;url=https://raw.githubusercontent.com/vector-of-bool/libman/develop/data/spec.bs</a>)
+<a href="#_footnoteref_6">6</a>. Packaging C&#43;&#43; Modules. <em>Richard Smith</em> (<a href="https://github.com/cplusplus/papers/issues/522" class="bare">https://github.com/cplusplus/papers/issues/522</a>)
 </div>
 <div class="footnote" id="_footnotedef_7">
-<a href="#_footnoteref_7">7</a>. Let&#8217;s Talk About Package Specification. <em>Matthew Woehlke</em> (<a href="https://wg21.link/p1313" class="bare">https://wg21.link/p1313</a>)
+<a href="#_footnoteref_7">7</a>. <code>libman</code>, A Dependency Manager ➔ Build System Bridge <em>Colby Pike</em> (<a href="https://api.csswg.org/bikeshed/?force=1&amp;url=https://raw.githubusercontent.com/vector-of-bool/libman/develop/data/spec.bs" class="bare">https://api.csswg.org/bikeshed/?force=1&amp;url=https://raw.githubusercontent.com/vector-of-bool/libman/develop/data/spec.bs</a>)
 </div>
 <div class="footnote" id="_footnotedef_8">
-<a href="#_footnoteref_8">8</a>. Package Ecosystem Plan. <em>René Ferdinand Rivera Morell</em> (<a href="https://github.com/cplusplus/papers/issues/48" class="bare">https://github.com/cplusplus/papers/issues/48</a>)
+<a href="#_footnoteref_8">8</a>. Let&#8217;s Talk About Package Specification. <em>Matthew Woehlke</em> (<a href="https://wg21.link/p1313" class="bare">https://wg21.link/p1313</a>)
 </div>
 <div class="footnote" id="_footnotedef_9">
-<a href="#_footnoteref_9">9</a>. Modules User-Facing Lexicon and File Extensions. <em>Bryce Adelstein Lelbach</em>, <em>Boris Kolpackov</em> (<a href="https://github.com/cplusplus/papers/issues/727" class="bare">https://github.com/cplusplus/papers/issues/727</a>)
+<a href="#_footnoteref_9">9</a>. Package Ecosystem Plan. <em>René Ferdinand Rivera Morell</em> (<a href="https://github.com/cplusplus/papers/issues/48" class="bare">https://github.com/cplusplus/papers/issues/48</a>)
+</div>
+<div class="footnote" id="_footnotedef_10">
+<a href="#_footnoteref_10">10</a>. Modules User-Facing Lexicon and File Extensions. <em>Bryce Adelstein Lelbach</em>, <em>Boris Kolpackov</em> (<a href="https://github.com/cplusplus/papers/issues/727" class="bare">https://github.com/cplusplus/papers/issues/727</a>)
 </div>
 </div>
 </body>
