@@ -136,6 +136,31 @@ Examples: `cmake`, `meson`, `bazel`, `gn`, `build2`, `B2`.
 [#defns-anlzr,reftext=defns.anlzr]
 ==== analyzer [.right]#[defns.anlzr]#
 
+tool that diagnoses coding flaws in software programs
+
++[+ _Note 1_:
+Analyzers may include static analysis tools, tools within a compiler suite, or
+tools in other contexts.
+ -- _end note_ +]+
+
++[+ _Note 2_:
+This definition is compatible with the matching one in ISO/IEC TS 17961:2013.
+footnote:[ISO/IEC TS 17961:2013(en) Information technology — Programming
+languages, their environments and system software interfaces — C secure coding
+rules (https://www.iso.org/obp/ui#iso:std:iso-iec:ts:17961:ed-1:v1:en:term:4.1)]
+ -- _end note_ +]+
+
+[#defns-stan,reftext=defns.stan]
+==== static analyzer [.right]#[defns.stan]#
+
+_analyzer_ that operates on software source code without executing it
+
++[+ _Note 1_:
+This definition is compatible with the matching one in ISO/IEC TS 17961:2013.
+footnote:[ISO/IEC TS 17961:2013(en) Information technology — Programming
+languages, their environments and system software interfaces — C secure coding
+rules (https://www.iso.org/obp/ui#iso:std:iso-iec:ts:17961:ed-1:v1:en:term:4.13)]
+ -- _end note_ +]+
 
 //// 
 
