@@ -63,6 +63,10 @@ footnote:P1279[P1279 `std::breakpoint`, _Isabella Muerte_ 2018-10-05
 
 == Revision History
 
+=== Revision 3 (November 2022)
+
+* Fix spelling error in wording.
+
 === Revision 2 (October 2022)
 
 * Add freestanding comment to wording per Ben Craig's feedback.
@@ -475,7 +479,7 @@ if (is_debugger_present()) breakpoint();
 _Returns_: Returns an implementation-defined value.
 
 +[+ _Note 1_:
-Recomended practice: if the program is currently running in the context of
+Recommended practice: if the program is currently running in the context of
 being monitored by a debugger an implementation should return `true`. An
 implementation should always perform an immediate query, as needed, to
 determine if the program is monitored by a debugger. On Windows, or equivalent,
