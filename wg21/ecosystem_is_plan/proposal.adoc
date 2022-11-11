@@ -1,0 +1,67 @@
+= C++ Ecosystem IS: Plan
+:copyright: Copyright 2022 René Ferdinand Rivera Morell
+:email: grafikrobot@gmail.com
+:authors: René Ferdinand Rivera Morell, et al.
+:audience: SG15
+:revdate: {docdate}
+:version-label!:
+:reproducible:
+:nofooter:
+:sectanchors:
+:sectnums:
+:sectnumlevels: 5
+:source-highlighter: rouge
+:source-language: c++
+:toc: left
+:toclevels: 2
+:caution-caption: ⚑
+:important-caption: ‼
+:note-caption: ℹ
+:tip-caption: ☀
+:warning-caption: ⚠
+:table-caption: Table 
+
+++++
+<style>
+.sectionbody > div > .ins {
+  border-left: solid 0.4em green;
+  padding-left: 1em;
+  text-decoration: underline solid green;
+  text-underline-offset: 0.3em;
+}
+.def > .content :first-child {
+  margin-left: 0;
+}
+.def > .content > * {
+  margin-left: 3em;
+}
+.icon .title {
+  font-size: 250%;
+}
+</style>
+++++
+
+Document number: :: ISO/IEC/JTC1/SC22/WG21/{revnumber}
+Date: :: {revdate}
+Audience: :: {audience}
+Reply-to: ::
+René Ferdinand Rivera Morell - _grafikrobot at gmail dot com_
+
+== Abstract
+
+We propose a plan for creating and publishing a new {CPP} Ecosystem
+International Standard as proposed by P2656R0 in a timely matter.
+
+== Revision History
+
+=== Revision 0 (November 2022)
+
+Initial text.
+
+== Motivation
+
+== Scope
+
+== Process
+
+== Timeline
