@@ -73,14 +73,20 @@ Wording is new and meant for a prospective {CPP} Ecosystem Internal Standard
 as proposed in P2656R0.
 footnote:[{CPP} Ecosystem Internal Standard (https://wg21.link/P2656R0)]
 
-Add a "Terms and defiitions" chapter with the following content.
+Add a "Terms and definitions" chapter with the following content.
 
 [#intro-defs,reftext=intro.defs]
 === Terms and definitions [.right]#[intro.defs]#
 
-For the purposes of this document, the terms and definitions given in ISO/IEC
-2382, the terms, definitions, and symbols given in ISO 80000-2:2009, and the
-following apply.
+For the purposes of this document, the terms and definitions given in:
+
+-- ISO/IEC 2382,
+footnote:[ISO/IEC 2382:2015(en) Information technology — Vocabulary (https://www.iso.org/obp/ui#iso:std:iso-iec:2382:ed-1:v2:en)]
+
+-- ISO/IEC/IEEE 24765,
+footnote:[ISO/IEC/IEEE 24765:2017(en) Systems and software engineering — Vocabulary (https://www.iso.org/obp/ui#iso:std:iso-iec-ieee:24765:ed-2:v1:en)]
+
+-- and the following apply.
 
 ISO and IEC maintain terminology databases for use in standardization at the
 following addresses:
@@ -120,15 +126,6 @@ Such a tool may be a _build executor_ itself or write out a plan for another
 _build executor_ to perform.
 Examples: `cmake`, `meson`, `bazel`, `gn`, `build2`, `B2`.
  -- _end note_ +]+
-
-[#defns-comp,reftext=defns.comp]
-==== compiler [.right]#[defns.comp]#
-
-[#defns-slnk,reftext=defns.slnk]
-==== static linker [.right]#[defns.slnk]#
-
-[#defns-dbg,reftext=defns.dbg]
-==== debugger [.right]#[defns.dbg]#
 
 [#defns-san,reftext=defns.san]
 ==== sanitizer [.right]#[defns.san]#
@@ -174,3 +171,4 @@ The thing could do sething else.
  -- _end note_ +]+
 
  ////
+ 

@@ -757,7 +757,7 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 <span id="author" class="author">René Ferdinand Rivera Morell, et al.</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> D2716R0,</span>
-<span id="revdate">2022-11-10</span>
+<span id="revdate">2022-11-11</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -805,7 +805,7 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 </dd>
 <dt class="hdlist1">Date: </dt>
 <dd>
-<p>2022-11-10</p>
+<p>2022-11-11</p>
 </dd>
 <dt class="hdlist1">Audience: </dt>
 <dd>
@@ -861,14 +861,23 @@ as proposed in P2656R0.
 <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup></p>
 </div>
 <div class="paragraph">
-<p>Add a "Terms and defiitions" chapter with the following content.</p>
+<p>Add a "Terms and definitions" chapter with the following content.</p>
 </div>
 <div class="sect2">
 <h3 id="intro-defs"><a class="anchor" href="#intro-defs"></a>4.1. Terms and definitions <span class="right">[intro.defs]</span></h3>
 <div class="paragraph">
-<p>For the purposes of this document, the terms and definitions given in ISO/IEC
-2382, the terms, definitions, and symbols given in ISO 80000-2:2009, and the
-following apply.</p>
+<p>For the purposes of this document, the terms and definitions given in:</p>
+</div>
+<div class="paragraph">
+<p>&#8201;&#8212;&#8201;ISO/IEC 2382,
+<sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup></p>
+</div>
+<div class="paragraph">
+<p>&#8201;&#8212;&#8201;ISO/IEC/IEEE 24765,
+<sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup></p>
+</div>
+<div class="paragraph">
+<p>&#8201;&#8212;&#8201;and the following apply.</p>
 </div>
 <div class="paragraph">
 <p>ISO and IEC maintain terminology databases for use in standardization at the
@@ -920,23 +929,11 @@ Examples: <code>cmake</code>, <code>meson</code>, <code>bazel</code>, <code>gn</
 </div>
 </div>
 <div class="sect3">
-<h4 id="defns-comp"><a class="anchor" href="#defns-comp"></a>4.1.4. compiler <span class="right">[defns.comp]</span></h4>
+<h4 id="defns-san"><a class="anchor" href="#defns-san"></a>4.1.4. sanitizer <span class="right">[defns.san]</span></h4>
 
 </div>
 <div class="sect3">
-<h4 id="defns-slnk"><a class="anchor" href="#defns-slnk"></a>4.1.5. static linker <span class="right">[defns.slnk]</span></h4>
-
-</div>
-<div class="sect3">
-<h4 id="defns-dbg"><a class="anchor" href="#defns-dbg"></a>4.1.6. debugger <span class="right">[defns.dbg]</span></h4>
-
-</div>
-<div class="sect3">
-<h4 id="defns-san"><a class="anchor" href="#defns-san"></a>4.1.7. sanitizer <span class="right">[defns.san]</span></h4>
-
-</div>
-<div class="sect3">
-<h4 id="defns-anlzr"><a class="anchor" href="#defns-anlzr"></a>4.1.8. analyzer <span class="right">[defns.anlzr]</span></h4>
+<h4 id="defns-anlzr"><a class="anchor" href="#defns-anlzr"></a>4.1.5. analyzer <span class="right">[defns.anlzr]</span></h4>
 <div class="paragraph">
 <p>tool that diagnoses coding flaws in software programs</p>
 </div>
@@ -949,19 +946,19 @@ tools in other contexts.
 <div class="paragraph">
 <p>[ <em>Note 2</em>:
 This definition is compatible with the matching one in ISO/IEC TS 17961:2013.
-<sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup>
+<sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup>
 &#8201;&#8212;&#8201;<em>end note</em> ]</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="defns-stan"><a class="anchor" href="#defns-stan"></a>4.1.9. static analyzer <span class="right">[defns.stan]</span></h4>
+<h4 id="defns-stan"><a class="anchor" href="#defns-stan"></a>4.1.6. static analyzer <span class="right">[defns.stan]</span></h4>
 <div class="paragraph">
 <p><em>analyzer</em> that operates on software source code without executing it</p>
 </div>
 <div class="paragraph">
 <p>[ <em>Note 1</em>:
 This definition is compatible with the matching one in ISO/IEC TS 17961:2013.
-<sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup>
+<sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnotedef_5" title="View footnote.">5</a>]</sup>
 &#8201;&#8212;&#8201;<em>end note</em> ]</p>
 </div>
 </div>
@@ -975,10 +972,16 @@ This definition is compatible with the matching one in ISO/IEC TS 17961:2013.
 <a href="#_footnoteref_1">1</a>. C&#43;&#43; Ecosystem Internal Standard (<a href="https://wg21.link/P2656R0" class="bare">https://wg21.link/P2656R0</a>)
 </div>
 <div class="footnote" id="_footnotedef_2">
-<a href="#_footnoteref_2">2</a>. ISO/IEC TS 17961:2013(en) Information technology — Programming languages, their environments and system software interfaces — C secure coding rules (<a href="https://www.iso.org/obp/ui#iso:std:iso-iec:ts:17961:ed-1:v1:en:term:4.1" class="bare">https://www.iso.org/obp/ui#iso:std:iso-iec:ts:17961:ed-1:v1:en:term:4.1</a>)
+<a href="#_footnoteref_2">2</a>. ISO/IEC 2382:2015(en) Information technology — Vocabulary (<a href="https://www.iso.org/obp/ui#iso:std:iso-iec:2382:ed-1:v2:en" class="bare">https://www.iso.org/obp/ui#iso:std:iso-iec:2382:ed-1:v2:en</a>)
 </div>
 <div class="footnote" id="_footnotedef_3">
-<a href="#_footnoteref_3">3</a>. ISO/IEC TS 17961:2013(en) Information technology — Programming languages, their environments and system software interfaces — C secure coding rules (<a href="https://www.iso.org/obp/ui#iso:std:iso-iec:ts:17961:ed-1:v1:en:term:4.13" class="bare">https://www.iso.org/obp/ui#iso:std:iso-iec:ts:17961:ed-1:v1:en:term:4.13</a>)
+<a href="#_footnoteref_3">3</a>. ISO/IEC/IEEE 24765:2017(en) Systems and software engineering — Vocabulary (<a href="https://www.iso.org/obp/ui#iso:std:iso-iec-ieee:24765:ed-2:v1:en" class="bare">https://www.iso.org/obp/ui#iso:std:iso-iec-ieee:24765:ed-2:v1:en</a>)
+</div>
+<div class="footnote" id="_footnotedef_4">
+<a href="#_footnoteref_4">4</a>. ISO/IEC TS 17961:2013(en) Information technology — Programming languages, their environments and system software interfaces — C secure coding rules (<a href="https://www.iso.org/obp/ui#iso:std:iso-iec:ts:17961:ed-1:v1:en:term:4.1" class="bare">https://www.iso.org/obp/ui#iso:std:iso-iec:ts:17961:ed-1:v1:en:term:4.1</a>)
+</div>
+<div class="footnote" id="_footnotedef_5">
+<a href="#_footnoteref_5">5</a>. ISO/IEC TS 17961:2013(en) Information technology — Programming languages, their environments and system software interfaces — C secure coding rules (<a href="https://www.iso.org/obp/ui#iso:std:iso-iec:ts:17961:ed-1:v1:en:term:4.13" class="bare">https://www.iso.org/obp/ui#iso:std:iso-iec:ts:17961:ed-1:v1:en:term:4.13</a>)
 </div>
 </div>
 </body>
