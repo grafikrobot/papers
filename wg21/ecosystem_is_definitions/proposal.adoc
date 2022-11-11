@@ -1,0 +1,151 @@
+= C++ Ecosystem IS: Definitions
+:copyright: Copyright 2022 René Ferdinand Rivera Morell
+:email: grafikrobot@gmail.com
+:authors: René Ferdinand Rivera Morell, et al.
+:audience: WG21
+:revdate: {docdate}
+:version-label!:
+:reproducible:
+:nofooter:
+:sectanchors:
+:sectnums:
+:sectnumlevels: 5
+:source-highlighter: rouge
+:source-language: c++
+:toc: left
+:toclevels: 2
+:caution-caption: ⚑
+:important-caption: ‼
+:note-caption: ℹ
+:tip-caption: ☀
+:warning-caption: ⚠
+:table-caption: Table 
+
+++++
+<style>
+.sectionbody > div > .ins {
+  border-left: solid 0.4em green;
+  padding-left: 1em;
+  text-decoration: underline solid green;
+  text-underline-offset: 0.3em;
+}
+.def > .content :first-child {
+  margin-left: 0;
+}
+.def > .content > * {
+  margin-left: 3em;
+}
+.icon .title {
+  font-size: 250%;
+}
+</style>
+++++
+
+Document number: :: ISO/IEC/JTC1/SC22/WG21/{revnumber}
+Date: :: {revdate}
+Audience: :: {audience}
+Reply-to: ::
+René Ferdinand Rivera Morell - _grafikrobot at gmail dot com_ - B2 Maintainer
+
+== Abstract
+
+This proposes an initial collection of definitions used in the {CPP} tooling
+ecosystem. The definitions herein should provide minimal coverage for well
+understood tools, processes, and concepts currently used in the ecosystem.
+
+== Revision History
+
+=== Revision 0 (November 2022)
+
+Initial text.
+
+== Motivation
+
+We need a common language to refer to the many components
+and aspects of the ecosystem. With a shared understanding of components like:
+compilers, linkers, analyzers, debuggers, package managers, preprocessors,
+source files, object files, library files, shared library files, executables, 
+and more, we can subsequently formulate specifications for them.
+
+== Wording
+
+Wording is new and meant for a prospective {CPP} Ecosystem Internal Standard
+as proposed in P2656R0.
+footnote:[{CPP} Ecosystem Internal Standard (https://wg21.link/P2656R0)]
+
+Add a "Terms and defiitions" chapter with the following content.
+
+[#intro-defs,reftext=intro.defs]
+=== Terms and definitions [.right]#[intro.defs]#
+
+For the purposes of this document, the terms and definitions given in ISO/IEC
+2382, the terms, definitions, and symbols given in ISO 80000-2:2009, and the
+following apply.
+
+ISO and IEC maintain terminology databases for use in standardization at the
+following addresses:
+
+-- ISO Online browsing platform: available at https://www.iso.org/obp
+
+-- IEC Electropedia: available at https://www.electropedia.org/
+
+Terms that are used only in a small portion of this document are defined where
+they are used and italicized where they are defined.
+
+[#defns-bldexec,reftext=defns.bldexec]
+==== build executor [.right]#[defns.bldexec]#
+
+_build tool_ that executes a set of commands in order to complete a build
+
++[+ _Note 1_:
+Examples: `ninja`, `make`, `bazel`.
+ -- _end note_ +]+
+
+[#defns-bldtool,reftext=defns.bldtool]
+==== build tool [.right]#[defns.bldtool]#
+
+tool used primarily for building software
+
++[+ _Note 1_:
+Examples: _compiler_, _build executor_, _build system_.
+ -- _end note_ +]+
+
+[#defns-bldsys,reftext=defns.bldsys]
+==== build system [.right]#[defns.bldsys]#
+
+tool which models a build of a set of sources into a set of artifacts
+
++[+ _Note 1_:
+Such a tool may be a _build executor_ itself or write out a plan for another
+_build executor_ to perform.
+Examples: `cmake`, `meson`, `bazel`, `gn`, `build2`, `B2`.
+ -- _end note_ +]+
+
+[#defns-comp,reftext=defns.comp]
+==== compiler [.right]#[defns.comp]#
+
+[#defns-slnk,reftext=defns.slnk]
+==== static linker [.right]#[defns.slnk]#
+
+[#defns-dbg,reftext=defns.dbg]
+==== debugger [.right]#[defns.dbg]#
+
+[#defns-san,reftext=defns.san]
+==== sanitizer [.right]#[defns.san]#
+
+[#defns-anlzr,reftext=defns.anlzr]
+==== analyzer [.right]#[defns.anlzr]#
+
+
+//// 
+
+[#defns-thing,reftext=defns.thing]
+==== thing [.right]#[defns.thing]#
+
+It's a thing that does things.
+
++[+ _Note 1_:
+The thing could do sething else.
+ -- _end note_ +]+
+
+ ////
