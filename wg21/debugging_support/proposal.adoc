@@ -66,6 +66,7 @@ footnote:P1279[P1279 `std::breakpoint`, _Isabella Muerte_ 2018-10-05
 === Revision 3 (November 2022)
 
 * Fix spelling error in wording.
+* Add EWG poll results.
 
 === Revision 2 (October 2022)
 
@@ -349,6 +350,17 @@ specific threads among the dozens of threads running, to prevent automated
 crash reporting, and to present GUI elements only when debugging.
 
 == Polls
+
+=== EWG: P2546R2 (2022-11-08)
+
+Forward P2546R2 to LEWG, and suggest inclusion in C++26.
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+| 4 | 13 | 1 | 0 | 1
+|===
+
+Result: Consensus
 
 === SG15: P2546 (2022-02-18)
 
