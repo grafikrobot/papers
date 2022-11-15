@@ -2,7 +2,7 @@
 :copyright: Copyright 2021 René Ferdinand Rivera Morell
 :email: grafikrobot@gmail.com
 :authors: René Ferdinand Rivera Morell
-:audience: EWG
+:audience: LEWG
 :revdate: {docdate}
 :version-label!:
 :reproducible:
