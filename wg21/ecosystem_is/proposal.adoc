@@ -119,6 +119,8 @@ It is not a goal to alter, in any way, the {CPP} Language Standard. It is
 important that how we define the tools of the {CPP} ecosystem evolves
 independent of the language.
 
+== Process
+
 == Goals
 
 Like the {CPP} Language Standard this one will never be complete or finished.
@@ -174,3 +176,63 @@ work on this:
 footnote:[Modules User-Facing Lexicon and File Extensions. _Bryce Adelstein Lelbach_, _Boris Kolpackov_ (https://github.com/cplusplus/papers/issues/727)]
 * P1177 Package Ecosystem Plan.
 footnote:P1177[]
+
+== Timeline
+
+We believe that improving the interoperability in the {CPP} ecosystem is an
+urgent problem to solve. Hence we aim to publish a standard quickly and
+provide updates to it as quickly.
+
+Because we plan on a small initial standard document we will follow the SDT 24
+standards development track.
+
+=== 2023.1: Plan
+
+[horizontal]
+Goal:: Finalize the plan for the development of the IS.
+
+=== 2023.2:
+
+=== 2023.3:
+
+=== 2024.1: Proposal
+
+[horizontal]
+Goal:: Submit formal proposal to create work item for the publication of
+the new IS.
+
+The proposal will include an initial, mostly complete, draft of the
+intended content of the IS. Submitting at this meeting allows following the
+"SDT 18" track of development with a target publication in Q3 2025. The goal
+being to avoid the rush of the preparations for the {CPP} 26 IS. As the work
+will be completed by Q1 2025.
+
+NOTE: Provide for an 8 week ballot period on proposal acceptance.
+
+=== 2024.3: CD Finalized
+
+[horizontal]
+Goal:: Approve Committee Draft for National Body comments.
+
+After gathering National Body comments 
+
+NOTE: Provide for an 8 week ballot period on proposal acceptance. And 2 weeks of
+comment compilation time.
+
+
+* Committee stage: Development and acceptance of committee draft DIS
+** 8 week ballot period
+** 4 week max comment compilation
+** optional?
+
+NOTE: Per ISO/IEC Directives 2.1.6
+"submission of the enquiry draft"
+
+=== 2025.1: DIS Finalized
+
+Resolve NB comments
+
+=== 2025.2: 
+
+NOTE: Per ISO/IEC Directives 2.1.6
+"publication"

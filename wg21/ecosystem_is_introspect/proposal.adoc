@@ -1,4 +1,4 @@
-= C++ Ecosystem IS: Plan
+= C++ Ecosystem IS: Introspection
 :copyright: Copyright 2022 René Ferdinand Rivera Morell
 :email: grafikrobot@gmail.com
 :authors: René Ferdinand Rivera Morell, et al.
@@ -49,8 +49,8 @@ René Ferdinand Rivera Morell - _grafikrobot at gmail dot com_
 
 == Abstract
 
-We propose a plan for creating and publishing a new {CPP} Ecosystem
-International Standard as proposed by P2656R0 in a timely matter.
+We propose to add a mechanism for {CPP} tools to communicate what capabilities
+a tool implements from the Ecosystem IS.
 
 == Revision History
 
@@ -60,8 +60,16 @@ Initial text.
 
 == Motivation
 
-== Scope
+== Design
 
-== Process
+=== Impact On The Standard
 
-== Timeline
+== Implementation Experience
+
+== Polls
+
+None yet.
+
+== Wording
+
+== Acknowledgements

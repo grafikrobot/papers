@@ -7,7 +7,7 @@ http://www.boost.org/LICENSE_1_0.txt)
 
 import asciidoctor ;
 
-local name = ecosystem_is_plan ;
+local name = ecosystem_is_introspect ;
 local docn = D2717 ;
 local docr = R0 ;
 local xxxx = $(docn)$(docr) ;
