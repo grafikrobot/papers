@@ -8,8 +8,8 @@ http://www.boost.org/LICENSE_1_0.txt)
 import asciidoctor ;
 
 local name = ecosystem_is ;
-local docn = P2656 ;
-local docr = R0 ;
+local docn = D2656 ;
+local docr = R1 ;
 local xxxx = $(docn)$(docr) ;
 
 project /wg21_$(name)
