@@ -133,6 +133,7 @@ standard could include some modest items:
 . Format Specifications :
 .. Build System <==> Package Manager Interoperation
 .. File Names
+.. Introspection
 
 === Definitions
 
@@ -194,6 +195,8 @@ provide updates to it as quickly.
 Because we plan on a small initial standard document we will follow the SDT 24
 standards development track.
 
+The timeline that follows lists milestones for relevant WG21 meetings.
+
 === 2023.1: Plan
 
 [horizontal]
@@ -202,7 +205,9 @@ Goal:: Finalize the plan for the development of the IS.
 With the intent of keeping the first release of the IS limited we expect to have
 a rough idea of what will go into the IS by this time. We will seek Committee
 approval at this stage of the work plan and rough outline. With that approval we
-can proceed with the work in ernest of drafting and implementing the IS.
+can proceed with the work in ernest of drafting and implementing the IS. From
+this point we will have one year (12 months) to hone proposals to merge into the
+IS.
 
 === 2024.1: Proposal
 
@@ -223,6 +228,12 @@ NOTE: Provide for an 8 week ballot period on proposal acceptance.
 [horizontal]
 Goal:: Approve Committee Draft for National Body comments.
 
+From submitting an initial draft in 2024.1 we will have completed incorporating
+any detail changes that the draft text will be ready to get voted on. This will
+mark, approximately, 1.5 years since the beginning of work on the new IS. The
+goal at this WG21 meeting will be to address any urgent issues that could
+prevent NB balloting of the IS draft.
+
 NOTE: Provide for an 8 week ballot period on proposal acceptance.
 And 2 (4?) weeks of comment compilation time.
 
@@ -231,7 +242,12 @@ And 2 (4?) weeks of comment compilation time.
 [horizontal]
 Goal:: Resolve collected NB comments and approve the final draft of the IS.
 
-=== 2025.2: 2027 Plan
+Consider and resolve NB comments compiled during the CD polling. With the first
+IS on its way to publishing approval we can start discussions on what the
+process and content will be going forward.
+
+=== 2025.2: Plan-27
 
 Goal:: Formally begin on the next IS release for 2027 by finalizing the ongoing
 development plans.
+
