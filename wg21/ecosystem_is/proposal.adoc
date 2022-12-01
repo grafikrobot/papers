@@ -57,6 +57,14 @@ Standard (ISO/IEC 14882).
 
 == Revision History
 
+=== Revision 1 (January 2023)
+
+Adds proposed timeline and process for development of the IS from the first
+edition onwards. Also adds "2717 Tool Introspection" as a goal for the first
+edition.
+
+Include record of polls.
+
 === Revision 0 (October 2022)
 
 Initial text.
@@ -119,14 +127,12 @@ It is not a goal to alter, in any way, the {CPP} Language Standard. It is
 important that how we define the tools of the {CPP} ecosystem evolves
 independent of the language.
 
-== Process
-
 == Goals
 
 Like the {CPP} Language Standard this one will never be complete or finished.
 And it will take time and effort to provide coverage of the specifications
 needed to put together a good basic picture of the ecosystem. While the scope
-above defines an ideal completion, the goals for a first revision of this
+above defines an ideal completion, the goals for a first edition of this
 standard could include some modest items:
 
 . Definitions
@@ -189,11 +195,20 @@ footnote:[Tool Introspection. _René Ferdinand Rivera Morell_ (https://wg21.link
 == Timeline
 
 We believe that improving the interoperability in the {CPP} ecosystem is an
-urgent problem to solve. Hence we aim to publish a standard quickly and
-provide updates to it as quickly.
+urgent problem to solve.
 
-Because we plan on a small initial standard document we will follow the SDT 24
-standards development track.
+* We can't solve all the challenges of the ecosystem interoperation at once;
+there are just too many of them.
+* We need solutions sooner to show that vendors can count on a stable future
+for them to build their tools on.
+* We need implementations sooner to show users the value of the IS.
+* We recognize that the IS will have errors that need to be addressed quickly.
+
+Hence we aim to publish a standard quickly and provide updates to it as quickly.
+The goal is to publish this new IS on a two (2) cycle starting in 2023. This
+means publishing the first edition in 2025. Subsequent versions would then
+publish in 2027, 2029, and so on. Because we plan on a small initial standard
+document we will follow the SDT 24 standards development track.
 
 The timeline that follows lists milestones for relevant WG21 meetings.
 
@@ -202,7 +217,7 @@ The timeline that follows lists milestones for relevant WG21 meetings.
 [horizontal]
 Goal:: Finalize the plan for the development of the IS.
 
-With the intent of keeping the first release of the IS limited we expect to have
+With the intent of keeping the first edition of the IS limited we expect to have
 a rough idea of what will go into the IS by this time. We will seek Committee
 approval at this stage of the work plan and rough outline. With that approval we
 can proceed with the work in ernest of drafting and implementing the IS. From
@@ -223,7 +238,7 @@ will be completed by Q1 2025.
 
 NOTE: Provide for an 8 week ballot period on proposal acceptance.
 
-=== 2024.3: CD Finalized
+=== 2024.3: Committee Draft (CD) Finalized
 
 [horizontal]
 Goal:: Approve Committee Draft for National Body comments.
@@ -237,17 +252,111 @@ prevent NB balloting of the IS draft.
 NOTE: Provide for an 8 week ballot period on proposal acceptance.
 And 2 (4?) weeks of comment compilation time.
 
-=== 2025.1: DIS Finalized
+=== 2025.1: Draft International Standard (DIS) Finalized
 
-[horizontal]
 Goal:: Resolve collected NB comments and approve the final draft of the IS.
 
 Consider and resolve NB comments compiled during the CD polling. With the first
 IS on its way to publishing approval we can start discussions on what the
 process and content will be going forward.
 
-=== 2025.2: Plan-27
+=== 2025.2: Future
 
-Goal:: Formally begin on the next IS release for 2027 by finalizing the ongoing
+Goal:: Formally begin on the next IS edition for 2027 by finalizing the ongoing
 development plans.
 
+From here we can start the ongoing two (2) year cycles of releasing updates to
+the IS. In comparison to the C++ IS that would look like:
+
+image::timeline.drawio.svg[opts=inline]
+
+== Process
+
+We expect the development of the IS to use two processes that mesh into the
+existing processes of WG21:
+
+Inline::
+Initial development and review in Tooling Study Group (SG15), followed by
+review and approvals in Evolution Working Group (EWG) or Library Evolution
+Working Group (LEWG). And from there continuing to the regular review and
+approval of wording process.
+
+Parallel::
+Development and review can originate in any existing study group depending as
+appropriate. And then move to SG15 for review. Followed for review and approval
+by a new Tooling/Ecosystem Working Group (TEWG). TEWG would include
+consideration of wording of the IS itself. And, hence, produce polls for WG21
+plenary votes.
+
+=== Inline
+
+We would use the _Inline_ process for the first edition of the IS. Following
+this process for the first edition has some advantages:
+
+* It's a process we know. Which means it reduces initial overhead.
+* The reduced overhead allows us to concentrate more time on the IS development
+  itself.
+* Gives us time to recruit people for the subsequent editions of the IS.
+* Contributors build up knowledge on the process to prepare for the next
+  IS edition.
+
+But it has some drawbacks:
+
+* It places higher burden on time for the EWG and Core groups to review the
+  work.
+* The EWG and Core groups usual experts might not all be familiar with the
+  tooling and ecosystem domain.
+
+Those are significant drawbacks although we think are ameliorated by: First,
+scheduling the IS to complete a full year before the {CPP}26 time frame. And,
+second, limiting the scope of the IS early in the time line resulting in more
+time spent in SG15 on draft wording details.
+
+=== Parallel
+
+After the first edition of the IS we would switch to the _Parallel_ process.
+Visually this process would alter the regular flow of WG21 in minor ways
+resulting in:
+
+image::process.drawio.svg[opts=inline]
+
+Here the drawbacks from the _Inline_ process are addressed. And we maintain the
+advantages as we will have people ready and able to develop and process further
+editions of the IS.
+
+This process structure will, clearly, change over time as the IS grows and
+experts fill similar roles to what we now have in WG21. Hence we expect to
+eventually need a wording group and narrower domain specific study groups.
+
+== Polls
+
+=== SG15: P2656R0 (2022-11-09)
+
+SG15 recommends to WG21 to create a new Tooling IS with the scope and goals
+described in P2656R0 when an approved working document has been produced.
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+| 13 | 3 | 4 | 0 | 0
+|===
+
+*Result*: pretty strong consensus
+
+*Author*: SF
+
+*Attendance*: 20 
+
+=== EWG: P2656R0 (2022-11-10)
+
+EWG is in favor of further work in the direction of starting an additional IS
+for Tooling Interaction as proposed by P2656, and would like to see this again
+with a proposed scope, process, details, etc:
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+| 29 | 6 | 1 | 0 | 0
+|===
+
+*Result*: strong consensus
