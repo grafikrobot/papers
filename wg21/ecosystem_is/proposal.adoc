@@ -38,6 +38,9 @@
 .icon .title {
   font-size: 250%;
 }
+.imageblock svg {
+  width: 100% !important;
+}
 </style>
 ++++
 
