@@ -217,7 +217,6 @@ The timeline that follows lists milestones for relevant WG21 meetings.
 
 === 2023.1: Plan
 
-[horizontal]
 Goal:: Finalize the plan for the development of the IS.
 
 With the intent of keeping the first edition of the IS limited we expect to have
@@ -229,7 +228,6 @@ IS.
 
 === 2024.1: Proposal
 
-[horizontal]
 Goal:: Submit formal proposal to create work item for the publication of
 the new IS.
 
@@ -243,7 +241,6 @@ NOTE: Provide for an 8 week ballot period on proposal acceptance.
 
 === 2024.3: Committee Draft (CD) Finalized
 
-[horizontal]
 Goal:: Approve Committee Draft for National Body comments.
 
 From submitting an initial draft in 2024.1 we will have completed incorporating
