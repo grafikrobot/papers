@@ -51,6 +51,7 @@ René Ferdinand Rivera Morell - _grafikrobot at gmail dot com_
 
 We propose to add a mechanism for {CPP} tools to communicate what capabilities
 a tool implements from the Ecosystem IS.
+footnote:EcoIS[https://wg21.link/P2656 {CPP} Ecosystem International Standard]
 
 == Revision History
 
@@ -60,11 +61,61 @@ Initial text.
 
 == Motivation
 
+{CPP} tools will implement the aspects of the Ecosystem IS footnote:EcoIS[] that
+are relevant to the particular tool. And when they implement those aspects they
+may implement ar particular edition of them. In order to allow other tools to
+adjust their behavior to accommodate such differences we need a mechanism of
+introspection for all tools. Additionally when one tool requests to use another
+tool's Ecosystem IS aspect it's desirable to consistently communicate which
+edition(s) of that aspect it can use.
+
 == Design
+
+There are two aspects that this proposal covers:
+
+Introspection:: A tool reporting its capabilities to a consumer.
+
+Declaration:: A consumer specifying which capability edition and version.
+
+_Introspection_ would allow a consumer to ask the target tool if it implements a
+particular set of capabilities. The target tool would respond with the range of
+capabilities, or nothing, that it supports. With that information the consumer
+can go ahead and follow the defined standard, in the Ecosystem IS
+footnote:EcoIS[], to further interact with the target tool.
+
+For _declaration_ a consumer can specify a particular capability and a version
+to interact with. And if the target tool recognizes the specification it can
+continue to process the consumer's use of that capability.
+
+Even though these are two separate functions they are by necessity tied to each
+other. In order for this pairing to work, and generally for tool
+interoperability to work, the tool consumers and target tools must operate on
+this minimal pair of functions to bootstrap their interactions. To make that
+possible, this design follows some basic tenants:
+
+[horizontal]
+
+Minimal:: The interface of the target tool is a single universal command line
+argument for each of the two operations.
+
+Concise:: The information communicated to and from the targe tool and consumer
+is as brief as needed to convey the required information.
+
+Robust:: The interface and information should not result in failure conditions
+for either the consumer or target tool. Both ends of the interactions need to
+rely on the stability of the interface to then be able to interoperate.
+
+=== Introspection
+
+The consumer can use a single method to query the target tool and obtain..
+
+=== Declaration
 
 === Impact On The Standard
 
 == Implementation Experience
+
+None yet.
 
 == Polls
 
@@ -72,4 +123,8 @@ None yet.
 
 == Wording
 
+None yet.
+
 == Acknowledgements
+
+None yet.

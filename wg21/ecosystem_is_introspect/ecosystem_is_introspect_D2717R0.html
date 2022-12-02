@@ -757,7 +757,7 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 <span id="author" class="author">René Ferdinand Rivera Morell, et al.</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> D2717R0,</span>
-<span id="revdate">2022-11-23</span>
+<span id="revdate">2022-12-01</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -771,7 +771,9 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 <li><a href="#_motivation">3. Motivation</a></li>
 <li><a href="#_design">4. Design</a>
 <ul class="sectlevel2">
-<li><a href="#_impact_on_the_standard">4.1. Impact On The Standard</a></li>
+<li><a href="#_introspection">4.1. Introspection</a></li>
+<li><a href="#_declaration">4.2. Declaration</a></li>
+<li><a href="#_impact_on_the_standard">4.3. Impact On The Standard</a></li>
 </ul>
 </li>
 <li><a href="#_implementation_experience">5. Implementation Experience</a></li>
@@ -809,7 +811,7 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 </dd>
 <dt class="hdlist1">Date: </dt>
 <dd>
-<p>2022-11-23</p>
+<p>2022-12-01</p>
 </dd>
 <dt class="hdlist1">Audience: </dt>
 <dd>
@@ -828,7 +830,8 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 <div class="sectionbody">
 <div class="paragraph">
 <p>We propose to add a mechanism for C&#43;&#43; tools to communicate what capabilities
-a tool implements from the Ecosystem IS.</p>
+a tool implements from the Ecosystem IS.
+<sup class="footnote" id="_footnote_EcoIS">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup></p>
 </div>
 </div>
 </div>
@@ -846,14 +849,98 @@ a tool implements from the Ecosystem IS.</p>
 <div class="sect1">
 <h2 id="_motivation"><a class="anchor" href="#_motivation"></a>3. Motivation</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>C&#43;&#43; tools will implement the aspects of the Ecosystem IS <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup> that
+are relevant to the particular tool. And when they implement those aspects they
+may implement ar particular edition of them. In order to allow other tools to
+adjust their behavior to accommodate such differences we need a mechanism of
+introspection for all tools. Additionally when one tool requests to use another
+tool&#8217;s Ecosystem IS aspect it&#8217;s desirable to consistently communicate which
+edition(s) of that aspect it can use.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_design"><a class="anchor" href="#_design"></a>4. Design</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>There are two aspects that this proposal covers:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Introspection</dt>
+<dd>
+<p>A tool reporting its capabilities to a consumer.</p>
+</dd>
+<dt class="hdlist1">Declaration</dt>
+<dd>
+<p>A consumer specifying which capability edition and version.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p><em>Introspection</em> would allow a consumer to ask the target tool if it implements a
+particular set of capabilities. The target tool would respond with the range of
+capabilities, or nothing, that it supports. With that information the consumer
+can go ahead and follow the defined standard, in the Ecosystem IS
+<sup class="footnoteref">[<a class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>, to further interact with the target tool.</p>
+</div>
+<div class="paragraph">
+<p>For <em>declaration</em> a consumer can specify a particular capability and a version
+to interact with. And if the target tool recognizes the specification it can
+continue to process the consumer&#8217;s use of that capability.</p>
+</div>
+<div class="paragraph">
+<p>Even though these are two separate functions they are by necessity tied to each
+other. In order for this pairing to work, and generally for tool
+interoperability to work, the tool consumers and target tools must operate on
+this minimal pair of functions to bootstrap their interactions. To make that
+possible, this design follows some basic tenants:</p>
+</div>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+Minimal
+</td>
+<td class="hdlist2">
+<p>The interface of the target tool is a single universal command line
+argument for each of the two operations.</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+Concise
+</td>
+<td class="hdlist2">
+<p>The information communicated to and from the targe tool and consumer
+is as brief as needed to convey the required information.</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+Robust
+</td>
+<td class="hdlist2">
+<p>The interface and information should not result in failure conditions
+for either the consumer or target tool. Both ends of the interactions need to
+rely on the stability of the interface to then be able to interoperate.</p>
+</td>
+</tr>
+</table>
+</div>
 <div class="sect2">
-<h3 id="_impact_on_the_standard"><a class="anchor" href="#_impact_on_the_standard"></a>4.1. Impact On The Standard</h3>
+<h3 id="_introspection"><a class="anchor" href="#_introspection"></a>4.1. Introspection</h3>
+<div class="paragraph">
+<p>The consumer can use a single method to query the target tool and obtain..</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_declaration"><a class="anchor" href="#_declaration"></a>4.2. Declaration</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_impact_on_the_standard"><a class="anchor" href="#_impact_on_the_standard"></a>4.3. Impact On The Standard</h3>
 
 </div>
 </div>
@@ -861,7 +948,9 @@ a tool implements from the Ecosystem IS.</p>
 <div class="sect1">
 <h2 id="_implementation_experience"><a class="anchor" href="#_implementation_experience"></a>5. Implementation Experience</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>None yet.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -875,14 +964,24 @@ a tool implements from the Ecosystem IS.</p>
 <div class="sect1">
 <h2 id="_wording"><a class="anchor" href="#_wording"></a>7. Wording</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>None yet.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_acknowledgements"><a class="anchor" href="#_acknowledgements"></a>8. Acknowledgements</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>None yet.</p>
 </div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnotedef_1">
+<a href="#_footnoteref_1">1</a>. <a href="https://wg21.link/P2656" class="bare">https://wg21.link/P2656</a> C&#43;&#43; Ecosystem International Standard
 </div>
 </div>
 </body>
