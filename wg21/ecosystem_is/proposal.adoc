@@ -83,7 +83,8 @@ fractured in ways that hinder its successful advancement.
 The continued success of {CPP} is tied not solely to the language, but to the
 {CPP} ecosystem. The interoperability within that ecosystem is key to
 surmounting the challenges of further growth of the language for the benefit of
-users. It is therefore critical that we expand the specifications that WG21 produces to bring coherence to the {CPP} ecosystem.
+users. It is therefore critical that we expand the specifications that WG21
+produces to bring coherence to the {CPP} ecosystem.
 
 Users should be able to mix and match their preferred build systems, compilers,
 linkers, package managers, static analyzers, runtime analyzers, debuggers,
@@ -208,10 +209,16 @@ for them to build their tools on.
 * We recognize that the IS will have errors that need to be addressed quickly.
 
 Hence we aim to publish a standard quickly and provide updates to it as quickly.
-The goal is to publish this new IS on a two (2) cycle starting in 2023. This
-means publishing the first edition in 2025. Subsequent versions would then
+The goal is to publish this new IS on a two (2) year cycle starting in 2023.
+This means publishing the first edition in 2025. Subsequent versions would then
 publish in 2027, 2029, and so on. Because we plan on a small initial standard
-document we will follow the SDT 24 standards development track.
+document we will follow the 24 month standards development track (SDT 24).
+footnote:sdt24[Standards Development Track, 24 Months:
+ISO/IEC Directives, Part 1 —
+Consolidated ISO Supplement —
+Procedure for the technical work
+— Procedures specific to ISO _Section 2.1.6.1 General_
+(https://isotc.iso.org/livelink/livelink?func=ll&objId=4230452&objAction=browse&sort=subtype)]
 
 The timeline that follows lists milestones for relevant WG21 meetings.
 
@@ -220,11 +227,18 @@ The timeline that follows lists milestones for relevant WG21 meetings.
 Goal:: Finalize the plan for the development of the IS.
 
 With the intent of keeping the first edition of the IS limited we expect to have
-a rough idea of what will go into the IS by this time. We will seek Committee
-approval at this stage of the work plan and rough outline. With that approval we
-can proceed with the work in ernest of drafting and implementing the IS. From
-this point we will have one year (12 months) to hone proposals to merge into the
-IS.
+a rough idea of what will go into the IS by this time. SG15 will poll the plan
+at this, or earlier, point. From this point we will have one year (12 months)
+to hone proposals to merge into the IS.
+
+=== 2023.2: Pre-Draft
+
+Goal:: Approve skeleton draft of the IS.
+
+We will have a minimal skeleton draft of the IS prepared. This draft will have
+one or more papers merged into it, and will have outlines for the rest of the
+content, as possible. We will ask EWG approval on this content to checkpoint
+the work so far and the work going forward.
 
 === 2024.1: Proposal
 
@@ -233,9 +247,9 @@ the new IS.
 
 The proposal will include an initial, mostly complete, draft of the
 intended content of the IS. Submitting at this meeting allows following the
-"SDT 18" track of development with a target publication in Q3 2025. The goal
-being to avoid the rush of the preparations for the {CPP} 26 IS. As the work
-will be completed by Q1 2025.
+SDT 24 track of development foornote:sdt24[] with a target publication in
+Q3 2025. The goal being to avoid the rush of the preparations for the {CPP} 26
+IS. As the work will be completed by Q1 2025.
 
 NOTE: Provide for an 8 week ballot period on proposal acceptance.
 
@@ -275,7 +289,7 @@ image::timeline.drawio.svg[opts=inline]
 We expect the development of the IS to use two processes that mesh into the
 existing processes of WG21:
 
-Inline::
+Bootstrap::
 Initial development and review in Tooling Study Group (SG15), followed by
 review and approvals in Evolution Working Group (EWG) or Library Evolution
 Working Group (LEWG). And from there continuing to the regular review and
@@ -283,14 +297,13 @@ approval of wording process.
 
 Parallel::
 Development and review can originate in any existing study group depending as
-appropriate. And then move to SG15 for review. Followed for review and approval
-by a new Tooling/Ecosystem Working Group (TEWG). TEWG would include
-consideration of wording of the IS itself. And, hence, produce polls for WG21
-plenary votes.
+appropriate. Followed for review and approval by a new Tooling Working Group
+(TWG). TWG would include consideration of wording of the IS itself. And, hence,
+produce polls for WG21 plenary votes.
 
-=== Inline
+=== Bootstrap
 
-We would use the _Inline_ process for the first edition of the IS. Following
+We would use the _Bootstrap_ process for the first edition of the IS. Following
 this process for the first edition has some advantages:
 
 * It's a process we know. Which means it reduces initial overhead.
@@ -320,13 +333,16 @@ resulting in:
 
 image::process.drawio.svg[opts=inline]
 
-Here the drawbacks from the _Inline_ process are addressed. And we maintain the
-advantages as we will have people ready and able to develop and process further
-editions of the IS.
+Here the drawbacks from the _Bootstrap_ process are addressed. And we maintain
+the advantages as we will have people ready and able to develop and process
+further editions of the IS.
 
 This process structure will, clearly, change over time as the IS grows and
 experts fill similar roles to what we now have in WG21. Hence we expect to
 eventually need a wording group and narrower domain specific study groups.
+
+NOTE: SG15 would cease to operate. As TWG would assume the same
+responsibilities.
 
 == Polls
 
