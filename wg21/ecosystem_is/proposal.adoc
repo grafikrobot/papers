@@ -247,7 +247,7 @@ the new IS.
 
 The proposal will include an initial, mostly complete, draft of the
 intended content of the IS. Submitting at this meeting allows following the
-SDT 24 track of development foornote:sdt24[] with a target publication in
+SDT 24 track of development footnote:sdt24[] with a target publication in
 Q3 2025. The goal being to avoid the rush of the preparations for the {CPP} 26
 IS. As the work will be completed by Q1 2025.
 
