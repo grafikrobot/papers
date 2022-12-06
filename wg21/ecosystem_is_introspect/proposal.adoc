@@ -75,7 +75,7 @@ There are two aspects that this proposal covers:
 
 Introspection:: A tool reporting its capabilities to a consumer.
 
-Declaration:: A consumer specifying which capability edition and version.
+Declaration:: A consumer specifying the capability edition and version.
 
 _Introspection_ would allow a consumer to ask the target tool if it implements a
 particular set of capabilities. The target tool would respond with the range of
@@ -107,9 +107,115 @@ rely on the stability of the interface to then be able to interoperate.
 
 === Introspection
 
-The consumer can use a single method to query the target tool and obtain..
+The consumer can use a single method to query the target tool and obtain all the
+capabilities that are available or specifically requested. The following two
+use cases are supported:
+
+. Unbounded _introspection_ of the available capabilities with a single
+valueless `--std-info` option.
+. Bounded _introspection_ of particular capabilities with a single query valued
+`--std-info=<query>` option.
+
+==== Unbounded
+
+An unbounded _introspection_ is the simplest form of obtaining the capabilities.
+It is expected that this will be the most commonly used and implemented method
+of obtaining this information. It simply returns everything the tool is capable
+of doing. This is because it is the easiest to implement for tools. As it's
+simply having a hard-wired result ready to output when needed. The drawback
+though is that the consumer has more information to parse and compare to decide
+how to interface with the target tool.
+
+Running a `tool` with the option would look like the following:
+
+[source,shell]
+----
+$ tool --std-info
+----
+
+And could produce this as a JSON output:
+
+[source,json]
+----
+{
+  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
+  "std:info": "[1.0.0,2.5.0]"
+}
+----
+
+Which would minimally indicate that the tool only supports the introspection
+capability at version "1.0.0".
+
+==== Bounded
+
+A bounded _introspection_ makes it possible to specify particular capabilities
+that a consumer is looking for in a target tool. By giving a query to the targe
+tool the consumer cat get an answer for just the capability they care about.
+This is particularly useful in cases where the consumer only support some
+versions of a capability and prefers to not implement the version comparison
+logic to determine this from the unbounded _introspection_.
+
+The bounded _introspection_ works equivalent to the unbounded case except the
+`--std-info` option takes a _specification_ value to say what capabilities to
+filter the results by. For example running:
+
+[source,shell]
+----
+tool "--std-info=std:info[1.0.0,2.1.0)"
+----
+
+And could produce this as a JSON output:
+
+[source,json]
+----
+{
+  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
+  "std:info": "[1.5.0,2.0.0]"
+}
+----
+
+Which means the tool is saying that tool only supports a subset of what the
+consumer asked about.
 
 === Declaration
+
+`--std-decl=<spec>`
+
+=== Format
+
+The information reported by _introspection_ is a JSON format
+footnote:json[Bryan, P., Ed., Zyp, K., and Nottingham, M., Ed., "JavaScript Object Notation (JSON) Pointer", RFC 6901, DOI 10.17487/RFC6901, April 2013, http://www.rfc-editor.org/info/rfc6901]
+document. Some advantages to using JSON:
+
+* It is widely used and available either natively or through libraries in many
+programming languages. Which is particularly important as {CPP} tools are
+written in an array of differing programming languages.
+* It is a simple format to understand by both programs and humans.
+
+[source,json]
+----
+{
+  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
+  "std:info": "1.0.0"
+}
+----
+
+[source,json]
+----
+{
+  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
+  "std:info": "[1.0.0,2.0.0)"
+}
+----
+
+[source,json]
+----
+{
+  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
+  "std:info": "[1.0.0,2.0.0)",
+  "gcc:extra": "1.5.0"
+}
+----
 
 === Impact On The Standard
 

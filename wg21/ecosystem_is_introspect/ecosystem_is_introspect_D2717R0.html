@@ -749,6 +749,88 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 .pygments .tok-c { color: #999 !important; }
 
 </style>
+<style>
+pre.rouge table td { padding: 5px; }
+pre.rouge table pre { margin: 0; }
+pre.rouge, pre.rouge .w {
+  color: #586e75;
+}
+pre.rouge .err {
+  color: #002b36;
+  background-color: #dc322f;
+}
+pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cpf, pre.rouge .c1, pre.rouge .cs {
+  color: #657b83;
+}
+pre.rouge .cp {
+  color: #b58900;
+}
+pre.rouge .nt {
+  color: #b58900;
+}
+pre.rouge .o, pre.rouge .ow {
+  color: #93a1a1;
+}
+pre.rouge .p, pre.rouge .pi {
+  color: #93a1a1;
+}
+pre.rouge .gi {
+  color: #859900;
+}
+pre.rouge .gd {
+  color: #dc322f;
+}
+pre.rouge .gh {
+  color: #268bd2;
+  background-color: #002b36;
+  font-weight: bold;
+}
+pre.rouge .k, pre.rouge .kn, pre.rouge .kp, pre.rouge .kr, pre.rouge .kv {
+  color: #6c71c4;
+}
+pre.rouge .kc {
+  color: #cb4b16;
+}
+pre.rouge .kt {
+  color: #cb4b16;
+}
+pre.rouge .kd {
+  color: #cb4b16;
+}
+pre.rouge .s, pre.rouge .sb, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .sh, pre.rouge .sx, pre.rouge .s1 {
+  color: #859900;
+}
+pre.rouge .sa {
+  color: #6c71c4;
+}
+pre.rouge .sr {
+  color: #2aa198;
+}
+pre.rouge .si {
+  color: #d33682;
+}
+pre.rouge .se {
+  color: #d33682;
+}
+pre.rouge .nn {
+  color: #b58900;
+}
+pre.rouge .nc {
+  color: #b58900;
+}
+pre.rouge .no {
+  color: #b58900;
+}
+pre.rouge .na {
+  color: #268bd2;
+}
+pre.rouge .m, pre.rouge .mb, pre.rouge .mf, pre.rouge .mh, pre.rouge .mi, pre.rouge .il, pre.rouge .mo, pre.rouge .mx {
+  color: #859900;
+}
+pre.rouge .ss {
+  color: #859900;
+}
+</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -757,7 +839,7 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 <span id="author" class="author">René Ferdinand Rivera Morell, et al.</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> D2717R0,</span>
-<span id="revdate">2022-12-01</span>
+<span id="revdate">2022-12-05</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -773,7 +855,8 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 <ul class="sectlevel2">
 <li><a href="#_introspection">4.1. Introspection</a></li>
 <li><a href="#_declaration">4.2. Declaration</a></li>
-<li><a href="#_impact_on_the_standard">4.3. Impact On The Standard</a></li>
+<li><a href="#_format">4.3. Format</a></li>
+<li><a href="#_impact_on_the_standard">4.4. Impact On The Standard</a></li>
 </ul>
 </li>
 <li><a href="#_implementation_experience">5. Implementation Experience</a></li>
@@ -811,7 +894,7 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 </dd>
 <dt class="hdlist1">Date: </dt>
 <dd>
-<p>2022-12-01</p>
+<p>2022-12-05</p>
 </dd>
 <dt class="hdlist1">Audience: </dt>
 <dd>
@@ -874,7 +957,7 @@ edition(s) of that aspect it can use.</p>
 </dd>
 <dt class="hdlist1">Declaration</dt>
 <dd>
-<p>A consumer specifying which capability edition and version.</p>
+<p>A consumer specifying the capability edition and version.</p>
 </dd>
 </dl>
 </div>
@@ -932,15 +1015,147 @@ rely on the stability of the interface to then be able to interoperate.</p>
 <div class="sect2">
 <h3 id="_introspection"><a class="anchor" href="#_introspection"></a>4.1. Introspection</h3>
 <div class="paragraph">
-<p>The consumer can use a single method to query the target tool and obtain..</p>
+<p>The consumer can use a single method to query the target tool and obtain all the
+capabilities that are available or specifically requested. The following two
+use cases are supported:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Unbounded <em>introspection</em> of the available capabilities with a single
+valueless <code>--std-info</code> option.</p>
+</li>
+<li>
+<p>Bounded <em>introspection</em> of particular capabilities with a single query valued
+<code>--std-info=&lt;query&gt;</code> option.</p>
+</li>
+</ol>
+</div>
+<div class="sect3">
+<h4 id="_unbounded"><a class="anchor" href="#_unbounded"></a>4.1.1. Unbounded</h4>
+<div class="paragraph">
+<p>An unbounded <em>introspection</em> is the simplest form of obtaining the capabilities.
+It is expected that this will be the most commonly used and implemented method
+of obtaining this information. It simply returns everything the tool is capable
+of doing. This is because it is the easiest to implement for tools. As it&#8217;s
+simply having a hard-wired result ready to output when needed. The drawback
+though is that the consumer has more information to parse and compare to decide
+how to interface with the target tool.</p>
+</div>
+<div class="paragraph">
+<p>Running a <code>tool</code> with the option would look like the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="nv">$ </span>tool <span class="nt">--std-info</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And could produce this as a JSON output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[1.0.0,2.5.0]"</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Which would minimally indicate that the tool only supports the introspection
+capability at version "1.0.0".</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_bounded"><a class="anchor" href="#_bounded"></a>4.1.2. Bounded</h4>
+<div class="paragraph">
+<p>A bounded <em>introspection</em> makes it possible to specify particular capabilities
+that a consumer is looking for in a target tool. By giving a query to the targe
+tool the consumer cat get an answer for just the capability they care about.
+This is particularly useful in cases where the consumer only support some
+versions of a capability and prefers to not implement the version comparison
+logic to determine this from the unbounded <em>introspection</em>.</p>
+</div>
+<div class="paragraph">
+<p>The bounded <em>introspection</em> works equivalent to the unbounded case except the
+<code>--std-info</code> option takes a <em>specification</em> value to say what capabilities to
+filter the results by. For example running:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">tool <span class="s2">"--std-info=std:info[1.0.0,2.1.0)"</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And could produce this as a JSON output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[1.5.0,2.0.0]"</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Which means the tool is saying that tool only supports a subset of what the
+consumer asked about.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_declaration"><a class="anchor" href="#_declaration"></a>4.2. Declaration</h3>
-
+<div class="paragraph">
+<p><code>--std-decl=&lt;spec&gt;</code></p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_impact_on_the_standard"><a class="anchor" href="#_impact_on_the_standard"></a>4.3. Impact On The Standard</h3>
+<h3 id="_format"><a class="anchor" href="#_format"></a>4.3. Format</h3>
+<div class="paragraph">
+<p>The information reported by <em>introspection</em> is a JSON format
+<sup class="footnote" id="_footnote_json">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup>
+document. Some advantages to using JSON:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>It is widely used and available either natively or through libraries in many
+programming languages. Which is particularly important as C&#43;&#43; tools are
+written in an array of differing programming languages.</p>
+</li>
+<li>
+<p>It is a simple format to understand by both programs and humans.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[1.0.0,2.0.0)"</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[1.0.0,2.0.0)"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"gcc:extra"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.5.0"</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_impact_on_the_standard"><a class="anchor" href="#_impact_on_the_standard"></a>4.4. Impact On The Standard</h3>
 
 </div>
 </div>
@@ -982,6 +1197,9 @@ rely on the stability of the interface to then be able to interoperate.</p>
 <hr>
 <div class="footnote" id="_footnotedef_1">
 <a href="#_footnoteref_1">1</a>. <a href="https://wg21.link/P2656" class="bare">https://wg21.link/P2656</a> C&#43;&#43; Ecosystem International Standard
+</div>
+<div class="footnote" id="_footnotedef_2">
+<a href="#_footnoteref_2">2</a>. Bryan, P., Ed., Zyp, K., and Nottingham, M., Ed., "JavaScript Object Notation (JSON) Pointer", RFC 6901, DOI 10.17487/RFC6901, April 2013, <a href="http://www.rfc-editor.org/info/rfc6901" class="bare">http://www.rfc-editor.org/info/rfc6901</a>
 </div>
 </div>
 </body>
