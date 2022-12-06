@@ -228,7 +228,7 @@ Goal:: Finalize the plan for the development of the IS.
 
 With the intent of keeping the first edition of the IS limited we expect to have
 a rough idea of what will go into the IS by this time. SG15 will poll the plan
-at this, or earlier, point. From this point we will have one year (12 months)
+by the end of this meeting. From this point we will have one year (12 months)
 to hone proposals to merge into the IS.
 
 === 2023.2: Pre-Draft
