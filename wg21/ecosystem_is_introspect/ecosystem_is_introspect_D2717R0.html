@@ -839,7 +839,7 @@ pre.rouge .ss {
 <span id="author" class="author">René Ferdinand Rivera Morell, et al.</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> D2717R0,</span>
-<span id="revdate">2022-12-05</span>
+<span id="revdate">2022-12-09</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -861,7 +861,11 @@ pre.rouge .ss {
 </li>
 <li><a href="#_implementation_experience">5. Implementation Experience</a></li>
 <li><a href="#_polls">6. Polls</a></li>
-<li><a href="#_wording">7. Wording</a></li>
+<li><a href="#_wording">7. Wording</a>
+<ul class="sectlevel2">
+<li><a href="#_schema">7.1. Schema</a></li>
+</ul>
+</li>
 <li><a href="#_acknowledgements">8. Acknowledgements</a></li>
 </ul>
 </div>
@@ -894,7 +898,7 @@ pre.rouge .ss {
 </dd>
 <dt class="hdlist1">Date: </dt>
 <dd>
-<p>2022-12-05</p>
+<p>2022-12-09</p>
 </dd>
 <dt class="hdlist1">Audience: </dt>
 <dd>
@@ -1098,8 +1102,8 @@ filter the results by. For example running:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Which means the tool is saying that tool only supports a subset of what the
-consumer asked about.</p>
+<p>Here the tool is saying that it only supports a subset of what the consumer
+asked about.</p>
 </div>
 </div>
 </div>
@@ -1182,6 +1186,56 @@ written in an array of differing programming languages.</p>
 <div class="paragraph">
 <p>None yet.</p>
 </div>
+<div class="sect2">
+<h3 id="_schema"><a class="anchor" href="#_schema"></a>7.1. Schema</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+	</span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://json-schema.org/draft/2020-12/schema"</span><span class="p">,</span><span class="w">
+	</span><span class="nl">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json"</span><span class="p">,</span><span class="w">
+	</span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tool Introspection Version 1.0.0 JSON Schema"</span><span class="p">,</span><span class="w">
+	</span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+		</span><span class="s2">"$schema"</span><span class="p">,</span><span class="w">
+		</span><span class="s2">"std:info"</span><span class="w">
+	</span><span class="p">],</span><span class="w">
+	</span><span class="nl">"$defs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+		</span><span class="nl">"VersionSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+			</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+			</span><span class="nl">"pattern"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^([0-9]+[.][0-9]+[.][0-9]+)|([[(][0-9]+[.][0-9]+[.][0-9]+,[0-9]+[.][0-9]+[.][0-9]+[)</span><span class="se">\\</span><span class="s2">]])$"</span><span class="w">
+		</span><span class="p">}</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+	</span><span class="nl">"anyOf"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+		</span><span class="p">{</span><span class="w">
+			</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+			</span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+				</span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+					</span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The URI of the JSON schema corresponding to the version of the tool introspection format."</span><span class="p">,</span><span class="w">
+					</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+					</span><span class="nl">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uri"</span><span class="w">
+				</span><span class="p">},</span><span class="w">
+				</span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+					</span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The Tool Introspection format version."</span><span class="p">,</span><span class="w">
+					</span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/VersionSpec"</span><span class="w">
+				</span><span class="p">}</span><span class="w">
+			</span><span class="p">}</span><span class="w">
+		</span><span class="p">},</span><span class="w">
+		</span><span class="p">{</span><span class="w">
+			</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+			</span><span class="nl">"propertyNames"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+				</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+				</span><span class="nl">"pattern"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^[a-z_]+(:[a-z_]+)+$"</span><span class="w">
+			</span><span class="p">},</span><span class="w">
+			</span><span class="nl">"patternProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+				</span><span class="nl">""</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+					</span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/VersionSpec"</span><span class="w">
+				</span><span class="p">}</span><span class="w">
+			</span><span class="p">}</span><span class="w">
+		</span><span class="p">}</span><span class="w">
+	</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1199,7 +1253,7 @@ written in an array of differing programming languages.</p>
 <a href="#_footnoteref_1">1</a>. <a href="https://wg21.link/P2656" class="bare">https://wg21.link/P2656</a> C&#43;&#43; Ecosystem International Standard
 </div>
 <div class="footnote" id="_footnotedef_2">
-<a href="#_footnoteref_2">2</a>. Bryan, P., Ed., Zyp, K., and Nottingham, M., Ed., "JavaScript Object Notation (JSON) Pointer", RFC 6901, DOI 10.17487/RFC6901, April 2013, <a href="http://www.rfc-editor.org/info/rfc6901" class="bare">http://www.rfc-editor.org/info/rfc6901</a>
+<a href="#_footnoteref_2">2</a>. ISO/IEC 21778:2017 Information technology — The JSON data interchange syntax, (<a href="https://www.iso.org/standard/71616.html" class="bare">https://www.iso.org/standard/71616.html</a>)
 </div>
 </div>
 </body>

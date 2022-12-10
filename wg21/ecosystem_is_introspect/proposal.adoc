@@ -174,8 +174,8 @@ And could produce this as a JSON output:
 }
 ----
 
-Which means the tool is saying that tool only supports a subset of what the
-consumer asked about.
+Here the tool is saying that it only supports a subset of what the consumer
+asked about.
 
 === Declaration
 
@@ -184,7 +184,7 @@ consumer asked about.
 === Format
 
 The information reported by _introspection_ is a JSON format
-footnote:json[Bryan, P., Ed., Zyp, K., and Nottingham, M., Ed., "JavaScript Object Notation (JSON) Pointer", RFC 6901, DOI 10.17487/RFC6901, April 2013, http://www.rfc-editor.org/info/rfc6901]
+footnote:json[ISO/IEC 21778:2017 Information technology — The JSON data interchange syntax, (https://www.iso.org/standard/71616.html)]
 document. Some advantages to using JSON:
 
 * It is widely used and available either natively or through libraries in many
@@ -230,6 +230,13 @@ None yet.
 == Wording
 
 None yet.
+
+=== Schema
+
+[source,json]
+----
+include::std_info-1.0.0.json[]
+----
 
 == Acknowledgements
 
