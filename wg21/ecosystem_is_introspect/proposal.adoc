@@ -1,7 +1,7 @@
 = Tool Introspection
 :copyright: Copyright 2022 René Ferdinand Rivera Morell
 :email: grafikrobot@gmail.com
-:authors: René Ferdinand Rivera Morell, et al.
+:authors: René Ferdinand Rivera Morell
 :audience: SG15
 :revdate: {docdate}
 :version-label!:
@@ -55,7 +55,7 @@ footnote:EcoIS[https://wg21.link/P2656 {CPP} Ecosystem International Standard]
 
 == Revision History
 
-=== Revision 0 (November 2022)
+=== Revision 0 (January 2022)
 
 Initial text.
 
@@ -63,7 +63,7 @@ Initial text.
 
 {CPP} tools will implement the aspects of the Ecosystem IS footnote:EcoIS[] that
 are relevant to the particular tool. And when they implement those aspects they
-may implement ar particular edition of them. In order to allow other tools to
+may implement a particular edition of them. In order to allow other tools to
 adjust their behavior to accommodate such differences we need a mechanism of
 introspection for all tools. Additionally when one tool requests to use another
 tool's Ecosystem IS aspect it's desirable to consistently communicate which
@@ -98,7 +98,7 @@ possible, this design follows some basic tenants:
 Minimal:: The interface of the target tool is a single universal command line
 argument for each of the two operations.
 
-Concise:: The information communicated to and from the targe tool and consumer
+Concise:: The information communicated to and from the target tool and consumer
 is as brief as needed to convey the required information.
 
 Robust:: The interface and information should not result in failure conditions
@@ -114,7 +114,7 @@ use cases are supported:
 . Unbounded _introspection_ of the available capabilities with a single
 valueless `--std-info` option.
 . Bounded _introspection_ of particular capabilities with a single query valued
-`--std-info=<query>` option.
+`--std-info=<VersionSpec>` option.
 
 ==== Unbounded
 
@@ -126,7 +126,7 @@ simply having a hard-wired result ready to output when needed. The drawback
 though is that the consumer has more information to parse and compare to decide
 how to interface with the target tool.
 
-Running a `tool` with the option would look like the following:
+Running a tool with the option would look like the following:
 
 [source,shell]
 ----
@@ -144,27 +144,27 @@ And could produce this as a JSON output:
 ----
 
 Which would minimally indicate that the tool only supports the introspection
-capability at version "1.0.0".
+capability at versions "1.0.0" through "2.5.0".
 
 ==== Bounded
 
 A bounded _introspection_ makes it possible to specify particular capabilities
-that a consumer is looking for in a target tool. By giving a query to the targe
-tool the consumer cat get an answer for just the capability they care about.
-This is particularly useful in cases where the consumer only support some
+that a consumer is looking for in a target tool. By giving a query to the target
+tool the consumer cat get an answer for just the capabilities they care about.
+This is particularly useful in cases where the consumer only supports some
 versions of a capability and prefers to not implement the version comparison
 logic to determine this from the unbounded _introspection_.
 
-The bounded _introspection_ works equivalent to the unbounded case except the
-`--std-info` option takes a _specification_ value to say what capabilities to
-filter the results by. For example running:
+The bounded _introspection_ works equivalently to the unbounded case except the
+`--std-info` option takes a _version specification_ value to say what
+capabilities to filter the results by. For example running:
 
 [source,shell]
 ----
-tool "--std-info=std:info[1.0.0,2.1.0)"
+tool "--std-info=std:info==[1.0.0,2.1.0)"
 ----
 
-And could produce this as a JSON output:
+Could produce this as a JSON output:
 
 [source,json]
 ----
@@ -175,22 +175,209 @@ And could produce this as a JSON output:
 ----
 
 Here the tool is saying that it only supports a subset of what the consumer
-asked about.
+asked about. It should also be possible to query about multiple capabilities of
+the target tool by using multiple `--std-info` options.
+
+[source,shell]
+----
+tool "--std-info=std:info=[1.0.0,2.1.0)" "--std-info=gcc:extra[2.0.0,2.1.0]"
+----
+
+In this example the target tool would return multiple capabilities, if
+supported:
+
+[source,json]
+----
+{
+  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
+  "std:info": "[1.0.0,2.0.0)",
+  "gcc:extra": "2.1.0"
+}
+----
 
 === Declaration
 
-`--std-decl=<spec>`
+The consumer can inform, i.e. declare, the target tool that specific
+capabilities should use particular versions when responding with information
+using one or more `--std-decl=<VersionSpec>` options. The declarations can only
+exist in tandem with options for the mentioned capabilities. It's expected that
+a consumer will first _introspect_ a target tool to discover what it supports.
+Followed by the consumer _declaring_ to the target tool what version(s) of the
+capabilities it is willing to consume. The target tool can then respond with
+the versions of the capabilities that satisfies the consumer and its own
+preference.
+
+An exchange between a consumer and target tool would begin with the
+_introspection_:
+
+[source,shell]
+----
+tool "--std-info=std:info=[1.0.0,2.1.0)" "--std-info=gcc:extra[2.0.0,2.1.0]"
+----
+
+With a target tool response:
+
+[source,json]
+----
+{
+  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
+  "std:info": "[1.0.0,2.0.0)",
+  "gcc:extra": "2.1.0"
+}
+----
+
+Which the consumer can use to _declare_ the specific capability versions:
+
+[source,shell]
+----
+tool "--std-decl=std:info=2.0.0" "--std-decl=gcc:extra=2.1.0" ...
+----
+
+=== Capabilities
+
+For this proposal capabilities refers to any published coherent target tool
+interface. This can include any single interface, like a single target tool
+option. Or it can include a collective interface of the target tool that covers
+many options. A capability is specified as a series of "scoped" identifiers
+separated by colons (":"). The capability must match this regular expression:
+footnote:Regex[ECMAScript® 2022 language specification, 13th edition, June 2022 (https://www.ecma-international.org/publications-and-standards/standards/ecma-262/)]
+
+[source,plan_text]
+----
+^[a-z_]+(:[a-z_]+)+$
+----
+
+At minimum a capability has two components. The first component is a general
+scope that identifies if the capability is one in the IS, or if it's a tool
+vendor capability.
+
+Standard:: A capability with a scope of `std` indicates that it's defined in the
+IS. footnote:EcoIS[]
+
+Vendor:: Any other capability, i.e. other than `std`, is available for vendors
+to use as extensions outside the IS. footnote:EcoIS[]
+
+=== Version Specification
+
+When indicating the version, or versions, to the target tool or the consumer the
+version information is specified in two possible forms: a single version, or a
+single version range.
+
+==== Single Version
+
+A single version in this proposal is composed of a dotted triplet of whole
+numbers. The numbers are expected to be strictly increasing. But otherwise do
+not impart any meaning to the components. Specifically this does not impart any
+for of semantic meaning between versions. Although the specification of the
+capabilities themselves may define such a semantic meaning. The format for the
+version must match the regular expression:
+footnote:Regex[]
+
+[source,plain_text]
+----
+^[0-9]+[.][0-9]+[.][0-9]+$
+----
+
+==== Version Range
+
+A version range in this proposal indicates a lower and upper bound of versions.
+It is composed of a pair of versions, separated by a comma, and bracketed by
+either an inclusive or exclusive symbol. This matches the intuition of a
+mathematic interval, but with the use of the version triplet number line.
+footnote:[Wikipedia: Interval (mathematics) (https://en.wikipedia.org/wiki/Interval_(mathematics))]
+Like the interval notation the `()` brackets indicate an exclusive point. And
+the `[]` brackets indicate an inclusive point. As versions are decidedly not
+single integers we use a `,` (comma) to separate the start and end of the range
+instead of using `..`. Hence the format for the version range must match the
+regular expression:
+footnote:Regex[]
+
+[source,plain_text]
+----
+^([0-9]+[.][0-9]+[.][0-9]+)|([[(][0-9]+[.][0-9]+[.][0-9]+,[0-9]+[.][0-9]+[.][0-9]+[)\\]])$
+----
+
+=== Version Matching
+
+When given two version specifications tools will need to match the two to
+determine the sub-range that are compatible with both. There are two aspects to
+doing that matching: comparing the two single versions, and evaluating the
+sub-range interval.
+
+==== Single Version Comparison
+
+Comparing two single versions equates to three-way comparing each of the
+components of both, `a` and `b`, as:
+
+. If the whole numbers of the first components, `i` and `j`, are not equal the
+comparison is either `a < b` or `a > b` if `i < j` or `i > j` respectively.
+Otherwise,
+. If the whole numbers of the second components, `k` and `l`, are not equal the
+comparison is either `a < b` or `a > b` if `k < l` or `k > l` respectively.
+Otherwise,
+. If the whole numbers of the third components, `m` and `n`, are not equal the
+comparison is either `a < b` or `a > b` if `m < n` or `m > n` respectively.
+Otherwise,
+. The versions are equal, i.e. `a == b`.
+
+==== Range Comparison
+
+Tools will need to compare either a single version to a version range, or a
+version range to another range to determine the overlapping version sub-range.
+The single version to a version range comparison can be reformulated to a
+range-to-range comparison. I.e. a comparison of a single range `a` to a range
+`b` is equivalent to a comparison of range `[a,a]` to range `b`. Hence we only
+need to consider the range-to-range comparison. Although implementations may
+use special case for comparing single-to-range and range-to-single.
+Range-to-range should follow something like the following to compare a range
+`a,b` to `m,n`, with some varied inclusive or exclusive ends:
+
+. If `b < m` or `n < a` the range is _empty_.
+. Otherwise, assign a _partial_ range `x,y = max(a,m), min(b,n)`.
+. If `a` or `m` are inclusive, then:
+.. If `b` or `n` are inclusive, then the range is `[x,y]`.
+.. Otherwise, the range is `[x,y)`.
+. Otherwise, if `b` or `n` are inclusive, then the range is `(x,y]`.
+. Otherwise, the range is `(x,y)`.
 
 === Format
 
-The information reported by _introspection_ is a JSON format
+The information reported by _introspection_ is a JSON
 footnote:json[ISO/IEC 21778:2017 Information technology — The JSON data interchange syntax, (https://www.iso.org/standard/71616.html)]
-document. Some advantages to using JSON:
+format document. Some advantages to using JSON:
 
 * It is widely used and available either natively or through libraries in many
 programming languages. Which is particularly important as {CPP} tools are
 written in an array of differing programming languages.
 * It is a simple format to understand by both programs and humans.
+
+In maintaining our goals of the interface being minimal, concise, and robust,
+the format for communicating the capabilities is a single key/value collection,
+i.e. a JSON object.
+footnote:json[]
+
+Capability Identifier:: The _key_ is a string with the capability identifier. The
+format of the is as described in the <<Capabilities>> section.
+
+Version Specification:: The _value_ indicates the versions supported by the tool
+for the capability. The versions follows the format described in the
+<<Version Specification>> section.
+
+In addition to the _capability identifier_ / _version specification_ members,
+there are additional special members:
+
+Schema:: The document can also specify a reference to a JSON Schema.
+footnote:jschema[JSON Schema: A Media Type for Describing JSON Documents (http://json-schema.org/latest/json-schema-core.html)]
+For this the _key_ would be `$schema`, and the _value_ would a URI to a
+published stable schema
+(`https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json`).
+
+There is one designated capability that is required to appear in the document:
+The `std:info` capability with a corresponding _version specification_. This
+requirement allows a consumer to identify the format of the rest of the document
+at all times.
+
+This is a minimal conforming document:
 
 [source,json]
 ----
@@ -200,6 +387,9 @@ written in an array of differing programming languages.
 }
 ----
 
+This is also a minimal conforming document. But specifies a range of versions
+supported for the `std:info` capability:
+
 [source,json]
 ----
 {
@@ -207,6 +397,8 @@ written in an array of differing programming languages.
   "std:info": "[1.0.0,2.0.0)"
 }
 ----
+
+This example adds a custom vendor capability:
 
 [source,json]
 ----
@@ -216,6 +408,8 @@ written in an array of differing programming languages.
   "gcc:extra": "1.5.0"
 }
 ----
+
+See the <<Wording>> for a JSON <<Schema>> for this format.
 
 === Impact On The Standard
 

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<meta name="author" content="René Ferdinand Rivera Morell, et al.">
+<meta name="author" content="René Ferdinand Rivera Morell">
 <meta name="copyright" content="Copyright 2022 René Ferdinand Rivera Morell">
 <title>Tool Introspection</title>
 <style>
@@ -836,10 +836,10 @@ pre.rouge .ss {
 <div id="header">
 <h1>Tool Introspection</h1>
 <div class="details">
-<span id="author" class="author">René Ferdinand Rivera Morell, et al.</span><br>
+<span id="author" class="author">René Ferdinand Rivera Morell</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> D2717R0,</span>
-<span id="revdate">2022-12-09</span>
+<span id="revdate">2022-12-11</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -847,7 +847,7 @@ pre.rouge .ss {
 <li><a href="#_abstract">1. Abstract</a></li>
 <li><a href="#_revision_history">2. Revision History</a>
 <ul class="sectlevel2">
-<li><a href="#_revision_0_november_2022">2.1. Revision 0 (November 2022)</a></li>
+<li><a href="#_revision_0_january_2022">2.1. Revision 0 (January 2022)</a></li>
 </ul>
 </li>
 <li><a href="#_motivation">3. Motivation</a></li>
@@ -855,8 +855,11 @@ pre.rouge .ss {
 <ul class="sectlevel2">
 <li><a href="#_introspection">4.1. Introspection</a></li>
 <li><a href="#_declaration">4.2. Declaration</a></li>
-<li><a href="#_format">4.3. Format</a></li>
-<li><a href="#_impact_on_the_standard">4.4. Impact On The Standard</a></li>
+<li><a href="#_capabilities">4.3. Capabilities</a></li>
+<li><a href="#_version_specification">4.4. Version Specification</a></li>
+<li><a href="#_version_matching">4.5. Version Matching</a></li>
+<li><a href="#_format">4.6. Format</a></li>
+<li><a href="#_impact_on_the_standard">4.7. Impact On The Standard</a></li>
 </ul>
 </li>
 <li><a href="#_implementation_experience">5. Implementation Experience</a></li>
@@ -898,7 +901,7 @@ pre.rouge .ss {
 </dd>
 <dt class="hdlist1">Date: </dt>
 <dd>
-<p>2022-12-09</p>
+<p>2022-12-11</p>
 </dd>
 <dt class="hdlist1">Audience: </dt>
 <dd>
@@ -926,7 +929,7 @@ a tool implements from the Ecosystem IS.
 <h2 id="_revision_history"><a class="anchor" href="#_revision_history"></a>2. Revision History</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_revision_0_november_2022"><a class="anchor" href="#_revision_0_november_2022"></a>2.1. Revision 0 (November 2022)</h3>
+<h3 id="_revision_0_january_2022"><a class="anchor" href="#_revision_0_january_2022"></a>2.1. Revision 0 (January 2022)</h3>
 <div class="paragraph">
 <p>Initial text.</p>
 </div>
@@ -939,7 +942,7 @@ a tool implements from the Ecosystem IS.
 <div class="paragraph">
 <p>C&#43;&#43; tools will implement the aspects of the Ecosystem IS <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup> that
 are relevant to the particular tool. And when they implement those aspects they
-may implement ar particular edition of them. In order to allow other tools to
+may implement a particular edition of them. In order to allow other tools to
 adjust their behavior to accommodate such differences we need a mechanism of
 introspection for all tools. Additionally when one tool requests to use another
 tool&#8217;s Ecosystem IS aspect it&#8217;s desirable to consistently communicate which
@@ -1000,7 +1003,7 @@ argument for each of the two operations.</p>
 Concise
 </td>
 <td class="hdlist2">
-<p>The information communicated to and from the targe tool and consumer
+<p>The information communicated to and from the target tool and consumer
 is as brief as needed to convey the required information.</p>
 </td>
 </tr>
@@ -1031,7 +1034,7 @@ valueless <code>--std-info</code> option.</p>
 </li>
 <li>
 <p>Bounded <em>introspection</em> of particular capabilities with a single query valued
-<code>--std-info=&lt;query&gt;</code> option.</p>
+<code>--std-info=&lt;VersionSpec&gt;</code> option.</p>
 </li>
 </ol>
 </div>
@@ -1047,7 +1050,7 @@ though is that the consumer has more information to parse and compare to decide
 how to interface with the target tool.</p>
 </div>
 <div class="paragraph">
-<p>Running a <code>tool</code> with the option would look like the following:</p>
+<p>Running a tool with the option would look like the following:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1067,31 +1070,31 @@ how to interface with the target tool.</p>
 </div>
 <div class="paragraph">
 <p>Which would minimally indicate that the tool only supports the introspection
-capability at version "1.0.0".</p>
+capability at versions "1.0.0" through "2.5.0".</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_bounded"><a class="anchor" href="#_bounded"></a>4.1.2. Bounded</h4>
 <div class="paragraph">
 <p>A bounded <em>introspection</em> makes it possible to specify particular capabilities
-that a consumer is looking for in a target tool. By giving a query to the targe
-tool the consumer cat get an answer for just the capability they care about.
-This is particularly useful in cases where the consumer only support some
+that a consumer is looking for in a target tool. By giving a query to the target
+tool the consumer cat get an answer for just the capabilities they care about.
+This is particularly useful in cases where the consumer only supports some
 versions of a capability and prefers to not implement the version comparison
 logic to determine this from the unbounded <em>introspection</em>.</p>
 </div>
 <div class="paragraph">
-<p>The bounded <em>introspection</em> works equivalent to the unbounded case except the
-<code>--std-info</code> option takes a <em>specification</em> value to say what capabilities to
-filter the results by. For example running:</p>
+<p>The bounded <em>introspection</em> works equivalently to the unbounded case except the
+<code>--std-info</code> option takes a <em>version specification</em> value to say what
+capabilities to filter the results by. For example running:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell">tool <span class="s2">"--std-info=std:info[1.0.0,2.1.0)"</span></code></pre>
+<pre class="rouge highlight"><code data-lang="shell">tool <span class="s2">"--std-info=std:info==[1.0.0,2.1.0)"</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And could produce this as a JSON output:</p>
+<p>Could produce this as a JSON output:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1103,22 +1106,240 @@ filter the results by. For example running:</p>
 </div>
 <div class="paragraph">
 <p>Here the tool is saying that it only supports a subset of what the consumer
-asked about.</p>
+asked about. It should also be possible to query about multiple capabilities of
+the target tool by using multiple <code>--std-info</code> options.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">tool <span class="s2">"--std-info=std:info=[1.0.0,2.1.0)"</span> <span class="s2">"--std-info=gcc:extra[2.0.0,2.1.0]"</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example the target tool would return multiple capabilities, if
+supported:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[1.0.0,2.0.0)"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"gcc:extra"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.1.0"</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_declaration"><a class="anchor" href="#_declaration"></a>4.2. Declaration</h3>
 <div class="paragraph">
-<p><code>--std-decl=&lt;spec&gt;</code></p>
+<p>The consumer can inform, i.e. declare, the target tool that specific
+capabilities should use particular versions when responding with information
+using one or more <code>--std-decl=&lt;VersionSpec&gt;</code> options. The declarations can only
+exist in tandem with options for the mentioned capabilities. It&#8217;s expected that
+a consumer will first <em>introspect</em> a target tool to discover what it supports.
+Followed by the consumer <em>declaring</em> to the target tool what version(s) of the
+capabilities it is willing to consume. The target tool can then respond with
+the versions of the capabilities that satisfies the consumer and its own
+preference.</p>
+</div>
+<div class="paragraph">
+<p>An exchange between a consumer and target tool would begin with the
+<em>introspection</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">tool <span class="s2">"--std-info=std:info=[1.0.0,2.1.0)"</span> <span class="s2">"--std-info=gcc:extra[2.0.0,2.1.0]"</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With a target tool response:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[1.0.0,2.0.0)"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"gcc:extra"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.1.0"</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Which the consumer can use to <em>declare</em> the specific capability versions:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">tool <span class="s2">"--std-decl=std:info=2.0.0"</span> <span class="s2">"--std-decl=gcc:extra=2.1.0"</span> ...</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_format"><a class="anchor" href="#_format"></a>4.3. Format</h3>
+<h3 id="_capabilities"><a class="anchor" href="#_capabilities"></a>4.3. Capabilities</h3>
 <div class="paragraph">
-<p>The information reported by <em>introspection</em> is a JSON format
-<sup class="footnote" id="_footnote_json">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup>
-document. Some advantages to using JSON:</p>
+<p>For this proposal capabilities refers to any published coherent target tool
+interface. This can include any single interface, like a single target tool
+option. Or it can include a collective interface of the target tool that covers
+many options. A capability is specified as a series of "scoped" identifiers
+separated by colons (":"). The capability must match this regular expression:
+<sup class="footnote" id="_footnote_Regex">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="plan_text">^[a-z_]+(:[a-z_]+)+$</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>At minimum a capability has two components. The first component is a general
+scope that identifies if the capability is one in the IS, or if it&#8217;s a tool
+vendor capability.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Standard</dt>
+<dd>
+<p>A capability with a scope of <code>std</code> indicates that it&#8217;s defined in the
+IS. <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup></p>
+</dd>
+<dt class="hdlist1">Vendor</dt>
+<dd>
+<p>Any other capability, i.e. other than <code>std</code>, is available for vendors
+to use as extensions outside the IS. <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup></p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_version_specification"><a class="anchor" href="#_version_specification"></a>4.4. Version Specification</h3>
+<div class="paragraph">
+<p>When indicating the version, or versions, to the target tool or the consumer the
+version information is specified in two possible forms: a single version, or a
+single version range.</p>
+</div>
+<div class="sect3">
+<h4 id="_single_version"><a class="anchor" href="#_single_version"></a>4.4.1. Single Version</h4>
+<div class="paragraph">
+<p>A single version in this proposal is composed of a dotted triplet of whole
+numbers. The numbers are expected to be strictly increasing. But otherwise do
+not impart any meaning to the components. Specifically this does not impart any
+for of semantic meaning between versions. Although the specification of the
+capabilities themselves may define such a semantic meaning. The format for the
+version must match the regular expression:
+<sup class="footnoteref">[<a class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="plain_text">^[0-9]+[.][0-9]+[.][0-9]+$</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_version_range"><a class="anchor" href="#_version_range"></a>4.4.2. Version Range</h4>
+<div class="paragraph">
+<p>A version range in this proposal indicates a lower and upper bound of versions.
+It is composed of a pair of versions, separated by a comma, and bracketed by
+either an inclusive or exclusive symbol. This matches the intuition of a
+mathematic interval, but with the use of the version triplet number line.
+<sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup>
+Like the interval notation the <code>()</code> brackets indicate an exclusive point. And
+the <code>[]</code> brackets indicate an inclusive point. As versions are decidedly not
+single integers we use a <code>,</code> (comma) to separate the start and end of the range
+instead of using <code>..</code>. Hence the format for the version range must match the
+regular expression:
+<sup class="footnoteref">[<a class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="plain_text">^([0-9]+[.][0-9]+[.][0-9]+)|([[(][0-9]+[.][0-9]+[.][0-9]+,[0-9]+[.][0-9]+[.][0-9]+[)\\]])$</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_version_matching"><a class="anchor" href="#_version_matching"></a>4.5. Version Matching</h3>
+<div class="paragraph">
+<p>When given two version specifications tools will need to match the two to
+determine the sub-range that are compatible with both. There are two aspects to
+doing that matching: comparing the two single versions, and evaluating the
+sub-range interval.</p>
+</div>
+<div class="sect3">
+<h4 id="_single_version_comparison"><a class="anchor" href="#_single_version_comparison"></a>4.5.1. Single Version Comparison</h4>
+<div class="paragraph">
+<p>Comparing two single versions equates to three-way comparing each of the
+components of both, <code>a</code> and <code>b</code>, as:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>If the whole numbers of the first components, <code>i</code> and <code>j</code>, are not equal the
+comparison is either <code>a &lt; b</code> or <code>a &gt; b</code> if <code>i &lt; j</code> or <code>i &gt; j</code> respectively.
+Otherwise,</p>
+</li>
+<li>
+<p>If the whole numbers of the second components, <code>k</code> and <code>l</code>, are not equal the
+comparison is either <code>a &lt; b</code> or <code>a &gt; b</code> if <code>k &lt; l</code> or <code>k &gt; l</code> respectively.
+Otherwise,</p>
+</li>
+<li>
+<p>If the whole numbers of the third components, <code>m</code> and <code>n</code>, are not equal the
+comparison is either <code>a &lt; b</code> or <code>a &gt; b</code> if <code>m &lt; n</code> or <code>m &gt; n</code> respectively.
+Otherwise,</p>
+</li>
+<li>
+<p>The versions are equal, i.e. <code>a == b</code>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_range_comparison"><a class="anchor" href="#_range_comparison"></a>4.5.2. Range Comparison</h4>
+<div class="paragraph">
+<p>Tools will need to compare either a single version to a version range, or a
+version range to another range to determine the overlapping version sub-range.
+The single version to a version range comparison can be reformulated to a
+range-to-range comparison. I.e. a comparison of a single range <code>a</code> to a range
+<code>b</code> is equivalent to a comparison of range <code>[a,a]</code> to range <code>b</code>. Hence we only
+need to consider the range-to-range comparison. Although implementations may
+use special case for comparing single-to-range and range-to-single.
+Range-to-range should follow something like the following to compare a range
+<code>a,b</code> to <code>m,n</code>, with some varied inclusive or exclusive ends:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>If <code>b &lt; m</code> or <code>n &lt; a</code> the range is <em>empty</em>.</p>
+</li>
+<li>
+<p>Otherwise, assign a <em>partial</em> range <code>x,y = max(a,m), min(b,n)</code>.</p>
+</li>
+<li>
+<p>If <code>a</code> or <code>m</code> are inclusive, then:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>If <code>b</code> or <code>n</code> are inclusive, then the range is <code>[x,y]</code>.</p>
+</li>
+<li>
+<p>Otherwise, the range is <code>[x,y)</code>.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Otherwise, if <code>b</code> or <code>n</code> are inclusive, then the range is <code>(x,y]</code>.</p>
+</li>
+<li>
+<p>Otherwise, the range is <code>(x,y)</code>.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_format"><a class="anchor" href="#_format"></a>4.6. Format</h3>
+<div class="paragraph">
+<p>The information reported by <em>introspection</em> is a JSON
+<sup class="footnote" id="_footnote_json">[<a id="_footnoteref_4" class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup>
+format document. Some advantages to using JSON:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1132,6 +1353,52 @@ written in an array of differing programming languages.</p>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>In maintaining our goals of the interface being minimal, concise, and robust,
+the format for communicating the capabilities is a single key/value collection,
+i.e. a JSON object.
+<sup class="footnoteref">[<a class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup></p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Capability Identifier</dt>
+<dd>
+<p>The <em>key</em> is a string with the capability identifier. The
+format of the is as described in the <a href="#_capabilities">Capabilities</a> section.</p>
+</dd>
+<dt class="hdlist1">Version Specification</dt>
+<dd>
+<p>The <em>value</em> indicates the versions supported by the tool
+for the capability. The versions follows the format described in the
+<a href="#_version_specification">Version Specification</a> section.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>In addition to the <em>capability identifier</em> / <em>version specification</em> members,
+there are additional special members:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Schema</dt>
+<dd>
+<p>The document can also specify a reference to a JSON Schema.
+<sup class="footnote" id="_footnote_jschema">[<a id="_footnoteref_5" class="footnote" href="#_footnotedef_5" title="View footnote.">5</a>]</sup>
+For this the <em>key</em> would be <code>$schema</code>, and the <em>value</em> would a URI to a
+published stable schema
+(<code><a href="https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json" class="bare">https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json</a></code>).</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>There is one designated capability that is required to appear in the document:
+The <code>std:info</code> capability with a corresponding <em>version specification</em>. This
+requirement allows a consumer to identify the format of the rest of the document
+at all times.</p>
+</div>
+<div class="paragraph">
+<p>This is a minimal conforming document:</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
@@ -1140,6 +1407,10 @@ written in an array of differing programming languages.</p>
 </span><span class="p">}</span></code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>This is also a minimal conforming document. But specifies a range of versions
+supported for the <code>std:info</code> capability:</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
@@ -1147,6 +1418,9 @@ written in an array of differing programming languages.</p>
   </span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[1.0.0,2.0.0)"</span><span class="w">
 </span><span class="p">}</span></code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>This example adds a custom vendor capability:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1157,9 +1431,12 @@ written in an array of differing programming languages.</p>
 </span><span class="p">}</span></code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>See the <a href="#_wording">Wording</a> for a JSON <a href="#_schema">Schema</a> for this format.</p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_impact_on_the_standard"><a class="anchor" href="#_impact_on_the_standard"></a>4.4. Impact On The Standard</h3>
+<h3 id="_impact_on_the_standard"><a class="anchor" href="#_impact_on_the_standard"></a>4.7. Impact On The Standard</h3>
 
 </div>
 </div>
@@ -1253,7 +1530,16 @@ written in an array of differing programming languages.</p>
 <a href="#_footnoteref_1">1</a>. <a href="https://wg21.link/P2656" class="bare">https://wg21.link/P2656</a> C&#43;&#43; Ecosystem International Standard
 </div>
 <div class="footnote" id="_footnotedef_2">
-<a href="#_footnoteref_2">2</a>. ISO/IEC 21778:2017 Information technology — The JSON data interchange syntax, (<a href="https://www.iso.org/standard/71616.html" class="bare">https://www.iso.org/standard/71616.html</a>)
+<a href="#_footnoteref_2">2</a>. ECMAScript® 2022 language specification, 13th edition, June 2022 (<a href="https://www.ecma-international.org/publications-and-standards/standards/ecma-262/" class="bare">https://www.ecma-international.org/publications-and-standards/standards/ecma-262/</a>)
+</div>
+<div class="footnote" id="_footnotedef_3">
+<a href="#_footnoteref_3">3</a>. Wikipedia: Interval (mathematics) (<a href="https://en.wikipedia.org/wiki/Interval_(mathematics)" class="bare">https://en.wikipedia.org/wiki/Interval_(mathematics)</a>)
+</div>
+<div class="footnote" id="_footnotedef_4">
+<a href="#_footnoteref_4">4</a>. ISO/IEC 21778:2017 Information technology — The JSON data interchange syntax, (<a href="https://www.iso.org/standard/71616.html" class="bare">https://www.iso.org/standard/71616.html</a>)
+</div>
+<div class="footnote" id="_footnotedef_5">
+<a href="#_footnoteref_5">5</a>. JSON Schema: A Media Type for Describing JSON Documents (<a href="http://json-schema.org/latest/json-schema-core.html" class="bare">http://json-schema.org/latest/json-schema-core.html</a>)
 </div>
 </div>
 </body>
