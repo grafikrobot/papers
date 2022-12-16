@@ -60,11 +60,11 @@ Standard (ISO/IEC 14882).
 
 == Revision History
 
-=== Revision 1 (January 2023)
+=== Revision 1 (December 2022)
 
 Adds proposed timeline and process for development of the IS from the first
 edition onwards. Also adds "2717 Tool Introspection" as a goal for the first
-edition.
+edition. Add SG15 polls regarding timeline.
 
 Include record of polls.
 
@@ -222,7 +222,7 @@ Procedure for the technical work
 
 The timeline that follows lists milestones for relevant WG21 meetings.
 
-=== 2023.1: Plan
+=== 2023.2: Plan
 
 Goal:: Finalize the plan for the development of the IS.
 
@@ -231,7 +231,7 @@ a rough idea of what will go into the IS by this time. SG15 will poll the plan
 by the end of this meeting. From this point we will have one year (12 months)
 to hone proposals to merge into the IS.
 
-=== 2023.2: Pre-Draft
+=== 2023.3: Pre-Draft
 
 Goal:: Approve skeleton draft of the IS.
 
@@ -240,7 +240,7 @@ one or more papers merged into it, and will have outlines for the rest of the
 content, as possible. We will ask EWG approval on this content to checkpoint
 the work so far and the work going forward.
 
-=== 2024.1: Proposal
+=== 2024.2: Proposal
 
 Goal:: Submit formal proposal to create work item for the publication of
 the new IS.
@@ -253,7 +253,7 @@ IS. As the work will be completed by Q1 2025.
 
 NOTE: Provide for an 8 week ballot period on proposal acceptance.
 
-=== 2024.3: Committee Draft (CD) Finalized
+=== 2025.1: Committee Draft (CD) Finalized
 
 Goal:: Approve Committee Draft for National Body comments.
 
@@ -266,18 +266,13 @@ prevent NB balloting of the IS draft.
 NOTE: Provide for an 8 week ballot period on proposal acceptance.
 And 2 (4?) weeks of comment compilation time.
 
-=== 2025.1: Draft International Standard (DIS) Finalized
+=== 2025.2: Draft International Standard (DIS) Finalized
 
 Goal:: Resolve collected NB comments and approve the final draft of the IS.
 
 Consider and resolve NB comments compiled during the CD polling. With the first
 IS on its way to publishing approval we can start discussions on what the
 process and content will be going forward.
-
-=== 2025.2: Future
-
-Goal:: Formally begin on the next IS edition for 2027 by finalizing the ongoing
-development plans.
 
 From here we can start the ongoing two (2) year cycles of releasing updates to
 the IS. In comparison to the C++ IS that would look like:
@@ -345,6 +340,29 @@ NOTE: SG15 would cease to operate. As TWG would assume the same
 responsibilities.
 
 == Polls
+
+=== SG15: P2656R1 (2022-12-16)
+
+SG15 recommends a two year timeline for the tooling IS as described in D2656R1.
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+|  1 | 5 | 4 | 0 | 0
+|===
+
+*Author*: SF
+
+SG15 recommends a three year timeline for the tooling IS offset from the C++
+Language IS.
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+|  0 | 5 | 4 | 0 | 0
+|===
+
+*Author*: F
 
 === SG15: P2656R0 (2022-11-09)
 
