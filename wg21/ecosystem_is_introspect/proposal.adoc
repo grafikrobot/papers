@@ -55,7 +55,7 @@ footnote:EcoIS[https://wg21.link/P2656 {CPP} Ecosystem International Standard]
 
 == Revision History
 
-=== Revision 0 (January 2022)
+=== Revision 0 (December 2022)
 
 Initial text.
 
