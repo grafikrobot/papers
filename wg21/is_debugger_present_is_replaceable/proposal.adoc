@@ -1,0 +1,130 @@
+= `is_debugger_present` `is_replaceable`
+:copyright: Copyright 2023 René Ferdinand Rivera Morell
+:email: grafikrobot@gmail.com
+:authors: René Ferdinand Rivera Morell
+:audience: SG15
+:revdate: {docdate}
+:version-label!:
+:reproducible:
+:nofooter:
+:sectanchors:
+:sectnums:
+:sectnumlevels: 5
+:source-highlighter: rouge
+:source-language: c++
+:toc: left
+:toclevels: 2
+:caution-caption: ⚑
+:important-caption: ‼
+:note-caption: ℹ
+:tip-caption: ☀
+:warning-caption: ⚠
+:table-caption: Table 
+
+++++
+<style>
+.sectionbody > div > .ins {
+  border-left: solid 0.4em green;
+  padding-left: 1em;
+  text-decoration: underline solid green;
+  text-underline-offset: 0.3em;
+}
+.def > .content :first-child {
+  margin-left: 0;
+}
+.def > .content > * {
+  margin-left: 3em;
+}
+.icon .title {
+  font-size: 250%;
+}
+</style>
+++++
+
+Document number: :: ISO/IEC/JTC1/SC22/WG21/{revnumber}
+Date: :: {revdate}
+Audience: :: {audience}
+Reply-to: :: {author}, {email}
+Project: :: ISO/IEC JTC1/SC22/WG21 14882: Programming Language — {CPP}
+
+== Abstract
+
+This proposes to add `std::is_debugger_present`, proposed in P2546
+footnote:P2546[P2546R3 Debugging Support, _René Ferdinand Rivera Morell_
+2022-11-15 (https://wg21.link/P2546R3)],
+to the set of replacement functions to allow users the flexibility to control
+the result of the function when otherwise it would not be possible to determine
+the platform specific result.
+
+== Revision History
+
+=== Revision 0 (February 2023)
+
+Initial.
+
+== Motivation
+
+The debugging support proposed in P2546
+footnote:P2546[P2546R3 Debugging Support, _René Ferdinand Rivera Morell_
+2022-11-15 (https://wg21.link/P2546R3)] defines its functions as available in
+both hosted and freestanding realms. In it the `std::is_debugger_present`
+function poses some challenges for embedded platforms where determining the
+circumstances of debuggers in a freestanding environment is most times
+impossible. Hence it is reasonable to allow the user to control what the
+function returns by some means. While some options are possible, like
+environment variables, platform configuration files, alternate runtime
+implementations, they are not ideal. As even those options may not be
+implementable for the platform. It is also ideal to not remove the function
+from freestanding as that will complicate the use of the functions with macro
+checks and alternative implementations. Placing the {CPP} ecosystem in yet more
+reliance on the preprocessor.
+
+The option we propose is to allow users to replace the function in their
+programs, i.e. a replaceable function. This has the benefits of giving users
+the ability to overcome any deficiencies in the default platform implementation
+and to have fine control over the result even on hosted platforms. Possible
+user implementations could:
+
+* Wire it to return `true` in special verifying builds of their application.
+* Wire it to return `true` from external input like: a key press or other
+external mechanical signal, a software signal as might be caught by a
+process signal handler, and so on.
+
+== Impact on the Standard
+
+This proposal marks the one function as an allowed replacement function.
+
+== Wording
+
+Wording is relative to P2546R3.
+footnote:P2546[]
+
+=== Library
+
+Insert the following paragraph between [replacement.functions] par. 2 and
+par. 3.
+
+[.ins.text-justify]
+--
+A {CPP} program may provide the definition of the following function signature
+declared in header `<debugging>` ([debugging.syn]):
+
+[source]
+----
+bool std::is_debugger_present() noexcept
+----
+--
+
+Add the following clause after the "Returns" clause of `is_debugger_present` in
+[debugging.utility]:
+
+[.ins.text-justify]
+--
+_Replaceable_: A {CPP} program may define a function with the function
+signature, and thereby displace the default version defined by the C++ standard
+library.
+--
+
+== Acknowledgements
+
+Thank you Ben Craig for the idea of using a replaceable function.

@@ -1,0 +1,38 @@
+#|
+Copyright René Ferdinand Rivera Morell 2022
+Distributed under the Boost Software License, Version 1.0.
+(See accompanying file LICENSE_1_0.txt or copy at
+http://www.boost.org/LICENSE_1_0.txt)
+|#
+
+import asciidoctor ;
+
+local name = ecosystem_is ;
+local docn = D2810 ;
+local docr = R0 ;
+local xxxx = $(docn)$(docr) ;
+
+project /wg21_$(name)
+    :   requirements
+        <cxxstd>20
+    ;
+
+path-constant CSS : ../../stylesheets ;
+
+local samples ;
+for local sample in [ glob sample*.cpp ]
+{
+    samples += [ run $(sample) ] ;
+    explicit $(sample) ;
+}
+alias samples : $(samples) ;
+
+html $(name)_$(xxxx).html : proposal.adoc
+	:
+		<dependency>samples
+		<flags>--attribute=docnumber=$(docn)
+		<flags>--attribute=revnumber=$(docn)$(docr)
+		<flags>--attribute=stylesheet=$(CSS)/golo.css
+		<flags>--attribute=rouge-style=base16.solarized
+	;
+install html : $(name)_$(xxxx).html : <location>. ;
