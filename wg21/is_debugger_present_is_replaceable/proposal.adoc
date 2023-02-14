@@ -1,7 +1,7 @@
 = `is_debugger_present` `is_replaceable`
 :copyright: Copyright 2023 René Ferdinand Rivera Morell
 :email: grafikrobot@gmail.com
-:authors: René Ferdinand Rivera Morell
+:authors: René Ferdinand Rivera Morell, et al.
 :audience: SG15
 :revdate: {docdate}
 :version-label!:
@@ -44,8 +44,10 @@
 Document number: :: ISO/IEC/JTC1/SC22/WG21/{revnumber}
 Date: :: {revdate}
 Audience: :: {audience}
-Reply-to: :: {author}, {email}
 Project: :: ISO/IEC JTC1/SC22/WG21 14882: Programming Language — {CPP}
+Reply-to: ::
+René Ferdinand Rivera Morell - _grafikrobot at gmail dot com_ +
+Ben Craig - _ben dot craig at gmail dot com_
 
 == Abstract
 

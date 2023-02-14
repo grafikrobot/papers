@@ -7,8 +7,8 @@ http://www.boost.org/LICENSE_1_0.txt)
 
 import asciidoctor ;
 
-local name = ecosystem_is ;
-local docn = D2810 ;
+local name = is_debugger_present_is_replaceable ;
+local docn = P2810 ;
 local docr = R0 ;
 local xxxx = $(docn)$(docr) ;
 
