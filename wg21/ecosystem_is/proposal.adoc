@@ -60,6 +60,11 @@ Standard (ISO/IEC 14882).
 
 == Revision History
 
+=== Revision 2 (February 2023)
+
+Narrows the set of goals for the initial edition of the IS per SG15 polls. And
+adds explanations of those goals.
+
 === Revision 1 (December 2022)
 
 Adds proposed timeline and process for development of the IS from the first
@@ -137,13 +142,19 @@ Like the {CPP} Language Standard this one will never be complete or finished.
 And it will take time and effort to provide coverage of the specifications
 needed to put together a good basic picture of the ecosystem. While the scope
 above defines an ideal completion, the goals for a first edition of this
-standard could include some modest items:
+standard include:
 
-. Definitions
-. Format Specifications :
-.. Build System <==> Package Manager Interoperation
-.. File Names
-.. Introspection
+. Definitions.
+. Build System <==> Package Manager Interoperation.
+. Minimum set of recognized file extensions.
+. Tool introspection.
+. Portable diagnostics format via SARIF.
+footnote:SARIF[https://sarifweb.azurewebsites.net/[Static Analysis Results Interchange Format (SARIF)]]
+. Command line portability.
+
+NOTE: This is not a closed set of goals. It is what we think is achievable with
+what we know now. We welcome additional goals if people come with complete
+proposals.
 
 === Definitions
 
@@ -153,10 +164,17 @@ included in this first standard.
 === Build System <==> Package Manager Interoperation
 
 Specification of formats and operation of interoperability between build
-systems and package managers. Current and previous work on this:
+systems and package managers. Current work:
 
+* Metadata to support {CPP} packaging
+footnote:[Metadata to support {CPP} packaging (https://github.com/isocpp/pkg-fmt)]
+* D2800R0 Dependency flag soup needs some fiber
+footnote:[Dependency flag soup needs some fiber (https://isocpp.org/files/papers/D2800R0.html)]
 * P2673 Common Description Format for {CPP} Libraries and Packages
 footnote:[Common Description Format for {CPP} Libraries and Packages (https://wg21.link/p2673r0)]
+
+And previous work on this:
+
 * The CppCon 2022 presentation "The Case For a Standardized Package Description
 Format",
 footnote:[CppCon 2022: The Case For a Standardized Package Description Format, _Luis Caro Campos_ (https://cppcon.digital-medium.co.uk/session/2022/the-case-for-a-standardized-package-description-format/)]
@@ -177,11 +195,13 @@ footnote:P1313[Let's Talk About Package Specification. _Matthew Woehlke_ (https:
 * P1177 Package Ecosystem Plan.
 footnote:P1177[Package Ecosystem Plan. _René Ferdinand Rivera Morell_ (https://github.com/cplusplus/papers/issues/48)]
 
-=== File Names
+=== File Name Extensions
 
-Specification of a minimal set of file names understood, and for what they
-are understood, by the various tools in the ecosystem. Current and previous
-work on this:
+Specification of a minimal set of file name extension understood, and for what
+they are understood, by the various tools in the ecosystem. Current work is
+forthcoming.
+
+Previous work on this:
 
 * P1838 Modules User-Facing Lexicon and File Extensions.
 footnote:[Modules User-Facing Lexicon and File Extensions. _Bryce Adelstein Lelbach_, _Boris Kolpackov_ (https://github.com/cplusplus/papers/issues/727)]
@@ -193,8 +213,27 @@ footnote:P1177[]
 Specification of format and command options to provide implementation
 information of the IS.
 
-* D2717 Tool Introspection
-footnote:[Tool Introspection. _René Ferdinand Rivera Morell_ (https://wg21.link/D2717R0)]
+* P2717 Tool Introspection
+footnote:[Tool Introspection. _René Ferdinand Rivera Morell_ (https://wg21.link/P2717R)]
+
+=== Portable Diagnostics Format
+
+{CPP} tools spend a lot of their time reading the output of other tools and
+processing it to either do more work or to present it to users. Unfortunately
+much of that information is not in a structured form. But instead is in plain
+stream output, i.e. log and error text which takes considerable effort and is
+specific to each tool generating it. Recently some tools have implemented
+the common structured output as SARIF format.footnote:SARIF[]
+The format is designed for presenting results of static analysis. But is
+finding alternate uses. We aim to incorporate the SARIF format.
+
+=== Command Line Portability
+
+A key aspect of interoperation between tools in the ecosystem is having a
+common language to express tool commands, i.e. in compiler drivers, that can
+be understood and/or translated between different tools and platforms. This
+aims to define a standard structured response file format that can become the
+best way to communicate compiling {CPP}.
 
 == Timeline
 
@@ -340,6 +379,26 @@ NOTE: SG15 would cease to operate. As TWG would assume the same
 responsibilities.
 
 == Polls
+
+=== SG15: P2656R1 (2023-02-10)
+
+SG15 thinks that the initial Ecosystem IS should include recommended /
+recognized file extensions.
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+|  3 | 4 | 3 | 0 | 0
+|===
+
+SG15 is interested in a structured diagnostics format in the initial Ecosystem
+IS.
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+|  6 | 3 | 1 | 0 | 0
+|===
 
 === SG15: P2656R1 (2022-12-16)
 

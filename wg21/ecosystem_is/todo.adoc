@@ -1,0 +1,43 @@
+. We need to finalize the expected content of the IS (matches item https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/p2656r1.html#_2023_2_plan[P2656-6.1]). I.e. we need to agree on what of the goals listed in P2656 will or will not be included (https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/p2656r1.html#_goals[P2656-5]). Items for consideration:
+
+.. Build System <==> PM Interop? (i.e. https://github.com/isocpp/pkg-fmt[isocpp/pkg-fmt, D2800])
+
+.. Recognized standard file names?
+
+.. Introspection (i.e. http://wg21.link/p2717[P2717]) (We already decided on this one. Just including it here for completeness.)
+
+.. Structured Diagnostic Output? (possibly https://docs.oasis-open.org/sarif/sarif/v2.1.0/sarif-v2.1.0.html[SARIF-2.1.0])
+
+.. Command line arguments?
+
+.. Anything else?
+
+. We need volunteers to sign up to work and submit papers for each of the items we agree on.
+
+. Agree on the current skeleton IS draft document
+(https://github.com/cplusplus/ecosystem-is[cplusplus/ecosystem-is]).
+
+.. Does it look correct and ready for basing wording in forthcoming papers?
+
+.. Who is going to be the IS editor & co-editor?
+
+== SG15 thinks that the initial Ecosystem IS should include recommended / recognized file extensions.
+
+|===
+| SF | F | N | A | SA
+| 3 | 4 | 3 | 0 | 0
+|===
+
+== SG15 is interested in a structured diagnostics format in the initial Ecosystem IS.
+
+|===
+| SF | F | N | A | SA
+| 6 | 3 | 1 | 0 | 0
+|===
+
+== SG15 is interested in a
+
+|===
+| SF | F | N | A | SA
+|  |  |  |  | 
+|===
