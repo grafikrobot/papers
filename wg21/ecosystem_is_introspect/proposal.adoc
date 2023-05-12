@@ -55,6 +55,10 @@ footnote:EcoIS[https://wg21.link/P2656 {CPP} Ecosystem International Standard]
 
 == Revision History
 
+=== Revision 1 (May 2023)
+
+Addition of scope, levels, use cases, and wording.
+
 === Revision 0 (December 2022)
 
 Initial text.
@@ -68,6 +72,17 @@ adjust their behavior to accommodate such differences we need a mechanism of
 introspection for all tools. Additionally when one tool requests to use another
 tool's Ecosystem IS aspect it's desirable to consistently communicate which
 edition(s) of that aspect it can use.
+
+== Scope
+
+This proposal aims to specify a method for tools to communicate which specific
+aspects of the Ecosystem IS they support and adhere to consumers (either other
+tools or users). It does not prescribe which aspects of the Ecosystem IS the
+tools must support or adhere to. Ultimately it only wants to make it possible
+to answer two questions:
+
+* What does the tool support and adhere to?
+* Does the tool support and adhere to X?
 
 == Design
 
@@ -197,7 +212,7 @@ supported:
 
 === Declaration
 
-The consumer can inform, i.e. declare, the target tool that specific
+The consumer can inform, i.e. declare, to the target tool that specific
 capabilities should use particular versions when responding with information
 using one or more `--std-decl=<VersionSpec>` options. The declarations can only
 exist in tandem with options for the mentioned capabilities. It's expected that
@@ -232,6 +247,28 @@ Which the consumer can use to _declare_ the specific capability versions:
 ----
 tool "--std-decl=std:info=2.0.0" "--std-decl=gcc:extra=2.1.0" ...
 ----
+
+=== Levels
+
+For some use cases it helps to simplify the extent of information the
+introspection understands. While it would be reasonable to expect a tool written
+in a modern general purpose programming language to fully implement all aspects
+of the introspection. It would not be practical to have a shell script parse
+and recognize the more challenging aspect of parsing version number ranges and
+matching them together. To support such use cases the introspection has to
+support levels "min" and "full".
+
+Obviously the "full" level equates to the tool understanding all the arguments
+and values. The "min" level only understands these:
+
+* Single version number in the responses for `--std-info`.
+* Only unbounded `--std-info`.
+
+This has the effect that a tool which only support the "min" level can only
+support specific versions of the capabilities it implements. But it also means
+that consumers will need to adjust their behavior to the tool instead of being
+able to ask the tool to adjust to the consumer. Consequently the consumer will
+likely have the more complex logic to do that adjustment.
 
 === Capabilities
 
@@ -413,17 +450,263 @@ See the <<Wording>> for a JSON <<Schema>> for this format.
 
 === Impact On The Standard
 
+This specification adds new functionality that is partly required for programs.
+Other specifications that define program behavior will need to follow this
+specification for conformance to the Ecosystem IS.
+
 == Implementation Experience
 
 None yet.
 
 == Polls
 
-None yet.
+=== SG15: P2717R0 (2023-01-27)
+
+SG15 wants to pursue defining in the Tooling IS a way for tools to provide
+portable information about which parts of the Tooling IS and vendor extensions
+they support.
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+| 5  | 3 | 0 | 0 | 0
+|===
 
 == Wording
 
-None yet.
+Wording is relative to
+link:https://github.com/cplusplus/ecosystem-is/tree/86cfbd72b9fae73554935d5f7039a798b5583628[ecosystem-is/86cfbd7].
+footnote:[Working Draft, {CPP} Ecosystem International Standard 2023-04-01 (https://github.com/cplusplus/ecosystem-is/tree/86cfbd72b9fae73554935d5f7039a798b5583628)]
+
+=== Normative references
+
+In [intro.refs] add:
+
+[.ins.text-justify]
+— ISO/IEC 21778:2017, _Information technology — The JSON data interchange syntax_ +
+— ISO/IEC 9945:2009, _Information technology — Portable Operating System Interface (POSIX®) Base Specifications, Issue 7_
+
+=== Specification: Conformance
+
+Insert clause before _Terms and definitions_ [intro.defs].
+
+[.ins.text-justify]
+[#cnf,reftext=cnf]
+==== Conformance [.right]#[<<cnf>>]#
+
+A conforming implementation shall meet the following criteria for conformance to
+this standard:
+
+— An application shall support the _minimum level_ of introspection
+(<<intspct-min>>).
+
+=== Definitions
+
+Add the following to _Terms and definitions_ [intro.defs].
+
+[.ins.text-justify]
+[#defns-application,reftext=defns.application]
+==== application [.right]#[<<defns-application>>]#
+
+a computer program that performs some desired function.
+
++[+ _Note 1_: From ISO/IEC 9945:2009. -- _end note_ +]+
+
+[.ins.text-justify]
+[#defns-capability,reftext=defns.capability]
+==== capability [.right]#[<<defns-capability>>]#
+
+an aspect of an overall specification that defines a subset of the entire
+specification.
+
+=== Specification: Introspection
+
+Insert clause after _Terms and definitions_ [intro.defs].
+
+[.ins.text-justify]
+[#intspct,reftext=intspct]
+==== Introspection [.right]#[<<intspct>>]#
+
+[#intspct-pre,reftext=intspct.pre]
+===== Preamble [.right]#[<<intspct-pre>>]#
+
+This clause describes options, output, and formats that describe what
+capabilities of this standard an application implements. An application can
+implement either the minimum or full level functionality.
+
+This clause specifies the `std:info` capability (<<intspct-cap>>).
+
+[#intspct-min,reftext=intspct.min]
+===== Minimum Level [.right]#[<<intspct-min>>]#
+
+An application that implements the minimum level functionality indicates it by
+specifying a single version (<<intspct-vers-single>>) as the value of the
+`std:info` capability (<<intspct-cap>>).
+
++[+ _Example 1_: +
+`{ "std:info": "1.0.0" }` +
+— _end example_ +]+
+
+[#intspct-full,reftext=intspct.full]
+===== Full Level [.right]#[<<intspct-full>>]#
+
+An application can implement the full level functionality as defined in this
+section. An application that reports implementing the full level shall implement
+all of the functionality in this section.
+
+An application that implements the full level functionality indicates it by
+specifying a version range (<<intspct-vers-single>>) as the value of the
+`std:info` capability (<<intspct-cap>>).
+
++[+ _Example 1_: +
+`{ "std:info": "[1.0.0,1.0.0]" }` +
+— _end example_ +]+
+
+[#intspct-cap,reftext=intspct.cap]
+===== Capabilities [.right]#[<<intspct-cap>>]#
+
+[horizontal]
+_capability-identifier_: ::
+  _name_ _scope-designator_ _name_ _sub-capability-identifier_
+_sub-capability-identifier_: ::
+  _scope-designator_ _name_ _sub-capability-identifier_
+_name_: one or more of ::
+  `a b c d e f g h i j k l m` +
+  `n o p q r s t u v w x y z` +
+  `_`
+_scope-designator_: ::
+  `:`
+
+A _capability-identifier_ is composed of two or more _scope-designator_
+delimited _name_ parts.
+
+The _name_ part `std` in a _capability-identifier_ is reserved for capabilities
+defined in this standard.
+
+Applications can specify vendor designated _name_ parts defined outside of this
+standard.
+
+[#intspct-vers,reftext=intspct.vers]
+===== Versions [.right]#[<<intspct-vers>>]#
+
+A version shall be either a single version (<<intspct-vers-single>>) or version
+range (<<intspct-vers-range>>).
+
+[#intspct-vers-num,reftext=intspct.vers.num]
+====== Version Number [.right]#[<<intspct-vers-num>>]#
+
+[horizontal]
+_version-number_: ::
+  _major-number_ `.` _minor-number_ `.` _patch-number_
+_major-number_: ::
+  _digits_
+_minor-number_: ::
+  _digits_
+_patch-number_: ::
+  _digits_
+_digits_: one or more of ::
+  `0 1 2 3 4 5 6 7 8 9`
+
+A version number is composed of 1, 2, or 3 decimal numbers (_digits_)
+separated by a period (`.`).
+
+A version number composed of 1 decimal number is equivalent to that decimal
+number followed by `.0.0`.
+
++[+ _Note 1_:
+That is the version number `N` is equivalent to `N.0.0`.
+— _end note_ +]+
+
+A version number composed of 2 decimal number parts is equivalent to those
+decimal number parts followed by `.0`.
+
++[+ _Note 2_:
+That is the version number `N.M` is equivalent to `N.M.0`.
+— _end note_ +]+
+
+Version numbers define a total ordering where version number _a_ with parts
+_i_, _j_, _k_ is ordered before version number _b_ with parts _p_, _q_, _r_
+when: _i_ < _p_, or _i_ == _p_ and _j_ < _q_, or _i_ == _p_ and _j_ == _q_
+and _k_ < _r_.
+
+Otherwise version number _a_ is ordered before version number _b_ when:
+_i_ > _p_, or _i_ == _p_ and _j_ > _q_, or _i_ == _p_ and _j_ == _q_
+and _k_ > _r_.
+
+Otherwise version number _a_ is the same as version number _b_.
+
+[#intspct-vers-range,reftext=intspct.vers.range]
+====== Version Range [.right]#[<<intspct-vers-range>>]#
+
+_version-range_: ::
+  _version-range-min-bracket_
+  _version-min-number_ `,` _version-max-number_
+  _version-range-max-bracket_
+_version-min-number_: ::
+  _version-number_
+_version-max-number_: ::
+  _version-number_
+_version-range-min-bracket_: one of ::
+  `[ (`
+_version-range-max-bracket_: one of ::
+  `) ]`
+
+A version range is composed of either one version number bracketed,
+or two version numbers separated by a command (`,`) and bracketed.
+
++[+ _Example 1_: +
+`[1.0.0]` +
+A version range with a single version number.
+— _end example_ +]+
+
++[+ _Example 2_: +
+`[1.0.0,2.0.0]` +
+A version range with a two version numbers.
+— _end example_ +]+
+
+A version range _a_ that is `[_i_,_j_]` makes _i_ and _j_ inclusive version
+range numbers.
+
+A version range _a_ that is `(_i_,_j_)` makes _i_ and _j_ exclusive version
+range numbers.
+
+A version range _a_ that is `(_i_,_j_]` makes _i_ an exclusive version number.
+
+A version range _a_ that is `[_i_,_j_)` makes _j_ and exclusive version number.
+
+A version range with a single inclusive version number _x_ is equivalent to the
+version range `[_x_,_x_]`.
+
+A version range with a single exclusive version number _x_ is invalid.
+
+An exclusive version number _x_ does not include the version number _x_ when
+compared to another version number _y_.
+
+A version range _a_ with version numbers _i_ and _j_ when compared to a version
+range _b_ with version number _m_ and _n_ will result in an empty version range
+when: _j_ < _m_ or _n_ < _i_.f
+
+Otherwise if _i_ or _m_ are inclusive version numbers and if _j_ or _n_ are
+inclusive version numbers the resulting range when _a_ is compare to _b_ is
+the inclusive version numbers "lesser of _i_ and _m_" and
+"lesser of _j_ and _n_".
+
+Otherwise if _i_ or _m_ are inclusive version numbers and if _j_ or _n_ are
+inclusive version numbers the resulting range when _a_ is compare to _b_ is
+the inclusive version number "lesser of _i_ and _m_" and the exclusive version
+number "lesser of _j_ and _n_".
+
+Otherwise if _j_ or _n_ are inclusive version numbers the resulting range when
+_a_ is compared to _b_ is the exclusive version number "lesser of _i_ and _m_"
+and the inclusive version number "lesser of _j_ and _n_".
+
+Otherwise the resulting range when _a_ is compared to _b_ is the exclusive version numbers "lesser of _i_ and _m_" and "lesser of _j_ and _n_".
+
+[#intspct-info,reftext=intspct.info]
+===== Introspection Information [.right]#[<<intspct-info>>]#
+
+[#intspct-dcl,reftext=intspct.dcl]
+===== Introspection Declaration [.right]#[<<intspct-dcl>>]#
 
 === Schema
 
