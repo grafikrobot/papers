@@ -13,7 +13,7 @@
 :source-highlighter: rouge
 :source-language: c++
 :toc: left
-:toclevels: 2
+:toclevels: 4
 :caution-caption: ⚑
 :important-caption: ‼
 :note-caption: ℹ
@@ -531,15 +531,49 @@ Insert clause after _Terms and definitions_ [intro.defs].
 ===== Preamble [.right]#[<<intspct-pre>>]#
 
 This clause describes options, output, and formats that describe what
-capabilities of this standard an application implements. An application can
-implement either the minimum or full level functionality.
+capabilities of this standard an application supports. An application can
+support either the _minimum level_ or _full level_ functionality.
 
 This clause specifies the `std:info` capability (<<intspct-cap>>).
+
+[#intspct-overview,reftext=intspct.overview]
+===== Overview [.right]#[<<intspct-overview>>]#
+
+--
+`_application_ [--std-info[=_declaration_]]`
+--
+
+[#intspct-options,reftext=intspct.options]
+===== Options [.right]#[<<intspct-options>>]#
+
+The following options shall be supported:
+
+`--std-info`::
+Outputs the version information of the capabilities supported by the
+application.
+The option can be specified zero or one time.
+The application shall support the option for _minimum level_ (<<intspct-min>>)
+functionality.
+
+`--std-info=_declaration_`::
+Declares the required capability version of the application.
+The option can be specified any number of times.
+The application shall support the option for _full level_ (<<intspct-full>>)
+functionality.
+
+`--std-info-out=_file_`::
+The pathname of a file to output the information to. If _file_ is '-', the
+standard output shall be used.
+The application shall support the option for _minimum level_ (<<intspct-min>>)
+functionality.
+
+[#intspct-output,reftext=intspct.output]
+===== Output [.right]#[<<intspct-output>>]#
 
 [#intspct-min,reftext=intspct.min]
 ===== Minimum Level [.right]#[<<intspct-min>>]#
 
-An application that implements the minimum level functionality indicates it by
+An application that supports the _minimum level_ functionality indicates it by
 specifying a single version (<<intspct-vers-single>>) as the value of the
 `std:info` capability (<<intspct-cap>>).
 
@@ -550,16 +584,16 @@ specifying a single version (<<intspct-vers-single>>) as the value of the
 [#intspct-full,reftext=intspct.full]
 ===== Full Level [.right]#[<<intspct-full>>]#
 
-An application can implement the full level functionality as defined in this
-section. An application that reports implementing the full level shall implement
-all of the functionality in this section.
+An application can support the _full level_ functionality as defined in this
+section. An application that reports supporting the _full level_ functionality
+shall support all of the functionality in this section.
 
-An application that implements the full level functionality indicates it by
+An application that supports the _full level_ functionality indicates it by
 specifying a version range (<<intspct-vers-single>>) as the value of the
 `std:info` capability (<<intspct-cap>>).
 
 +[+ _Example 1_: +
-`{ "std:info": "[1.0.0,1.0.0]" }` +
+`{ "std:info": "[1.0.0]" }` +
 — _end example_ +]+
 
 [#intspct-cap,reftext=intspct.cap]
@@ -700,7 +734,8 @@ Otherwise if _j_ or _n_ are inclusive version numbers the resulting range when
 _a_ is compared to _b_ is the exclusive version number "lesser of _i_ and _m_"
 and the inclusive version number "lesser of _j_ and _n_".
 
-Otherwise the resulting range when _a_ is compared to _b_ is the exclusive version numbers "lesser of _i_ and _m_" and "lesser of _j_ and _n_".
+Otherwise the resulting range when _a_ is compared to _b_ is the exclusive
+version numbers "lesser of _i_ and _m_" and "lesser of _j_ and _n_".
 
 [#intspct-info,reftext=intspct.info]
 ===== Introspection Information [.right]#[<<intspct-info>>]#

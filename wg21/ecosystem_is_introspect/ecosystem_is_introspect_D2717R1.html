@@ -839,7 +839,7 @@ pre.rouge .ss {
 <span id="author" class="author">René Ferdinand Rivera Morell</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> D2717R1,</span>
-<span id="revdate">2023-05-12</span>
+<span id="revdate">2023-05-13</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -855,12 +855,27 @@ pre.rouge .ss {
 <li><a href="#_scope">4. Scope</a></li>
 <li><a href="#_design">5. Design</a>
 <ul class="sectlevel2">
-<li><a href="#_introspection">5.1. Introspection</a></li>
+<li><a href="#_introspection">5.1. Introspection</a>
+<ul class="sectlevel3">
+<li><a href="#_unbounded">5.1.1. Unbounded</a></li>
+<li><a href="#_bounded">5.1.2. Bounded</a></li>
+</ul>
+</li>
 <li><a href="#_declaration">5.2. Declaration</a></li>
 <li><a href="#_levels">5.3. Levels</a></li>
 <li><a href="#_capabilities">5.4. Capabilities</a></li>
-<li><a href="#_version_specification">5.5. Version Specification</a></li>
-<li><a href="#_version_matching">5.6. Version Matching</a></li>
+<li><a href="#_version_specification">5.5. Version Specification</a>
+<ul class="sectlevel3">
+<li><a href="#_single_version">5.5.1. Single Version</a></li>
+<li><a href="#_version_range">5.5.2. Version Range</a></li>
+</ul>
+</li>
+<li><a href="#_version_matching">5.6. Version Matching</a>
+<ul class="sectlevel3">
+<li><a href="#_single_version_comparison">5.6.1. Single Version Comparison</a></li>
+<li><a href="#_range_comparison">5.6.2. Range Comparison</a></li>
+</ul>
+</li>
 <li><a href="#_format">5.7. Format</a></li>
 <li><a href="#_impact_on_the_standard">5.8. Impact On The Standard</a></li>
 </ul>
@@ -874,9 +889,35 @@ pre.rouge .ss {
 <li><a href="#_wording">8. Wording</a>
 <ul class="sectlevel2">
 <li><a href="#_normative_references">8.1. Normative references</a></li>
-<li><a href="#_specification_conformance">8.2. Specification: Conformance</a></li>
-<li><a href="#_definitions">8.3. Definitions</a></li>
-<li><a href="#_specification_introspection">8.4. Specification: Introspection</a></li>
+<li><a href="#_specification_conformance">8.2. Specification: Conformance</a>
+<ul class="sectlevel3">
+<li><a href="#cnf">8.2.1. Conformance <span class="right">[cnf]</span></a></li>
+</ul>
+</li>
+<li><a href="#_definitions">8.3. Definitions</a>
+<ul class="sectlevel3">
+<li><a href="#defns-application">8.3.1. application <span class="right">[defns.application]</span></a></li>
+<li><a href="#defns-capability">8.3.2. capability <span class="right">[defns.capability]</span></a></li>
+</ul>
+</li>
+<li><a href="#_specification_introspection">8.4. Specification: Introspection</a>
+<ul class="sectlevel3">
+<li><a href="#intspct">8.4.1. Introspection <span class="right">[intspct]</span></a>
+<ul class="sectlevel4">
+<li><a href="#intspct-pre">8.4.1.1. Preamble <span class="right">[intspct.pre]</span></a></li>
+<li><a href="#intspct-overview">8.4.1.2. Overview <span class="right">[intspct.overview]</span></a></li>
+<li><a href="#intspct-options">8.4.1.3. Options <span class="right">[intspct.options]</span></a></li>
+<li><a href="#intspct-output">8.4.1.4. Output <span class="right">[intspct.output]</span></a></li>
+<li><a href="#intspct-min">8.4.1.5. Minimum Level <span class="right">[intspct.min]</span></a></li>
+<li><a href="#intspct-full">8.4.1.6. Full Level <span class="right">[intspct.full]</span></a></li>
+<li><a href="#intspct-cap">8.4.1.7. Capabilities <span class="right">[intspct.cap]</span></a></li>
+<li><a href="#intspct-vers">8.4.1.8. Versions <span class="right">[intspct.vers]</span></a></li>
+<li><a href="#intspct-info">8.4.1.9. Introspection Information <span class="right">[intspct.info]</span></a></li>
+<li><a href="#intspct-dcl">8.4.1.10. Introspection Declaration <span class="right">[intspct.dcl]</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a href="#_schema">8.5. Schema</a></li>
 </ul>
 </li>
@@ -912,7 +953,7 @@ pre.rouge .ss {
 </dd>
 <dt class="hdlist1">Date: </dt>
 <dd>
-<p>2023-05-12</p>
+<p>2023-05-13</p>
 </dd>
 <dt class="hdlist1">Audience: </dt>
 <dd>
@@ -1633,17 +1674,63 @@ specification.</p>
 <h5 id="intspct-pre"><a class="anchor" href="#intspct-pre"></a>8.4.1.1. Preamble <span class="right">[<a href="#intspct-pre">intspct.pre</a>]</span></h5>
 <div class="paragraph">
 <p>This clause describes options, output, and formats that describe what
-capabilities of this standard an application implements. An application can
-implement either the minimum or full level functionality.</p>
+capabilities of this standard an application supports. An application can
+support either the <em>minimum level</em> or <em>full level</em> functionality.</p>
 </div>
 <div class="paragraph">
 <p>This clause specifies the <code>std:info</code> capability (<a href="#intspct-cap">intspct.cap</a>).</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="intspct-min"><a class="anchor" href="#intspct-min"></a>8.4.1.2. Minimum Level <span class="right">[<a href="#intspct-min">intspct.min</a>]</span></h5>
+<h5 id="intspct-overview"><a class="anchor" href="#intspct-overview"></a>8.4.1.2. Overview <span class="right">[<a href="#intspct-overview">intspct.overview</a>]</span></h5>
+<div class="openblock">
+<div class="content">
 <div class="paragraph">
-<p>An application that implements the minimum level functionality indicates it by
+<p><code><em>application</em> [--std-info[=<em>declaration</em>]]</code></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="intspct-options"><a class="anchor" href="#intspct-options"></a>8.4.1.3. Options <span class="right">[<a href="#intspct-options">intspct.options</a>]</span></h5>
+<div class="paragraph">
+<p>The following options shall be supported:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>--std-info</code></dt>
+<dd>
+<p>Outputs the version information of the capabilities supported by the
+application.
+The option can be specified zero or one time.
+The application shall support the option for <em>minimum level</em> (<a href="#intspct-min">intspct.min</a>)
+functionality.</p>
+</dd>
+<dt class="hdlist1"><code>--std-info=<em>declaration</em></code></dt>
+<dd>
+<p>Declares the required capability version of the application.
+The option can be specified any number of times.
+The application shall support the option for <em>full level</em> (<a href="#intspct-full">intspct.full</a>)
+functionality.</p>
+</dd>
+<dt class="hdlist1"><code>--std-info-out=<em>file</em></code></dt>
+<dd>
+<p>The pathname of a file to output the information to. If <em>file</em> is '-', the
+standard output shall be used.
+The application shall support the option for <em>minimum level</em> (<a href="#intspct-min">intspct.min</a>)
+functionality.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect4">
+<h5 id="intspct-output"><a class="anchor" href="#intspct-output"></a>8.4.1.4. Output <span class="right">[<a href="#intspct-output">intspct.output</a>]</span></h5>
+
+</div>
+<div class="sect4">
+<h5 id="intspct-min"><a class="anchor" href="#intspct-min"></a>8.4.1.5. Minimum Level <span class="right">[<a href="#intspct-min">intspct.min</a>]</span></h5>
+<div class="paragraph">
+<p>An application that supports the <em>minimum level</em> functionality indicates it by
 specifying a single version (<a href="#intspct-vers-single">[intspct-vers-single]</a>) as the value of the
 <code>std:info</code> capability (<a href="#intspct-cap">intspct.cap</a>).</p>
 </div>
@@ -1654,25 +1741,25 @@ specifying a single version (<a href="#intspct-vers-single">[intspct-vers-single
 </div>
 </div>
 <div class="sect4">
-<h5 id="intspct-full"><a class="anchor" href="#intspct-full"></a>8.4.1.3. Full Level <span class="right">[<a href="#intspct-full">intspct.full</a>]</span></h5>
+<h5 id="intspct-full"><a class="anchor" href="#intspct-full"></a>8.4.1.6. Full Level <span class="right">[<a href="#intspct-full">intspct.full</a>]</span></h5>
 <div class="paragraph">
-<p>An application can implement the full level functionality as defined in this
-section. An application that reports implementing the full level shall implement
-all of the functionality in this section.</p>
+<p>An application can support the <em>full level</em> functionality as defined in this
+section. An application that reports supporting the <em>full level</em> functionality
+shall support all of the functionality in this section.</p>
 </div>
 <div class="paragraph">
-<p>An application that implements the full level functionality indicates it by
+<p>An application that supports the <em>full level</em> functionality indicates it by
 specifying a version range (<a href="#intspct-vers-single">[intspct-vers-single]</a>) as the value of the
 <code>std:info</code> capability (<a href="#intspct-cap">intspct.cap</a>).</p>
 </div>
 <div class="paragraph">
 <p>[ <em>Example 1</em>:<br>
-<code>{ "std:info": "[1.0.0,1.0.0]" }</code><br>
+<code>{ "std:info": "[1.0.0]" }</code><br>
 — <em>end example</em> ]</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="intspct-cap"><a class="anchor" href="#intspct-cap"></a>8.4.1.4. Capabilities <span class="right">[<a href="#intspct-cap">intspct.cap</a>]</span></h5>
+<h5 id="intspct-cap"><a class="anchor" href="#intspct-cap"></a>8.4.1.7. Capabilities <span class="right">[<a href="#intspct-cap">intspct.cap</a>]</span></h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -1725,13 +1812,13 @@ standard.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="intspct-vers"><a class="anchor" href="#intspct-vers"></a>8.4.1.5. Versions <span class="right">[<a href="#intspct-vers">intspct.vers</a>]</span></h5>
+<h5 id="intspct-vers"><a class="anchor" href="#intspct-vers"></a>8.4.1.8. Versions <span class="right">[<a href="#intspct-vers">intspct.vers</a>]</span></h5>
 <div class="paragraph">
 <p>A version shall be either a single version (<a href="#intspct-vers-single">[intspct-vers-single]</a>) or version
 range (<a href="#intspct-vers-range">intspct.vers.range</a>).</p>
 </div>
 <div class="sect5">
-<h6 id="intspct-vers-num"><a class="anchor" href="#intspct-vers-num"></a>8.4.1.5.1. Version Number <span class="right">[<a href="#intspct-vers-num">intspct.vers.num</a>]</span></h6>
+<h6 id="intspct-vers-num"><a class="anchor" href="#intspct-vers-num"></a>8.4.1.8.1. Version Number <span class="right">[<a href="#intspct-vers-num">intspct.vers.num</a>]</span></h6>
 <div class="hdlist">
 <table>
 <tr>
@@ -1814,7 +1901,7 @@ and <em>k</em> &gt; <em>r</em>.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="intspct-vers-range"><a class="anchor" href="#intspct-vers-range"></a>8.4.1.5.2. Version Range <span class="right">[<a href="#intspct-vers-range">intspct.vers.range</a>]</span></h6>
+<h6 id="intspct-vers-range"><a class="anchor" href="#intspct-vers-range"></a>8.4.1.8.2. Version Range <span class="right">[<a href="#intspct-vers-range">intspct.vers.range</a>]</span></h6>
 <div class="dlist">
 <dl>
 <dt class="hdlist1"><em>version-range</em>: </dt>
@@ -1905,16 +1992,17 @@ number "lesser of <em>j</em> and <em>n</em>".</p>
 and the inclusive version number "lesser of <em>j</em> and <em>n</em>".</p>
 </div>
 <div class="paragraph">
-<p>Otherwise the resulting range when <em>a</em> is compared to <em>b</em> is the exclusive version numbers "lesser of <em>i</em> and <em>m</em>" and "lesser of <em>j</em> and <em>n</em>".</p>
+<p>Otherwise the resulting range when <em>a</em> is compared to <em>b</em> is the exclusive
+version numbers "lesser of <em>i</em> and <em>m</em>" and "lesser of <em>j</em> and <em>n</em>".</p>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="intspct-info"><a class="anchor" href="#intspct-info"></a>8.4.1.6. Introspection Information <span class="right">[<a href="#intspct-info">intspct.info</a>]</span></h5>
+<h5 id="intspct-info"><a class="anchor" href="#intspct-info"></a>8.4.1.9. Introspection Information <span class="right">[<a href="#intspct-info">intspct.info</a>]</span></h5>
 
 </div>
 <div class="sect4">
-<h5 id="intspct-dcl"><a class="anchor" href="#intspct-dcl"></a>8.4.1.7. Introspection Declaration <span class="right">[<a href="#intspct-dcl">intspct.dcl</a>]</span></h5>
+<h5 id="intspct-dcl"><a class="anchor" href="#intspct-dcl"></a>8.4.1.10. Introspection Declaration <span class="right">[<a href="#intspct-dcl">intspct.dcl</a>]</span></h5>
 
 </div>
 </div>
