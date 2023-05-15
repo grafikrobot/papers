@@ -9,11 +9,11 @@
 :nofooter:
 :sectanchors:
 :sectnums:
-:sectnumlevels: 5
+:sectnumlevels: 10
 :source-highlighter: rouge
 :source-language: c++
 :toc: left
-:toclevels: 4
+:toclevels: 2
 :caution-caption: ⚑
 :important-caption: ‼
 :note-caption: ℹ
@@ -57,7 +57,9 @@ footnote:EcoIS[https://wg21.link/P2656 {CPP} Ecosystem International Standard]
 
 === Revision 1 (May 2023)
 
-Addition of scope, levels, use cases, and wording.
+Addition of scope, functionality levels, use cases, and wording.
+Simplified introspection and declaration interfaces to make implementing
+introspection trivial and declaration straightforward.
 
 === Revision 0 (December 2022)
 
@@ -483,8 +485,10 @@ footnote:[Working Draft, {CPP} Ecosystem International Standard 2023-04-01 (http
 In [intro.refs] add:
 
 [.ins.text-justify]
-— ISO/IEC 21778:2017, _Information technology — The JSON data interchange syntax_ +
-— ISO/IEC 9945:2009, _Information technology — Portable Operating System Interface (POSIX®) Base Specifications, Issue 7_
+JSON::
+ISO/IEC 21778:2017, _Information technology — The JSON data interchange syntax_
+POSIX::
+ISO/IEC 9945:2009, _Information technology — Portable Operating System Interface (POSIX®) Base Specifications, Issue 7_
 
 === Specification: Conformance
 
@@ -497,8 +501,8 @@ Insert clause before _Terms and definitions_ [intro.defs].
 A conforming implementation shall meet the following criteria for conformance to
 this standard:
 
-— An application shall support the _minimum level_ of introspection
-(<<intspct-min>>).
+— An application shall support the _minimum level_ functionality of
+introspection (<<intspct-min>>).
 
 === Definitions
 
@@ -519,6 +523,14 @@ a computer program that performs some desired function.
 an aspect of an overall specification that defines a subset of the entire
 specification.
 
+[.ins.text-justify]
+[#defns-file,reftext=defns.file]
+==== file [.right]#[<<defns-file>>]#
+
+an object that can be written to, or read from, or both.
+
++[+ _Note 1_: From ISO/IEC 9945:2009. -- _end note_ +]+
+
 === Specification: Introspection
 
 Insert clause after _Terms and definitions_ [intro.defs].
@@ -531,8 +543,9 @@ Insert clause after _Terms and definitions_ [intro.defs].
 ===== Preamble [.right]#[<<intspct-pre>>]#
 
 This clause describes options, output, and formats that describe what
-capabilities of this standard an application supports. An application can
-support either the _minimum level_ or _full level_ functionality.
+capabilities of this standard an application supports. An application shall
+support the _minimum level_ functionality (<<intspct-min>>). An application can
+support the _full level_ functionality (<<intspct-full>>).
 
 This clause specifies the `std:info` capability (<<intspct-cap>>).
 
@@ -540,7 +553,7 @@ This clause specifies the `std:info` capability (<<intspct-cap>>).
 ===== Overview [.right]#[<<intspct-overview>>]#
 
 --
-`_application_ [--std-info[=_declaration_]]`
+`_application_ [--std-info[=_declaration_]] [--std-info-out=_file_]`
 --
 
 [#intspct-options,reftext=intspct.options]
@@ -548,53 +561,77 @@ This clause specifies the `std:info` capability (<<intspct-cap>>).
 
 The following options shall be supported:
 
-`--std-info`::
+[#intspct-opt-info,reftext=intspct.opt.info]
+`--std-info` [.right]#[<<intspct-opt-info>>]#::
 Outputs the version information of the capabilities supported by the
 application.
 The option can be specified zero or one time.
 The application shall support the option for _minimum level_ (<<intspct-min>>)
 functionality.
 
-`--std-info=_declaration_`::
+[#intspct-opt-out,reftext=intspct.opt.out]
+`--std-info-out=_file_` [.right]#[<<intspct-opt-out>>]#::
+The pathname of a file to output the information to. If _file_ is '`-`', the
+standard output shall be used.
+The application shall support the option for _minimum level_ (<<intspct-min>>)
+functionality.
+Not specifying this option while specifying the `--std-info` option
+(<<intspct-opt-info>>) shall be equivalent to also specifying a
+`--std-info-out=-` option.
+
+The following options should be supported:
+
+[#intspct-opt-decl,reftext=intspct.opt.decl]
+`--std-info=_declaration_` [.right]#[<<intspct-opt-decl>>]#::
 Declares the required capability version of the application.
 The option can be specified any number of times.
 The application shall support the option for _full level_ (<<intspct-full>>)
 functionality.
 
-`--std-info-out=_file_`::
-The pathname of a file to output the information to. If _file_ is '-', the
-standard output shall be used.
-The application shall support the option for _minimum level_ (<<intspct-min>>)
-functionality.
-
 [#intspct-output,reftext=intspct.output]
 ===== Output [.right]#[<<intspct-output>>]#
 
-[#intspct-min,reftext=intspct.min]
-===== Minimum Level [.right]#[<<intspct-min>>]#
+An application shall output a valid JSON text file that conforms to the
+introspection schema (<<intspct-schema>>) to the file specified in the options
+(<<intspct-opt-out>>).
 
-An application that supports the _minimum level_ functionality indicates it by
-specifying a single version (<<intspct-vers-single>>) as the value of the
-`std:info` capability (<<intspct-cap>>).
+[#intspct-schema,reftext=intspct.schema]
+===== Schema [.right]#[<<intspct-schema>>]#
 
-+[+ _Example 1_: +
-`{ "std:info": "1.0.0" }` +
-— _end example_ +]+
+An introspection JSON text file shall contain one introspection JSON object
+(<<intspct-schema-obj>>).
 
-[#intspct-full,reftext=intspct.full]
-===== Full Level [.right]#[<<intspct-full>>]#
+[#intspct-schema-obj,reftext=intspct.schema.obj]
+====== Introspection Object [.right]#[<<intspct-schema-obj>>]#
 
-An application can support the _full level_ functionality as defined in this
-section. An application that reports supporting the _full level_ functionality
-shall support all of the functionality in this section.
+The _introspection object_ is the root JSON object of the introspection JSON
+text.
 
-An application that supports the _full level_ functionality indicates it by
-specifying a version range (<<intspct-vers-single>>) as the value of the
-`std:info` capability (<<intspct-cap>>).
+An _introspection object_ can have the following fields.
 
-+[+ _Example 1_: +
-`{ "std:info": "[1.0.0]" }` +
-— _end example_ +]+
+[#intspct-fld-schema,reftext=intspct.schema.schema]
+JSON Schema Field [.right]#[<<intspct-fld-schema>>]# ::
+_Name_: `$schema` +
+_Type_: `string` +
+_Value_:
+  The value shall be a reference to a JSON Schema specification. +
+_Description_:
+  An _introspection object_ can contain this field.
+  If an _introspection object_ does not contain this field the value shall be a
+  reference to the JSON Schema corresponding to the current edition of this
+  standard.
+
+[#intspct-fld-cap,reftext=intspct.schema.cap]
+capability [.right]#[<<intspct-fld-cap>>]# ::
+_Name_: _capability-identifier_ (<<intspct-cap>>) +
+_Type_: `string` +
+_Value_:
+  The value shall be a _version-number_ for _minimum level_ functionality.
+  Or the value shall be a _version-range_ for _full level_ functionality. +
+_Description_:
+  An _introspection object_ can contain this field one or more times.
+  When the field appears more than one time the name of the fields shall be
+  unique withing the _introspection object_.
 
 [#intspct-cap,reftext=intspct.cap]
 ===== Capabilities [.right]#[<<intspct-cap>>]#
@@ -614,7 +651,7 @@ _scope-designator_: ::
 A _capability-identifier_ is composed of two or more _scope-designator_
 delimited _name_ parts.
 
-The _name_ part `std` in a _capability-identifier_ is reserved for capabilities
+The _name_ `std` in a _capability-identifier_ is reserved for capabilities
 defined in this standard.
 
 Applications can specify vendor designated _name_ parts defined outside of this
@@ -625,6 +662,14 @@ standard.
 
 A version shall be either a single version (<<intspct-vers-single>>) or version
 range (<<intspct-vers-range>>).
+
+A single version shall be equivalent to the inclusive version range spanning
+solely that single version number.
+
++[+ _Note 1_:
+That is the version number `i.j.k` is equivalent to version range
+`[i.j.k,i.j.k]`.
+— _end note_ +]+
 
 [#intspct-vers-num,reftext=intspct.vers.num]
 ====== Version Number [.right]#[<<intspct-vers-num>>]#
@@ -686,7 +731,7 @@ _version-range-max-bracket_: one of ::
   `) ]`
 
 A version range is composed of either one version number bracketed,
-or two version numbers separated by a command (`,`) and bracketed.
+or two version numbers separated by a comma (`,`) and bracketed.
 
 +[+ _Example 1_: +
 `[1.0.0]` +
@@ -706,7 +751,7 @@ range numbers.
 
 A version range _a_ that is `(_i_,_j_]` makes _i_ an exclusive version number.
 
-A version range _a_ that is `[_i_,_j_)` makes _j_ and exclusive version number.
+A version range _a_ that is `[_i_,_j_)` makes _j_ an exclusive version number.
 
 A version range with a single inclusive version number _x_ is equivalent to the
 version range `[_x_,_x_]`.
@@ -737,11 +782,62 @@ and the inclusive version number "lesser of _j_ and _n_".
 Otherwise the resulting range when _a_ is compared to _b_ is the exclusive
 version numbers "lesser of _i_ and _m_" and "lesser of _j_ and _n_".
 
+[#intspct-min,reftext=intspct.min]
+===== Minimum Level [.right]#[<<intspct-min>>]#
+
+An application that supports the _minimum level_ functionality indicates it by
+specifying a single version (<<intspct-vers-single>>) as the value of the
+`std:info` capability (<<intspct-cap>>).
+
++[+ _Example 1_: +
+`{ "std:info": "1.0.0" }` +
+— _end example_ +]+
+
+[#intspct-full,reftext=intspct.full]
+===== Full Level [.right]#[<<intspct-full>>]#
+
+An application can support the _full level_ functionality as defined in this
+section. An application that reports supporting the _full level_ functionality
+shall support all of the functionality in this section.
+
+An application that supports the _full level_ functionality indicates it by
+specifying a version range (<<intspct-vers-single>>) as the value of the
+`std:info` capability (<<intspct-cap>>).
+
++[+ _Example 1_: +
+`{ "std:info": "[1.0.0]" }` +
+— _end example_ +]+
+
 [#intspct-info,reftext=intspct.info]
 ===== Introspection Information [.right]#[<<intspct-info>>]#
 
+An application shall output an an introspection schema (<<intspct-schema>>)
+that contains one capability field for each capability that the application
+supports when given the `--std-info` option (<<intspct-opt-info>>).
+
+An application shall indicate the single version (<<intspct-vers-num>>) or
+version range (<<intspct-vers-range>>) of each capability it supports as the
+value of the capability field.
+
 [#intspct-dcl,reftext=intspct.dcl]
 ===== Introspection Declaration [.right]#[<<intspct-dcl>>]#
+
+An application that supports the _full level_ functionality when given one or
+more `--std-info=_declaration_` options shall conform its functionality to the
+indicated edition of this standard in the given _declaration_ _version-number_
+for the given capability.
+
+[horizontal]
+_declaration_ ::
+  _capability-identifier_ `=` _version-number_
+
+An application, when not given a `--std-info=_declaration_` option for a
+capability it supports, should conform its functionality to the most recent
+version of the standard it supports for that capability.
+
+An application, when given a capability declaration option and the given
+version is outside of the version range that the application supports, should
+indicate an error.
 
 === Schema
 
