@@ -839,7 +839,7 @@ pre.rouge .ss {
 <span id="author" class="author">René Ferdinand Rivera Morell</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> D2717R1,</span>
-<span id="revdate">2023-05-14</span>
+<span id="revdate">2023-05-15</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -877,7 +877,7 @@ pre.rouge .ss {
 <li><a href="#_specification_conformance">8.2. Specification: Conformance</a></li>
 <li><a href="#_definitions">8.3. Definitions</a></li>
 <li><a href="#_specification_introspection">8.4. Specification: Introspection</a></li>
-<li><a href="#_schema">8.5. Schema</a></li>
+<li><a href="#_json_schema">8.5. JSON Schema</a></li>
 </ul>
 </li>
 <li><a href="#_acknowledgements">9. Acknowledgements</a></li>
@@ -912,7 +912,7 @@ pre.rouge .ss {
 </dd>
 <dt class="hdlist1">Date: </dt>
 <dd>
-<p>2023-05-14</p>
+<p>2023-05-15</p>
 </dd>
 <dt class="hdlist1">Audience: </dt>
 <dd>
@@ -1506,7 +1506,7 @@ supported for the <code>std:info</code> capability:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>See the <a href="#_wording">Wording</a> for a JSON <a href="#_schema">Schema</a> for this format.</p>
+<p>See the <a href="#_wording">Wording</a> for a JSON <a href="#Schema">[Schema]</a> for this format.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1621,7 +1621,7 @@ introspection (<a href="#intspct-min">intspct.min</a>).</p>
 <p>a computer program that performs some desired function.</p>
 </div>
 <div class="paragraph">
-<p>[ <em>Note 1</em>: From ISO/IEC 9945:2009.&#8201;&#8212;&#8201;<em>end note</em> ]</p>
+<p>[ <em>Note 1</em>: From POSIX.&#8201;&#8212;&#8201;<em>end note</em> ]</p>
 </div>
 </div>
 <div class="sect3 ins text-justify">
@@ -1637,7 +1637,7 @@ specification.</p>
 <p>an object that can be written to, or read from, or both.</p>
 </div>
 <div class="paragraph">
-<p>[ <em>Note 1</em>: From ISO/IEC 9945:2009.&#8201;&#8212;&#8201;<em>end note</em> ]</p>
+<p>[ <em>Note 1</em>: From POSIX.&#8201;&#8212;&#8201;<em>end note</em> ]</p>
 </div>
 </div>
 </div>
@@ -1767,7 +1767,7 @@ text.</p>
 <em>Description</em>:
   An <em>introspection object</em> can contain this field one or more times.
   When the field appears more than one time the name of the fields shall be
-  unique withing the <em>introspection object</em>.</p>
+  unique within the <em>introspection object</em>.</p>
 </dd>
 </dl>
 </div>
@@ -1829,12 +1829,12 @@ standard.</p>
 <div class="sect4">
 <h5 id="intspct-vers"><a class="anchor" href="#intspct-vers"></a>8.4.1.7. Versions <span class="right">[<a href="#intspct-vers">intspct.vers</a>]</span></h5>
 <div class="paragraph">
-<p>A version shall be either a single version (<a href="#intspct-vers-single">[intspct-vers-single]</a>) or version
-range (<a href="#intspct-vers-range">intspct.vers.range</a>).</p>
+<p>A version shall be either a single version number (<a href="#intspct-vers-num">intspct.vers.num</a>) or a
+version range (<a href="#intspct-vers-range">intspct.vers.range</a>).</p>
 </div>
 <div class="paragraph">
-<p>A single version shall be equivalent to the inclusive version range spanning
-solely that single version number.</p>
+<p>A single version number shall be equivalent to the inclusive version range
+spanning solely that single version number.</p>
 </div>
 <div class="paragraph">
 <p>[ <em>Note 1</em>:
@@ -2056,9 +2056,9 @@ specifying a version range (<a href="#intspct-vers-single">[intspct-vers-single]
 <div class="sect4">
 <h5 id="intspct-info"><a class="anchor" href="#intspct-info"></a>8.4.1.10. Introspection Information <span class="right">[<a href="#intspct-info">intspct.info</a>]</span></h5>
 <div class="paragraph">
-<p>An application shall output an an introspection schema (<a href="#intspct-schema">intspct.schema</a>)
-that contains one capability field for each capability that the application
-supports when given the <code>--std-info</code> option (<a href="#intspct-opt-info">intspct.opt.info</a>).</p>
+<p>An application shall output an introspection schema (<a href="#intspct-schema">intspct.schema</a>) that
+contains one capability field for each capability that the application supports
+when given the <code>--std-info</code> option (<a href="#intspct-opt-info">intspct.opt.info</a>).</p>
 </div>
 <div class="paragraph">
 <p>An application shall indicate the single version (<a href="#intspct-vers-num">intspct.vers.num</a>) or
@@ -2100,7 +2100,27 @@ indicate an error.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_schema"><a class="anchor" href="#_schema"></a>8.5. Schema</h3>
+<h3 id="_json_schema"><a class="anchor" href="#_json_schema"></a>8.5. JSON Schema</h3>
+<div class="paragraph">
+<p>Insert clause before <em>Bibliography</em>.</p>
+</div>
+<div class="sect3 ins text-justify">
+<h4 id="intspct-json-schema"><a class="anchor" href="#intspct-json-schema"></a>8.5.1. Annex A (informative) Tool Introspection <em>JSON Schema</em> <span class="right">[<a href="#intspct-json-schema">intsjschm</a>]</span></h4>
+<div class="sect4">
+<h5 id="intspct-json-schema-general"><a class="anchor" href="#intspct-json-schema-general"></a>8.5.1.1. General <span class="right">[<a href="#intspct-json-schema-general">intsjschm.general</a>]</span></h5>
+<div class="paragraph">
+<p>This Annex describe defines the introspection capability schema
+(<a href="#intspct-schema">intspct.schema</a>) in terms of a <em>JSON Schema</em>. A <em>JSON Schema</em> refers to the
+IETF RFC draft "JSON Schema: A Media Type for Describing JSON Documents" as
+specified in <a href="https://json-schema.org/draft/2020-12/json-schema-core.html" class="bare">https://json-schema.org/draft/2020-12/json-schema-core.html</a>.</p>
+</div>
+<div class="paragraph">
+<p>This JSON Schema can be referenced as the <code>$schema</code> field with URI value of
+<code>"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json"</code>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="intspct-json-schema-spec"><a class="anchor" href="#intspct-json-schema-spec"></a>8.5.1.2. JSON Schema Specification <span class="right">[<a href="#intspct-json-schema-spec">intsjschm.spec</a>]</span></h5>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
@@ -2114,7 +2134,7 @@ indicate an error.</p>
 	</span><span class="nl">"$defs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
 		</span><span class="nl">"VersionSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
 			</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-			</span><span class="nl">"pattern"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^([0-9]+[.][0-9]+[.][0-9]+)|([[(][0-9]+[.][0-9]+[.][0-9]+,[0-9]+[.][0-9]+[.][0-9]+[)</span><span class="se">\\</span><span class="s2">]])$"</span><span class="w">
+			</span><span class="nl">"pattern"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^([0-9]+([.][0-9]+){0,2})|([[(][0-9]+([.][0-9]+){0,2},[0-9]+([.][0-9]+){0,2}[)</span><span class="se">\\</span><span class="s2">]])$"</span><span class="w">
 		</span><span class="p">}</span><span class="w">
 	</span><span class="p">},</span><span class="w">
 	</span><span class="nl">"anyOf"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -2146,6 +2166,8 @@ indicate an error.</p>
 		</span><span class="p">}</span><span class="w">
 	</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span></code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>

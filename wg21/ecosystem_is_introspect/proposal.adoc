@@ -514,7 +514,7 @@ Add the following to _Terms and definitions_ [intro.defs].
 
 a computer program that performs some desired function.
 
-+[+ _Note 1_: From ISO/IEC 9945:2009. -- _end note_ +]+
++[+ _Note 1_: From POSIX. -- _end note_ +]+
 
 [.ins.text-justify]
 [#defns-capability,reftext=defns.capability]
@@ -529,7 +529,7 @@ specification.
 
 an object that can be written to, or read from, or both.
 
-+[+ _Note 1_: From ISO/IEC 9945:2009. -- _end note_ +]+
++[+ _Note 1_: From POSIX. -- _end note_ +]+
 
 === Specification: Introspection
 
@@ -631,7 +631,7 @@ _Value_:
 _Description_:
   An _introspection object_ can contain this field one or more times.
   When the field appears more than one time the name of the fields shall be
-  unique withing the _introspection object_.
+  unique within the _introspection object_.
 
 [#intspct-cap,reftext=intspct.cap]
 ===== Capabilities [.right]#[<<intspct-cap>>]#
@@ -660,11 +660,11 @@ standard.
 [#intspct-vers,reftext=intspct.vers]
 ===== Versions [.right]#[<<intspct-vers>>]#
 
-A version shall be either a single version (<<intspct-vers-single>>) or version
-range (<<intspct-vers-range>>).
+A version shall be either a single version number (<<intspct-vers-num>>) or a
+version range (<<intspct-vers-range>>).
 
-A single version shall be equivalent to the inclusive version range spanning
-solely that single version number.
+A single version number shall be equivalent to the inclusive version range
+spanning solely that single version number.
 
 +[+ _Note 1_:
 That is the version number `i.j.k` is equivalent to version range
@@ -811,9 +811,9 @@ specifying a version range (<<intspct-vers-single>>) as the value of the
 [#intspct-info,reftext=intspct.info]
 ===== Introspection Information [.right]#[<<intspct-info>>]#
 
-An application shall output an an introspection schema (<<intspct-schema>>)
-that contains one capability field for each capability that the application
-supports when given the `--std-info` option (<<intspct-opt-info>>).
+An application shall output an introspection schema (<<intspct-schema>>) that
+contains one capability field for each capability that the application supports
+when given the `--std-info` option (<<intspct-opt-info>>).
 
 An application shall indicate the single version (<<intspct-vers-num>>) or
 version range (<<intspct-vers-range>>) of each capability it supports as the
@@ -839,7 +839,27 @@ An application, when given a capability declaration option and the given
 version is outside of the version range that the application supports, should
 indicate an error.
 
-=== Schema
+=== JSON Schema
+
+Insert clause before _Bibliography_.
+
+[.ins.text-justify]
+[#intspct-json-schema,reftext=intsjschm]
+==== Annex A (informative) Tool Introspection _JSON Schema_ [.right]#[<<intspct-json-schema>>]#
+
+[#intspct-json-schema-general,reftext=intsjschm.general]
+===== General [.right]#[<<intspct-json-schema-general>>]#
+
+This Annex describe defines the introspection capability schema
+(<<intspct-schema>>) in terms of a _JSON Schema_. A _JSON Schema_ refers to the
+IETF RFC draft "JSON Schema: A Media Type for Describing JSON Documents" as
+specified in https://json-schema.org/draft/2020-12/json-schema-core.html.
+
+This JSON Schema can be referenced as the `$schema` field with URI value of
+`"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json"`.
+
+[#intspct-json-schema-spec,reftext=intsjschm.spec]
+===== JSON Schema Specification [.right]#[<<intspct-json-schema-spec>>]#
 
 [source,json]
 ----
