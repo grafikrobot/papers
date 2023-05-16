@@ -880,7 +880,11 @@ pre.rouge .ss {
 <li><a href="#_json_schema">8.5. JSON Schema</a></li>
 </ul>
 </li>
-<li><a href="#_acknowledgements">9. Acknowledgements</a></li>
+<li><a href="#_examples">9. Examples</a>
+<ul class="sectlevel2">
+<li><a href="#_portable_command_lines">9.1. Portable Command Lines</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -944,7 +948,8 @@ a tool implements from the Ecosystem IS.
 <div class="paragraph">
 <p>Addition of scope, functionality levels, use cases, and wording.
 Simplified introspection and declaration interfaces to make implementing
-introspection trivial and declaration straightforward.</p>
+introspection trivial and declaration straightforward. The simplification
+removes the <em>bounded</em> introspection interface as superfluous.</p>
 </div>
 </div>
 <div class="sect2">
@@ -976,8 +981,9 @@ edition(s) of that aspect it can use.</p>
 <p>This proposal aims to specify a method for tools to communicate which specific
 aspects of the Ecosystem IS they support and adhere to consumers (either other
 tools or users). It does not prescribe which aspects of the Ecosystem IS the
-tools must support or adhere to. Ultimately it only wants to make it possible
-to answer two questions:</p>
+tools must support or adhere to except to prescribe that supporting any
+capability of the Ecosystem IS must also support this aspect. Ultimately it
+wants to make it possible to address two cases:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -985,7 +991,7 @@ to answer two questions:</p>
 <p>What does the tool support and adhere to?</p>
 </li>
 <li>
-<p>Does the tool support and adhere to X?</p>
+<p>The tool should adhere to what the consumer asks if possible.</p>
 </li>
 </ul>
 </div>
@@ -1010,8 +1016,8 @@ to answer two questions:</p>
 </dl>
 </div>
 <div class="paragraph">
-<p><em>Introspection</em> would allow a consumer to ask the target tool if it implements a
-particular set of capabilities. The target tool would respond with the range of
+<p><em>Introspection</em> would allow a consumer to ask the target tool what versions of
+of capabilities it supports. The target tool would respond with the range of
 capabilities, or nothing, that it supports. With that information the consumer
 can go ahead and follow the defined standard, in the Ecosystem IS
 <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>, to further interact with the target tool.</p>
@@ -1062,33 +1068,30 @@ rely on the stability of the interface to then be able to interoperate.</p>
 </div>
 <div class="sect2">
 <h3 id="_introspection"><a class="anchor" href="#_introspection"></a>5.1. Introspection</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">ℹ</div>
+</td>
+<td class="content">
+We used to include a <em>bounded</em> introspection option. But turned out to be
+not worth the added complexity in the consumer and tool.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>The consumer can use a single method to query the target tool and obtain all the
-capabilities that are available or specifically requested. The following two
-use cases are supported:</p>
+capabilities that are available or specifically requested. The use case
+supported is for unbounded <em>introspection</em> of the available capabilities with a
+single valueless <code>--std-info</code> option.</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Unbounded <em>introspection</em> of the available capabilities with a single
-valueless <code>--std-info</code> option.</p>
-</li>
-<li>
-<p>Bounded <em>introspection</em> of particular capabilities with a single query valued
-<code>--std-info=&lt;VersionSpec&gt;</code> option.</p>
-</li>
-</ol>
-</div>
-<div class="sect3">
-<h4 id="_unbounded"><a class="anchor" href="#_unbounded"></a>5.1.1. Unbounded</h4>
 <div class="paragraph">
-<p>An unbounded <em>introspection</em> is the simplest form of obtaining the capabilities.
-It is expected that this will be the most commonly used and implemented method
-of obtaining this information. It simply returns everything the tool is capable
-of doing. This is because it is the easiest to implement for tools. As it&#8217;s
-simply having a hard-wired result ready to output when needed. The drawback
-though is that the consumer has more information to parse and compare to decide
-how to interface with the target tool.</p>
+<p>And unbounded introspection simply returns everything the tool is capable
+of doing. The tool has the option to respond with either all minimal single
+(aka bare) versions or full version ranges. Either can be trivially implemented
+by tools as most time it can be a hard-wired response text.</p>
 </div>
 <div class="paragraph">
 <p>Running a tool with the option would look like the following:</p>
@@ -1099,13 +1102,25 @@ how to interface with the target tool.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>And could produce this as a JSON output:</p>
+<p>And could produce this as a minimal JSON output to indicate the single version
+of the capabilities it supports:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[1.0.0,2.5.0]"</span><span class="w">
+  </span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or could produce this as a JSON output in the case of full version ranges:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[1,2.5]"</span><span class="w">
 </span><span class="p">}</span></code></pre>
 </div>
 </div>
@@ -1114,74 +1129,17 @@ how to interface with the target tool.</p>
 capability at versions "1.0.0" through "2.5.0".</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_bounded"><a class="anchor" href="#_bounded"></a>5.1.2. Bounded</h4>
-<div class="paragraph">
-<p>A bounded <em>introspection</em> makes it possible to specify particular capabilities
-that a consumer is looking for in a target tool. By giving a query to the target
-tool the consumer cat get an answer for just the capabilities they care about.
-This is particularly useful in cases where the consumer only supports some
-versions of a capability and prefers to not implement the version comparison
-logic to determine this from the unbounded <em>introspection</em>.</p>
-</div>
-<div class="paragraph">
-<p>The bounded <em>introspection</em> works equivalently to the unbounded case except the
-<code>--std-info</code> option takes a <em>version specification</em> value to say what
-capabilities to filter the results by. For example running:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="shell">tool <span class="s2">"--std-info=std:info==[1.0.0,2.1.0)"</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Could produce this as a JSON output:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[1.5.0,2.0.0]"</span><span class="w">
-</span><span class="p">}</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Here the tool is saying that it only supports a subset of what the consumer
-asked about. It should also be possible to query about multiple capabilities of
-the target tool by using multiple <code>--std-info</code> options.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="shell">tool <span class="s2">"--std-info=std:info=[1.0.0,2.1.0)"</span> <span class="s2">"--std-info=gcc:extra[2.0.0,2.1.0]"</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In this example the target tool would return multiple capabilities, if
-supported:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[1.0.0,2.0.0)"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"gcc:extra"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.1.0"</span><span class="w">
-</span><span class="p">}</span></code></pre>
-</div>
-</div>
-</div>
-</div>
 <div class="sect2">
 <h3 id="_declaration"><a class="anchor" href="#_declaration"></a>5.2. Declaration</h3>
 <div class="paragraph">
 <p>The consumer can inform, i.e. declare, to the target tool that specific
 capabilities should use particular versions when responding with information
-using one or more <code>--std-decl=&lt;VersionSpec&gt;</code> options. The declarations can only
+using one or more <code>--std-info=&lt;VersionSpec&gt;</code> options. The declarations can only
 exist in tandem with options for the mentioned capabilities. It&#8217;s expected that
 a consumer will first <em>introspect</em> a target tool to discover what it supports.
 Followed by the consumer <em>declaring</em> to the target tool what version(s) of the
-capabilities it is willing to consume. The target tool can then respond with
-the versions of the capabilities that satisfies the consumer and its own
-preference.</p>
+capabilities it is willing to consume. The target tool can then either accept
+the declared capability versions or indicate an error.</p>
 </div>
 <div class="paragraph">
 <p>An exchange between a consumer and target tool would begin with the
@@ -1189,7 +1147,7 @@ preference.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell">tool <span class="s2">"--std-info=std:info=[1.0.0,2.1.0)"</span> <span class="s2">"--std-info=gcc:extra[2.0.0,2.1.0]"</span></code></pre>
+<pre class="rouge highlight"><code data-lang="shell">tool <span class="s2">"--std-info"</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1199,8 +1157,8 @@ preference.</p>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[1.0.0,2.0.0)"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"gcc:extra"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.1.0"</span><span class="w">
+  </span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[1,2)"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"gcc:extra"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[2.1]"</span><span class="w">
 </span><span class="p">}</span></code></pre>
 </div>
 </div>
@@ -1231,10 +1189,10 @@ and values. The "min" level only understands these:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Single version number in the responses for <code>--std-info</code>.</p>
+<p>Only introspection <code>--std-info</code> option.</p>
 </li>
 <li>
-<p>Only unbounded <code>--std-info</code>.</p>
+<p>Single version number in the responses for <code>--std-info</code>.</p>
 </li>
 </ul>
 </div>
@@ -1291,17 +1249,17 @@ single version range.</p>
 <div class="sect3">
 <h4 id="_single_version"><a class="anchor" href="#_single_version"></a>5.5.1. Single Version</h4>
 <div class="paragraph">
-<p>A single version in this proposal is composed of a dotted triplet of whole
+<p>A single version in this proposal is composed of a one to three dotted whole
 numbers. The numbers are expected to be strictly increasing. But otherwise do
 not impart any meaning to the components. Specifically this does not impart any
-for of semantic meaning between versions. Although the specification of the
+form of semantic meaning between versions. Although the specification of the
 capabilities themselves may define such a semantic meaning. The format for the
 version must match the regular expression:
 <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="plain_text">^[0-9]+[.][0-9]+[.][0-9]+$</code></pre>
+<pre class="rouge highlight"><code data-lang="plain_text">^[0-9]+([.][0-9]+){0,2}$</code></pre>
 </div>
 </div>
 </div>
@@ -1322,7 +1280,7 @@ regular expression:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="plain_text">^([0-9]+[.][0-9]+[.][0-9]+)|([[(][0-9]+[.][0-9]+[.][0-9]+,[0-9]+[.][0-9]+[.][0-9]+[)\\]])$</code></pre>
+<pre class="rouge highlight"><code data-lang="plain_text">^[[(][0-9]+([.][0-9]+){0,2},[0-9]+([.][0-9]+){0,2}[)\\]]$</code></pre>
 </div>
 </div>
 </div>
@@ -1476,7 +1434,6 @@ at all times.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="w">
 </span><span class="p">}</span></code></pre>
 </div>
@@ -1488,13 +1445,12 @@ supported for the <code>std:info</code> capability:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[1.0.0,2.0.0)"</span><span class="w">
 </span><span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This example adds a custom vendor capability:</p>
+<p>This example adds a custom vendor capability and the schema reference:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1506,7 +1462,7 @@ supported for the <code>std:info</code> capability:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>See the <a href="#_wording">Wording</a> for a JSON <a href="#Schema">[Schema]</a> for this format.</p>
+<p>See the <a href="#_wording">Wording</a> for a <a href="#_json_schema">JSON Schema</a> for this format.</p>
 </div>
 </div>
 <div class="sect2">
@@ -2174,10 +2130,67 @@ specified in <a href="https://json-schema.org/draft/2020-12/json-schema-core.htm
 </div>
 </div>
 <div class="sect1">
-<h2 id="_acknowledgements"><a class="anchor" href="#_acknowledgements"></a>9. Acknowledgements</h2>
+<h2 id="_examples"><a class="anchor" href="#_examples"></a>9. Examples</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_portable_command_lines"><a class="anchor" href="#_portable_command_lines"></a>9.1. Portable Command Lines</h3>
 <div class="paragraph">
-<p>None yet.</p>
+<p>Assuming that the Ecosystem IS specifies a common set of portable command line
+compiler options an interaction between a build system (or user at a command
+prompt) and a compiler could look like:</p>
+</div>
+<div class="paragraph">
+<p>Build systems asks the compiler for supported capabilities:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="nv">$ </span>c++ <span class="nt">--std-info</span>
+<span class="o">{</span> <span class="s2">"std:info"</span>: <span class="s2">"[1]"</span>, <span class="s2">"std:cli:c++"</span>, <span class="s2">"[1]"</span> <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">ℹ</div>
+</td>
+<td class="content">
+The build system would likely want to cache that information as it&#8217;s
+likely to be static for the release of the compiler.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The build system could then declare and use any such portable compiler options:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="nv">$ </span>c++ <span class="nt">--std-info</span><span class="o">=</span>std:cli:c++<span class="o">=</span>1 <span class="nt">-std</span><span class="o">=</span>c++26 <span class="nt">-I</span> /home/user/boost <span class="nt">-o</span> myapp main.cpp</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The interaction when the compiler tool only supports the minimum level would be:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="nv">$ </span>c++ <span class="nt">--std-info</span>
+<span class="o">{</span> <span class="s2">"std:info"</span>: <span class="s2">"1"</span>, <span class="s2">"std:cli:c++"</span>, <span class="s2">"1"</span> <span class="o">}</span>
+<span class="nv">$ </span>c++ <span class="nt">-std</span><span class="o">=</span>c++26 <span class="nt">-I</span> /home/user/boost <span class="nt">-o</span> myapp main.cpp</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This example predicts that it might be useful outside of the C&#43;&#43; ecosystem by
+using <code>std:cli:c++</code> to indicate a C&#43;&#43; specific command line. It could be
+that Fortran uses a different, but possibly overlapping CLI:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="nv">$ </span>gcc <span class="nt">--std-info</span>
+<span class="o">{</span> <span class="s2">"std:info"</span>: <span class="s2">"1"</span>, <span class="s2">"std:cli:c++"</span>, <span class="s2">"1"</span>, <span class="s2">"gcc:cli:fortran"</span>, <span class="s2">"1"</span> <span class="o">}</span>
+<span class="nv">$ </span>gcc <span class="nt">-std</span><span class="o">=</span>f2018 <span class="nt">-o</span> myapp main.fpp</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>

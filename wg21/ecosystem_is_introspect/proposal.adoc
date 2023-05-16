@@ -59,7 +59,8 @@ footnote:EcoIS[https://wg21.link/P2656 {CPP} Ecosystem International Standard]
 
 Addition of scope, functionality levels, use cases, and wording.
 Simplified introspection and declaration interfaces to make implementing
-introspection trivial and declaration straightforward.
+introspection trivial and declaration straightforward. The simplification
+removes the _bounded_ introspection interface as superfluous.
 
 === Revision 0 (December 2022)
 
@@ -80,11 +81,12 @@ edition(s) of that aspect it can use.
 This proposal aims to specify a method for tools to communicate which specific
 aspects of the Ecosystem IS they support and adhere to consumers (either other
 tools or users). It does not prescribe which aspects of the Ecosystem IS the
-tools must support or adhere to. Ultimately it only wants to make it possible
-to answer two questions:
+tools must support or adhere to except to prescribe that supporting any
+capability of the Ecosystem IS must also support this aspect. Ultimately it
+wants to make it possible to address two cases:
 
 * What does the tool support and adhere to?
-* Does the tool support and adhere to X?
+* The tool should adhere to what the consumer asks if possible.
 
 == Design
 
@@ -94,8 +96,8 @@ Introspection:: A tool reporting its capabilities to a consumer.
 
 Declaration:: A consumer specifying the capability edition and version.
 
-_Introspection_ would allow a consumer to ask the target tool if it implements a
-particular set of capabilities. The target tool would respond with the range of
+_Introspection_ would allow a consumer to ask the target tool what versions of
+of capabilities it supports. The target tool would respond with the range of
 capabilities, or nothing, that it supports. With that information the consumer
 can go ahead and follow the defined standard, in the Ecosystem IS
 footnote:EcoIS[], to further interact with the target tool.
@@ -124,24 +126,18 @@ rely on the stability of the interface to then be able to interoperate.
 
 === Introspection
 
+NOTE: We used to include a _bounded_ introspection option. But turned out to be
+not worth the added complexity in the consumer and tool.
+
 The consumer can use a single method to query the target tool and obtain all the
-capabilities that are available or specifically requested. The following two
-use cases are supported:
+capabilities that are available or specifically requested. The use case
+supported is for unbounded _introspection_ of the available capabilities with a
+single valueless `--std-info` option.
 
-. Unbounded _introspection_ of the available capabilities with a single
-valueless `--std-info` option.
-. Bounded _introspection_ of particular capabilities with a single query valued
-`--std-info=<VersionSpec>` option.
-
-==== Unbounded
-
-An unbounded _introspection_ is the simplest form of obtaining the capabilities.
-It is expected that this will be the most commonly used and implemented method
-of obtaining this information. It simply returns everything the tool is capable
-of doing. This is because it is the easiest to implement for tools. As it's
-simply having a hard-wired result ready to output when needed. The drawback
-though is that the consumer has more information to parse and compare to decide
-how to interface with the target tool.
+And unbounded introspection simply returns everything the tool is capable
+of doing. The tool has the option to respond with either all minimal single
+(aka bare) versions or full version ranges. Either can be trivially implemented
+by tools as most time it can be a hard-wired response text.
 
 Running a tool with the option would look like the following:
 
@@ -150,86 +146,47 @@ Running a tool with the option would look like the following:
 $ tool --std-info
 ----
 
-And could produce this as a JSON output:
+And could produce this as a minimal JSON output to indicate the single version
+of the capabilities it supports:
 
 [source,json]
 ----
 {
   "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
-  "std:info": "[1.0.0,2.5.0]"
+  "std:info": "1.0.0"
+}
+----
+
+Or could produce this as a JSON output in the case of full version ranges:
+
+[source,json]
+----
+{
+  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
+  "std:info": "[1,2.5]"
 }
 ----
 
 Which would minimally indicate that the tool only supports the introspection
 capability at versions "1.0.0" through "2.5.0".
 
-==== Bounded
-
-A bounded _introspection_ makes it possible to specify particular capabilities
-that a consumer is looking for in a target tool. By giving a query to the target
-tool the consumer cat get an answer for just the capabilities they care about.
-This is particularly useful in cases where the consumer only supports some
-versions of a capability and prefers to not implement the version comparison
-logic to determine this from the unbounded _introspection_.
-
-The bounded _introspection_ works equivalently to the unbounded case except the
-`--std-info` option takes a _version specification_ value to say what
-capabilities to filter the results by. For example running:
-
-[source,shell]
-----
-tool "--std-info=std:info==[1.0.0,2.1.0)"
-----
-
-Could produce this as a JSON output:
-
-[source,json]
-----
-{
-  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
-  "std:info": "[1.5.0,2.0.0]"
-}
-----
-
-Here the tool is saying that it only supports a subset of what the consumer
-asked about. It should also be possible to query about multiple capabilities of
-the target tool by using multiple `--std-info` options.
-
-[source,shell]
-----
-tool "--std-info=std:info=[1.0.0,2.1.0)" "--std-info=gcc:extra[2.0.0,2.1.0]"
-----
-
-In this example the target tool would return multiple capabilities, if
-supported:
-
-[source,json]
-----
-{
-  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
-  "std:info": "[1.0.0,2.0.0)",
-  "gcc:extra": "2.1.0"
-}
-----
-
 === Declaration
 
 The consumer can inform, i.e. declare, to the target tool that specific
 capabilities should use particular versions when responding with information
-using one or more `--std-decl=<VersionSpec>` options. The declarations can only
+using one or more `--std-info=<VersionSpec>` options. The declarations can only
 exist in tandem with options for the mentioned capabilities. It's expected that
 a consumer will first _introspect_ a target tool to discover what it supports.
 Followed by the consumer _declaring_ to the target tool what version(s) of the
-capabilities it is willing to consume. The target tool can then respond with
-the versions of the capabilities that satisfies the consumer and its own
-preference.
+capabilities it is willing to consume. The target tool can then either accept
+the declared capability versions or indicate an error.
 
 An exchange between a consumer and target tool would begin with the
 _introspection_:
 
 [source,shell]
 ----
-tool "--std-info=std:info=[1.0.0,2.1.0)" "--std-info=gcc:extra[2.0.0,2.1.0]"
+tool "--std-info"
 ----
 
 With a target tool response:
@@ -238,8 +195,8 @@ With a target tool response:
 ----
 {
   "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
-  "std:info": "[1.0.0,2.0.0)",
-  "gcc:extra": "2.1.0"
+  "std:info": "[1,2)",
+  "gcc:extra": "[2.1]"
 }
 ----
 
@@ -263,8 +220,8 @@ support levels "min" and "full".
 Obviously the "full" level equates to the tool understanding all the arguments
 and values. The "min" level only understands these:
 
+* Only introspection `--std-info` option.
 * Single version number in the responses for `--std-info`.
-* Only unbounded `--std-info`.
 
 This has the effect that a tool which only support the "min" level can only
 support specific versions of the capabilities it implements. But it also means
@@ -304,17 +261,17 @@ single version range.
 
 ==== Single Version
 
-A single version in this proposal is composed of a dotted triplet of whole
+A single version in this proposal is composed of a one to three dotted whole
 numbers. The numbers are expected to be strictly increasing. But otherwise do
 not impart any meaning to the components. Specifically this does not impart any
-for of semantic meaning between versions. Although the specification of the
+form of semantic meaning between versions. Although the specification of the
 capabilities themselves may define such a semantic meaning. The format for the
 version must match the regular expression:
 footnote:Regex[]
 
 [source,plain_text]
 ----
-^[0-9]+[.][0-9]+[.][0-9]+$
+^[0-9]+([.][0-9]+){0,2}$
 ----
 
 ==== Version Range
@@ -333,7 +290,7 @@ footnote:Regex[]
 
 [source,plain_text]
 ----
-^([0-9]+[.][0-9]+[.][0-9]+)|([[(][0-9]+[.][0-9]+[.][0-9]+,[0-9]+[.][0-9]+[.][0-9]+[)\\]])$
+^[[(][0-9]+([.][0-9]+){0,2},[0-9]+([.][0-9]+){0,2}[)\\]]$
 ----
 
 === Version Matching
@@ -421,7 +378,6 @@ This is a minimal conforming document:
 [source,json]
 ----
 {
-  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
   "std:info": "1.0.0"
 }
 ----
@@ -432,12 +388,11 @@ supported for the `std:info` capability:
 [source,json]
 ----
 {
-  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
   "std:info": "[1.0.0,2.0.0)"
 }
 ----
 
-This example adds a custom vendor capability:
+This example adds a custom vendor capability and the schema reference:
 
 [source,json]
 ----
@@ -448,7 +403,7 @@ This example adds a custom vendor capability:
 }
 ----
 
-See the <<Wording>> for a JSON <<Schema>> for this format.
+See the <<Wording>> for a <<JSON Schema>> for this format.
 
 === Impact On The Standard
 
@@ -866,6 +821,48 @@ This JSON Schema can be referenced as the `$schema` field with URI value of
 include::std_info-1.0.0.json[]
 ----
 
-== Acknowledgements
+== Examples
 
-None yet.
+=== Portable Command Lines
+
+Assuming that the Ecosystem IS specifies a common set of portable command line
+compiler options an interaction between a build system (or user at a command
+prompt) and a compiler could look like:
+
+Build systems asks the compiler for supported capabilities:
+
+[,shell]
+----
+$ c++ --std-info
+{ "std:info": "[1]", "std:cli:c++", "[1]" }
+----
+
+NOTE: The build system would likely want to cache that information as it's
+likely to be static for the release of the compiler.
+
+The build system could then declare and use any such portable compiler options:
+
+[,shell]
+----
+$ c++ --std-info=std:cli:c++=1 -std=c++26 -I /home/user/boost -o myapp main.cpp
+----
+
+The interaction when the compiler tool only supports the minimum level would be:
+
+[,shell]
+----
+$ c++ --std-info
+{ "std:info": "1", "std:cli:c++", "1" }
+$ c++ -std=c++26 -I /home/user/boost -o myapp main.cpp
+----
+
+This example predicts that it might be useful outside of the {CPP} ecosystem by
+using `std:cli:c++` to indicate a {CPP} specific command line. It could be
+that Fortran uses a different, but possibly overlapping CLI:
+
+[,shell]
+----
+$ gcc --std-info
+{ "std:info": "1", "std:cli:c++", "1", "gcc:cli:fortran", "1" }
+$ gcc -std=f2018 -o myapp main.fpp
+----
