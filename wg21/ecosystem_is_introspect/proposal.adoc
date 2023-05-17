@@ -110,7 +110,7 @@ Even though these are two separate functions they are by necessity tied to each
 other. In order for this pairing to work, and generally for tool
 interoperability to work, the tool consumers and target tools must operate on
 this minimal pair of functions to bootstrap their interactions. To make that
-possible, this design follows some basic tenants:
+possible, this design follows some basic tenets:
 
 [horizontal]
 
