@@ -405,6 +405,30 @@ This example adds a custom vendor capability and the schema reference:
 
 See the <<Wording>> for a <<JSON Schema>> for this format.
 
+=== Capability Versions
+
+The capabilities and their version is expected to work similar to how {CPP}
+feature macro version ([version.syn]) in that it specifies if a feature of a
+standard is implemented and at what version. Although the meaning of the
+capability version is not defined, it's recommended that it follow some simple
+rules:
+
+* The _major-number_ should only change for large changes.
+* The _minor-number_ should only change for fixes that are significant, but not
+  large.
+* The _patch-number_ should only change for fixes that are simple and small.
+
+That is, it should roughly follow the industry understanding of sematic
+versioning.
+footnote:Semver[Semantic Versioning (https://semver.org/)]
+
+* Each part of the version number should always increment, but;
+* The _minor-number_ should reset to zero when the _major-number_ increases,
+  equivalently for the _patch-number_ and _minor-number_.
+
+These rules set it apart from the {CPP} feature macros that they impart some
+meaning to a version relative to other versions.
+
 === Impact On The Standard
 
 This specification adds new functionality that is partly required for programs.

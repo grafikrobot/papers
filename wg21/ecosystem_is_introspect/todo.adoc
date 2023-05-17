@@ -3,8 +3,8 @@
 * Define the scope of what introspection means to answer. (done)
 * Consider the single minimal argument introspection as a minimal conforming api. (added min/full layers design)
 * Add samples scenarios for using introspection. (done, kinda)
+* Compare it to the c++ feature macros. (done)
 
 == To-do?
 
 * Add an example for p1689. (seems unnecessary)
-* Compare it to the c++ feature macros. (seems unnecessary)
