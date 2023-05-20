@@ -55,6 +55,10 @@ footnote:EcoIS[https://wg21.link/P2656 {CPP} Ecosystem International Standard]
 
 == Revision History
 
+=== Revision 2 (June 2023)
+
+Change wording to match text in draft IS.
+
 === Revision 1 (May 2023)
 
 Addition of scope, functionality levels, use cases, and wording.
@@ -538,10 +542,12 @@ This clause specifies the `std:info` capability (<<intspct-cap>>).
 [#intspct-options,reftext=intspct.options]
 ===== Options [.right]#[<<intspct-options>>]#
 
-The following options shall be supported:
-
 [#intspct-opt-info,reftext=intspct.opt.info]
-`--std-info` [.right]#[<<intspct-opt-info>>]#::
+===== Information Option [.right]#[<<intspct-opt-info>>]#
+
+This option shall be supported.
+
+`--std-info`::
 Outputs the version information of the capabilities supported by the
 application.
 The option can be specified zero or one time.
@@ -549,7 +555,11 @@ The application shall support the option for _minimum level_ (<<intspct-min>>)
 functionality.
 
 [#intspct-opt-out,reftext=intspct.opt.out]
-`--std-info-out=_file_` [.right]#[<<intspct-opt-out>>]#::
+===== Information Output Option [.right]#[<<intspct-opt-out>>]#
+
+This option shall be supported.
+
+`--std-info-out=_file_`::
 The pathname of a file to output the information to. If _file_ is '`-`', the
 standard output shall be used.
 The application shall support the option for _minimum level_ (<<intspct-min>>)
@@ -558,10 +568,12 @@ Not specifying this option while specifying the `--std-info` option
 (<<intspct-opt-info>>) shall be equivalent to also specifying a
 `--std-info-out=-` option.
 
-The following options should be supported:
-
 [#intspct-opt-decl,reftext=intspct.opt.decl]
-`--std-info=_declaration_` [.right]#[<<intspct-opt-decl>>]#::
+===== Declaration Option [.right]#[<<intspct-opt-decl>>]#
+
+This option should be supported.
+
+`--std-info=_declaration_`::
 Declares the required capability version of the application.
 The option can be specified any number of times.
 The application shall support the option for _full level_ (<<intspct-full>>)
@@ -589,7 +601,8 @@ text.
 An _introspection object_ can have the following fields.
 
 [#intspct-fld-schema,reftext=intspct.schema.schema]
-JSON Schema Field [.right]#[<<intspct-fld-schema>>]# ::
+====== JSON Schema Field [.right]#[<<intspct-fld-schema>>]#
+
 _Name_: `$schema` +
 _Type_: `string` +
 _Value_:
@@ -601,7 +614,8 @@ _Description_:
   standard.
 
 [#intspct-fld-cap,reftext=intspct.schema.cap]
-capability [.right]#[<<intspct-fld-cap>>]# ::
+====== Capability Field [.right]#[<<intspct-fld-cap>>]#
+
 _Name_: _capability-identifier_ (<<intspct-cap>>) +
 _Type_: `string` +
 _Value_:
@@ -615,12 +629,12 @@ _Description_:
 [#intspct-cap,reftext=intspct.cap]
 ===== Capabilities [.right]#[<<intspct-cap>>]#
 
-[horizontal]
 _capability-identifier_: ::
-  _name_ _scope-designator_ _name_ _sub-capability-identifier_
+  _name_ _scope-designator_ _name_ _sub-capability-identifier~opt~_
 _sub-capability-identifier_: ::
-  _scope-designator_ _name_ _sub-capability-identifier_
-_name_: one or more of ::
+  _scope-designator_ _name_ _sub-capability-identifier~opt~_
+_name_: ::
+  one or more of: +
   `a b c d e f g h i j k l m` +
   `n o p q r s t u v w x y z` +
   `_`
@@ -653,16 +667,20 @@ That is the version number `i.j.k` is equivalent to version range
 [#intspct-vers-num,reftext=intspct.vers.num]
 ====== Version Number [.right]#[<<intspct-vers-num>>]#
 
-[horizontal]
 _version-number_: ::
-  _major-number_ `.` _minor-number_ `.` _patch-number_
+  _major-number_ _minor-patch-part~opt~_
+_minor_patch_part_: ::
+  `.` _minor-number_  _patch-part~opt~_
+_patch-part_: ::
+  `.` _patch-number_
 _major-number_: ::
   _digits_
 _minor-number_: ::
   _digits_
 _patch-number_: ::
   _digits_
-_digits_: one or more of ::
+_digits_: ::
+  one or more of: +
   `0 1 2 3 4 5 6 7 8 9`
 
 A version number is composed of 1, 2, or 3 decimal numbers (_digits_)
@@ -698,8 +716,9 @@ Otherwise version number _a_ is the same as version number _b_.
 
 _version-range_: ::
   _version-range-min-bracket_
-  _version-min-number_ `,` _version-max-number_
-  _version-range-max-bracket_
+  _version-min-number_ _version-range-max-part_~opt~
+_version-range-max-part_: ::
+  `,` _version-max-number_ _version-range-max-bracket_
 _version-min-number_: ::
   _version-number_
 _version-max-number_: ::
@@ -712,14 +731,12 @@ _version-range-max-bracket_: one of ::
 A version range is composed of either one version number bracketed,
 or two version numbers separated by a comma (`,`) and bracketed.
 
-+[+ _Example 1_: +
-`[1.0.0]` +
-A version range with a single version number.
++[+ _Example 1_:
+A version range with a single version number "`[1.0.0]`".
 — _end example_ +]+
 
-+[+ _Example 2_: +
-`[1.0.0,2.0.0]` +
-A version range with a two version numbers.
++[+ _Example 2_:
+A version range with a two version numbers "`[1.0.0,2.0.0]`".
 — _end example_ +]+
 
 A version range _a_ that is `[_i_,_j_]` makes _i_ and _j_ inclusive version
@@ -806,8 +823,7 @@ more `--std-info=_declaration_` options shall conform its functionality to the
 indicated edition of this standard in the given _declaration_ _version-number_
 for the given capability.
 
-[horizontal]
-_declaration_ ::
+_declaration_: ::
   _capability-identifier_ `=` _version-number_
 
 An application, when not given a `--std-info=_declaration_` option for a
