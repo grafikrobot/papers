@@ -63,6 +63,10 @@ footnote:P1279[P1279 `std::breakpoint`, _Isabella Muerte_ 2018-10-05
 
 == Revision History
 
+=== Revision 4 (February 2023)
+
+* Add LEWG poll results.
+
 === Revision 3 (November 2022)
 
 * Fix spelling error in wording.
@@ -350,6 +354,42 @@ specific threads among the dozens of threads running, to prevent automated
 crash reporting, and to present GUI elements only when debugging.
 
 == Polls
+
+=== LEWG: P2546R3 (2023-02-09)
+
+is_debugger_present should be in freestanding.
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | WF | N | WA | SA
+| 0 | 6 | 10 | 2| 0
+|===
+
+__Attendance:__ 22 (In-person) + 13 (Remote)
+
+__# of Authors:__ 1
+
+__Authors’ position: __ WF
+
+__Outcome:__ Weak consensus in favor
+
+Forward P2546R3 to LWG for C++26 classified as B3 - addition to be confirmed to a library evolution electronic poll.
+
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | WF | N | WA | SA
+| 8 | 13 | 1 | 0 | 0
+|===
+
+__Attendance:__ 22 (In-person) + 13 (Remote)
+
+__# of Authors:__ 1
+
+__Authors’ position: __ SF
+
+__Outcome:__ Strong Consensus in favor
+
 
 === EWG: P2546R2 (2022-11-08)
 
