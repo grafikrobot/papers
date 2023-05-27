@@ -60,6 +60,11 @@ Standard (ISO/IEC 14882).
 
 == Revision History
 
+=== Revision 3 (June 2023)
+
+Specifies explicit steps for bootstrap review process with CWG to do wording
+review. Tweak the goals terms and order to mirror the draft outline.
+
 === Revision 2 (February 2023)
 
 Narrows the set of goals for the initial edition of the IS per SG15 polls. And
@@ -161,7 +166,15 @@ proposals.
 We will need some basic definitions as needed to circumscribe the specifications
 included in this first standard.
 
-=== Build System <==> Package Manager Interoperation
+=== Introspection
+
+Specification of format and command options to provide implementation
+information of the IS.
+
+* P2717 Tool Introspection
+footnote:[Tool Introspection. _René Ferdinand Rivera Morell_ (https://wg21.link/P2717)]
+
+=== Package Format
 
 Specification of formats and operation of interoperability between build
 systems and package managers. Current work:
@@ -208,15 +221,7 @@ footnote:[Modules User-Facing Lexicon and File Extensions. _Bryce Adelstein Lelb
 * P1177 Package Ecosystem Plan.
 footnote:P1177[]
 
-=== Introspection
-
-Specification of format and command options to provide implementation
-information of the IS.
-
-* P2717 Tool Introspection
-footnote:[Tool Introspection. _René Ferdinand Rivera Morell_ (https://wg21.link/P2717R)]
-
-=== Portable Diagnostics Format
+=== Diagnostics Output
 
 {CPP} tools spend a lot of their time reading the output of other tools and
 processing it to either do more work or to present it to users. Unfortunately
@@ -227,7 +232,7 @@ the common structured output as SARIF format.footnote:SARIF[]
 The format is designed for presenting results of static analysis. But is
 finding alternate uses. We aim to incorporate the SARIF format.
 
-=== Command Line Portability
+=== Response File
 
 A key aspect of interoperation between tools in the ecosystem is having a
 common language to express tool commands, i.e. in compiler drivers, that can
@@ -296,7 +301,7 @@ NOTE: Provide for an 8 week ballot period on proposal acceptance.
 
 Goal:: Approve Committee Draft for National Body comments.
 
-From submitting an initial draft in 2024.1 we will have completed incorporating
+From submitting an initial draft in 2024.2 we will have completed incorporating
 any detail changes that the draft text will be ready to get voted on. This will
 mark, approximately, 1.5 years since the beginning of work on the new IS. The
 goal at this WG21 meeting will be to address any urgent issues that could
@@ -325,9 +330,9 @@ existing processes of WG21:
 
 Bootstrap::
 Initial development and review in Tooling Study Group (SG15), followed by
-review and approvals in Evolution Working Group (EWG) or Library Evolution
-Working Group (LEWG). And from there continuing to the regular review and
-approval of wording process.
+review and approvals in Evolution Working Group (EWG). Followed by wording
+review in Core Language Wording (CWG). And from there to polls for WG21 plenary
+votes.
 
 Parallel::
 Development and review can originate in any existing study group depending as
@@ -349,15 +354,26 @@ this process for the first edition has some advantages:
 
 But it has some drawbacks:
 
-* It places higher burden on time for the EWG and Core groups to review the
+* It places higher burden on time for the EWG and CWG groups to review the
   work.
-* The EWG and Core groups usual experts might not all be familiar with the
+* The EWG and CWG groups usual experts might not all be familiar with the
   tooling and ecosystem domain.
 
 Those are significant drawbacks although we think are ameliorated by: First,
 scheduling the IS to complete a full year before the {CPP}26 time frame. And,
 second, limiting the scope of the IS early in the time line resulting in more
 time spent in SG15 on draft wording details.
+
+Wording review in the Bootstrap process would follow these steps:
+
+. Checkpoint vote in EWG with first edition outline and introspection
+  preliminary wording. Target is 2023.2 (Varna) meeting for this.
+. SG15 design and wording approval for Introspection and one other feature.
+. EWG design and wording for Introspection and one other feature.
+. CWG wording review for Introspection and one other feature.
+. Continue with SG15, EWG, and CWG sequence with additional features.
+. Final approval from SG15, EWG, and CWG for WG21 plenary voting to start ISO
+  work item. Target for this is 2024.2 meeting.
 
 === Parallel
 
@@ -377,6 +393,11 @@ eventually need a wording group and narrower domain specific study groups.
 
 NOTE: SG15 would cease to operate. As TWG would assume the same
 responsibilities.
+
+=== Train Model
+
+Like the {CPP} process we are going to follow the train model of releases. That
+is, we will release what we have now not what we could have in the future.
 
 == Polls
 

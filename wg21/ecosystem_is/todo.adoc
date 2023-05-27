@@ -41,3 +41,24 @@
 | SF | F | N | A | SA
 |  |  |  |  | 
 |===
+
+== Other
+
+* (STARTED) Conversation with CWG & LWG chairs on schedule for wording review of EcoIS.
+	* Core Language Wording, aka CWG: Jens Maurer
+	* Library Wording, aka LWG: Jonathan Wakely (IBM)
+* (STARTED) Conversation with CWG & LWG chairs on whom should do wording review (provide the introspection paper as example).
+	* Core Language Wording, aka CWG: Jens Maurer
+	* Library Wording, aka LWG: Jonathan Wakely (IBM)
+* (STARTED) Conversation with Gaby, GCC rep, and Clang rep on how to converge on a common CLI option prefix.
+	MSVC: Gabriel Dos Reis
+	GCC: Jason Merrill
+	Clang: Aaron Ballman and Fangrui Song
+
+== Feedback
+
+From Jens:
+
+* (DONE) Mention CWG as the wording review gate for bootstrap process.
+* (DONE) Outline plan to start wording review as soon as there's wording for one
+feature + introspection.
