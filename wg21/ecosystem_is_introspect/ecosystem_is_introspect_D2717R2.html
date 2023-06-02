@@ -839,7 +839,7 @@ pre.rouge .ss {
 <span id="author" class="author">René Ferdinand Rivera Morell</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> D2717R2,</span>
-<span id="revdate">2023-05-20</span>
+<span id="revdate">2023-06-01</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -887,6 +887,7 @@ pre.rouge .ss {
 <li><a href="#_portable_command_lines">9.1. Portable Command Lines</a></li>
 </ul>
 </li>
+<li><a href="#_acknowledgements">10. Acknowledgements</a></li>
 </ul>
 </div>
 </div>
@@ -918,7 +919,7 @@ pre.rouge .ss {
 </dd>
 <dt class="hdlist1">Date: </dt>
 <dd>
-<p>2023-05-20</p>
+<p>2023-06-01</p>
 </dd>
 <dt class="hdlist1">Audience: </dt>
 <dd>
@@ -948,7 +949,13 @@ a tool implements from the Ecosystem IS.
 <div class="sect2">
 <h3 id="_revision_2_june_2023"><a class="anchor" href="#_revision_2_june_2023"></a>2.1. Revision 2 (June 2023)</h3>
 <div class="paragraph">
-<p>Change wording to match text in draft IS.</p>
+<p>Change wording to match text in draft IS. Use Unicode for literals as needed.
+Change the version numbers to follow the Semantic Versioning, and JSON, specs
+of not allowed leading zeros. Add array of version ranges to full level support
+to allow for disjoint support reporting. Updated the JSON schema to correct it
+not properly excluding extra unknown properties, to correctly restrict the
+syntax of capability names and values, and to add array of version ranges for
+capability fields.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1292,6 +1299,32 @@ regular expression:
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_multiple_ranges"><a class="anchor" href="#_multiple_ranges"></a>5.5.3. Multiple Ranges</h4>
+<div class="paragraph">
+<p>There are situations where specifying only one version range for what the
+application supports is not sufficient. For example an application may decide
+that they add support for a <code>2.0.0</code> version but not support further <code>1.x.y</code>
+versions. In that case it&#8217;s important to be precise in informing consumers of
+this fact. To allow for that situation one can specify a JSON array instead of
+the single JSON string for the version range. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="plain_text">{
+  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
+  "std:info": "[1.0.0,2.0.0)",
+  "gcc:extra": [
+    "1.0.0",
+    "[2,3)"
+  ]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Would indicate support for versions 1.0.z through 1.2.0, and version 2.0.0.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_version_matching"><a class="anchor" href="#_version_matching"></a>5.6. Version Matching</h3>
@@ -1590,13 +1623,17 @@ they support.</p>
 </div>
 <div class="dlist ins text-justify">
 <dl>
+<dt class="hdlist1">POSIX</dt>
+<dd>
+<p>ISO/IEC 9945:2009, <em>Information technology — Portable Operating System Interface (POSIX®) Base Specifications, Issue 7</em></p>
+</dd>
 <dt class="hdlist1">JSON</dt>
 <dd>
 <p>ISO/IEC 21778:2017, <em>Information technology — The JSON data interchange syntax</em></p>
 </dd>
-<dt class="hdlist1">POSIX</dt>
+<dt class="hdlist1">Mathematics</dt>
 <dd>
-<p>ISO/IEC 9945:2009, <em>Information technology — Portable Operating System Interface (POSIX®) Base Specifications, Issue 7</em></p>
+<p>ISO 80000-2:2019, <em>Quantities and units — Part 2: Mathematics</em></p>
 </dd>
 </dl>
 </div>
@@ -1779,10 +1816,14 @@ text.</p>
 <h6 id="intspct-fld-cap"><a class="anchor" href="#intspct-fld-cap"></a>8.4.1.8.3. Capability Field <span class="right">[<a href="#intspct-fld-cap">intspct.schema.cap</a>]</span></h6>
 <div class="paragraph">
 <p><em>Name</em>: <em>capability-identifier</em> (<a href="#intspct-cap">intspct.cap</a>)<br>
-<em>Type</em>: <code>string</code><br>
-<em>Value</em>:
+<em>Type</em>: <code>string</code> or <code>array</code><br>
+<em>Value</em> (for <code>string</code>):
   The value shall be a <em>version-number</em> for <em>minimum level</em> functionality.
   Or the value shall be a <em>version-range</em> for <em>full level</em> functionality.<br>
+<em>Value</em> (for <code>array</code>):
+  The value can be a JSON array for <em>full level</em> functionality.
+  If the value is a JSON array the items in the array shall be a
+  <em>version-number</em> or <em>version-range</em>.
 <em>Description</em>:
   An <em>introspection object</em> can contain this field one or more times.
   When the field appears more than one time the name of the fields shall be
@@ -1805,13 +1846,12 @@ text.</p>
 <dt class="hdlist1"><em>name</em>: </dt>
 <dd>
 <p>one or more of:<br>
-<code>a b c d e f g h i j k l m</code><br>
-<code>n o p q r s t u v w x y z</code><br>
-<code>_</code></p>
+U+0061 .. U+007A LATIN SMALL LETTER A .. Z<br>
+U+005F LOW LINE</p>
 </dd>
 <dt class="hdlist1"><em>scope-designator</em>: </dt>
 <dd>
-<p><code>:</code></p>
+<p>U+003A COLON</p>
 </dd>
 </dl>
 </div>
@@ -1862,26 +1902,33 @@ That is the version number <code>i.j.k</code> is equivalent to version range
 </dd>
 <dt class="hdlist1"><em>major-number</em>: </dt>
 <dd>
-<p><em>digits</em></p>
+<p><em>decimal</em></p>
 </dd>
 <dt class="hdlist1"><em>minor-number</em>: </dt>
 <dd>
-<p><em>digits</em></p>
+<p><em>decimal</em></p>
 </dd>
 <dt class="hdlist1"><em>patch-number</em>: </dt>
 <dd>
-<p><em>digits</em></p>
+<p><em>decimal</em></p>
 </dd>
-<dt class="hdlist1"><em>digits</em>: </dt>
+<dt class="hdlist1"><em>decimal</em>: </dt>
 <dd>
-<p>one or more of:<br>
-<code>0 1 2 3 4 5 6 7 8 9</code></p>
+<p>one of: U+0031 .. u+0039 DIGIT ONE .. NINE<br>
+zero or more of: U+0030 .. u+0039 DIGIT ZERO .. NINE</p>
 </dd>
 </dl>
 </div>
 <div class="paragraph">
-<p>A version number is composed of 1, 2, or 3 decimal numbers (<em>digits</em>)
-separated by a period (<code>.</code>).</p>
+<p>A <em>decimal</em> is a sequence of decimal digits (U+0030 .. u+0039 DIGIT ZERO .. NINE)
+with no superfluous leading zeros (U+0030 DIGIT ZERO).</p>
+</div>
+<div class="paragraph">
+<p>A <em>decimal</em> represents a non-negative base 10 integer.</p>
+</div>
+<div class="paragraph">
+<p>A version number is composed of 1, 2, or 3 decimal numbers (<em>decimal</em>)
+separated by a U+002E FULL STOP.</p>
 </div>
 <div class="paragraph">
 <p>A version number composed of 1 decimal number is equivalent to that decimal
@@ -1902,15 +1949,16 @@ That is the version number <code>N.M</code> is equivalent to <code>N.M.0</code>.
 — <em>end note</em> ]</p>
 </div>
 <div class="paragraph">
-<p>Version numbers define a total ordering where version number <em>a</em> with parts
-<em>i</em>, <em>j</em>, <em>k</em> is ordered before version number <em>b</em> with parts <em>p</em>, <em>q</em>, <em>r</em>
-when: <em>i</em> &lt; <em>p</em>, or <em>i</em> == <em>p</em> and <em>j</em> &lt; <em>q</em>, or <em>i</em> == <em>p</em> and <em>j</em> == <em>q</em>
-and <em>k</em> &lt; <em>r</em>.</p>
+<p>Version numbers define a total ordering where version number <em>a</em> with decimal
+parts <em>i</em>, <em>j</em>, <em>k</em> is ordered before version number <em>b</em> with decimal parts
+<em>p</em>, <em>q</em>, <em>r</em> when: <em>i</em> is less than <em>p</em>, or <em>i</em> is equal to <em>p</em> and
+<em>j</em> is less than <em>q</em>, or <em>i</em> is equal to <em>p</em> and <em>j</em> is equal to <em>q</em>
+and <em>k</em> is less than <em>r</em>.</p>
 </div>
 <div class="paragraph">
 <p>Otherwise version number <em>a</em> is ordered before version number <em>b</em> when:
-<em>i</em> &gt; <em>p</em>, or <em>i</em> == <em>p</em> and <em>j</em> &gt; <em>q</em>, or <em>i</em> == <em>p</em> and <em>j</em> == <em>q</em>
-and <em>k</em> &gt; <em>r</em>.</p>
+<em>i</em> is greater than <em>p</em>, or <em>i</em> is equal to <em>p</em> and <em>j</em> is greater than <em>q</em>, or
+<em>i</em> is equal to <em>p</em> and <em>j</em> is equal to <em>q</em> and <em>k</em> is greater than <em>r</em>.</p>
 </div>
 <div class="paragraph">
 <p>Otherwise version number <em>a</em> is the same as version number <em>b</em>.</p>
@@ -1923,11 +1971,11 @@ and <em>k</em> &gt; <em>r</em>.</p>
 <dt class="hdlist1"><em>version-range</em>: </dt>
 <dd>
 <p><em>version-range-min-bracket</em>
-<em>version-min-number</em> <em>version-range-max-part</em><sub>opt</sub></p>
+<em>version-min-number</em> <em>version-range-max-part</em><sub>opt</sub> <em>version-range-max-bracket</em></p>
 </dd>
 <dt class="hdlist1"><em>version-range-max-part</em>: </dt>
 <dd>
-<p><code>,</code> <em>version-max-number</em> <em>version-range-max-bracket</em></p>
+<p>U+002C COMMA <em>version-max-number</em></p>
 </dd>
 <dt class="hdlist1"><em>version-min-number</em>: </dt>
 <dd>
@@ -1937,19 +1985,19 @@ and <em>k</em> &gt; <em>r</em>.</p>
 <dd>
 <p><em>version-number</em></p>
 </dd>
-<dt class="hdlist1"><em>version-range-min-bracket</em>: one of </dt>
+<dt class="hdlist1"><em>version-range-min-bracket</em></dt>
 <dd>
-<p><code>[ (</code></p>
+<p>one of: U+005B LEFT SQUARE BRACKET U+0028 LEFT PARENTHESIS</p>
 </dd>
-<dt class="hdlist1"><em>version-range-max-bracket</em>: one of </dt>
+<dt class="hdlist1"><em>version-range-max-bracket</em></dt>
 <dd>
-<p><code>) ]</code></p>
+<p>one of: U+005D RIGHT SQUARE BRACKET U+0029 RIGHT PARENTHESIS</p>
 </dd>
 </dl>
 </div>
 <div class="paragraph">
 <p>A version range is composed of either one version number bracketed,
-or two version numbers separated by a comma (<code>,</code>) and bracketed.</p>
+or two version numbers separated by a U+002C COMMA and bracketed.</p>
 </div>
 <div class="paragraph">
 <p>[ <em>Example 1</em>:
@@ -1958,22 +2006,26 @@ A version range with a single version number &#8220;[1.0.0]&#8221;.
 </div>
 <div class="paragraph">
 <p>[ <em>Example 2</em>:
-A version range with a two version numbers &#8220;[1.0.0,2.0.0]&#8221;.
+A version range with two version numbers &#8220;[1.0.0,2.0.0]&#8221;.
 — <em>end example</em> ]</p>
 </div>
 <div class="paragraph">
 <p>A version range <em>a</em> that is <code>[<em>i</em>,<em>j</em>]</code> makes <em>i</em> and <em>j</em> inclusive version
-range numbers.</p>
+range numbers, defining a Mathematics closed interval.</p>
 </div>
 <div class="paragraph">
 <p>A version range <em>a</em> that is <code>(<em>i</em>,<em>j</em>)</code> makes <em>i</em> and <em>j</em> exclusive version
-range numbers.</p>
+range numbers, defining a Mathematics open interval.</p>
 </div>
 <div class="paragraph">
-<p>A version range <em>a</em> that is <code>(<em>i</em>,<em>j</em>]</code> makes <em>i</em> an exclusive version number.</p>
+<p>A version range <em>a</em> that is <code>(<em>i</em>,<em>j</em>]</code> makes <em>i</em> an exclusive version number
+and <em>j</em> an inclusive version number, defining a Mathematics half-open
+interval.</p>
 </div>
 <div class="paragraph">
-<p>A version range <em>a</em> that is <code>[<em>i</em>,<em>j</em>)</code> makes <em>j</em> an exclusive version number.</p>
+<p>A version range <em>a</em> that is <code>[<em>i</em>,<em>j</em>)</code> makes <em>j</em> an exclusive version number
+and <em>i</em> an inclusive version number, defining a Mathematics half-open
+interval.</p>
 </div>
 <div class="paragraph">
 <p>A version range with a single inclusive version number <em>x</em> is equivalent to the
@@ -2036,13 +2088,17 @@ shall support all of the functionality in this section.</p>
 </div>
 <div class="paragraph">
 <p>An application that supports the <em>full level</em> functionality indicates it by
-specifying a version range (<a href="#intspct-vers-single">[intspct-vers-single]</a>) as the value of the
-<code>std:info</code> capability (<a href="#intspct-cap">intspct.cap</a>).</p>
+specifying a version range (<a href="#intspct-vers-single">[intspct-vers-single]</a>) or an array of version
+range items as the value of the <code>std:info</code> capability (<a href="#intspct-cap">intspct.cap</a>).</p>
 </div>
 <div class="paragraph">
 <p>[ <em>Example 1</em>:<br>
 <code>{ "std:info": "[1.0.0]" }</code><br>
 — <em>end example</em> ]</p>
+</div>
+<div class="paragraph">
+<p>An application that responds with an array of version range items as the value
+of a capability field shall support the union of the range items indicated.</p>
 </div>
 </div>
 <div class="sect4">
@@ -2070,7 +2126,7 @@ for the given capability.</p>
 <dl>
 <dt class="hdlist1"><em>declaration</em>: </dt>
 <dd>
-<p><em>capability-identifier</em> <code>=</code> <em>version-number</em></p>
+<p><em>capability-identifier</em> U+003D EQUALS SIGN <em>version-number</em></p>
 </dd>
 </dl>
 </div>
@@ -2097,7 +2153,7 @@ indicate an error.</p>
 <div class="sect4">
 <h5 id="intspct-json-schema-general"><a class="anchor" href="#intspct-json-schema-general"></a>8.5.1.1. General <span class="right">[<a href="#intspct-json-schema-general">intsjschm.general</a>]</span></h5>
 <div class="paragraph">
-<p>This Annex describe defines the introspection capability schema
+<p>This Annex defines the introspection capability schema
 (<a href="#intspct-schema">intspct.schema</a>) in terms of a <em>JSON Schema</em>. A <em>JSON Schema</em> refers to the
 IETF RFC draft "JSON Schema: A Media Type for Describing JSON Documents" as
 specified in <a href="https://json-schema.org/draft/2020-12/json-schema-core.html" class="bare">https://json-schema.org/draft/2020-12/json-schema-core.html</a>.</p>
@@ -2112,47 +2168,77 @@ specified in <a href="https://json-schema.org/draft/2020-12/json-schema-core.htm
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
-	</span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://json-schema.org/draft/2020-12/schema"</span><span class="p">,</span><span class="w">
-	</span><span class="nl">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json"</span><span class="p">,</span><span class="w">
-	</span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tool Introspection Version 1.0.0 JSON Schema"</span><span class="p">,</span><span class="w">
-	</span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-		</span><span class="s2">"$schema"</span><span class="p">,</span><span class="w">
-		</span><span class="s2">"std:info"</span><span class="w">
-	</span><span class="p">],</span><span class="w">
-	</span><span class="nl">"$defs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-		</span><span class="nl">"VersionSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-			</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-			</span><span class="nl">"pattern"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^([0-9]+([.][0-9]+){0,2})|([[(][0-9]+([.][0-9]+){0,2},[0-9]+([.][0-9]+){0,2}[)</span><span class="se">\\</span><span class="s2">]])$"</span><span class="w">
-		</span><span class="p">}</span><span class="w">
-	</span><span class="p">},</span><span class="w">
-	</span><span class="nl">"anyOf"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-		</span><span class="p">{</span><span class="w">
-			</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
-			</span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-				</span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-					</span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The URI of the JSON schema corresponding to the version of the tool introspection format."</span><span class="p">,</span><span class="w">
-					</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-					</span><span class="nl">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uri"</span><span class="w">
-				</span><span class="p">},</span><span class="w">
-				</span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-					</span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The Tool Introspection format version."</span><span class="p">,</span><span class="w">
-					</span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/VersionSpec"</span><span class="w">
-				</span><span class="p">}</span><span class="w">
-			</span><span class="p">}</span><span class="w">
-		</span><span class="p">},</span><span class="w">
-		</span><span class="p">{</span><span class="w">
-			</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
-			</span><span class="nl">"propertyNames"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-				</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-				</span><span class="nl">"pattern"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^[a-z_]+(:[a-z_]+)+$"</span><span class="w">
-			</span><span class="p">},</span><span class="w">
-			</span><span class="nl">"patternProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-				</span><span class="nl">""</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-					</span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/VersionSpec"</span><span class="w">
-				</span><span class="p">}</span><span class="w">
-			</span><span class="p">}</span><span class="w">
-		</span><span class="p">}</span><span class="w">
-	</span><span class="p">]</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://json-schema.org/draft/2020-12/schema"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tool Introspection Version 1.0.0 JSON Schema"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"$defs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"VersionMin"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pattern"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^[0-9]+([.][0-9]+){0,2}$"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"VersionFull"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pattern"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^[[(][0-9]+([.][0-9]+){0,2}[)</span><span class="se">\\</span><span class="s2">]]$"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"VersionRange"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pattern"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^[[(][0-9]+([.][0-9]+){0,2},[0-9]+([.][0-9]+){0,2}[)</span><span class="se">\\</span><span class="s2">]]$"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"Version"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"oneOf"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/VersionMin"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/VersionFull"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/VersionRange"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"Versions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"array"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Version"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"VersionSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"oneOf"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Version"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Versions"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"anyOf"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The URI of the JSON schema corresponding to the version of the tool introspection format."</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uri"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"std:info"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The Tool Introspection format version."</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/VersionSpec"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"patternProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"^[a-z_]+(:[a-z_]+)+$"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/VersionSpec"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"std:info"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span></code></pre>
 </div>
 </div>
@@ -2223,6 +2309,15 @@ that Fortran uses a different, but possibly overlapping CLI:</p>
 <span class="nv">$ </span>gcc <span class="nt">-std</span><span class="o">=</span>f2018 <span class="nt">-o</span> myapp main.fpp</code></pre>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_acknowledgements"><a class="anchor" href="#_acknowledgements"></a>10. Acknowledgements</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Thanks to Jens Maurer for some initial wording review.
+Thanks to Charles-Henri Gros for feedback on version ranges.</p>
 </div>
 </div>
 </div>

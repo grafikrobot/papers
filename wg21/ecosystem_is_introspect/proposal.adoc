@@ -19,7 +19,7 @@
 :note-caption: ℹ
 :tip-caption: ☀
 :warning-caption: ⚠
-:table-caption: Table 
+:table-caption: Table
 
 ++++
 <style>
@@ -57,7 +57,13 @@ footnote:EcoIS[https://wg21.link/P2656 {CPP} Ecosystem International Standard]
 
 === Revision 2 (June 2023)
 
-Change wording to match text in draft IS.
+Change wording to match text in draft IS. Use Unicode for literals as needed.
+Change the version numbers to follow the Semantic Versioning, and JSON, specs
+of not allowed leading zeros. Add array of version ranges to full level support
+to allow for disjoint support reporting. Updated the JSON schema to correct it
+not properly excluding extra unknown properties, to correctly restrict the
+syntax of capability names and values, and to add array of version ranges for
+capability fields.
 
 === Revision 1 (May 2023)
 
@@ -155,20 +161,14 @@ of the capabilities it supports:
 
 [source,json]
 ----
-{
-  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
-  "std:info": "1.0.0"
-}
+include::example-01.json[]
 ----
 
 Or could produce this as a JSON output in the case of full version ranges:
 
 [source,json]
 ----
-{
-  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
-  "std:info": "[1,2.5]"
-}
+include::example-02.json[]
 ----
 
 Which would minimally indicate that the tool only supports the introspection
@@ -197,11 +197,7 @@ With a target tool response:
 
 [source,json]
 ----
-{
-  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
-  "std:info": "[1,2)",
-  "gcc:extra": "[2.1]"
-}
+include::example-03.json[]
 ----
 
 Which the consumer can use to _declare_ the specific capability versions:
@@ -297,6 +293,22 @@ footnote:Regex[]
 ^[[(][0-9]+([.][0-9]+){0,2},[0-9]+([.][0-9]+){0,2}[)\\]]$
 ----
 
+==== Multiple Ranges
+
+There are situations where specifying only one version range for what the
+application supports is not sufficient. For example an application may decide
+that they add support for a `2.0.0` version but not support further `1.x.y`
+versions. In that case it's important to be precise in informing consumers of
+this fact. To allow for that situation one can specify a JSON array instead of
+the single JSON string for the version range. For example:
+
+[source,plain_text]
+----
+include::example-07.json[]
+----
+
+Would indicate support for versions 1.0.z through 1.2.0, and version 2.0.0.
+
 === Version Matching
 
 When given two version specifications tools will need to match the two to
@@ -381,9 +393,7 @@ This is a minimal conforming document:
 
 [source,json]
 ----
-{
-  "std:info": "1.0.0"
-}
+include::example-04.json[]
 ----
 
 This is also a minimal conforming document. But specifies a range of versions
@@ -391,20 +401,14 @@ supported for the `std:info` capability:
 
 [source,json]
 ----
-{
-  "std:info": "[1.0.0,2.0.0)"
-}
+include::example-05.json[]
 ----
 
 This example adds a custom vendor capability and the schema reference:
 
 [source,json]
 ----
-{
-  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
-  "std:info": "[1.0.0,2.0.0)",
-  "gcc:extra": "1.5.0"
-}
+include::example-06.json[]
 ----
 
 See the <<Wording>> for a <<JSON Schema>> for this format.
@@ -468,10 +472,12 @@ footnote:[Working Draft, {CPP} Ecosystem International Standard 2023-04-01 (http
 In [intro.refs] add:
 
 [.ins.text-justify]
-JSON::
-ISO/IEC 21778:2017, _Information technology — The JSON data interchange syntax_
 POSIX::
 ISO/IEC 9945:2009, _Information technology — Portable Operating System Interface (POSIX®) Base Specifications, Issue 7_
+JSON::
+ISO/IEC 21778:2017, _Information technology — The JSON data interchange syntax_
+Mathematics::
+ISO 80000-2:2019, _Quantities and units — Part 2: Mathematics_
 
 === Specification: Conformance
 
@@ -617,10 +623,14 @@ _Description_:
 ====== Capability Field [.right]#[<<intspct-fld-cap>>]#
 
 _Name_: _capability-identifier_ (<<intspct-cap>>) +
-_Type_: `string` +
-_Value_:
+_Type_: `string` or `array` +
+_Value_ (for `string`):
   The value shall be a _version-number_ for _minimum level_ functionality.
   Or the value shall be a _version-range_ for _full level_ functionality. +
+_Value_ (for `array`):
+  The value can be a JSON array for _full level_ functionality.
+  If the value is a JSON array the items in the array shall be a
+  _version-number_ or _version-range_.
 _Description_:
   An _introspection object_ can contain this field one or more times.
   When the field appears more than one time the name of the fields shall be
@@ -635,11 +645,10 @@ _sub-capability-identifier_: ::
   _scope-designator_ _name_ _sub-capability-identifier~opt~_
 _name_: ::
   one or more of: +
-  `a b c d e f g h i j k l m` +
-  `n o p q r s t u v w x y z` +
-  `_`
+  U+0061 .. U+007A LATIN SMALL LETTER A .. Z +
+  U+005F LOW LINE
 _scope-designator_: ::
-  `:`
+  U+003A COLON
 
 A _capability-identifier_ is composed of two or more _scope-designator_
 delimited _name_ parts.
@@ -674,17 +683,22 @@ _minor_patch_part_: ::
 _patch-part_: ::
   `.` _patch-number_
 _major-number_: ::
-  _digits_
+  _decimal_
 _minor-number_: ::
-  _digits_
+  _decimal_
 _patch-number_: ::
-  _digits_
-_digits_: ::
-  one or more of: +
-  `0 1 2 3 4 5 6 7 8 9`
+  _decimal_
+_decimal_: ::
+  one of: U+0031 .. u+0039 DIGIT ONE .. NINE +
+  zero or more of: U+0030 .. u+0039 DIGIT ZERO .. NINE
 
-A version number is composed of 1, 2, or 3 decimal numbers (_digits_)
-separated by a period (`.`).
+A _decimal_ is a sequence of decimal digits (U+0030 .. u+0039 DIGIT ZERO .. NINE)
+with no superfluous leading zeros (U+0030 DIGIT ZERO).
+
+A _decimal_ represents a non-negative base 10 integer.
+
+A version number is composed of 1, 2, or 3 decimal numbers (_decimal_)
+separated by a U+002E FULL STOP.
 
 A version number composed of 1 decimal number is equivalent to that decimal
 number followed by `.0.0`.
@@ -700,14 +714,15 @@ decimal number parts followed by `.0`.
 That is the version number `N.M` is equivalent to `N.M.0`.
 — _end note_ +]+
 
-Version numbers define a total ordering where version number _a_ with parts
-_i_, _j_, _k_ is ordered before version number _b_ with parts _p_, _q_, _r_
-when: _i_ < _p_, or _i_ == _p_ and _j_ < _q_, or _i_ == _p_ and _j_ == _q_
-and _k_ < _r_.
+Version numbers define a total ordering where version number _a_ with decimal
+parts _i_, _j_, _k_ is ordered before version number _b_ with decimal parts
+_p_, _q_, _r_ when: _i_ is less than _p_, or _i_ is equal to _p_ and
+_j_ is less than _q_, or _i_ is equal to _p_ and _j_ is equal to _q_
+and _k_ is less than _r_.
 
 Otherwise version number _a_ is ordered before version number _b_ when:
-_i_ > _p_, or _i_ == _p_ and _j_ > _q_, or _i_ == _p_ and _j_ == _q_
-and _k_ > _r_.
+_i_ is greater than _p_, or _i_ is equal to _p_ and _j_ is greater than _q_, or
+_i_ is equal to _p_ and _j_ is equal to _q_ and _k_ is greater than _r_.
 
 Otherwise version number _a_ is the same as version number _b_.
 
@@ -716,38 +731,42 @@ Otherwise version number _a_ is the same as version number _b_.
 
 _version-range_: ::
   _version-range-min-bracket_
-  _version-min-number_ _version-range-max-part_~opt~
+  _version-min-number_ _version-range-max-part_~opt~ _version-range-max-bracket_
 _version-range-max-part_: ::
-  `,` _version-max-number_ _version-range-max-bracket_
+  U+002C COMMA _version-max-number_
 _version-min-number_: ::
   _version-number_
 _version-max-number_: ::
   _version-number_
-_version-range-min-bracket_: one of ::
-  `[ (`
-_version-range-max-bracket_: one of ::
-  `) ]`
+_version-range-min-bracket_::
+  one of: U+005B LEFT SQUARE BRACKET U+0028 LEFT PARENTHESIS
+_version-range-max-bracket_::
+  one of: U+005D RIGHT SQUARE BRACKET U+0029 RIGHT PARENTHESIS
 
 A version range is composed of either one version number bracketed,
-or two version numbers separated by a comma (`,`) and bracketed.
+or two version numbers separated by a U+002C COMMA and bracketed.
 
 +[+ _Example 1_:
 A version range with a single version number "`[1.0.0]`".
 — _end example_ +]+
 
 +[+ _Example 2_:
-A version range with a two version numbers "`[1.0.0,2.0.0]`".
+A version range with two version numbers "`[1.0.0,2.0.0]`".
 — _end example_ +]+
 
 A version range _a_ that is `[_i_,_j_]` makes _i_ and _j_ inclusive version
-range numbers.
+range numbers, defining a Mathematics closed interval.
 
 A version range _a_ that is `(_i_,_j_)` makes _i_ and _j_ exclusive version
-range numbers.
+range numbers, defining a Mathematics open interval.
 
-A version range _a_ that is `(_i_,_j_]` makes _i_ an exclusive version number.
+A version range _a_ that is `(_i_,_j_]` makes _i_ an exclusive version number
+and _j_ an inclusive version number, defining a Mathematics half-open
+interval.
 
-A version range _a_ that is `[_i_,_j_)` makes _j_ an exclusive version number.
+A version range _a_ that is `[_i_,_j_)` makes _j_ an exclusive version number
+and _i_ an inclusive version number, defining a Mathematics half-open
+interval.
 
 A version range with a single inclusive version number _x_ is equivalent to the
 version range `[_x_,_x_]`.
@@ -797,12 +816,15 @@ section. An application that reports supporting the _full level_ functionality
 shall support all of the functionality in this section.
 
 An application that supports the _full level_ functionality indicates it by
-specifying a version range (<<intspct-vers-single>>) as the value of the
-`std:info` capability (<<intspct-cap>>).
+specifying a version range (<<intspct-vers-single>>) or an array of version
+range items as the value of the `std:info` capability (<<intspct-cap>>).
 
 +[+ _Example 1_: +
 `{ "std:info": "[1.0.0]" }` +
 — _end example_ +]+
+
+An application that responds with an array of version range items as the value
+of a capability field shall support the union of the range items indicated.
 
 [#intspct-info,reftext=intspct.info]
 ===== Introspection Information [.right]#[<<intspct-info>>]#
@@ -824,7 +846,7 @@ indicated edition of this standard in the given _declaration_ _version-number_
 for the given capability.
 
 _declaration_: ::
-  _capability-identifier_ `=` _version-number_
+  _capability-identifier_ U+003D EQUALS SIGN _version-number_
 
 An application, when not given a `--std-info=_declaration_` option for a
 capability it supports, should conform its functionality to the most recent
@@ -845,7 +867,7 @@ Insert clause before _Bibliography_.
 [#intspct-json-schema-general,reftext=intsjschm.general]
 ===== General [.right]#[<<intspct-json-schema-general>>]#
 
-This Annex describe defines the introspection capability schema
+This Annex defines the introspection capability schema
 (<<intspct-schema>>) in terms of a _JSON Schema_. A _JSON Schema_ refers to the
 IETF RFC draft "JSON Schema: A Media Type for Describing JSON Documents" as
 specified in https://json-schema.org/draft/2020-12/json-schema-core.html.
@@ -906,3 +928,8 @@ $ gcc --std-info
 { "std:info": "1", "std:cli:c++", "1", "gcc:cli:fortran", "1" }
 $ gcc -std=f2018 -o myapp main.fpp
 ----
+
+== Acknowledgements
+
+Thanks to Jens Maurer for some initial wording review.
+Thanks to Charles-Henri Gros for feedback on version ranges.

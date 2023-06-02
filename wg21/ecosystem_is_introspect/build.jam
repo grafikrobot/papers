@@ -36,3 +36,18 @@ html $(name)_$(xxxx).html : proposal.adoc
 		<flags>--attribute=rouge-style=base16.solarized
 	;
 install html : $(name)_$(xxxx).html : <location>. ;
+
+actions json-validate
+{
+	check-jsonschema -v --traceback-mode=full --schemafile "$(>[2])" "$(>[1])" && echo "passed" > "$(<)"
+}
+
+local validations ;
+for local json in [ glob example-*.json ]
+{
+	validations += [ make $(json:B:S=.check)
+		: $(json) std_info-1.0.0.json
+		: @json-validate ] ;
+	explicit $(json:B:S=.check) ;
+}
+alias validate : $(validations) ;
