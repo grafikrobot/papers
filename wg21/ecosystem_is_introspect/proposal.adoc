@@ -57,13 +57,16 @@ footnote:EcoIS[https://wg21.link/P2656 {CPP} Ecosystem International Standard]
 
 === Revision 2 (June 2023)
 
-Change wording to match text in draft IS. Use Unicode for literals as needed.
-Change the version numbers to follow the Semantic Versioning, and JSON, specs
+Changed wording to match text in draft IS. Use Unicode for literals as needed.
+Changed the version numbers to follow the Semantic Versioning, and JSON, specs
 of not allowed leading zeros. Add array of version ranges to full level support
 to allow for disjoint support reporting. Updated the JSON schema to correct it
 not properly excluding extra unknown properties, to correctly restrict the
 syntax of capability names and values, and to add array of version ranges for
-capability fields.
+capability fields. Change capability names to allow for numbers. Add exposition
+on command option handling and specification files. Add some possible user
+interface alternatives for obtaining the specification JSON text. And describe
+the currently preferred choice.
 
 === Revision 1 (May 2023)
 
@@ -240,7 +243,7 @@ footnote:Regex[ECMAScript® 2022 language specification, 13th edition, June 2022
 
 [source,plan_text]
 ----
-^[a-z_]+(:[a-z_]+)+$
+^[a-z0-9_]+(:[a-z0-9_]+)+$
 ----
 
 At minimum a capability has two components. The first component is a general
@@ -252,6 +255,16 @@ IS. footnote:EcoIS[]
 
 Vendor:: Any other capability, i.e. other than `std`, is available for vendors
 to use as extensions outside the IS. footnote:EcoIS[]
+
+There was a question on "Why not alow 0-9 in the name?". Considering this brings
+up the question as to the utility of having numbers in the name. An
+obvious use case is to add versioning to the name, for example `std2`. That is a
+case we want to avoid. As it avoids using the version numbers themselves which
+subverts the spirit of the introspection. Another use case is to cover vendor
+specific names for tools that use a number in their names, for example `b2`,
+`build2`. Because that is a currently existing use case, and that forcing such
+applications that want custom capabilities to create alternate names has
+various drawbacks, yes, we should accept numbers in the names.
 
 === Version Specification
 
@@ -436,6 +449,426 @@ footnote:Semver[Semantic Versioning (https://semver.org/)]
 
 These rules set it apart from the {CPP} feature macros that they impart some
 meaning to a version relative to other versions.
+
+=== User Interface
+
+This proposal currently suggests to add some application command line (CLI)
+options as the user interface for obtaining the introspection information. In
+particular adding `--std-info=X` and `--std-info-out=X` options for any
+conforming tool. Some compiler vendors expressed some concerns regarding this
+choice:
+
+* Launching the application to get this information can be expensive,
+  particularly in "performance sensitive scenarios".
+* It increases the binary size of applications. Which can impact deployment
+  time in some environments, like continuous integration.
+
+One alternative to adding command line options, in this case, and as suggested,
+is to have an external fixed file with the content. This alternative hinges on
+being able to find that file through some reasonably stable method.
+
+We explore the pros and cons of both choices herein. Note, as this feature has
+not yet been implemented the analysis below is an informed best guess.
+
+First some assumptions:
+
+. We are only going to consider the logic for adding the minimal conforming
+  interface and introspection information result. I.e. _minimum level_
+  (<<intspct-min>>) functionality.
+. We will make some best effort prospective optimizations to an expected
+  implementation. I.e. try to think of minimal code and data that reuses
+  existing functionality in an application.
+
+It is important to understand in these implementation considerations that tools
+can be both an _application_ and _consumer_ in this. Where an _application_
+is a tool producing the introspection information. And a _consumer_ ingests
+that information. But either can be a compiler driver, linker, assembler,
+analyzer, build system, package manager, IDE, and so on. For example a package
+manager will invoke a build system for introspection. But also a build system
+will invoke a package manager for introspection.
+
+==== Command Line Options
+
+Adding command line options to an application is a well know practice that has
+a long history. As such it's relatively easy to estimate it's impact.
+
+_(A) Application: Sizeof of introspection string in the application "binary"._
+
+The absolute _minimum level_ conforming introspection string in this would be
+`{"std:info":"1"}`. But that's not particularly useful as we would expect
+some other items represented. Being generous we can make a guess of having 10
+items:
+`{"std:info":"1","std:first":"1","std:second":"1","std:third":"1","std:fourth":"1","std:fifth":"1","std:sixth":"1","std:seventh":"1","std:eighth":"1","std:ninth":"1"}`.
+Which gives a total of 165 UTF-8 code points, or the same byte count, plus a
+null terminator. We can round that up to 200 bytes total.
+
+_(B) Application: Additional code to handle the options._
+
+This cost is harder to estimate as the collection of application implementations
+is varied in both method and programming languages. For this we can roughly
+estimate an implementation difficulty for some of the most used tools in the
+{CPP} ecosystem. Below is a survey of the difficulty of adding various command
+line option syntax in three categories, compiler drivers, build systems, and
+package managers:
+
+[cols="1,1,1,1,1,1",options="header"]
+|===
+^|Tool
+^|Current
+^|`*--opt=val*`
+^|`*-opt=val*`
+^|`*--opt:val*`
+^|`*-opt:val*`
+
+6+^h|Compiler Driver
+
+|`cl.exe` (Windows, macOS)
+l|
+/opt:val
+-opt:val
+3+^.^|_unknown_^1^
+^.^|&check;
+
+|`clang` (many)
+l|
+-opt val
+-opt=val
+--opt=val
+^.^|&check;
+^.^|&check;
+2+^.^|Easy; use Joined<["--"], "foo:"> in `clang&#x200B;/&#x200B;include&#x200B;/&#x200B;clang&#x200B;/&#x200B;Driver&#x200B;/&#x200B;Options.td`.&nbsp;^2^
+
+|`gcc` (many)
+l|
+-opt val
+-opt=val
+--opt=val
+^.^|&check;
+^.^|&check;
+2+^.^|Trivial; just use `:` instead of `=` to spell the option in `*.opt`.&nbsp;^3^
+
+6+^h|Build System
+
+|Cmake (many)
+l|
+-opt val
+-opt=val
+--opt val
+--opt=val
+^.^|&check;
+^.^|&check;
+2+^.^|Easy; Add test for ':' in https://github.com/Kitware/CMake/blob/master/Source/cmCommandLineArgument.h#L102[`cm&#x200B;Command&#x200B;Line&#x200B;Argument.h`].&nbsp;^4^
+
+|MSBuild (many)
+l|
+/opt:val
+-opt:val
+3+^.^|_unknown_^1^
+^.^|&check;
+
+|Ninja (many)
+l|
+-opt val
+--opt=val
+^.^|&check;
+3+^.^|Very Hard; requires changing `getopt_long`.&nbsp;^5^
+
+|QMake (many)
+l|
+-opt val
+4+^.^|Medium; https://github.com/qt/qtbase/blob/55aee8697512af105dfefabc1e2ec41d4df1e45e/qmake/option.cpp#L173[it's custom {CPP}] ^6^
+
+|GNU Make (many)
+l|
+-opt val
+--opt=val
+^.^|&check;
+3+^.^|Very Hard; requires changing `getopt_long`.&nbsp;^5^
+
+|autotools (Unix-like)
+l|
+-opt val
+4+^.^|Very Hard
+
+|Gradle (Java)
+l|
+-opt val
+-opt=val
+--opt val
+--opt=val
+^.^|&check;
+^.^|&check;
+2+^.^|Easy; it's a single custom parser: https://github.com/gradle/gradle/blob/master/subprojects/cli/src/main/java/org/gradle/cli/CommandLineParser.java[CommandLineParser.java] ^7^
+
+|Bazel (Unix, macOS, Windows)
+l|
+--opt=val
+--opt val
+-opt val
+^.^|&check;
+3+^.^|Very Hard; Mostly Starlark code.
+
+|nmake (Windows)
+l|
+/opt val
+-opt val
+4+^.^|Easy; it's a simple C arg parser.
+
+|Meson (Python)
+l|
+-opt=val
+--opt=val
+--opt val
+^.^|&check;
+^.^|&check;
+2+^.^|Hard; uses Python `argparse`.&nbsp;^8^
+
+|SCons (Python)
+l|
+-o val
+--opt=val
+--opt val
+^.^|&check;
+^.^|&check;
+2+^.^|Hard; uses Python `argparse`.&nbsp;^8^
+
+|B2 (Boost Build)
+l|
+-oval
+-o val
+--opt=val
+--opt val
+^.^|&check;
+^.^|Medium; custom C code, conflicts with `-oval`.
+^.^|Easy; uses Jam+regex matching.
+^.^|Medium; custom C code, conflicts with `-oval`.
+
+6+^h|Package Manager
+
+|Conan (Python)
+l|
+-opt=val
+--opt=val
+--opt val
+^.^|&check;
+^.^|&check;
+2+^.^|Hard; uses Python `argparse`.&nbsp;^8^
+
+|vcpkg (Many)
+l|
+--opt=val
+^.^|&check;
+3+^.^|Medium; custom C++ code.
+
+|NuGet (Many)
+l|
+-opt val
+4+^.^|_unknown_^1^
+
+|Hunter (CMake)
+l|
+-Dopt=val
+4+^.^|Impossible; it's written in CMake.
+
+|Spack (Unix, macOS)
+l|
+-opt val
+--opt val
+2+^.^|Easy; may already be supported from use of Python `argparse`.
+2+^.^|Hard; uses Python `argparse`.&nbsp;^8^
+
+|Build2 (Many)
+l|
+-opt val
+--opt val
+4+^.^|Hard; Seems to use a custom language and compiler for argument definition
+and parsing.
+
+|===
+
+1. Unable to estimate as it's closed source.
+2. llvm-project has a few utilities that uses LLVMOption to parse command line
+options. See `fdOpts.td`.
+3. Would prefer not to depart from existing POSIX conventions.
+4. https://github.com/Kitware/CMake/blob/master/Source/cmCommandLineArgument.h#L102
+5. Uses `gnuopt_long` in `gnulib/lib/getopt.c`. Which has a global effect on
+the ecosystem of tools that use `getop_long` across many systems.
+6. https://github.com/qt/qtbase/blob/55aee8697512af105dfefabc1e2ec41d4df1e45e/qmake/option.cpp#L173
+7. https://github.com/gradle/gradle/blob/master/subprojects/cli/src/main/java/org/gradle/cli/CommandLineParser.java
+8. Choosing to change the Python `argparse` as a solution for this results in a
+global effect on all Python programs that use `argparse` and would prevent
+backward compatibility.
+
+Of the above set of possible option syntaxes and within the set of applications
+the most widely accepted option syntax is the `--opt=val` variation. Hence, it
+currently appears, that the least cost avenue is to use the `--opt=val` syntax
+globally for the Ecosystem IS.
+
+Although the cost of using `--opt=val` varies across the range of applications
+in aggregate we can estimate the cost as "medium". As most applications already
+support this option syntax. And it's possible for some other applications to add
+limited support for this syntax.
+
+_(+C+) Consumer: Executing the application._
+
+The cost of executing the an application comes in different parts:
+
+1. There's the basic cost of the execution itself, which varies between
+environments. But is a well known cost and easy to account for.
+2. There's the cost of, at best, one more execution of the application to gather
+the introspection information.
+
+==== Specification File
+
+Having an additional specification file can support some additional use cases
+that using command line options can't. The idea for this alternative is to have
+the JSON information in a file that is easily findable by consumers. Some
+possible locations are: as a specially named sibling to the application, in some
+standard location in the system with a special file name, manually specified
+by the user (for example through an environment variable or other consumer
+specific configuration). There are a couple of differing costs involved in
+having introspection files:
+
+_(A) Application: Deployment of extra file with application "binary"._
+
+Most applications already deploy extra files that support the main application.
+Hence adding another file is of negligible cost. Where the file is located is
+a concern. As finding a single consistent location for such a file across many
+environments is very difficult, at best, or impossible at worse. For example,
+while it's natural to have a sibling to the executable information file on
+Windows, it's not usual on Unix when installing to the system directories
+(i.e. `/bin`).
+
+An aspect of having the extra file is both the extra on-disk storage and
+time to install the file. For many uses this is not a concern. But there are
+classes of cases where the install is done repeatedly as would be seen in CI
+testing systems that require fresh installs. This is a concern regardless of
+where the data lives though. As it's the same data if it's an extra file or
+embedded in the application.
+
+_(B) Consumer: Deployment of extra file with application "binary"._
+
+A common method of distributing computation, especially {CPP} compiles, is to
+transport the tools from one machine to many, for example Incredibuild. The
+cost of transporting this extra file is minimal though. As the data is small,
+as shown above, and such systems are already dealing with transporting and
+caching such information.
+
+_(+C+) Consumer: Additional code to find the application "binary"._
+
+If the extra file is available from some location relative to the application
+consumers will need to implement search methods to first find the application
+before attempting to find the extra file. This search can be challenging for a
+variety of reasons like: needing to interpret `PATH` searching (in the case of
+not having an absolute file path), accounting for following symbolic links (or
+equivalents), avoiding user permission restrictions, and so on. The difficulty
+of this will also differ based on the utilities available in the language the
+application is written in and what the system provides.
+
+_(D) Consumer: Additional code to find the introspection file._
+
+Assuming we have a path to the application, per above, and/or that we have known
+locations it is relatively straightforward to find a specially named extra file.
+But that the more choices one has to account for the more implementation there
+is that can run into problems. Additionally tools like Incredibuild would need
+to learn about the extra file and consumers might need to use special logic to
+account for both the usual location of the file and the transported file
+location.
+
+==== Alternatives
+
+Given all that we can try and evaluate some alternative user user interface
+possibilities. Note, that these are not exhaustive. But they are, currently,
+the most likely to work in the widest set of use cases.
+
+[cols="^1,1a,1a",options="header"]
+|===
+
+^|
+^| Pros
+^| Cons
+
+|*Single Option Style* +
+`--std-info=X`, `--std-info-file=X`
+|
+* Low implementation cost.
+* Uniform handling for consumers.
+|
+* Some applications will need to implement a new option style.
+* Running the application may not be possible by the consumer.
+
+|*Two Option Styles* +
+`--std-info=X`, `--std-info-file=X` and/or `-std-info:X`, `-std-info-file:X`
+|
+* Low implementation cost.
+* Limited set of option handling for consumers.
+* Avoids changing Microsoft tools option handling.
+|
+* Adds an extra check, and context, for consumers.
+* Running the application may not be possible by the consumer.
+
+|*Implementation Defined Option Style* +
+(i.e. current status quo)
+|
+* Low implementation cost.
+* No changes to option handling for producers.
+|
+* Adds extra checks, and contexts, for consumers.
+* Running the application may not be possible by the consumer.
+
+|*Specification File*
+|
+* Avoids cost of adding options for producers.
+* Allows use when the application can't be executed.
+|
+* Adds complexity of finding the file for consumers.
+* Adds cost of transporting file along with the application where needed.
+
+|*Specification File and "Two Option Styles"*
+|
+* Low implementation cost.
+* Limited set of option handling for consumers.
+* Avoids changing Microsoft tools option handling.
+* Allows use when the application can't be executed.
+|
+* Some applications will need to implement a new option style.
+
+|===
+
+As we can see, no alternative is a perfect choice. But hopefully we can see that
+the last one, _Specification File and "Two Option Styles"_ is the most
+advantageous. But what is it? Other than the obvious of mashing the
+_Specification File_ and _"Two Option Style"_ alternatives together. The
+characteristics and requirements would be:
+
+1. A producer would be required to implement one or both of the two option
+styles: `--opt=val` or `-opt:val`.
+2. A producer would be required to indicate an error for an option style it does
+no accept.
+3. A producer could implement the `std-info-file` request as they wish, including
+reading from a file, reading from internal fixed text, dynamically generating
+the information, or any other method it deems appropriate.
+4. A consumer that wants to execute the producer directly would be required
+to try both the `--opt=val` and `-opt:val` styles in an order of its choosing
+to find the style that works for the producer.
+5. A consumer can save the produced information, using the `std-info-file`
+option, or other method of its choosing to a file that it can read directly
+afterwards.
+6. A consumer that does not want to execute the producer directly can use a
+previously saved information file.
+7. A consumer that does not want to execute the producer directly is required to
+search a small, defined, set of either relative to the producer or absolute
+locations for a specified specially named file.
+
+The key differences from the previous specification of only the _Single Option
+Style_ alternative are:
+
+* The addition of the `-opt:val` style.
+* Item (4) on consumers to try both option styles.
+* Item (7) specifying some search location for the information file.
+
+That combination of features and requirements avoids most of the problems one
+can encounter without creating additional ones.
 
 === Impact On The Standard
 
@@ -646,6 +1079,7 @@ _sub-capability-identifier_: ::
 _name_: ::
   one or more of: +
   U+0061 .. U+007A LATIN SMALL LETTER A .. Z +
+  U+0030 .. u+0039 DIGIT ZERO .. NINE +
   U+005F LOW LINE
 _scope-designator_: ::
   U+003A COLON
@@ -932,4 +1366,12 @@ $ gcc -std=f2018 -o myapp main.fpp
 == Acknowledgements
 
 Thanks to Jens Maurer for some initial wording review.
+
 Thanks to Charles-Henri Gros for feedback on version ranges.
+
+Thanks to Fangrui Song for feedback on command line option syntax and assessment
+of changes to clang and for the applications that use `getlong_opt`.
+
+Thanks to Jason Merrill and Fangrui Song for assessment of changes to GCC.
+
+Thanks to Olga Arkhipova for suggesting the use of files as the user interface.

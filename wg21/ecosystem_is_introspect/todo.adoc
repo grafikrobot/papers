@@ -4,9 +4,10 @@
 * Consider the single minimal argument introspection as a minimal conforming api. (added min/full layers design)
 * Add samples scenarios for using introspection. (done, kinda)
 * Compare it to the c++ feature macros. (done)
-* (DONE) Specify version number decimal interpretation in introspection wording.
-* (DONE) Disallow leading zeros, like JSON and Sematic Versioning.
-* (DONE) Allow multiple ranges.
+* Specify version number decimal interpretation in introspection wording.
+* Disallow leading zeros, like JSON and Sematic Versioning.
+* Allow multiple ranges.
+* Allow digits in names?
 
 == To-do?
 
@@ -14,4 +15,3 @@
 
 == Feedback
 
-* Allow digits in names?
