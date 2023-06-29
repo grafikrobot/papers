@@ -362,7 +362,7 @@ crash reporting, and to present GUI elements only when debugging.
 
 === LEWG: P2546R3 (2023-06-16)
 
-Poll 4: Send +[+P2546R3+]+ Debugging Support to Library Working Group for {CPP}26.
+Poll 4: Send +[P2546R3]+ Debugging Support to Library Working Group for {CPP}26.
 footnote:[P2776R0 2023-05 Library Evolution Poll Outcomes (https://wg21.link/P2776R0)]
 
 [options="header,autowidth",cols="^0,^0,^0,^0,^0"]
