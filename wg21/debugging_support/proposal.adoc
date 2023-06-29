@@ -19,7 +19,7 @@
 :note-caption: ℹ
 :tip-caption: ☀
 :warning-caption: ⚠
-:table-caption: Table 
+:table-caption: Table
 
 ++++
 <style>
@@ -62,6 +62,11 @@ footnote:P1279[P1279 `std::breakpoint`, _Isabella Muerte_ 2018-10-05
 (https://wg21.link/P1279)]
 
 == Revision History
+
+=== Revision 5 (June 2023)
+
+* Wording fixes from LWG.
+* Add ePoll results.
 
 === Revision 4 (February 2023)
 
@@ -355,6 +360,17 @@ crash reporting, and to present GUI elements only when debugging.
 
 == Polls
 
+=== LEWG: P2546R3 (2023-06-16)
+
+Poll 4: Send +[+P2546R3+]+ Debugging Support to Library Working Group for {CPP}26.
+footnote:[P2776R0 2023-05 Library Evolution Poll Outcomes (https://wg21.link/P2776R0)]
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | WF | N | WA | SA
+| 13 | 7 | 0 | 0 | 1
+|===
+
 === LEWG: P2546R3 (2023-02-09)
 
 is_debugger_present should be in freestanding.
@@ -362,7 +378,7 @@ is_debugger_present should be in freestanding.
 [options="header,autowidth",cols="^0,^0,^0,^0,^0"]
 |===
 | SF | WF | N | WA | SA
-| 0 | 6 | 10 | 2| 0
+| 0 | 6 | 10 | 2 | 0
 |===
 
 __Attendance:__ 22 (In-person) + 13 (Remote)
@@ -430,8 +446,7 @@ footnote:[P1279 GitHub Issue (https://github.com/cplusplus/papers/issues/307)]
 
 == Wording
 
-Wording is relative to link:https://wg21.link/N4868[N4868].
-footnote:[N4868 Working Draft, Standard for Programming Language C++ 2020-10-18 (https://wg21.link/N4868)]
+Wording is relative to latest {CPP}26 draft.
 
 === Feature Test Macro
 
@@ -440,7 +455,7 @@ In [version.syn] add:
 [.ins.text-justify]
 [source]
 ----
-#define __cpp_lib_debugging YYYYMML // also in <debugging>
+#define __cpp_lib_debugging YYYYMML // freestanding, also in <debugging>
 ----
 
 === Library
@@ -454,7 +469,7 @@ Add a new entry to General utilities library summary [tab:utilities.summary] tab
 |===
 --
 
-Add a new entry to the "C++ headers for freestanding implementations" table
+Add a new entry to the "{CPP} headers for freestanding implementations" table
 [tab:headers.cpp.fs].
 
 [.ins.text-justify]
@@ -474,12 +489,11 @@ Add section to General utilities library [utilities].
 ===== In general [.right]#[<<dbg-gen>>]#
 
 This subclause [debugging] describes functionality to introspect and interact
-with implementation-defined behavior of the executing program.
+with the execution of the program.
 
 +[+ _Note 1_:
-The facilities provided by the debugging functionality are expected to interact
-with a program that may be tracing the execution of a {CPP} program. Most
-commonly such a tracing program would be a debugger.
+The facilities provided by the debugging functionality interact with a program
+that may be tracing the execution of a {CPP} program, such as a debugger.
  -- _end note_ +]+
 
 [#dbg-syn,reftext=debugging.syn]
@@ -502,13 +516,13 @@ namespace std {
 --
 `void breakpoint() noexcept;`
 
-_Effects_: Effects when invoked are implementation-defined behavior.
+The semantics of this function are implementation-defined.
 
 +[+ _Note 1_:
-When the function is invoked it is expected that the program's execution
-temporarily halts and execution is handed to the debugger until such a time
-as: the program is terminated by the debugger or, the debugger resumes
-execution of the program as if the function was not invoked.
+When invoked the executing of the program temporarily halts and execution is
+handed to the debugger until such a time as: the program is terminated by the
+debugger or, the debugger resumes execution of the program as if the function
+was not invoked.
  -- _end note_ +]+
 --
 
@@ -528,17 +542,16 @@ if (is_debugger_present()) breakpoint();
 --
 `bool is_debugger_present() noexcept;`
 
-_Returns_: Returns an implementation-defined value.
+The semantics of this function are implementation-defined.
 
 +[+ _Note 1_:
-Recommended practice: if the program is currently running in the context of
-being monitored by a debugger an implementation should return `true`. An
-implementation should always perform an immediate query, as needed, to
-determine if the program is monitored by a debugger. On Windows, or equivalent,
-systems it's expected this will be implemented by calling the
-`::IsDebuggerPresent()` Win32 function. On POSIX it's expected that this will
-check for a tracer parent process, with best effort determination that such a
-tracer parent process is a debugger.
+When tracing with a debugger the execution of a program an implementation
+returns `true`. An implementation performs an immediate query, as needed, to
+determine if the program is traced by a debugger.
+On Windows, or equivalent, systems this can be achieved by calling the
+`::IsDebuggerPresent()` Win32 function.
+On POSIX this can be achieved by checking for a tracer parent process, with
+best effort determination that such a tracer parent process is a debugger.
  -- _end note_ +]+
 --
 

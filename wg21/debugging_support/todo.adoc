@@ -1,0 +1,38 @@
+Need freestanding note on feature test macro.
+
+breakpoint & is_debugger_present
+
+Use wording from https://eel.is/c++draft/stacktrace.entry.obs
+
+The intent is
+
+
+—++ [[http://wg21.link/p2546r4][P2546r4]]
+
+```
+RFRM presenting
+MD: we should not have shoulds in notes: is expected should in disguise
+MD: also, one note says recommended practice: should that be a recommended practice
+CT: “The intention of the debugging functionality is to interact …” “
+MD: will the debugging facility become freestanding?
+BC: yes
+JW: so add “, freestanding” to the feature test macro; see [[http://wg21.link/p2338r4][P2338r4]]
+FB: [debugging.general] is oddly phrased
+JW: remove “implementation-defined behavior of”
+CT: I would even remove “interact”
+MD: I don’t like “program” to be the subject and would prefer “execution of the program”
+CT: I also don’t like the “implementation-defined” part
+JW: I dislike “most commonly”
+JW: “, such as a debugger”
+CT: why are the members noexcept?
+JW: do these function have a precondition?
+JG: we should strike the Effects and do what is in the chat
+JG: that is for breakpoint and is_debugger_present
+TK: can implementation defined stuff return an indeterminate value?
+FB: it isn’t useful to change
+DK: we strike “Returns” after “Returns:”
+MD: the other notes also gets edited
+JW: “...”
+JW: say the same thing without “should”
+MD: “On Windows this can be achieved by…”; likewise elsewhere
+```
