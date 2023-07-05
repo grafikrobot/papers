@@ -2,7 +2,7 @@
 :copyright: Copyright 2021 René Ferdinand Rivera Morell
 :email: grafikrobot@gmail.com
 :authors: René Ferdinand Rivera Morell
-:audience: LEWG
+:audience: LWG
 :revdate: {docdate}
 :version-label!:
 :reproducible:
@@ -67,6 +67,7 @@ footnote:P1279[P1279 `std::breakpoint`, _Isabella Muerte_ 2018-10-05
 
 * Wording fixes from LWG.
 * Add ePoll results.
+* Add LWG forwarding poll.
 
 === Revision 4 (February 2023)
 
@@ -360,6 +361,16 @@ crash reporting, and to present GUI elements only when debugging.
 
 == Polls
 
+=== LWG: P2546R5 (2023-07-05)
+
+Put P2546R5 (to be checked by JW and JG) into C++26?
+
+[options="header,autowidth",cols="^0,^0,^0"]
+|===
+| F | A | N
+| 8 | 0 | 0
+|===
+
 === LEWG: P2546R3 (2023-06-16)
 
 Poll 4: Send +[P2546R3]+ Debugging Support to Library Working Group for {CPP}26.
@@ -519,7 +530,7 @@ namespace std {
 The semantics of this function are implementation-defined.
 
 +[+ _Note 1_:
-When invoked the executing of the program temporarily halts and execution is
+When invoked the execution of the program temporarily halts and execution is
 handed to the debugger until such a time as: the program is terminated by the
 debugger or, the debugger resumes execution of the program as if the function
 was not invoked.

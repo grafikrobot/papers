@@ -1,3 +1,7 @@
+executing ==> execution
+
+'''
+
 Need freestanding note on feature test macro.
 
 breakpoint & is_debugger_present

@@ -8,7 +8,7 @@ http://www.boost.org/LICENSE_1_0.txt)
 import asciidoctor ;
 
 local name = debugging_support ;
-local docn = D2546 ;
+local docn = P2546 ;
 local docr = R5 ;
 local xxxx = $(docn)$(docr) ;
 
