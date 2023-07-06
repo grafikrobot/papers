@@ -2,7 +2,7 @@
 :copyright: Copyright 2023 René Ferdinand Rivera Morell
 :email: grafikrobot@gmail.com
 :authors: René Ferdinand Rivera Morell, et al.
-:audience: SG15
+:audience: LEWG
 :revdate: {docdate}
 :version-label!:
 :reproducible:
@@ -19,7 +19,7 @@
 :note-caption: ℹ
 :tip-caption: ☀
 :warning-caption: ⚠
-:table-caption: Table 
+:table-caption: Table
 
 ++++
 <style>
@@ -52,13 +52,17 @@ Ben Craig - _ben dot craig at gmail dot com_
 == Abstract
 
 This proposes to add `std::is_debugger_present`, proposed in P2546
-footnote:P2546[P2546R3 Debugging Support, _René Ferdinand Rivera Morell_
-2022-11-15 (https://wg21.link/P2546R3)],
+footnote:P2546[P2546R5 Debugging Support, _René Ferdinand Rivera Morell_
+2022-11-15 (https://wg21.link/P2546R5)],
 to the set of replacement functions to allow users the flexibility to control
 the result of the function when otherwise it would not be possible to determine
 the platform specific result.
 
 == Revision History
+
+=== Revision 1 (July 2023)
+
+Wording relative to final P2546 revision 5.
 
 === Revision 0 (February 2023)
 
@@ -67,8 +71,8 @@ Initial.
 == Motivation
 
 The debugging support proposed in P2546
-footnote:P2546[P2546R3 Debugging Support, _René Ferdinand Rivera Morell_
-2022-11-15 (https://wg21.link/P2546R3)] defines its functions as available in
+footnote:P2546[P2546R5 Debugging Support, _René Ferdinand Rivera Morell_
+2022-11-15 (https://wg21.link/P2546R5)] defines its functions as available in
 both hosted and freestanding realms. In it the `std::is_debugger_present`
 function poses some challenges for embedded platforms where determining the
 circumstances of debuggers in a freestanding environment is most times
@@ -96,9 +100,17 @@ process signal handler, and so on.
 
 This proposal marks the one function as an allowed replacement function.
 
+== Polls
+
+=== SG15: P2810R0 (2023-06-16)
+
+Forward P2810R0 is_debugger_present is_replaceable to LEWG.
+
+Result: Unanimous Consent
+
 == Wording
 
-Wording is relative to P2546R3.
+Wording is relative to P2546R5.
 footnote:P2546[]
 
 === Library
@@ -117,7 +129,7 @@ bool std::is_debugger_present() noexcept
 ----
 --
 
-Add the following clause after the "Returns" clause of `is_debugger_present` in
+Add the following clause before the "Note 1" clause of `is_debugger_present` in
 [debugging.utility]:
 
 [.ins.text-justify]
