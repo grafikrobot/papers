@@ -2,7 +2,7 @@
 :copyright: Copyright 2023 René Ferdinand Rivera Morell
 :email: grafikrobot@gmail.com
 :authors: René Ferdinand Rivera Morell, et al.
-:audience: LEWG
+:audience: LWG
 :revdate: {docdate}
 :version-label!:
 :reproducible:
@@ -23,21 +23,7 @@
 
 ++++
 <style>
-.sectionbody > div > .ins {
-  border-left: solid 0.4em green;
-  padding-left: 1em;
-  text-decoration: underline solid green;
-  text-underline-offset: 0.3em;
-}
-.def > .content :first-child {
-  margin-left: 0;
-}
-.def > .content > * {
-  margin-left: 3em;
-}
-.icon .title {
-  font-size: 250%;
-}
+include::../std-min.css[]
 </style>
 ++++
 
@@ -59,6 +45,11 @@ the result of the function when otherwise it would not be possible to determine
 the platform specific result.
 
 == Revision History
+
+=== Revision 2 (September 2023)
+
+Add poll results from LEWG 2023-09-19 meeting. Adjust wording per LEWG
+consensus feedback for no-precondition on the user replacement function.
 
 === Revision 1 (July 2023)
 
@@ -104,9 +95,35 @@ This proposal marks the one function as an allowed replacement function.
 
 === SG15: P2810R0 (2023-06-16)
 
-Forward P2810R0 is_debugger_present is_replaceable to LEWG.
+*Poll*: Forward P2810R0 is_debugger_present is_replaceable to LEWG.
 
-Result: Unanimous Consent
+*Outcome*: Unanimous Consent
+
+=== LEWG: P2810R1 (2023-09-19)
+
+*Poll*: We should mandate a replaced `is_debugger_present` implementation to
+have no preconditions.
+
+*Outcome*: Unanimous Consent
+
+*Poll*: Send "P2810R1: is_debugger_present is_replaceable" to LWG for C++26, to
+be confirmed by electronic poll.
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+| 5  | 6 | 1 | 0 | 1
+|===
+
+*Attendance*: 18
+
+*Number of Authors*: 2
+
+*Author Position*: 2 SF
+
+*Outcome*: Consensus in favor
+
+*Strongly Against*: Lack of implementation experience (Walter Brown).
 
 == Wording
 
@@ -129,15 +146,37 @@ bool std::is_debugger_present() noexcept
 ----
 --
 
-Add the following clause before the "Note 1" clause of `is_debugger_present` in
-[debugging.utility]:
+Change wording of definition of `is_debugger_present` in [debugging.utility] as:
+
+[.def]
+`bool is_debugger_present() noexcept;`
+
+[.del]
+The semantics of this function are implementation-defined.
 
 [.ins.text-justify]
---
 _Replaceable_: A {CPP} program may define a function with the function
 signature, and thereby displace the default version defined by the C++ standard
 library.
---
+
+[.ins.text-justify]
+_Required behavior_: This function has no preconditions. +
+ +
+NOTE 1:
+This means that a call to this function does not result in undefined
+behavior, even in the presence of a program-defined replacement.
+
+[.ins.text-justify]
+_Default behavior_: Implementation defined.
+
+NOTE [.del]+1+ [.ins]+2+:
+When tracing with a debugger the execution of a program an implementation
+returns `true`. An implementation performs an immediate query, as needed, to
+determine if the program is traced by a debugger.
+On Windows, or equivalent, systems this can be achieved by calling the
+`::IsDebuggerPresent()` Win32 function.
+On POSIX this can be achieved by checking for a tracer parent process, with
+best effort determination that such a tracer parent process is a debugger.
 
 == Acknowledgements
 

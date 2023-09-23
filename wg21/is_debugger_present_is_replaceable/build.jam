@@ -8,8 +8,8 @@ http://www.boost.org/LICENSE_1_0.txt)
 import asciidoctor ;
 
 local name = is_debugger_present_is_replaceable ;
-local docn = P2810 ;
-local docr = R1 ;
+local docn = D2810 ;
+local docr = R2 ;
 local xxxx = $(docn)$(docr) ;
 
 project /wg21_$(name)
