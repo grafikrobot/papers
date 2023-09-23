@@ -1,0 +1,31 @@
+.sectionbody>div>.ins {
+	border-left: solid 0.2em green;
+	padding-left: 0.3em;
+	margin-left: -0.5em;
+	text-decoration: underline solid green;
+	text-underline-offset: 0.3em;
+}
+
+.sectionbody>div>.del {
+	border-left: solid 0.2em red;
+	padding-left: 0.3em;
+	margin-left: -0.5em;
+	text-decoration: line-through solid red;
+}
+
+span.ins {
+	text-decoration: underline solid green;
+	text-underline-offset: 0.3em;
+}
+
+span.del {
+	text-decoration: line-through solid red;
+}
+
+.def>.content :first-child {
+	margin-left: 0;
+}
+
+.def>.content>* {
+	margin-left: 3em;
+}
