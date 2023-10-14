@@ -1,5 +1,6 @@
 = Tool Introspection
-:copyright: Copyright 2022 René Ferdinand Rivera Morell
+:copyright: Copyright 2022-2023 René Ferdinand Rivera Morell
+:license: Creative Commons Attribution 4.0 International License (CC BY 4.0)
 :email: grafikrobot@gmail.com
 :authors: René Ferdinand Rivera Morell
 :audience: SG15
@@ -23,37 +24,42 @@
 
 ++++
 <style>
-.sectionbody > div > .ins {
-  border-left: solid 0.4em green;
-  padding-left: 1em;
-  text-decoration: underline solid green;
-  text-underline-offset: 0.3em;
-}
-.def > .content :first-child {
-  margin-left: 0;
-}
-.def > .content > * {
-  margin-left: 3em;
-}
-.icon .title {
-  font-size: 250%;
-}
+include::../std-min.css[]
 </style>
 ++++
 
-Document number: :: ISO/IEC/JTC1/SC22/WG21/{revnumber}
+[horizontal]
+Document #: :: ISO/IEC/JTC1/SC22/WG21/{revnumber}
 Date: :: {revdate}
 Audience: :: {audience}
-Reply-to: ::
-René Ferdinand Rivera Morell - _grafikrobot at gmail dot com_
+Authors: :: {authors}
+Reply-to: :: {email}
+Copyright: :: {copyright}, {license}
 
 == Abstract
 
 We propose to add a mechanism for {CPP} tools to communicate what capabilities
 a tool implements from the Ecosystem IS.
-footnote:EcoIS[https://wg21.link/P2656 {CPP} Ecosystem International Standard]
+footnote:EcoIS[{CPP} Ecosystem International Standard (https://wg21.link/P2656)]
 
 == Revision History
+
+[.chg]
+=== Revision 3 (October 2023)
+
+Added poll results from June 2023 WG21 meeting.
+
+Adds the use of an "introspection file" as an alter way to provide the
+introspection information for situations where it is not desirable or possible
+to execute a program for the information.
+
+Adds support for two option syntax styles to widen the set of applications that
+can support implementing this specification without having them change their
+option syntax parsing. The result is that we now support all major {CPP}
+compilers and many more other ecosystem tools.
+
+Adopt the semantic versioning specification to both define the syntax and
+semantics of compatibility for capabilities.
 
 === Revision 2 (June 2023)
 
@@ -177,6 +183,31 @@ include::example-02.json[]
 Which would minimally indicate that the tool only supports the introspection
 capability at versions "1.0.0" through "2.5.0".
 
+[.chg]
+--
+
+Per the findings of the <<User Interface>> research and the consensus of the
+<<SG15: P2717R2 (2023-06-16)>> polling a tool can, additionally, provide the
+introspection information in a file accompanying the tool. There is a challenge
+when providing such an introspection file though: It is not practical to specify
+an absolute location, or locations, across the variety of operating systems and
+tools in the {CPP} ecosystem. As such we provide some possibilities:
+
+1. The name of an introspection file will be the name of the top level invoked
+tool executable (or script, or equivalent) with any type extension
+(i.e. "`.exe`") removed if it exists. That base name will be appended with the
+`.stdinfo` text. For example: `cl.exe` => `cl.stdinfo`, or
+`pass:[g++]` => `pass:[g++].stdinfo`.
+
+2. The introspection file can be found: in the same filesystem location
+as the tool executable (or script, or equivalent), in an implementation defined
+location relative to the tool location, or in an implementation defined global
+location (i.e. an absolute path location).
+
+NOTE: The choice of the `.stdinfo` extension is subject to a naming discussion.
+
+--
+
 === Declaration
 
 The consumer can inform, i.e. declare, to the target tool that specific
@@ -272,15 +303,23 @@ When indicating the version, or versions, to the target tool or the consumer the
 version information is specified in two possible forms: a single version, or a
 single version range.
 
+[.chg]
+==== Semantic Versioning
+
+We use the base (pre-release and build labels are not allowed) specification of
+Semantic Versioning 2.0.0
+footnote:SemVer[Semantic Versioning 2.0.0 (https://semver.org/spec/v2.0.0.html)]
+to define the syntax and semantics of compatibility.
+
 ==== Single Version
 
+[.chg]
 A single version in this proposal is composed of a one to three dotted whole
-numbers. The numbers are expected to be strictly increasing. But otherwise do
-not impart any meaning to the components. Specifically this does not impart any
-form of semantic meaning between versions. Although the specification of the
-capabilities themselves may define such a semantic meaning. The format for the
-version must match the regular expression:
-footnote:Regex[]
+numbers. The numbers are expected to be strictly increasing.
+Following SemVer footnote:SemVer[] a change to the MAJOR version indicates a
+backward incompatible change. And changes to the MINOR and PATCH versions
+indicate backward compatible changes.
+The format for the version must match the regular expression: footnote:Regex[]
 
 [source,plain_text]
 ----
@@ -439,9 +478,9 @@ rules:
   large.
 * The _patch-number_ should only change for fixes that are simple and small.
 
-That is, it should roughly follow the industry understanding of sematic
-versioning.
-footnote:Semver[Semantic Versioning (https://semver.org/)]
+[.chg]
+That is, it follows the industry understanding of sematic versioning.
+footnote:SemVer[]
 
 * Each part of the version number should always increment, but;
 * The _minor-number_ should reset to zero when the _major-number_ increases,
@@ -844,7 +883,7 @@ characteristics and requirements would be:
 1. A producer would be required to implement one or both of the two option
 styles: `--opt=val` or `-opt:val`.
 2. A producer would be required to indicate an error for an option style it does
-no accept.
+not accept.
 3. A producer could implement the `std-info-file` request as they wish, including
 reading from a file, reading from internal fixed text, dynamically generating
 the information, or any other method it deems appropriate.
@@ -894,11 +933,46 @@ they support.
 | 5  | 3 | 0 | 0 | 0
 |===
 
+[.chg]
+=== SG15: P2717R2 (2023-06-16)
+
+Require a specification file and a procedure how it is found.
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+| 1  | 6 | 4 | 1 | 0
+|===
+
+Result: Consensus
+
+Require tools to support at least one of the two styles of
+command line options (if the tool can be run at all).
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+| 4  | 5 | 1 | 2 | 0
+|===
+
+Result: Consensus
+
+The capabilities documented by the IS should be versioned
+in a way that supports backwards incompatible changes.
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+| 4  | 6 | 1 | 0 | 0
+|===
+
+Result: Consensus
+
 == Wording
 
 Wording is relative to
-link:https://github.com/cplusplus/ecosystem-is/tree/86cfbd72b9fae73554935d5f7039a798b5583628[ecosystem-is/86cfbd7].
-footnote:[Working Draft, {CPP} Ecosystem International Standard 2023-04-01 (https://github.com/cplusplus/ecosystem-is/tree/86cfbd72b9fae73554935d5f7039a798b5583628)]
+link:https://github.com/cplusplus/ecosystem-is/tree/5c7ecf79235488bb9aa05505cbfe01ff2b9281e0[ecosystem-is/5c7ecf7].
+footnote:[Working Draft, {CPP} Ecosystem International Standard 2023-04-01 (https://github.com/cplusplus/ecosystem-is/tree/5c7ecf79235488bb9aa05505cbfe01ff2b9281e0)]
 
 === Normative references
 
@@ -911,6 +985,12 @@ JSON::
 ISO/IEC 21778:2017, _Information technology — The JSON data interchange syntax_
 Mathematics::
 ISO 80000-2:2019, _Quantities and units — Part 2: Mathematics_
+
+[.chg]
+[.ins.text-justify]
+SemVer::
+The SemVer Team. Semantic Versioning 2.0.0. June 18 2013.
+Available at: https://semver.org/spec/v2.0.0.html
 
 === Specification: Conformance
 
@@ -936,7 +1016,7 @@ Add the following to _Terms and definitions_ [intro.defs].
 
 a computer program that performs some desired function.
 
-+[+ _Note 1_: From POSIX. -- _end note_ +]+
+_NOTE 1_: From POSIX.
 
 [.ins.text-justify]
 [#defns-capability,reftext=defns.capability]
@@ -945,13 +1025,58 @@ a computer program that performs some desired function.
 an aspect of an overall specification that defines a subset of the entire
 specification.
 
+[.chg]
+[.ins.text-justify]
+[#defns-directory,reftext=defns.directory]
+==== directory [.right]#[<<defns-directory>>]#
+
+a file that contains directory entries.
+
+_NOTE 1_: From POSIX.
+
+[.chg]
+[.ins.text-justify]
+[#defns-direntry,reftext=defns.direntry]
+==== directory entry [.right]#[<<defns-direntry>>]#
+
+an object that associates a filename with a file.
+
+_NOTE 1_: From POSIX.
+
 [.ins.text-justify]
 [#defns-file,reftext=defns.file]
 ==== file [.right]#[<<defns-file>>]#
 
 an object that can be written to, or read from, or both.
 
-+[+ _Note 1_: From POSIX. -- _end note_ +]+
+_NOTE 1_: From POSIX.
+
+[.chg]
+[.ins.text-justify]
+[#defns-filename,reftext=defns.filename]
+==== filename [.right]#[<<defns-filename>>]#
+
+a sequence of bytes used to name a file.
+
+_NOTE 1_: From POSIX.
+
+[.chg]
+[.ins.text-justify]
+[#defns-parentdir,reftext=defns.parentdir]
+==== parent directory [.right]#[<<defns-parentdir>>]#
+
+a directory containing a directory entry for the file under discussion.
+
+_NOTE 1_: From POSIX.
+
+[.chg]
+[.ins.text-justify]
+[#defns-pathname,reftext=defns.pathname]
+==== pathname [.right]#[<<defns-pathname>>]#
+
+a string that is used to identify a file.
+
+_NOTE 1_: From POSIX.
 
 === Specification: Introspection
 
@@ -974,21 +1099,47 @@ This clause specifies the `std:info` capability (<<intspct-cap>>).
 [#intspct-overview,reftext=intspct.overview]
 ===== Overview [.right]#[<<intspct-overview>>]#
 
+[.chg]
 --
-`_application_ [--std-info[=_declaration_]] [--std-info-out=_file_]`
+`_application_ [ __std-info-opt__ [__declaration__] ] [ __std-info-out-opt__ __file__ ]`
 --
 
 [#intspct-options,reftext=intspct.options]
 ===== Options [.right]#[<<intspct-options>>]#
+
+[.chg]
+Applications shall accept one of two options syntax variations:
+`--name=value` (`--name` without a value) or `-name:value` (`-name` without a
+value).
+
+[.chg]
+Applications shall indicate an error if invoked with an option syntax variation
+that it does not support.
+
+[.chg]
+_NOTE 1_:
+An application will report the error in what is conventional for the platform
+it runs in. On POSIX and Windows it would return an error code, and optionally
+output to the error stream.
+
+[.chg]
+_NOTE 2_:
+It is up to a program that interacts with an application implementing
+introspection to determine what option syntax variation the application
+supports. One method to accomplish that is to execute the application with one
+of the two syntax styles and use the error indication to conclude which syntax
+works. Another is to have a priori knowledge of which syntax variation works.
 
 [#intspct-opt-info,reftext=intspct.opt.info]
 ===== Information Option [.right]#[<<intspct-opt-info>>]#
 
 This option shall be supported.
 
-`--std-info`::
+[.chg]
+`__std-info-opt__`::
 Outputs the version information of the capabilities supported by the
 application.
+The option is specified as `--std-info` or `-std-info`.
 The option can be specified zero or one time.
 The application shall support the option for _minimum level_ (<<intspct-min>>)
 functionality.
@@ -998,22 +1149,27 @@ functionality.
 
 This option shall be supported.
 
-`--std-info-out=_file_`::
-The pathname of a file to output the information to. If _file_ is '`-`', the
-standard output shall be used.
+[.chg]
+`__std-info-out-opt__ __file__`::
+The pathname of a file to output the information to.
+The option is specified as `--std-info-out=__file__` or `-std-info-out:__file__`.
+If _file_ is '`-`', the standard output shall be used.
 The application shall support the option for _minimum level_ (<<intspct-min>>)
 functionality.
-Not specifying this option while specifying the `--std-info` option
+Not specifying this option while specifying the `__std-info-opt__` option
 (<<intspct-opt-info>>) shall be equivalent to also specifying a
-`--std-info-out=-` option.
+`__std-info-out-opt__ __file__` option where _file_ is '`-`'.
 
 [#intspct-opt-decl,reftext=intspct.opt.decl]
 ===== Declaration Option [.right]#[<<intspct-opt-decl>>]#
 
 This option should be supported.
 
-`--std-info=_declaration_`::
+[.chg]
+`__std-info-opt__ __declaration__`::
 Declares the required capability version of the application.
+The option is specified as `--std-info=__declaration__`
+or `-std-info:__declaration__`.
 The option can be specified any number of times.
 The application shall support the option for _full level_ (<<intspct-full>>)
 functionality.
@@ -1024,6 +1180,32 @@ functionality.
 An application shall output a valid JSON text file that conforms to the
 introspection schema (<<intspct-schema>>) to the file specified in the options
 (<<intspct-opt-out>>).
+
+[#intspct-file,reftext=intspct.file]
+[.chg]
+===== Files [.right]#[<<intspct-file>>]#
+
+An application can provide an _introspection file_ that contains valid JSON
+that conforms to the introspection schema (<<intspct-schema>>).
+
+An _introspection file_ shall contain the same information as that produced from
+the `__std-info-opt__` information option (<<intspct-opt-info>>).
+
+An _introspection file_ shall be named the same as the application with any
+filename extension replaced with the `stdinfo` filename extension.
+It is implementation defined how the filename of the _introspection file_
+replaces the application filename extension with the new `stdinfo` filename
+extension.
+
+_NOTE 1_:
+For Windows, POSIX, and other platforms replacing the filename extension would
+remove any filename bytes after the last period (U+002E FULL STOP) and append
+the `stdinfo` sequence of bytes.
+
+An _introspection file_ shall either have the same parent directory as the
+application, have an implementation defined parent directory that is relative
+to the parent directory of the application, or have an implementation defined
+parent directory.
 
 [#intspct-schema,reftext=intspct.schema]
 ===== Schema [.right]#[<<intspct-schema>>]#
@@ -1102,63 +1284,25 @@ version range (<<intspct-vers-range>>).
 A single version number shall be equivalent to the inclusive version range
 spanning solely that single version number.
 
-+[+ _Note 1_:
+_NOTE 1_:
 That is the version number `i.j.k` is equivalent to version range
 `[i.j.k,i.j.k]`.
-— _end note_ +]+
 
+[.chg]
 [#intspct-vers-num,reftext=intspct.vers.num]
 ====== Version Number [.right]#[<<intspct-vers-num>>]#
 
-_version-number_: ::
-  _major-number_ _minor-patch-part~opt~_
-_minor_patch_part_: ::
-  `.` _minor-number_  _patch-part~opt~_
-_patch-part_: ::
-  `.` _patch-number_
-_major-number_: ::
-  _decimal_
-_minor-number_: ::
-  _decimal_
-_patch-number_: ::
-  _decimal_
-_decimal_: ::
-  one of: U+0031 .. u+0039 DIGIT ONE .. NINE +
-  zero or more of: U+0030 .. u+0039 DIGIT ZERO .. NINE
+A _version number_ shall conform to the SemVer `<version core>` syntax.
 
-A _decimal_ is a sequence of decimal digits (U+0030 .. u+0039 DIGIT ZERO .. NINE)
-with no superfluous leading zeros (U+0030 DIGIT ZERO).
+A version number can be truncated to only `<major>` or `<major>.<minor>` syntax.
 
-A _decimal_ represents a non-negative base 10 integer.
+A version number composed of only `<major>` is equivalent to `<major>.0.0`.
 
-A version number is composed of 1, 2, or 3 decimal numbers (_decimal_)
-separated by a U+002E FULL STOP.
+A version number composed of only `<major>.<minor>` is equivalent to
+`<major>.<minor>.0`.
 
-A version number composed of 1 decimal number is equivalent to that decimal
-number followed by `.0.0`.
-
-+[+ _Note 1_:
-That is the version number `N` is equivalent to `N.0.0`.
-— _end note_ +]+
-
-A version number composed of 2 decimal number parts is equivalent to those
-decimal number parts followed by `.0`.
-
-+[+ _Note 2_:
-That is the version number `N.M` is equivalent to `N.M.0`.
-— _end note_ +]+
-
-Version numbers define a total ordering where version number _a_ with decimal
-parts _i_, _j_, _k_ is ordered before version number _b_ with decimal parts
-_p_, _q_, _r_ when: _i_ is less than _p_, or _i_ is equal to _p_ and
-_j_ is less than _q_, or _i_ is equal to _p_ and _j_ is equal to _q_
-and _k_ is less than _r_.
-
-Otherwise version number _a_ is ordered before version number _b_ when:
-_i_ is greater than _p_, or _i_ is equal to _p_ and _j_ is greater than _q_, or
-_i_ is equal to _p_ and _j_ is equal to _q_ and _k_ is greater than _r_.
-
-Otherwise version number _a_ is the same as version number _b_.
+Version numbers define a total ordering where version number _a_ is ordered
+before a version number _b_ when _a_ has a lower SemVer precedence than _b_.
 
 [#intspct-vers-range,reftext=intspct.vers.range]
 ====== Version Range [.right]#[<<intspct-vers-range>>]#
@@ -1180,13 +1324,11 @@ _version-range-max-bracket_::
 A version range is composed of either one version number bracketed,
 or two version numbers separated by a U+002C COMMA and bracketed.
 
-+[+ _Example 1_:
+_EXAMPLE 1_:
 A version range with a single version number "`[1.0.0]`".
-— _end example_ +]+
 
-+[+ _Example 2_:
+_EXAMPLE 2_:
 A version range with two version numbers "`[1.0.0,2.0.0]`".
-— _end example_ +]+
 
 A version range _a_ that is `[_i_,_j_]` makes _i_ and _j_ inclusive version
 range numbers, defining a Mathematics closed interval.
@@ -1238,9 +1380,8 @@ An application that supports the _minimum level_ functionality indicates it by
 specifying a single version (<<intspct-vers-single>>) as the value of the
 `std:info` capability (<<intspct-cap>>).
 
-+[+ _Example 1_: +
-`{ "std:info": "1.0.0" }` +
-— _end example_ +]+
+_EXAMPLE 1_: +
+`{ "std:info": "1.0.0" }`
 
 [#intspct-full,reftext=intspct.full]
 ===== Full Level [.right]#[<<intspct-full>>]#
@@ -1253,9 +1394,8 @@ An application that supports the _full level_ functionality indicates it by
 specifying a version range (<<intspct-vers-single>>) or an array of version
 range items as the value of the `std:info` capability (<<intspct-cap>>).
 
-+[+ _Example 1_: +
-`{ "std:info": "[1.0.0]" }` +
-— _end example_ +]+
+_EXAMPLE 1_: +
+`{ "std:info": "[1.0.0]" }`
 
 An application that responds with an array of version range items as the value
 of a capability field shall support the union of the range items indicated.
@@ -1274,15 +1414,17 @@ value of the capability field.
 [#intspct-dcl,reftext=intspct.dcl]
 ===== Introspection Declaration [.right]#[<<intspct-dcl>>]#
 
+[.chg]
 An application that supports the _full level_ functionality when given one or
-more `--std-info=_declaration_` options shall conform its functionality to the
-indicated edition of this standard in the given _declaration_ _version-number_
-for the given capability.
+more `_std-info-opt_ _declaration_` options shall conform its functionality to
+the indicated edition of this standard in the given _declaration_
+_version-number_ for the given capability.
 
 _declaration_: ::
   _capability-identifier_ U+003D EQUALS SIGN _version-number_
 
-An application, when not given a `--std-info=_declaration_` option for a
+[.chg]
+An application, when not given a `_std-info-opt_ _declaration_` option for a
 capability it supports, should conform its functionality to the most recent
 version of the standard it supports for that capability.
 
@@ -1375,3 +1517,10 @@ of changes to clang and for the applications that use `getlong_opt`.
 Thanks to Jason Merrill and Fangrui Song for assessment of changes to GCC.
 
 Thanks to Olga Arkhipova for suggesting the use of files as the user interface.
+
+== License
+
+This work is licensed under the Creative Commons Attribution 4.0 International
+License. To view a copy of this license, visit
+http://creativecommons.org/licenses/by/4.0/ or send a letter to Creative
+Commons, PO Box 1866, Mountain View, CA 94042, USA.

@@ -9,7 +9,7 @@ import asciidoctor ;
 
 local name = ecosystem_is_introspect ;
 local docn = P2717 ;
-local docr = R2 ;
+local docr = R3 ;
 local xxxx = $(docn)$(docr) ;
 
 project /wg21_$(name)

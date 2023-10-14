@@ -1,16 +1,8 @@
+/* Insertions: Marked by green underlined text. */
+
 .sectionbody>div>.ins {
-	border-left: solid 0.2em green;
-	padding-left: 0.3em;
-	margin-left: -0.5em;
 	text-decoration: underline solid green;
 	text-underline-offset: 0.3em;
-}
-
-.sectionbody>div>.del {
-	border-left: solid 0.2em red;
-	padding-left: 0.3em;
-	margin-left: -0.5em;
-	text-decoration: line-through solid red;
 }
 
 span.ins {
@@ -18,9 +10,79 @@ span.ins {
 	text-underline-offset: 0.3em;
 }
 
+/* Deletions: Marked by red strikeout text. */
+
+.sectionbody>div>.del {
+	text-decoration: line-through solid red;
+}
+
 span.del {
 	text-decoration: line-through solid red;
 }
+
+/* Rev-to-rev Change: Marked by blue sidebar, or squiggle text. */
+
+.sectionbody div.chg {
+	border-left: solid 0.2em blue;
+	padding-left: 0.3em;
+	margin-left: -0.5em;
+}
+
+span.chg {
+	text-decoration: underline wavy blue;
+}
+
+/* Information Preamble: Table like indented. */
+
+#preamble div.hdlist {
+	margin-left: 40%;
+}
+
+#preamble div.hdlist td.hdlist1 {
+	width: 8em;
+	padding: 0;
+}
+
+#preamble div.hdlist td.hdlist2 p {
+	margin-bottom: 0.25em;
+}
+
+/* Admonition Icons: Use simple, large, colored, glyphs for icons. Requires
+specifying the caption symbol properties:
+
+:caution-caption: ⚑
+:important-caption: ‼
+:note-caption: ℹ
+:tip-caption: ☀
+:warning-caption: ⚠
+*/
+
+.admonitionblock .icon .title {
+	font-size: 2.5em;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, .5);
+}
+
+.caution .icon .title {
+	color: rgba(192, 51, 0, 1);
+}
+
+.important .icon .title {
+	color: rgba(192, 0, 0, 1);
+}
+
+.note .icon .title {
+	color: rgba(26, 64, 128, 1);
+}
+
+.tip .icon .title {
+	color: rgba(255, 192, 0, 1);
+}
+
+.warning .icon .title {
+	color: rgba(192, 102, 0, 1);
+}
+
+/* ??? */
 
 .def>.content :first-child {
 	margin-left: 0;
