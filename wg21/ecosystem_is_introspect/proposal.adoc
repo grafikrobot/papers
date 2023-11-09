@@ -45,6 +45,11 @@ footnote:EcoIS[{CPP} Ecosystem International Standard (https://wg21.link/P2656)]
 == Revision History
 
 [.chg]
+=== Revision 4 (November 2023)
+
+Add explanation for backward compatibility in regards to what it means for
+tools.
+
 === Revision 3 (October 2023)
 
 Added poll results from June 2023 WG21 meeting.
@@ -183,7 +188,6 @@ include::example-02.json[]
 Which would minimally indicate that the tool only supports the introspection
 capability at versions "1.0.0" through "2.5.0".
 
-[.chg]
 --
 
 Per the findings of the <<User Interface>> research and the consensus of the
@@ -303,7 +307,6 @@ When indicating the version, or versions, to the target tool or the consumer the
 version information is specified in two possible forms: a single version, or a
 single version range.
 
-[.chg]
 ==== Semantic Versioning
 
 We use the base (pre-release and build labels are not allowed) specification of
@@ -311,9 +314,29 @@ Semantic Versioning 2.0.0
 footnote:SemVer[Semantic Versioning 2.0.0 (https://semver.org/spec/v2.0.0.html)]
 to define the syntax and semantics of compatibility.
 
+[.chg]
+--
+We define a tool (producer or consumer) to be _backward compatible_, for
+semantic versioning, with another tool (consumer or producer) when the
+consumer that implements an older version of the API can operate, with the same
+semantics, when interacting with a producer that implement  a newer version of
+the API, and vice versa.
+
+For example: If a producer generates JSON structured data. In a newer,
+compatible, version if may decided to introduce a new field. If such a field
+can be ignored by the consumer such that ignoring it does not change the
+operational semantics of the consumer the API would be considered
+_backward compatible_. And hence could be indicated with a MINOR or PATCH
+version difference per semantic versioning.
+
+The specifics of how the API behaves to achieve _backward compatible_ changes
+is up to the individual specification of the capabilities. As the ability to be
+_backward caompatible_ varies with the specifics of many factors, like
+tool options, data formats, and so on.
+--
+
 ==== Single Version
 
-[.chg]
 A single version in this proposal is composed of a one to three dotted whole
 numbers. The numbers are expected to be strictly increasing.
 Following SemVer footnote:SemVer[] a change to the MAJOR version indicates a
@@ -478,7 +501,6 @@ rules:
   large.
 * The _patch-number_ should only change for fixes that are simple and small.
 
-[.chg]
 That is, it follows the industry understanding of sematic versioning.
 footnote:SemVer[]
 
@@ -933,7 +955,6 @@ they support.
 | 5  | 3 | 0 | 0 | 0
 |===
 
-[.chg]
 === SG15: P2717R2 (2023-06-16)
 
 Require a specification file and a procedure how it is found.
@@ -986,7 +1007,6 @@ ISO/IEC 21778:2017, _Information technology — The JSON data interchange syntax
 Mathematics::
 ISO 80000-2:2019, _Quantities and units — Part 2: Mathematics_
 
-[.chg]
 [.ins.text-justify]
 SemVer::
 The SemVer Team. Semantic Versioning 2.0.0. June 18 2013.
@@ -1025,7 +1045,6 @@ _NOTE 1_: From POSIX.
 an aspect of an overall specification that defines a subset of the entire
 specification.
 
-[.chg]
 [.ins.text-justify]
 [#defns-directory,reftext=defns.directory]
 ==== directory [.right]#[<<defns-directory>>]#
@@ -1034,7 +1053,6 @@ a file that contains directory entries.
 
 _NOTE 1_: From POSIX.
 
-[.chg]
 [.ins.text-justify]
 [#defns-direntry,reftext=defns.direntry]
 ==== directory entry [.right]#[<<defns-direntry>>]#
@@ -1051,7 +1069,6 @@ an object that can be written to, or read from, or both.
 
 _NOTE 1_: From POSIX.
 
-[.chg]
 [.ins.text-justify]
 [#defns-filename,reftext=defns.filename]
 ==== filename [.right]#[<<defns-filename>>]#
@@ -1060,7 +1077,6 @@ a sequence of bytes used to name a file.
 
 _NOTE 1_: From POSIX.
 
-[.chg]
 [.ins.text-justify]
 [#defns-parentdir,reftext=defns.parentdir]
 ==== parent directory [.right]#[<<defns-parentdir>>]#
@@ -1069,7 +1085,6 @@ a directory containing a directory entry for the file under discussion.
 
 _NOTE 1_: From POSIX.
 
-[.chg]
 [.ins.text-justify]
 [#defns-pathname,reftext=defns.pathname]
 ==== pathname [.right]#[<<defns-pathname>>]#
@@ -1099,7 +1114,6 @@ This clause specifies the `std:info` capability (<<intspct-cap>>).
 [#intspct-overview,reftext=intspct.overview]
 ===== Overview [.right]#[<<intspct-overview>>]#
 
-[.chg]
 --
 `_application_ [ __std-info-opt__ [__declaration__] ] [ __std-info-out-opt__ __file__ ]`
 --
@@ -1107,22 +1121,18 @@ This clause specifies the `std:info` capability (<<intspct-cap>>).
 [#intspct-options,reftext=intspct.options]
 ===== Options [.right]#[<<intspct-options>>]#
 
-[.chg]
 Applications shall accept one of two options syntax variations:
 `--name=value` (`--name` without a value) or `-name:value` (`-name` without a
 value).
 
-[.chg]
 Applications shall indicate an error if invoked with an option syntax variation
 that it does not support.
 
-[.chg]
 _NOTE 1_:
 An application will report the error in what is conventional for the platform
 it runs in. On POSIX and Windows it would return an error code, and optionally
 output to the error stream.
 
-[.chg]
 _NOTE 2_:
 It is up to a program that interacts with an application implementing
 introspection to determine what option syntax variation the application
@@ -1135,7 +1145,6 @@ works. Another is to have a priori knowledge of which syntax variation works.
 
 This option shall be supported.
 
-[.chg]
 `__std-info-opt__`::
 Outputs the version information of the capabilities supported by the
 application.
@@ -1149,7 +1158,6 @@ functionality.
 
 This option shall be supported.
 
-[.chg]
 `__std-info-out-opt__ __file__`::
 The pathname of a file to output the information to.
 The option is specified as `--std-info-out=__file__` or `-std-info-out:__file__`.
@@ -1165,7 +1173,6 @@ Not specifying this option while specifying the `__std-info-opt__` option
 
 This option should be supported.
 
-[.chg]
 `__std-info-opt__ __declaration__`::
 Declares the required capability version of the application.
 The option is specified as `--std-info=__declaration__`
@@ -1182,7 +1189,6 @@ introspection schema (<<intspct-schema>>) to the file specified in the options
 (<<intspct-opt-out>>).
 
 [#intspct-file,reftext=intspct.file]
-[.chg]
 ===== Files [.right]#[<<intspct-file>>]#
 
 An application can provide an _introspection file_ that contains valid JSON
@@ -1288,7 +1294,6 @@ _NOTE 1_:
 That is the version number `i.j.k` is equivalent to version range
 `[i.j.k,i.j.k]`.
 
-[.chg]
 [#intspct-vers-num,reftext=intspct.vers.num]
 ====== Version Number [.right]#[<<intspct-vers-num>>]#
 
@@ -1414,7 +1419,6 @@ value of the capability field.
 [#intspct-dcl,reftext=intspct.dcl]
 ===== Introspection Declaration [.right]#[<<intspct-dcl>>]#
 
-[.chg]
 An application that supports the _full level_ functionality when given one or
 more `_std-info-opt_ _declaration_` options shall conform its functionality to
 the indicated edition of this standard in the given _declaration_
@@ -1423,7 +1427,6 @@ _version-number_ for the given capability.
 _declaration_: ::
   _capability-identifier_ U+003D EQUALS SIGN _version-number_
 
-[.chg]
 An application, when not given a `_std-info-opt_ _declaration_` option for a
 capability it supports, should conform its functionality to the most recent
 version of the standard it supports for that capability.
@@ -1431,6 +1434,15 @@ version of the standard it supports for that capability.
 An application, when given a capability declaration option and the given
 version is outside of the version range that the application supports, should
 indicate an error.
+
+[.chg]
+[#intspct-compat,reftext=intspct.compat]
+===== Compatability [.right]#[<<intspct-compat>>]#
+
+An application shall indicate, per SemVer specification, that version `n` of
+the interface it implements is _backward compatible_ with another version `p` of
+the interface that another application implements when the `<major>` number is
+the same in version `n` and `p` and version `n` follows version `p`.
 
 === JSON Schema
 
