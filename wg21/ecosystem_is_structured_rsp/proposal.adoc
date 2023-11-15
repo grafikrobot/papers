@@ -1,0 +1,211 @@
+= Tool Structured Response Files
+:copyright: Copyright 2023 René Ferdinand Rivera Morell
+:license: Creative Commons Attribution 4.0 International License (CC BY 4.0)
+:email: grafikrobot@gmail.com
+:authors: René Ferdinand Rivera Morell
+:audience: SG15
+:revdate: {docdate}
+:version-label!:
+:reproducible:
+:nofooter:
+:sectanchors:
+:sectnums:
+:sectnumlevels: 10
+:source-highlighter: rouge
+:source-language: {CPP}
+:toc: left
+:toclevels: 2
+:caution-caption: ⚑
+:important-caption: ‼
+:note-caption: ℹ
+:tip-caption: ☀
+:warning-caption: ⚠
+:table-caption: Table
+
+++++
+<style>
+include::../std-min.css[]
+</style>
+++++
+
+[horizontal]
+Document #: :: ISO/IEC/JTC1/SC22/WG21/{revnumber}
+Date: :: {revdate}
+Audience: :: {audience}
+Authors: :: {authors}
+Reply-to: :: {email}
+Copyright: :: {copyright}, {license}
+
+== Abstract
+
+This aims to define a standard structured response file format that can become
+the best way to communicate compiling {CPP}.
+
+== Revision History
+
+=== Revision 0 (?? 2023)
+
+Initial text.
+
+== Motivation
+
+A key aspect of inter-operation between tools in the ecosystem is having a
+common language to express tool commands, i.e. in compiler drivers, that can
+be understood and/or translated between different tools and platforms.
+
+Currently tools use differing, but related, ways for users (and other tools) to
+specify the set of options to "toolsets" (compiler drivers, linkers, etc).
+While there are some commonalities in how those options are specified as
+"configuration response files" containing bare options, there are sufficient
+differences to hinder general inter-operation.
+
+== Scope
+
+== Design
+
+=== Current Response Files
+
+==== Clang
+
+* Use of `@__filename__` argument.
+* Use of `--config=__filename__` argument.
+* References to other response files allowed.
+
+Example response file:
+
+[source,rsp]
+----
+# Several options on line
+-c --target=x86_64-unknown-linux-gnu
+
+# Long option split between lines
+-I/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/{CPP}/5.4.0
+
+# other config files may be included
+@linux.options
+----
+
+Source: Clang Compiler User’s Manual 
+footnote:Clang[Clang Compiler User’s Manual (https://clang.llvm.org/docs/UsersManual.html#configuration-files)]
+
+==== GNU Compiler Collection, GCC
+
+* Use of `@__filename__` argument.
+* References to other response files allowed.
+
+Example response file:
+
+[source,rsp]
+----
+-o "hello" -Wl,--start-group "bin/hello.o" -Wl,-Bstatic -Wl,-Bdynamic -Wl,--end-group -fPIC -g
+----
+
+Source: GCC Documentation
+footnote:GCC[GCC Documentation (https://gcc.gnu.org/onlinedocs/gcc-13.2.0/gcc/Overall-Options.html)]
+
+==== Intel(R) oneAPI DP{CPP}/{CPP}
+
+* Use of `@__filename__` argument.
+* References to other response files disallowed.
+* Platform specific option syntax.
+* `#` prefixed line comments.
+
+Example response file for "Linux":
+
+[source,rsp]
+----
+# compile with these options
+  -O0
+# end of response file
+----
+
+Example response file for "Windows": footnote:ICC[]
+
+[source,rsp]
+----
+# compile with these options
+  /0d
+# end of response file
+----
+
+Source: Intel(R) oneAPI DP{CPP}/{CPP} Compiler Developer Guide and Reference
+footnote:ICC[Intel(R) oneAPI DP{CPP}/{CPP} Compiler Developer Guide and Reference
+(https://www.intel.com/content/dam/develop/external/us/en/documents/oneapi_dpcpp_cpp_compiler_2022.pdf)]
+
+==== NVIDIA CUDA Compiler Driver NVCC
+
+* Use of `--options-file __filename__,...`, or `-optf __filename__,...`.
+
+[source,rsp]
+----
+-O0
+----
+
+Source: NVIDIA CUDA Compiler Driver NVCC Documentation
+footnote:NVCC[NVIDIA CUDA Compiler Driver NVCC Documentation
+(https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html)]
+
+==== Microsoft Visual {CPP}
+
+* Use of `@__filename__` argument.
+* References to other response files disallowed.
+
+Example response file:
+
+[source,rsp]
+----
+"hello.cpp" -c -Fo"bin\hello.obj" -TP /wd4675 /EHs /GR /Zc:throwingNew /Z7 /Od /Ob0 /W3 /MDd /Zc:forScope /Zc:wchar_t /Zc:inline /favor:blend
+----
+
+Source: Microsoft {CPP}, C, and Assembler documentation
+footnote:MSVC[Microsoft {CPP}, C, and Assembler documentation (https://learn.microsoft.com/en-us/cpp/build/reference/at-specify-a-compiler-response-file)]
+
+==== Other
+
+HPE Cray Programming Environment (CPE)::
+  Support depends on the platform complier environment.
+
+Edison Design Group {CPP} Front End (`edgcpfe`)::
+  Does not support response configuration files.
+  footnote:[https://www.edg.com/docs/edg_cpp.pdf]
+
+Embarcadero {CPP} Builder::
+  Supports at least `@__filename__` option, with bare arguments syntax.
+  footnote:[https://github.com/bfgroup/b2/blob/4.10.1/src/tools/borland.jam#L282]
+
+IBM Open XL C/{CPP} for Linux on Power 17.1.1::
+  Has migrated to using the Clang footnote:Clang[] toolchain and supports the
+  same options.
+
+IBM Open XL C/{CPP} and XL C/{CPP} for z/OS::
+  Supports the Clang footnote:Clang[] `--config` option.
+
+IBM Open XL C/{CPP} for AIX 17.1.0::
+  Supports the Clang footnote:Clang[] `--config` option.
+
+NVIDIA HPC {CPP} (NV{CPP})::
+  Does not support response configuration files.
+  footnote:[https://docs.nvidia.com/hpc-sdk/compilers/hpc-compilers-ref-guide/index.html]
+
+Oracle® Developer Studio 12.6:
+  Supports a single global options configuration file, with bare arguments
+  syntax.
+
+== Implementation Experience
+
+None yet.
+
+== Polls
+
+None yet.
+
+== Wording
+
+None yet.
+
+== License
+
+This work is licensed under the Creative Commons Attribution 4.0 International
+License. To view a copy of this license, visit
+http://creativecommons.org/licenses/by/4.0/ or send a letter to Creative
+Commons, PO Box 1866, Mountain View, CA 94042, USA.
