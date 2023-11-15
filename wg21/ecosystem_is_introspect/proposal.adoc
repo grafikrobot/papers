@@ -44,7 +44,11 @@ footnote:EcoIS[{CPP} Ecosystem International Standard (https://wg21.link/P2656)]
 
 == Revision History
 
-[.chg]
+=== Revision 5 (November 2023)
+
+Change capability name delimiter to `.` (FULL STOP) per merge poll. And merge
+wording into draft Ecosystem IS. footnote:EcoIS[]
+
 === Revision 4 (November 2023)
 
 Add explanation for backward compatibility in regards to what it means for
@@ -242,7 +246,7 @@ Which the consumer can use to _declare_ the specific capability versions:
 
 [source,shell]
 ----
-tool "--std-decl=std:info=2.0.0" "--std-decl=gcc:extra=2.1.0" ...
+tool "--std-decl=std.info=2.0.0" "--std-decl=gcc.extra=2.1.0" ...
 ----
 
 === Levels
@@ -314,7 +318,6 @@ Semantic Versioning 2.0.0
 footnote:SemVer[Semantic Versioning 2.0.0 (https://semver.org/spec/v2.0.0.html)]
 to define the syntax and semantics of compatibility.
 
-[.chg]
 --
 We define a tool (producer or consumer) to be _backward compatible_, for
 semantic versioning, with another tool (consumer or producer) when the
@@ -460,7 +463,7 @@ published stable schema
 (`https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json`).
 
 There is one designated capability that is required to appear in the document:
-The `std:info` capability with a corresponding _version specification_. This
+The `std.info` capability with a corresponding _version specification_. This
 requirement allows a consumer to identify the format of the rest of the document
 at all times.
 
@@ -472,7 +475,7 @@ include::example-04.json[]
 ----
 
 This is also a minimal conforming document. But specifies a range of versions
-supported for the `std:info` capability:
+supported for the `std.info` capability:
 
 [source,json]
 ----
@@ -556,10 +559,10 @@ a long history. As such it's relatively easy to estimate it's impact.
 _(A) Application: Sizeof of introspection string in the application "binary"._
 
 The absolute _minimum level_ conforming introspection string in this would be
-`{"std:info":"1"}`. But that's not particularly useful as we would expect
+`{"std.info":"1"}`. But that's not particularly useful as we would expect
 some other items represented. Being generous we can make a guess of having 10
 items:
-`{"std:info":"1","std:first":"1","std:second":"1","std:third":"1","std:fourth":"1","std:fifth":"1","std:sixth":"1","std:seventh":"1","std:eighth":"1","std:ninth":"1"}`.
+`{"std.info":"1","std.first":"1","std.second":"1","std.third":"1","std.fourth":"1","std.fifth":"1","std.sixth":"1","std.seventh":"1","std.eighth":"1","std.ninth":"1"}`.
 Which gives a total of 165 UTF-8 code points, or the same byte count, plus a
 null terminator. We can round that up to 200 bytes total.
 
@@ -989,6 +992,17 @@ in a way that supports backwards incompatible changes.
 
 Result: Consensus
 
+=== SG15: P2717R4 (2023-11-09)
+
+Change the capability identifier separator from `:` to `.` and merge P2717 into
+the draft Tooling Ecosystem IS.
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+| 7  | 4 | 1 | 0 | 0
+|===
+
 == Wording
 
 Wording is relative to
@@ -1109,7 +1123,7 @@ capabilities of this standard an application supports. An application shall
 support the _minimum level_ functionality (<<intspct-min>>). An application can
 support the _full level_ functionality (<<intspct-full>>).
 
-This clause specifies the `std:info` capability (<<intspct-cap>>).
+This clause specifies the `std.info` capability (<<intspct-cap>>).
 
 [#intspct-overview,reftext=intspct.overview]
 ===== Overview [.right]#[<<intspct-overview>>]#
@@ -1383,10 +1397,10 @@ version numbers "lesser of _i_ and _m_" and "lesser of _j_ and _n_".
 
 An application that supports the _minimum level_ functionality indicates it by
 specifying a single version (<<intspct-vers-single>>) as the value of the
-`std:info` capability (<<intspct-cap>>).
+`std.info` capability (<<intspct-cap>>).
 
 _EXAMPLE 1_: +
-`{ "std:info": "1.0.0" }`
+`{ "std.info": "1.0.0" }`
 
 [#intspct-full,reftext=intspct.full]
 ===== Full Level [.right]#[<<intspct-full>>]#
@@ -1397,10 +1411,10 @@ shall support all of the functionality in this section.
 
 An application that supports the _full level_ functionality indicates it by
 specifying a version range (<<intspct-vers-single>>) or an array of version
-range items as the value of the `std:info` capability (<<intspct-cap>>).
+range items as the value of the `std.info` capability (<<intspct-cap>>).
 
 _EXAMPLE 1_: +
-`{ "std:info": "[1.0.0]" }`
+`{ "std.info": "[1.0.0]" }`
 
 An application that responds with an array of version range items as the value
 of a capability field shall support the union of the range items indicated.
@@ -1435,7 +1449,6 @@ An application, when given a capability declaration option and the given
 version is outside of the version range that the application supports, should
 indicate an error.
 
-[.chg]
 [#intspct-compat,reftext=intspct.compat]
 ===== Compatability [.right]#[<<intspct-compat>>]#
 
@@ -1484,7 +1497,7 @@ Build systems asks the compiler for supported capabilities:
 [,shell]
 ----
 $ c++ --std-info
-{ "std:info": "[1]", "std:cli:c++", "[1]" }
+{ "std.info": "[1]", "std.cli.c++", "[1]" }
 ----
 
 NOTE: The build system would likely want to cache that information as it's
@@ -1494,7 +1507,7 @@ The build system could then declare and use any such portable compiler options:
 
 [,shell]
 ----
-$ c++ --std-info=std:cli:c++=1 -std=c++26 -I /home/user/boost -o myapp main.cpp
+$ c++ --std-info=std.cli.c++=1 -std=c++26 -I /home/user/boost -o myapp main.cpp
 ----
 
 The interaction when the compiler tool only supports the minimum level would be:
@@ -1502,18 +1515,18 @@ The interaction when the compiler tool only supports the minimum level would be:
 [,shell]
 ----
 $ c++ --std-info
-{ "std:info": "1", "std:cli:c++", "1" }
+{ "std.info": "1", "std.cli.c++", "1" }
 $ c++ -std=c++26 -I /home/user/boost -o myapp main.cpp
 ----
 
 This example predicts that it might be useful outside of the {CPP} ecosystem by
-using `std:cli:c++` to indicate a {CPP} specific command line. It could be
+using `std.cli.c++` to indicate a {CPP} specific command line. It could be
 that Fortran uses a different, but possibly overlapping CLI:
 
 [,shell]
 ----
 $ gcc --std-info
-{ "std:info": "1", "std:cli:c++", "1", "gcc:cli:fortran", "1" }
+{ "std.info": "1", "std.cli.c++", "1", "gcc.cli.fortran", "1" }
 $ gcc -std=f2018 -o myapp main.fpp
 ----
 

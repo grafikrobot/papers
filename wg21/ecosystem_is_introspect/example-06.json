@@ -1,5 +1,5 @@
 {
   "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_info-1.0.0.json",
-  "std:info": "[1.0.0,2.0.0)",
-  "gcc:extra": "1.5.0"
+  "std.info": "[1.0.0,2.0.0)",
+  "gcc.extra": "1.5.0"
 }
