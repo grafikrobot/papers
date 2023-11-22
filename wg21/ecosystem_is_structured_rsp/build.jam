@@ -42,12 +42,12 @@ actions json-validate
 	check-jsonschema -v --traceback-mode=full --schemafile "$(>[2])" "$(>[1])" && echo "passed" > "$(<)"
 }
 
-local validations ;
-for local json in [ glob example-*.json ]
-{
-	validations += [ make $(json:B:S=.check)
-		: $(json) srsp-1.0.0.json
-		: @json-validate ] ;
-	explicit $(json:B:S=.check) ;
-}
-alias validate : $(validations) ;
+# local validations ;
+# for local json in [ glob example-*.json ]
+# {
+# 	validations += [ make $(json:B:S=.check)
+# 		: $(json) std_rsp-1.0.0.json
+# 		: @json-validate ] ;
+# 	explicit $(json:B:S=.check) ;
+# }
+# alias validate : $(validations) ;

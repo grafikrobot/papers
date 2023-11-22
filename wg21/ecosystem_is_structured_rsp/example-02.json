@@ -1,0 +1,22 @@
+{
+  "options": [
+    "fPIC",
+    {
+      "O": "0"
+    },
+    "fno-inline",
+    {
+      "W": [
+        "all",
+        "error"
+      ]
+    },
+    "g",
+    {
+      "I": [
+        "util/include"
+      ]
+    },
+    "c"
+  ]
+}

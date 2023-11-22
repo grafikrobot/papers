@@ -1,4 +1,4 @@
-= Tool Structured Response Files
+= Structured Response Files
 :copyright: Copyright 2023 René Ferdinand Rivera Morell
 :license: Creative Commons Attribution 4.0 International License (CC BY 4.0)
 :email: grafikrobot@gmail.com
@@ -36,16 +36,19 @@ Authors: :: {authors}
 Reply-to: :: {email}
 Copyright: :: {copyright}, {license}
 
+
 == Abstract
 
 This aims to define a standard structured response file format that can become
 the best way to communicate compiling {CPP}.
+
 
 == Revision History
 
 === Revision 0 (?? 2023)
 
 Initial text.
+
 
 == Motivation
 
@@ -59,13 +62,31 @@ While there are some commonalities in how those options are specified as
 "configuration response files" containing bare options, there are sufficient
 differences to hinder general inter-operation.
 
+
 == Scope
 
-== Design
+This proposal aims to specify a method for tools to specify arguments to other
+tools in a consistent and flexible manner. As such what it does and doesn't
+aim to accomplish:
 
-=== Current Response Files
+* It _does not_ aim to remove current arguments handling. It _does_ allow for
+  incrementally adoption of an alternative that facilitates common tool
+  arguments.
 
-==== Clang
+* It _does not_ specify any particular options to replace existing options
+  (except the ones to indicate the new response file). It _does_ aim to
+  specify an additional alternative option style that reduces the parsing
+  complexity, and perhaps ambiguities, in tools.
+
+
+== Current Response Files
+
+Current response files commonly contain "unstructured" sequence of command line
+arguments. Some also allow recursive inclusion and expansion of additional
+response files. Below are a summary of the syntax, capabilities, and
+restrictions of some of the compiler drivers.
+
+=== Clang
 
 * Use of `@__filename__` argument.
 * Use of `--config=__filename__` argument.
@@ -79,13 +100,13 @@ Example response file:
 -c --target=x86_64-unknown-linux-gnu
 
 # Long option split between lines
--I/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/{CPP}/5.4.0
+-I/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/C++/5.4.0
 
 # other config files may be included
 @linux.options
 ----
 
-Source: Clang Compiler User’s Manual 
+Source: Clang Compiler User’s Manual
 footnote:Clang[Clang Compiler User’s Manual (https://clang.llvm.org/docs/UsersManual.html#configuration-files)]
 
 ==== GNU Compiler Collection, GCC
@@ -103,7 +124,7 @@ Example response file:
 Source: GCC Documentation
 footnote:GCC[GCC Documentation (https://gcc.gnu.org/onlinedocs/gcc-13.2.0/gcc/Overall-Options.html)]
 
-==== Intel(R) oneAPI DP{CPP}/{CPP}
+=== Intel(R) oneAPI DP{CPP}/{CPP}
 
 * Use of `@__filename__` argument.
 * References to other response files disallowed.
@@ -119,7 +140,7 @@ Example response file for "Linux":
 # end of response file
 ----
 
-Example response file for "Windows": footnote:ICC[]
+Example response file for "Windows":
 
 [source,rsp]
 ----
@@ -132,7 +153,7 @@ Source: Intel(R) oneAPI DP{CPP}/{CPP} Compiler Developer Guide and Reference
 footnote:ICC[Intel(R) oneAPI DP{CPP}/{CPP} Compiler Developer Guide and Reference
 (https://www.intel.com/content/dam/develop/external/us/en/documents/oneapi_dpcpp_cpp_compiler_2022.pdf)]
 
-==== NVIDIA CUDA Compiler Driver NVCC
+=== NVIDIA CUDA Compiler Driver NVCC
 
 * Use of `--options-file __filename__,...`, or `-optf __filename__,...`.
 
@@ -145,7 +166,7 @@ Source: NVIDIA CUDA Compiler Driver NVCC Documentation
 footnote:NVCC[NVIDIA CUDA Compiler Driver NVCC Documentation
 (https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html)]
 
-==== Microsoft Visual {CPP}
+=== Microsoft Visual {CPP}
 
 * Use of `@__filename__` argument.
 * References to other response files disallowed.
@@ -160,10 +181,7 @@ Example response file:
 Source: Microsoft {CPP}, C, and Assembler documentation
 footnote:MSVC[Microsoft {CPP}, C, and Assembler documentation (https://learn.microsoft.com/en-us/cpp/build/reference/at-specify-a-compiler-response-file)]
 
-==== Other
-
-HPE Cray Programming Environment (CPE)::
-  Support depends on the platform complier environment.
+=== Other
 
 Edison Design Group {CPP} Front End (`edgcpfe`)::
   Does not support response configuration files.
@@ -173,6 +191,9 @@ Embarcadero {CPP} Builder::
   Supports at least `@__filename__` option, with bare arguments syntax.
   footnote:[https://github.com/bfgroup/b2/blob/4.10.1/src/tools/borland.jam#L282]
 
+IBM Open XL C/{CPP} for AIX 17.1.0::
+  Supports the Clang footnote:Clang[] `--config` option.
+
 IBM Open XL C/{CPP} for Linux on Power 17.1.1::
   Has migrated to using the Clang footnote:Clang[] toolchain and supports the
   same options.
@@ -180,8 +201,8 @@ IBM Open XL C/{CPP} for Linux on Power 17.1.1::
 IBM Open XL C/{CPP} and XL C/{CPP} for z/OS::
   Supports the Clang footnote:Clang[] `--config` option.
 
-IBM Open XL C/{CPP} for AIX 17.1.0::
-  Supports the Clang footnote:Clang[] `--config` option.
+HPE Cray Programming Environment (CPE)::
+  Support depends on the platform complier environment.
 
 NVIDIA HPC {CPP} (NV{CPP})::
   Does not support response configuration files.
@@ -191,17 +212,149 @@ Oracle® Developer Studio 12.6:
   Supports a single global options configuration file, with bare arguments
   syntax.
 
+== Design
+
+Abstractly _response files_ are files in the operating system storage that
+contain arguments and options in addition to the ones given directly in the
+tool invocation. For this design we are going to refer to two different types
+of ways to give pass the information to the tools:
+
+Arguments::
+Arguments use the syntax that one would specify directly in the command line as
+a user. This would be things like the `-O1` optimization flag argument.
+
+Options::
+Options are the conceptual flag option that the tool understands that does not
+necessarily follow the same syntax as the flags specify in command line
+_arguments_.
+
+Using those two distinct definitions allows us to specify them differently in
+the response file. Using _arguments_ we will follow the same existing command
+line syntax. Keeping a form of compatibility with existing. But we would then
+be restricted to that syntax. Using _options_ we can use a definition that
+fits best with a structured data definition.
+
+Last consideration is the choice of structured data format we will have in the
+response files. Keeping with previous work and practice we will use JSON text
+as that format.
+footnote:EcoISIntropection[P2717 Tool Introspection (https://wg21.link/P2717)]
+footnote:JSONCompileDb[JSON Compilation Database Format Specification (https://clang.llvm.org/docs/JSONCompilationDatabase.html)]
+
+With that context, here are two example structured response files:
+
+[%header,cols="1,1"]
+|===
+
+| Simple Arguments
+| Structured Options
+
+a|
+[source,json]
+----
+include::example-01.json[]
+----
+
+a|
+[source,json]
+----
+include::example-02.json[]
+----
+
+|===
+
+The _simple arguments_ example shows specifying an "__arguments__" key with an
+array of values corresponding to the regular command line arguments. This
+mirrors what one would se in a JSON compilation database footnote:JSONCompileDb[].
+This style has some advantages:
+
+* There is a direct correlation with the JSON compilation database format which
+  some tools support. Which would mean that they already have code to deal with
+  at the JSON loading and understanding of it.
+* There's a direct mapping for regular command line arguments. Hence it will be
+  less effort to support this style for tools.
+
+And there are some disadvantages:
+
+* The parsing of the arguments still has to happen to get the at the option and
+  value.
+* It is subject to the same limitations of regular command line arguments. Like
+  complexity and ambiguities of command line syntax.
+
+The _structured options_ example shows specifying an "__options__" key with
+an array of option names or option objects. Where the option objects contain an
+option name and structured value. Some advantages of this style of structured
+data are:
+
+* The option names do indicate a particular option prefix (i.e. `-`, `--`,
+  `/`, etc) making it possible to use tools agnostic common names.
+* The ability to use arrays, or possibly objects, for the option values allows
+  for logical groupings and avoid extra tracking of such as is present in
+  command line parsing of options.
+
+Some possible disadvantages:
+
+* Tools will need an alternative path to understand the new options. Although
+  hopefully this is balanced by the more direct availability of the values.
+* If this style is also to be supported in the JSON compile database format it
+  means more work to accomplish that. But again, the hope is that there is an
+  easier mapping from internal structures to this format.
+
+One additional aspect of how the _arguments_ and _options_ are specified is that
+they allow for a simple transformation between them if that is needed. Although
+the _options_ to _arguments_ transformation is an easier one than the converse.
+
+The design we are proposing has the following key points:
+
+* The format of the file is well formed JSON text.
+* The top level of that is a JSON object with either one of or both _arguments_
+  and _options_ fields.
+* The addition of one command line option to specify the structured response
+  file.
+* The _arguments_ field has an array value with string values.
+* The _arguments_ values are single string containing the same options as would
+  be specified in the command line.
+* The _arguments_ values can contain the option for other structure response
+  files. Which will be recursively inserted at the location of the option.
+* The _options_ field has an array of values for structured options.
+* The _options_ values can be either a single option name (for flag options) or
+  an object.
+* The _options_ values that are an object contain a single field with the base
+  option name (i.e. with an option prefix).
+* The _options_ value that is an object the field value in the object can be
+  either a single value or an array of values.
+* The arguments and option names are not specified in the
+
 == Implementation Experience
 
 None yet.
+
 
 == Polls
 
 None yet.
 
+
 == Wording
 
-None yet.
+Wording is relative to
+link:https://github.com/cplusplus/ecosystem-is/tree/d9ea1239e883b54425002873bb8ebf5f3559dbad[ecosystem-is/d9ea1239].
+footnote:[Working Draf, {CPP} Ecosystem International Standard 2023-11-10 (https://github.com/cplusplus/ecosystem-is/tree/d9ea1239e883b54425002873bb8ebf5f3559dbad)]
+
+=== Specification: Structured Response File
+
+Insert clause after _Introspection_ [intspct].
+
+[.ins.text-justify]
+[#rsp.reftext=rsp]
+==== Structure Response File [.right]#[<<rsp>>]#
+
+[#rsp-pre,reftext=rsp.pre]
+===== Preamble [.right]#[<<rsp-pre>>]#
+
+This clause specifies the `std.rsp` capability ([intspct.cap]) version `1.0.0`.
+
+[#rsp-overview,reftext=rsp.overview]
+==== Overview [.right]#[<<rsp-overview>>]#
 
 == License
 

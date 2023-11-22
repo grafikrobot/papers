@@ -1,0 +1,12 @@
+{
+  "arguments": [
+    "-fPIC",
+    "-O0",
+    "-fno-inline",
+    "-Wall",
+    "-Werror",
+    "-g",
+    "-I\"util/include\"",
+    "-c"
+  ]
+}
