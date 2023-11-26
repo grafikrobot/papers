@@ -1,0 +1,5 @@
+{
+  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_rsp-1.0.0.json",
+  "version": "1",
+  "arguments": ["-fPIC", "-O0", "-fno-inline", "-Wall", "-Werror", "-g", "-I\"util/include\"", "-c" ]
+}

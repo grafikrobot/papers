@@ -185,11 +185,11 @@ footnote:MSVC[Microsoft {CPP}, C, and Assembler documentation (https://learn.mic
 
 Edison Design Group {CPP} Front End (`edgcpfe`)::
   Does not support response configuration files.
-  footnote:[https://www.edg.com/docs/edg_cpp.pdf]
+  footnote:[Edison Design Group {CPP} documentation. https://www.edg.com/docs/edg_cpp.pdf]
 
 Embarcadero {CPP} Builder::
   Supports at least `@__filename__` option, with bare arguments syntax.
-  footnote:[https://github.com/bfgroup/b2/blob/4.10.1/src/tools/borland.jam#L282]
+  footnote:[B2 Embarcadero {CPP} Builder `@` file implementation. (https://github.com/bfgroup/b2/blob/4.10.1/src/tools/borland.jam#L282)]
 
 IBM Open XL C/{CPP} for AIX 17.1.0::
   Supports the Clang footnote:Clang[] `--config` option.
@@ -206,11 +206,16 @@ HPE Cray Programming Environment (CPE)::
 
 NVIDIA HPC {CPP} (NV{CPP})::
   Does not support response configuration files.
-  footnote:[https://docs.nvidia.com/hpc-sdk/compilers/hpc-compilers-ref-guide/index.html]
+  footnote:[NVIDIA HPC {CPP} Reference (https://docs.nvidia.com/hpc-sdk/compilers/hpc-compilers-ref-guide/index.html)]
 
 Oracle® Developer Studio 12.6:
   Supports a single global options configuration file, with bare arguments
   syntax.
+
+Python `argparse` module:
+  Supports arbitrarily character prefixed response files. Where the files, by
+  default, contain an argument per line.
+  footnote:[Python `argparse` module (https://docs.python.org/3/library/argparse.html#fromfile-prefix-chars)]
 
 == Design
 
@@ -306,12 +311,12 @@ the _options_ to _arguments_ transformation is an easier one than the converse.
 The design we are proposing has the following key points:
 
 * The format of the file is well formed JSON text.
-* The top level of that is a JSON object with either one of or both _arguments_
+* The top level of that is a JSON object with one, of or both, _arguments_
   and _options_ fields.
 * The addition of one command line option to specify the structured response
   file.
 * The _arguments_ field has an array value with string values.
-* The _arguments_ values are single string containing the same options as would
+* The _arguments_ values are single strings containing the same options as would
   be specified in the command line.
 * The _arguments_ values can contain the option for other structure response
   files. Which will be recursively inserted at the location of the option.
@@ -322,11 +327,128 @@ The design we are proposing has the following key points:
   option name (i.e. with an option prefix).
 * The _options_ value that is an object the field value in the object can be
   either a single value or an array of values.
-* The arguments and option names are not specified in the
+* The arguments and option names are not specified, and as such are
+  implementation defined.
+
+=== Command Line
+
+We propose to add a single new command line option as a requirement to
+implementing this capability:
+
+--
+`$ tool --std-rsp=__file__`
+--
+
+Or:
+
+--
+`$ tool -std-rsp:__file__`
+--
+
+The `std-rsp` command line option, which can be repeated, will read the
+indicated file and parse the JSON text contents to configure the tool as needed.
+
+=== File Format
+
+The response file is a valid JSON text file with a single JSON object as the
+root object. There are two mutually exclusive fields to specify the command
+information: `arguments` or `options`.
+
+There are two additional, optional, fields: `$schema` and `version`. The
+`$schema` field points at the released JSON Schema.
+footnote:jschema[JSON Schema: A Media Type for Describing JSON Documents (http://json-schema.org/latest/json-schema-core.html)]
+The `version` field indicated the response format of the file. The version number follows those specified in the capability introspection version
+numbering and semantics.
+
+The `arguments` field specifies a *single* array value of strings. Each string
+array entry is a command line argument to be used directly by the tool. The
+specific syntax of the arguments is up to the specific tool. For example a
+compile invocation for GCC, and compatible compiler front-ends, would look like:
+
+[source,json]
+----
+include::example-arguments.json[]
+----
+
+You can also include `--std_rsp=__file__` options in the list of arguments to
+include the arguments that are referenced in another response file, and so on.
+For example, given a `common.json` response file as such:
+
+[source,json]
+----
+include::example-args-recurse-common.json[]
+----
+
+One can refer to it in a main response file that compiles a {CPP} source file:
+
+[source,json]
+----
+include::example-args-recurse-main.json[]
+----
+
+The effect is that the options in `common.json` ar inserted in the arguments
+array at the location of the `--std_rsp=common.json` argument.
+
+The `options` field specifies a *single* array value of options values. An
+option value can be either a single string or a JSON object (option object).
+The option object contains fields for each option to be used with each having
+a value that is a single string or an array of strings. For example:
+
+[source,json]
+----
+include::example-options.json[]
+----
+
+When compared to having the `arguments` field there are more constraints to the
+syntax of the options:
+
+* The option names do not contain prefix characters (i.e. the `--`, `-`, `/`,
+  etc) and without the value separator (i.e. `=`, `:`, etc).
+* Flags, i.e. options without a value, must be specified as the single string
+  in the options array.
+* Options, i.e. when there is a value (i.e. `--opt=value` command line argument)
+  must be specified as part of an option object. I.e. as `{ "opt": "value" }`.
+* Options that can be specified multiple times they can be specified as multiple
+  separate entries in the `options` array. Or can specified once, and the
+  multiple values specified as an array in the value. I.e. as
+  `{ "opt": [ "value0", "value1" ] }`.
+
+But like the `arguments` field, additional response files can be inserted at the
+indicated location by specifying a `{ "std_rsp": "file.json" }` option.
+
+Do note though that even though the option names have a specific naming format
+they are still defined by the tool. The goal of having the restrictions on the
+option names is to make it possible in the future to specify tool agnostic
+options to facilitate general interop. But that is a subject for future
+proposals.
+
+IMPORTANT: Tools need to support being able to either refer to an `options`
+style response file from an `arguments` style response file, and conversely.
+
+== Questions
+
+Why use a new option (`--std_rsp=__file__`) instead of existing response file methods like `@__file__`?::
+
+Implementing support in tools for using the same response file options would:
+* The option to add the structured response files would vary from tool to tool.
+* It would be harder to implement as it would require inspecting the file
+  content to determine the parsing method needed.
+
+Why have an `arguments` field instead of just using the `options` field?::
+
+Having an `arguments` field has a couple of benefits:
+* It makes it easier for tools to immediately support use of this format as they
+  can directly inject the arguments into their existing command line argument
+  parsing.
+* Makes it easier for tools that already support `compile_commands.json` to
+  produce or consume structured response files as they are the same format for
+  the `arguments` field in both.
+
 
 == Implementation Experience
 
-None yet.
+An example implementation to support this format externally for many tools is
+planned.
 
 
 == Polls

@@ -839,7 +839,7 @@ pre.rouge .ss {
 <span id="author" class="author">René Ferdinand Rivera Morell</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> D3051R0,</span>
-<span id="revdate">2023-11-22</span>
+<span id="revdate">2023-11-25</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -861,15 +861,21 @@ pre.rouge .ss {
 <li><a href="#_other">5.5. Other</a></li>
 </ul>
 </li>
-<li><a href="#_design">6. Design</a></li>
-<li><a href="#_implementation_experience">7. Implementation Experience</a></li>
-<li><a href="#_polls">8. Polls</a></li>
-<li><a href="#_wording">9. Wording</a>
+<li><a href="#_design">6. Design</a>
 <ul class="sectlevel2">
-<li><a href="#_specification_structured_response_file">9.1. Specification: Structured Response File</a></li>
+<li><a href="#_command_line">6.1. Command Line</a></li>
+<li><a href="#_file_format">6.2. File Format</a></li>
 </ul>
 </li>
-<li><a href="#_license">10. License</a></li>
+<li><a href="#_questions">7. Questions</a></li>
+<li><a href="#_implementation_experience">8. Implementation Experience</a></li>
+<li><a href="#_polls">9. Polls</a></li>
+<li><a href="#_wording">10. Wording</a>
+<ul class="sectlevel2">
+<li><a href="#_specification_structured_response_file">10.1. Specification: Structured Response File</a></li>
+</ul>
+</li>
+<li><a href="#_license">11. License</a></li>
 </ul>
 </div>
 </div>
@@ -986,7 +992,7 @@ Document #:
 Date: 
 </td>
 <td class="hdlist2">
-<p>2023-11-22</p>
+<p>2023-11-25</p>
 </td>
 </tr>
 <tr>
@@ -1286,6 +1292,12 @@ same options.</p>
   Supports a single global options configuration file, with bare arguments
   syntax.</p>
 </div>
+<div class="paragraph">
+<p>Python <code>argparse</code> module:
+  Supports arbitrarily character prefixed response files. Where the files, by
+  default, contain an argument per line.
+  <sup class="footnote">[<a id="_footnoteref_9" class="footnote" href="#_footnotedef_9" title="View footnote.">9</a>]</sup></p>
+</div>
 </div>
 </div>
 </div>
@@ -1324,8 +1336,8 @@ fits best with a structured data definition.</p>
 <p>Last consideration is the choice of structured data format we will have in the
 response files. Keeping with previous work and practice we will use JSON text
 as that format.
-<sup class="footnote" id="_footnote_EcoISIntropection">[<a id="_footnoteref_9" class="footnote" href="#_footnotedef_9" title="View footnote.">9</a>]</sup>
-<sup class="footnote" id="_footnote_JSONCompileDb">[<a id="_footnoteref_10" class="footnote" href="#_footnotedef_10" title="View footnote.">10</a>]</sup></p>
+<sup class="footnote" id="_footnote_EcoISIntropection">[<a id="_footnoteref_10" class="footnote" href="#_footnotedef_10" title="View footnote.">10</a>]</sup>
+<sup class="footnote" id="_footnote_JSONCompileDb">[<a id="_footnoteref_11" class="footnote" href="#_footnotedef_11" title="View footnote.">11</a>]</sup></p>
 </div>
 <div class="paragraph">
 <p>With that context, here are two example structured response files:</p>
@@ -1364,22 +1376,11 @@ as that format.
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="s2">"fPIC"</span><span class="p">,</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"O"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"O"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w"> </span><span class="p">},</span><span class="w">
     </span><span class="s2">"fno-inline"</span><span class="p">,</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"W"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="s2">"all"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"error"</span><span class="w">
-      </span><span class="p">]</span><span class="w">
-    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"W"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"all"</span><span class="p">,</span><span class="w"> </span><span class="s2">"error"</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">},</span><span class="w">
     </span><span class="s2">"g"</span><span class="p">,</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"I"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="s2">"util/include"</span><span class="w">
-      </span><span class="p">]</span><span class="w">
-    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"I"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"util/include"</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">},</span><span class="w">
     </span><span class="s2">"c"</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span></code></pre>
@@ -1391,7 +1392,7 @@ as that format.
 <div class="paragraph">
 <p>The <em>simple arguments</em> example shows specifying an "<em>arguments</em>" key with an
 array of values corresponding to the regular command line arguments. This
-mirrors what one would se in a JSON compilation database <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_10" title="View footnote.">10</a>]</sup>.
+mirrors what one would se in a JSON compilation database <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_11" title="View footnote.">11</a>]</sup>.
 This style has some advantages:</p>
 </div>
 <div class="ulist">
@@ -1471,7 +1472,7 @@ the <em>options</em> to <em>arguments</em> transformation is an easier one than 
 <p>The format of the file is well formed JSON text.</p>
 </li>
 <li>
-<p>The top level of that is a JSON object with either one of or both <em>arguments</em>
+<p>The top level of that is a JSON object with one, of or both, <em>arguments</em>
 and <em>options</em> fields.</p>
 </li>
 <li>
@@ -1482,7 +1483,7 @@ file.</p>
 <p>The <em>arguments</em> field has an array value with string values.</p>
 </li>
 <li>
-<p>The <em>arguments</em> values are single string containing the same options as would
+<p>The <em>arguments</em> values are single strings containing the same options as would
 be specified in the command line.</p>
 </li>
 <li>
@@ -1505,14 +1506,227 @@ option name (i.e. with an option prefix).</p>
 either a single value or an array of values.</p>
 </li>
 <li>
-<p>The arguments and option names are not specified in the</p>
+<p>The arguments and option names are not specified, and as such are
+implementation defined.</p>
 </li>
 </ul>
 </div>
+<div class="sect2">
+<h3 id="_command_line"><a class="anchor" href="#_command_line"></a>6.1. Command Line</h3>
+<div class="paragraph">
+<p>We propose to add a single new command line option as a requirement to
+implementing this capability:</p>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p><code>$ tool --std-rsp=<em>file</em></code></p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Or:</p>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p><code>$ tool -std-rsp:<em>file</em></code></p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>std-rsp</code> command line option, which can be repeated, will read the
+indicated file and parse the JSON text contents to configure the tool as needed.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_file_format"><a class="anchor" href="#_file_format"></a>6.2. File Format</h3>
+<div class="paragraph">
+<p>The response file is a valid JSON text file with a single JSON object as the
+root object. There are two mutually exclusive fields to specify the command
+information: <code>arguments</code> or <code>options</code>.</p>
+</div>
+<div class="paragraph">
+<p>There are two additional, optional, fields: <code>$schema</code> and <code>version</code>. The
+<code>$schema</code> field points at the released JSON Schema.
+<sup class="footnote" id="_footnote_jschema">[<a id="_footnoteref_12" class="footnote" href="#_footnotedef_12" title="View footnote.">12</a>]</sup>
+The <code>version</code> field indicated the response format of the file. The version number follows those specified in the capability introspection version
+numbering and semantics.</p>
+</div>
+<div class="paragraph">
+<p>The <code>arguments</code> field specifies a <strong>single</strong> array value of strings. Each string
+array entry is a command line argument to be used directly by the tool. The
+specific syntax of the arguments is up to the specific tool. For example a
+compile invocation for GCC, and compatible compiler front-ends, would look like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_rsp-1.0.0.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"arguments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"-fPIC"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-O0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-fno-inline"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-Wall"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-Werror"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-g"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-I</span><span class="se">\"</span><span class="s2">util/include</span><span class="se">\"</span><span class="s2">"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-c"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also include <code>--std_rsp=<em>file</em></code> options in the list of arguments to
+include the arguments that are referenced in another response file, and so on.
+For example, given a <code>common.json</code> response file as such:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_rsp-1.0.0.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"arguments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"-fPIC"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-O0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-fno-inline"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-Wall"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-Werror"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-g"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-I</span><span class="se">\"</span><span class="s2">util/include</span><span class="se">\"</span><span class="s2">"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-c"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>One can refer to it in a main response file that compiles a C&#43;&#43; source file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_rsp-1.0.0.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"arguments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"--std_rsp=common.json"</span><span class="p">,</span><span class="w"> </span><span class="s2">"main.cpp"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-o"</span><span class="p">,</span><span class="w"> </span><span class="s2">"main.o"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The effect is that the options in <code>common.json</code> ar inserted in the arguments
+array at the location of the <code>--std_rsp=common.json</code> argument.</p>
+</div>
+<div class="paragraph">
+<p>The <code>options</code> field specifies a <strong>single</strong> array value of options values. An
+option value can be either a single string or a JSON object (option object).
+The option object contains fields for each option to be used with each having
+a value that is a single string or an array of strings. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_rsp-1.0.0.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"fPIC"</span><span class="p">,</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"O"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"W"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"all"</span><span class="p">,</span><span class="w"> </span><span class="s2">"error"</span><span class="w"> </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"I"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"util/include"</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"fno-inline"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"g"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"c"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When compared to having the <code>arguments</code> field there are more constraints to the
+syntax of the options:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The option names do not contain prefix characters (i.e. the <code>--</code>, <code>-</code>, <code>/</code>,
+etc) and without the value separator (i.e. <code>=</code>, <code>:</code>, etc).</p>
+</li>
+<li>
+<p>Flags, i.e. options without a value, must be specified as the single string
+in the options array.</p>
+</li>
+<li>
+<p>Options, i.e. when there is a value (i.e. <code>--opt=value</code> command line argument)
+must be specified as part of an option object. I.e. as <code>{ "opt": "value" }</code>.</p>
+</li>
+<li>
+<p>Options that can be specified multiple times they can be specified as multiple
+separate entries in the <code>options</code> array. Or can specified once, and the
+multiple values specified as an array in the value. I.e. as
+<code>{ "opt": [ "value0", "value1" ] }</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>But like the <code>arguments</code> field, additional response files can be inserted at the
+indicated location by specifying a <code>{ "std_rsp": "file.json" }</code> option.</p>
+</div>
+<div class="paragraph">
+<p>Do note though that even though the option names have a specific naming format
+they are still defined by the tool. The goal of having the restrictions on the
+option names is to make it possible in the future to specify tool agnostic
+options to facilitate general interop. But that is a subject for future
+proposals.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">‼</div>
+</td>
+<td class="content">
+Tools need to support being able to either refer to an <code>options</code>
+style response file from an <code>arguments</code> style response file, and conversely.
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_implementation_experience"><a class="anchor" href="#_implementation_experience"></a>7. Implementation Experience</h2>
+<h2 id="_questions"><a class="anchor" href="#_questions"></a>7. Questions</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Why use a new option (<code>--std_rsp=<em>file</em></code>) instead of existing response file methods like <code>@<em>file</em></code>?</dt>
+<dd>
+<p>Implementing support in tools for using the same response file options would:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The option to add the structured response files would vary from tool to tool.</p>
+</li>
+<li>
+<p>It would be harder to implement as it would require inspecting the file
+content to determine the parsing method needed.</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Why have an <code>arguments</code> field instead of just using the <code>options</code> field?</dt>
+<dd>
+<p>Having an <code>arguments</code> field has a couple of benefits:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>It makes it easier for tools to immediately support use of this format as they
+can directly inject the arguments into their existing command line argument
+parsing.</p>
+</li>
+<li>
+<p>Makes it easier for tools that already support <code>compile_commands.json</code> to
+produce or consume structured response files as they are the same format for
+the <code>arguments</code> field in both.</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_implementation_experience"><a class="anchor" href="#_implementation_experience"></a>8. Implementation Experience</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An example implementation to support this format externally for many tools is
+planned.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_polls"><a class="anchor" href="#_polls"></a>9. Polls</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>None yet.</p>
@@ -1520,44 +1734,36 @@ either a single value or an array of values.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_polls"><a class="anchor" href="#_polls"></a>8. Polls</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>None yet.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_wording"><a class="anchor" href="#_wording"></a>9. Wording</h2>
+<h2 id="_wording"><a class="anchor" href="#_wording"></a>10. Wording</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Wording is relative to
 <a href="https://github.com/cplusplus/ecosystem-is/tree/d9ea1239e883b54425002873bb8ebf5f3559dbad">ecosystem-is/d9ea1239</a>.
-<sup class="footnote">[<a id="_footnoteref_11" class="footnote" href="#_footnotedef_11" title="View footnote.">11</a>]</sup></p>
+<sup class="footnote">[<a id="_footnoteref_13" class="footnote" href="#_footnotedef_13" title="View footnote.">13</a>]</sup></p>
 </div>
 <div class="sect2">
-<h3 id="_specification_structured_response_file"><a class="anchor" href="#_specification_structured_response_file"></a>9.1. Specification: Structured Response File</h3>
+<h3 id="_specification_structured_response_file"><a class="anchor" href="#_specification_structured_response_file"></a>10.1. Specification: Structured Response File</h3>
 <div class="paragraph">
 <p>Insert clause after <em>Introspection</em> [intspct].</p>
 </div>
 <div class="sect3 ins text-justify reftext=rsp">
-<h4 id="rsp"><a class="anchor" href="#rsp"></a>9.1.1. Structure Response File <span class="right">[<a href="#rsp">Structure Response File <span class="right">[[rsp]]</span></a>]</span></h4>
+<h4 id="rsp"><a class="anchor" href="#rsp"></a>10.1.1. Structure Response File <span class="right">[<a href="#rsp">Structure Response File <span class="right">[[rsp]]</span></a>]</span></h4>
 <div class="sect4">
-<h5 id="rsp-pre"><a class="anchor" href="#rsp-pre"></a>9.1.1.1. Preamble <span class="right">[<a href="#rsp-pre">rsp.pre</a>]</span></h5>
+<h5 id="rsp-pre"><a class="anchor" href="#rsp-pre"></a>10.1.1.1. Preamble <span class="right">[<a href="#rsp-pre">rsp.pre</a>]</span></h5>
 <div class="paragraph">
 <p>This clause specifies the <code>std.rsp</code> capability ([intspct.cap]) version <code>1.0.0</code>.</p>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="rsp-overview"><a class="anchor" href="#rsp-overview"></a>9.1.2. Overview <span class="right">[<a href="#rsp-overview">rsp.overview</a>]</span></h4>
+<h4 id="rsp-overview"><a class="anchor" href="#rsp-overview"></a>10.1.2. Overview <span class="right">[<a href="#rsp-overview">rsp.overview</a>]</span></h4>
 
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_license"><a class="anchor" href="#_license"></a>10. License</h2>
+<h2 id="_license"><a class="anchor" href="#_license"></a>11. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This work is licensed under the Creative Commons Attribution 4.0 International
@@ -1586,22 +1792,28 @@ Commons, PO Box 1866, Mountain View, CA 94042, USA.</p>
 <a href="#_footnoteref_5">5</a>. Microsoft C&#43;&#43;, C, and Assembler documentation (<a href="https://learn.microsoft.com/en-us/cpp/build/reference/at-specify-a-compiler-response-file" class="bare">https://learn.microsoft.com/en-us/cpp/build/reference/at-specify-a-compiler-response-file</a>)
 </div>
 <div class="footnote" id="_footnotedef_6">
-<a href="#_footnoteref_6">6</a>. <a href="https://www.edg.com/docs/edg_cpp.pdf" class="bare">https://www.edg.com/docs/edg_cpp.pdf</a>
+<a href="#_footnoteref_6">6</a>. Edison Design Group C&#43;&#43; documentation. <a href="https://www.edg.com/docs/edg_cpp.pdf" class="bare">https://www.edg.com/docs/edg_cpp.pdf</a>
 </div>
 <div class="footnote" id="_footnotedef_7">
-<a href="#_footnoteref_7">7</a>. <a href="https://github.com/bfgroup/b2/blob/4.10.1/src/tools/borland.jam#L282" class="bare">https://github.com/bfgroup/b2/blob/4.10.1/src/tools/borland.jam#L282</a>
+<a href="#_footnoteref_7">7</a>. B2 Embarcadero C&#43;&#43; Builder <code>@</code> file implementation. (<a href="https://github.com/bfgroup/b2/blob/4.10.1/src/tools/borland.jam#L282" class="bare">https://github.com/bfgroup/b2/blob/4.10.1/src/tools/borland.jam#L282</a>)
 </div>
 <div class="footnote" id="_footnotedef_8">
-<a href="#_footnoteref_8">8</a>. <a href="https://docs.nvidia.com/hpc-sdk/compilers/hpc-compilers-ref-guide/index.html" class="bare">https://docs.nvidia.com/hpc-sdk/compilers/hpc-compilers-ref-guide/index.html</a>
+<a href="#_footnoteref_8">8</a>. NVIDIA HPC C&#43;&#43; Reference (<a href="https://docs.nvidia.com/hpc-sdk/compilers/hpc-compilers-ref-guide/index.html" class="bare">https://docs.nvidia.com/hpc-sdk/compilers/hpc-compilers-ref-guide/index.html</a>)
 </div>
 <div class="footnote" id="_footnotedef_9">
-<a href="#_footnoteref_9">9</a>. P2717 Tool Introspection (<a href="https://wg21.link/P2717" class="bare">https://wg21.link/P2717</a>)
+<a href="#_footnoteref_9">9</a>. Python <code>argparse</code> module (<a href="https://docs.python.org/3/library/argparse.html#fromfile-prefix-chars" class="bare">https://docs.python.org/3/library/argparse.html#fromfile-prefix-chars</a>)
 </div>
 <div class="footnote" id="_footnotedef_10">
-<a href="#_footnoteref_10">10</a>. JSON Compilation Database Format Specification (<a href="https://clang.llvm.org/docs/JSONCompilationDatabase.html" class="bare">https://clang.llvm.org/docs/JSONCompilationDatabase.html</a>)
+<a href="#_footnoteref_10">10</a>. P2717 Tool Introspection (<a href="https://wg21.link/P2717" class="bare">https://wg21.link/P2717</a>)
 </div>
 <div class="footnote" id="_footnotedef_11">
-<a href="#_footnoteref_11">11</a>. Working Draf, C&#43;&#43; Ecosystem International Standard 2023-11-10 (<a href="https://github.com/cplusplus/ecosystem-is/tree/d9ea1239e883b54425002873bb8ebf5f3559dbad" class="bare">https://github.com/cplusplus/ecosystem-is/tree/d9ea1239e883b54425002873bb8ebf5f3559dbad</a>)
+<a href="#_footnoteref_11">11</a>. JSON Compilation Database Format Specification (<a href="https://clang.llvm.org/docs/JSONCompilationDatabase.html" class="bare">https://clang.llvm.org/docs/JSONCompilationDatabase.html</a>)
+</div>
+<div class="footnote" id="_footnotedef_12">
+<a href="#_footnoteref_12">12</a>. JSON Schema: A Media Type for Describing JSON Documents (<a href="http://json-schema.org/latest/json-schema-core.html" class="bare">http://json-schema.org/latest/json-schema-core.html</a>)
+</div>
+<div class="footnote" id="_footnotedef_13">
+<a href="#_footnoteref_13">13</a>. Working Draf, C&#43;&#43; Ecosystem International Standard 2023-11-10 (<a href="https://github.com/cplusplus/ecosystem-is/tree/d9ea1239e883b54425002873bb8ebf5f3559dbad" class="bare">https://github.com/cplusplus/ecosystem-is/tree/d9ea1239e883b54425002873bb8ebf5f3559dbad</a>)
 </div>
 </div>
 </body>
