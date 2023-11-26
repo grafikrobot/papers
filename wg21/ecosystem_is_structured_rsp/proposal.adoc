@@ -208,11 +208,11 @@ NVIDIA HPC {CPP} (NV{CPP})::
   Does not support response configuration files.
   footnote:[NVIDIA HPC {CPP} Reference (https://docs.nvidia.com/hpc-sdk/compilers/hpc-compilers-ref-guide/index.html)]
 
-Oracle® Developer Studio 12.6:
+Oracle® Developer Studio 12.6::
   Supports a single global options configuration file, with bare arguments
   syntax.
 
-Python `argparse` module:
+Python `argparse` module::
   Supports arbitrarily character prefixed response files. Where the files, by
   default, contain an argument per line.
   footnote:[Python `argparse` module (https://docs.python.org/3/library/argparse.html#fromfile-prefix-chars)]
