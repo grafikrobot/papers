@@ -839,7 +839,7 @@ pre.rouge .ss {
 <span id="author" class="author">René Ferdinand Rivera Morell</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> D3051R0,</span>
-<span id="revdate">2023-11-25</span>
+<span id="revdate">2023-11-26</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -992,7 +992,7 @@ Document #:
 Date: 
 </td>
 <td class="hdlist2">
-<p>2023-11-25</p>
+<p>2023-11-26</p>
 </td>
 </tr>
 <tr>
@@ -1720,8 +1720,95 @@ the <code>arguments</code> field in both.</p>
 <h2 id="_implementation_experience"><a class="anchor" href="#_implementation_experience"></a>8. Implementation Experience</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>An example implementation to support this format externally for many tools is
-planned.</p>
+<p>Here is a simple implementation, as a Python 3 script, that can accept any
+number of arguments will translate any referenced structured response files to
+use and return a list of arguments to pass to <code>g++`</code>. Note, it&#8217;s not very
+smart, as it makes various generalizations about option syntax for GCC. But it
+does show the simplicity of a possible minimal integration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="c1">#!/usr/bin/env python3
+</span>
+<span class="kn">import</span> <span class="n">collections.abc</span>
+<span class="kn">import</span> <span class="n">glob</span>
+<span class="kn">import</span> <span class="n">json</span>
+<span class="kn">import</span> <span class="n">os</span>
+<span class="kn">import</span> <span class="n">re</span>
+<span class="kn">import</span> <span class="n">sys</span>
+
+<span class="n">out_args</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">def</span> <span class="nf">add_rsp</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+	<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+		<span class="n">rsp</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+		<span class="k">if</span> <span class="sh">'</span><span class="s">arguments</span><span class="sh">'</span> <span class="ow">in</span> <span class="n">rsp</span><span class="p">:</span>
+			<span class="nf">add_rsp_args</span><span class="p">(</span><span class="n">rsp</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="sh">'</span><span class="s">options</span><span class="sh">'</span> <span class="ow">in</span> <span class="n">rsp</span><span class="p">:</span>
+			<span class="nf">add_rsp_opts</span><span class="p">(</span><span class="n">rsp</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">add_rsp_args</span><span class="p">(</span><span class="n">rsp</span><span class="p">):</span>
+	<span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">rsp</span><span class="p">[</span><span class="sh">'</span><span class="s">arguments</span><span class="sh">'</span><span class="p">]:</span>
+		<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sa">r</span><span class="sh">'</span><span class="s">^--std_rsp=(.*)$</span><span class="sh">'</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">m</span><span class="p">:</span>
+			<span class="nf">add_rsp</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="nf">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">out_args</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">add_rsp_opts</span><span class="p">(</span><span class="n">rsp</span><span class="p">):</span>
+	<span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">rsp</span><span class="p">[</span><span class="sh">'</span><span class="s">options</span><span class="sh">'</span><span class="p">]:</span>
+		<span class="k">if</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+			<span class="nf">add_rsp_opt</span><span class="p">(</span><span class="n">opt</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="nf">for </span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="n">opt</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
+				<span class="nf">add_rsp_opt</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">add_rsp_opt</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">value</span> <span class="o">!=</span> <span class="bp">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">collections</span><span class="p">.</span><span class="n">abc</span><span class="p">.</span><span class="n">Sequence</span><span class="p">):</span>
+		<span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="p">]</span>
+	<span class="k">if</span> <span class="n">opt</span> <span class="o">==</span> <span class="sh">"</span><span class="s">std_rsp</span><span class="sh">"</span><span class="p">:</span>
+		<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+			<span class="nf">add_rsp</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+	<span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+		<span class="n">out_args</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="nf">opt_as_arg</span><span class="p">(</span><span class="n">opt</span><span class="p">))</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">arg_name</span> <span class="o">=</span> <span class="nf">opt_as_arg</span><span class="p">(</span><span class="n">opt</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">opt</span> <span class="ow">in</span> <span class="p">[</span><span class="sh">"</span><span class="s">D</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">I</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">O</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">W</span><span class="sh">"</span><span class="p">]:</span>
+			<span class="n">out_args</span><span class="p">.</span><span class="nf">extend</span><span class="p">(</span><span class="nf">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">arg_name</span><span class="o">+</span><span class="n">v</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">out_args</span><span class="p">.</span><span class="nf">extend</span><span class="p">(</span><span class="nf">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">arg_name</span><span class="o">+</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">+</span><span class="n">v</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">opt_as_arg</span><span class="p">(</span><span class="n">opt</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">opt</span> <span class="ow">in</span> <span class="p">[</span><span class="sh">"</span><span class="s">help</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">target-help</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">version</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">coverage</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">entry</span><span class="sh">"</span><span class="p">,</span> \
+		<span class="sh">"</span><span class="s">no-sysroot-suffix</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">sysroot</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">param</span><span class="sh">"</span><span class="p">]:</span>
+		<span class="k">return</span> <span class="sh">"</span><span class="s">--</span><span class="sh">"</span><span class="o">+</span><span class="n">opt</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="k">return</span> <span class="sh">"</span><span class="s">-</span><span class="sh">"</span><span class="o">+</span><span class="n">opt</span>
+
+<span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+	<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sa">r</span><span class="sh">'</span><span class="s">^--std_rsp=(.*)$</span><span class="sh">'</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">m</span><span class="p">:</span>
+		<span class="nf">add_rsp</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="nf">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">out_args</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+
+<span class="n">out_args</span> <span class="o">=</span> <span class="nf">map</span><span class="p">(</span><span class="n">glob</span><span class="p">.</span><span class="n">escape</span><span class="p">,</span> <span class="n">out_args</span><span class="p">)</span>
+<span class="n">out_args</span> <span class="o">=</span> <span class="nf">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s"> </span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">\ </span><span class="sh">'</span><span class="p">),</span> <span class="n">out_args</span><span class="p">)</span>
+<span class="n">out_args</span> <span class="o">=</span> <span class="sh">'</span><span class="s"> </span><span class="sh">'</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">out_args</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">out_args</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Usage:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="nv">$ </span>stdrsp.py <span class="nt">--std_rsp</span><span class="o">=</span>example-02.json
+<span class="nt">-fPIC</span> <span class="nt">-O0</span> <span class="nt">-fno-inline</span> <span class="nt">-Wall</span> <span class="nt">-Werror</span> <span class="nt">-g</span> <span class="nt">-I</span><span class="s2">"util/include"</span> <span class="nt">-c</span>
+<span class="nv">$ </span>g++ <span class="sb">`</span>stdrsp.py <span class="nt">--std_rsp</span><span class="o">=</span>example-02.json<span class="sb">`</span> main.cpp
+<span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-1</span> main.o
+main.o</code></pre>
+</div>
 </div>
 </div>
 </div>

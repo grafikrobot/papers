@@ -447,9 +447,27 @@ Having an `arguments` field has a couple of benefits:
 
 == Implementation Experience
 
-An example implementation to support this format externally for many tools is
-planned.
+Here is a simple implementation, as a Python 3 script, that can accept any
+number of arguments will translate any referenced structured response files to
+use and return a list of arguments to pass to `g++``. Note, it's not very
+smart, as it makes various generalizations about option syntax for GCC. But it
+does show the simplicity of a possible minimal integration:
 
+[source,python]
+----
+include::stdrsp.py[]
+----
+
+Usage:
+
+[source,shell]
+----
+$ stdrsp.py --std_rsp=example-02.json
+-fPIC -O0 -fno-inline -Wall -Werror -g -I"util/include" -c
+$ g++ `stdrsp.py --std_rsp=example-02.json` main.cpp
+$ ls -1 main.o
+main.o
+----
 
 == Polls
 
