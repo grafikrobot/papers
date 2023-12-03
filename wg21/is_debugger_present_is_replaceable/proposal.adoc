@@ -2,7 +2,7 @@
 :copyright: Copyright 2023 René Ferdinand Rivera Morell
 :email: grafikrobot@gmail.com
 :authors: René Ferdinand Rivera Morell, et al.
-:audience: LWG
+:audience: LEWG
 :revdate: {docdate}
 :version-label!:
 :reproducible:
@@ -39,7 +39,7 @@ Ben Craig - _ben dot craig at gmail dot com_
 
 This proposes to add `std::is_debugger_present`, proposed in P2546
 footnote:P2546[P2546R5 Debugging Support, _René Ferdinand Rivera Morell_
-2022-11-15 (https://wg21.link/P2546R5)],
+2023-07-05 (https://wg21.link/P2546R5)],
 to the set of replacement functions to allow users the flexibility to control
 the result of the function when otherwise it would not be possible to determine
 the platform specific result.
@@ -130,6 +130,16 @@ be confirmed by electronic poll.
 Wording is relative to P2546R5.
 footnote:P2546[]
 
+=== Feature Test Macro
+
+In [version.syn] change date on adoption:
+
+[.ins.text-justify]
+[source]
+----
+#define __cpp_lib_debugging YYYYMML // freestanding, also in <debugging>
+----
+
 === Library
 
 Insert the following paragraph between [replacement.functions] par. 2 and
@@ -163,8 +173,8 @@ library.
 _Required behavior_: This function has no preconditions. +
  +
 NOTE 1:
-This means that a call to this function does not result in undefined
-behavior, even in the presence of a program-defined replacement.
+A call to this function does not result in undefined behavior, even in the
+presence of a program-defined replacement.
 
 [.ins.text-justify]
 _Default behavior_: Implementation defined.
