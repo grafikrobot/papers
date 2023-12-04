@@ -9,7 +9,7 @@ import asciidoctor ;
 
 local name = is_debugger_present_is_replaceable ;
 local docn = P2810 ;
-local docr = R2 ;
+local docr = R3 ;
 local xxxx = $(docn)$(docr) ;
 
 project /wg21_$(name)

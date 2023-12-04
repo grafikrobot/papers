@@ -838,8 +838,8 @@ pre.rouge .ss {
 <div class="details">
 <span id="author" class="author">René Ferdinand Rivera Morell, et al.</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
-<span id="revnumber"> P2810R2,</span>
-<span id="revdate">2023-12-02</span>
+<span id="revnumber"> P2810R3,</span>
+<span id="revdate">2023-12-03</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -847,9 +847,10 @@ pre.rouge .ss {
 <li><a href="#_abstract">1. Abstract</a></li>
 <li><a href="#_revision_history">2. Revision History</a>
 <ul class="sectlevel2">
-<li><a href="#_revision_2_december_2023">2.1. Revision 2 (December 2023)</a></li>
-<li><a href="#_revision_1_july_2023">2.2. Revision 1 (July 2023)</a></li>
-<li><a href="#_revision_0_february_2023">2.3. Revision 0 (February 2023)</a></li>
+<li><a href="#_revision_3_december_2023">2.1. Revision 3 (December 2023)</a></li>
+<li><a href="#_revision_2_december_2023">2.2. Revision 2 (December 2023)</a></li>
+<li><a href="#_revision_1_july_2023">2.3. Revision 1 (July 2023)</a></li>
+<li><a href="#_revision_0_february_2023">2.4. Revision 0 (February 2023)</a></li>
 </ul>
 </li>
 <li><a href="#_motivation">3. Motivation</a></li>
@@ -972,11 +973,11 @@ specifying the caption symbol properties:
 <dl>
 <dt class="hdlist1">Document number: </dt>
 <dd>
-<p>ISO/IEC/JTC1/SC22/WG21/P2810R2</p>
+<p>ISO/IEC/JTC1/SC22/WG21/P2810R3</p>
 </dd>
 <dt class="hdlist1">Date: </dt>
 <dd>
-<p>2023-12-02</p>
+<p>2023-12-03</p>
 </dd>
 <dt class="hdlist1">Audience: </dt>
 <dd>
@@ -1011,20 +1012,26 @@ the platform specific result.</p>
 <h2 id="_revision_history"><a class="anchor" href="#_revision_history"></a>2. Revision History</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_revision_2_december_2023"><a class="anchor" href="#_revision_2_december_2023"></a>2.1. Revision 2 (December 2023)</h3>
+<h3 id="_revision_3_december_2023"><a class="anchor" href="#_revision_3_december_2023"></a>2.1. Revision 3 (December 2023)</h3>
+<div class="paragraph">
+<p>Remove problematic wording note.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_revision_2_december_2023"><a class="anchor" href="#_revision_2_december_2023"></a>2.2. Revision 2 (December 2023)</h3>
 <div class="paragraph">
 <p>Add poll results from LEWG 2023-09-19 meeting. Adjust wording per LEWG
 consensus feedback for no-precondition on the user replacement function.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_revision_1_july_2023"><a class="anchor" href="#_revision_1_july_2023"></a>2.2. Revision 1 (July 2023)</h3>
+<h3 id="_revision_1_july_2023"><a class="anchor" href="#_revision_1_july_2023"></a>2.3. Revision 1 (July 2023)</h3>
 <div class="paragraph">
 <p>Wording relative to final P2546 revision 5.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_revision_0_february_2023"><a class="anchor" href="#_revision_0_february_2023"></a>2.3. Revision 0 (February 2023)</h3>
+<h3 id="_revision_0_february_2023"><a class="anchor" href="#_revision_0_february_2023"></a>2.4. Revision 0 (February 2023)</h3>
 <div class="paragraph">
 <p>Initial.</p>
 </div>
@@ -1200,24 +1207,10 @@ signature, and thereby displace the default version defined by the C++ standard
 library.</p>
 </div>
 <div class="paragraph ins text-justify">
-<p><em>Required behavior</em>: This function has no preconditions.<br>
-<br>
-NOTE 1:
-A call to this function does not result in undefined behavior, even in the
-presence of a program-defined replacement.</p>
+<p><em>Required behavior</em>: This function has no preconditions.<br></p>
 </div>
 <div class="paragraph ins text-justify">
 <p><em>Default behavior</em>: Implementation defined.</p>
-</div>
-<div class="paragraph">
-<p>NOTE <span class="del">1</span> <span class="ins">2</span>:
-When tracing with a debugger the execution of a program an implementation
-returns <code>true</code>. An implementation performs an immediate query, as needed, to
-determine if the program is traced by a debugger.
-On Windows, or equivalent, systems this can be achieved by calling the
-<code>::IsDebuggerPresent()</code> Win32 function.
-On POSIX this can be achieved by checking for a tracer parent process, with
-best effort determination that such a tracer parent process is a debugger.</p>
 </div>
 </div>
 </div>

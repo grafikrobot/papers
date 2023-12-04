@@ -46,7 +46,11 @@ the platform specific result.
 
 == Revision History
 
-=== Revision 2 (September 2023)
+=== Revision 3 (December 2023)
+
+Remove problematic wording note.
+
+=== Revision 2 (December 2023)
 
 Add poll results from LEWG 2023-09-19 meeting. Adjust wording per LEWG
 consensus feedback for no-precondition on the user replacement function.
@@ -171,22 +175,9 @@ library.
 
 [.ins.text-justify]
 _Required behavior_: This function has no preconditions. +
- +
-NOTE 1:
-A call to this function does not result in undefined behavior, even in the
-presence of a program-defined replacement.
 
 [.ins.text-justify]
 _Default behavior_: Implementation defined.
-
-NOTE [.del]+1+ [.ins]+2+:
-When tracing with a debugger the execution of a program an implementation
-returns `true`. An implementation performs an immediate query, as needed, to
-determine if the program is traced by a debugger.
-On Windows, or equivalent, systems this can be achieved by calling the
-`::IsDebuggerPresent()` Win32 function.
-On POSIX this can be achieved by checking for a tracer parent process, with
-best effort determination that such a tracer parent process is a debugger.
 
 == Acknowledgements
 
