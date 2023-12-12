@@ -45,7 +45,7 @@ the best way to communicate compiling {CPP}.
 
 == Revision History
 
-=== Revision 0 (?? 2023)
+=== Revision 0 (December 2023)
 
 Initial text.
 
@@ -269,7 +269,7 @@ include::example-02.json[]
 
 The _simple arguments_ example shows specifying an "__arguments__" key with an
 array of values corresponding to the regular command line arguments. This
-mirrors what one would se in a JSON compilation database footnote:JSONCompileDb[].
+mirrors what one would see in a JSON compilation database footnote:JSONCompileDb[].
 This style has some advantages:
 
 * There is a direct correlation with the JSON compilation database format which
@@ -425,12 +425,69 @@ proposals.
 IMPORTANT: Tools need to support being able to either refer to an `options`
 style response file from an `arguments` style response file, and conversely.
 
+=== Flags or Names
+
+There is a question as to wether it's better to use command line flags (for
+example `W`, `o`, `I`, etc) or non-command line names (for example
+`warning`, `output`, `include`, etc) in the `options` field. We will call the
+former the "Flags" choice, and the latter the "Names" choice. Each would mean:
+
+Flags::
+	The keys would be direct correlation to the specific tool, i.e. compiler,
+	command line options. For example a `I` field name would match the `-I`.
+
+Names::
+	The keys would be symbolic names correlating to a concept that may map to
+	one or more current command line options. For example an `include` field
+	name would map to one or more `-I` command line options. But it would also
+	map to one or more new `--include` command line options.
+
+Given those definitions we can consider the pros and cons of each method.
+
+[cols=",50,50",options="header"]
+|===
+| ^| Flags ^| Names
+
+^.^h| Pros
+
+a| // Pros: Flags
+* Small effort for compilers to implement.
+* No additional CLI parsing to implement.
+
+a| // Pros: Names
+* Common names and meanings across different tools.
+* Names could be used in other formats, like CPS.
+
+^.^h| Cons
+
+a| // Cons: Flags
+* Continues the increased implementation burden on build systems, etc, to manage
+  different options per compiler, etc.
+
+a| // Cons: Names
+* Possibly complex implementation to map from names to internal data.
+
+|===
+
+NOTE: One key consideration is that this proposal does not prevent choosing
+either flags or names as the `options` fields. Specifying the fields can be
+accomplished in a further proposal that specifies either flags or names as
+common specified syntax.
+
+There are a set of possible design questions for this proposal that come to
+mind:
+
+. Specify `options` fields as "Flags" or "Names"?
+. Specify the `options` in this proposal or a separate proposal?
+
+
 == Questions
 
 Why use a new option (`--std_rsp=__file__`) instead of existing response file methods like `@__file__`?::
 
 Implementing support in tools for using the same response file options would:
-* The option to add the structured response files would vary from tool to tool.
+* Mean that the option to add the structured response files would vary from
+  tool to tool as some use different styles for specifying the file.
 * It would be harder to implement as it would require inspecting the file
   content to determine the parsing method needed.
 
@@ -474,6 +531,8 @@ main.o
 None yet.
 
 
+////
+
 == Wording
 
 Wording is relative to
@@ -485,7 +544,7 @@ footnote:[Working Draf, {CPP} Ecosystem International Standard 2023-11-10 (https
 Insert clause after _Introspection_ [intspct].
 
 [.ins.text-justify]
-[#rsp.reftext=rsp]
+[#rsp,reftext=rsp]
 ==== Structure Response File [.right]#[<<rsp>>]#
 
 [#rsp-pre,reftext=rsp.pre]
@@ -495,6 +554,10 @@ This clause specifies the `std.rsp` capability ([intspct.cap]) version `1.0.0`.
 
 [#rsp-overview,reftext=rsp.overview]
 ==== Overview [.right]#[<<rsp-overview>>]#
+
+???
+
+ ////
 
 == License
 

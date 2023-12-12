@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id":
+    "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_rsp-1.0.0.json",
+  "title": "Structured Response Version 1.0.0 JSON Schema",
+  "$defs": {
+  },
+  "anyOf": [
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "description":
+            "JSON Schema URI for the version of the structured response format.",
+          "type": "string",
+          "format": "uri"
+        },
+        "version": {
+          "description": "The Structured Response format version.",
+          "type": "string",
+          "enum": ["1", "1.0", "1.0.0"]
+        },
+        "arguments": {
+          "description": ""
+        },
+        "options": {
+        }
+      },
+      "additionalProperties": false
+    }
+  ]
+}
