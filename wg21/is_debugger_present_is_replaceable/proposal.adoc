@@ -46,6 +46,10 @@ the platform specific result.
 
 == Revision History
 
+=== Revision 5 (March 2024)
+
+Wording edits from LWG.
+
 === Revision 3 (December 2023)
 
 Remove problematic wording note.
@@ -169,7 +173,7 @@ Change wording of definition of `is_debugger_present` in [debugging.utility] as:
 The semantics of this function are implementation-defined.
 
 [.ins.text-justify]
-_Replaceable_: A {CPP} program may define a function with the function
+_Replaceable_: A {CPP} program may define a function with this function
 signature, and thereby displace the default version defined by the C++ standard
 library.
 
