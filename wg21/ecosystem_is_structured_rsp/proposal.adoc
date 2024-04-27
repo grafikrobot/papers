@@ -222,7 +222,7 @@ Python `argparse` module::
 Abstractly _response files_ are files in the operating system storage that
 contain arguments and options in addition to the ones given directly in the
 tool invocation. For this design we are going to refer to two different types
-of ways to give pass the information to the tools:
+of ways to pass the information to the tools:
 
 Arguments::
 Arguments use the syntax that one would specify directly in the command line as
@@ -235,8 +235,8 @@ _arguments_.
 
 Using those two distinct definitions allows us to specify them differently in
 the response file. Using _arguments_ we will follow the same existing command
-line syntax. Keeping a form of compatibility with existing. But we would then
-be restricted to that syntax. Using _options_ we can use a definition that
+line syntax. Keeping a form of compatibility with existing tools. But we would
+then be restricted to that syntax. Using _options_ we can use a definition that
 fits best with a structured data definition.
 
 Last consideration is the choice of structured data format we will have in the
@@ -267,6 +267,9 @@ include::example-02.json[]
 
 |===
 
+NOTE: The names and values in the `options` example is for exposition only. It
+may not reflect the actual names and values as proposed, now or in the future.
+
 The _simple arguments_ example shows specifying an "__arguments__" key with an
 array of values corresponding to the regular command line arguments. This
 mirrors what one would see in a JSON compilation database footnote:JSONCompileDb[].
@@ -274,13 +277,13 @@ This style has some advantages:
 
 * There is a direct correlation with the JSON compilation database format which
   some tools support. Which would mean that they already have code to deal with
-  at the JSON loading and understanding of it.
+  the JSON loading and understanding of it.
 * There's a direct mapping for regular command line arguments. Hence it will be
   less effort to support this style for tools.
 
 And there are some disadvantages:
 
-* The parsing of the arguments still has to happen to get the at the option and
+* The parsing of the arguments still has to happen to get at the option and
   value.
 * It is subject to the same limitations of regular command line arguments. Like
   complexity and ambiguities of command line syntax.
@@ -291,10 +294,11 @@ option name and structured value. Some advantages of this style of structured
 data are:
 
 * The option names do indicate a particular option prefix (i.e. `-`, `--`,
-  `/`, etc) making it possible to use tools agnostic common names.
+  `/`, etc) making it possible to use tool agnostic common names.
 * The ability to use arrays, or possibly objects, for the option values allows
-  for logical groupings and avoid extra tracking of such as is present in
+  for logical groupings avoiding extra tracking of such as is present in
   command line parsing of options.
+* The names can be more descriptive, and hence easier for people to understand.
 
 Some possible disadvantages:
 
@@ -305,30 +309,26 @@ Some possible disadvantages:
   easier mapping from internal structures to this format.
 
 One additional aspect of how the _arguments_ and _options_ are specified is that
-they allow for a simple transformation between them if that is needed. Although
-the _options_ to _arguments_ transformation is an easier one than the converse.
+the goal is to allow for a simple transformation between them if that is needed.
+Although the _options_ to _arguments_ transformation is an easier one than the
+converse.
 
 The design we are proposing has the following key points:
 
 * The format of the file is well formed JSON text.
-* The top level of that is a JSON object with one, of or both, _arguments_
+* The top level of that is a JSON object with one of, or both, _arguments_
   and _options_ fields.
 * The addition of one command line option to specify the structured response
   file.
-* The _arguments_ field has an array value with string values.
+* The _arguments_ field has a single array value with string values.
 * The _arguments_ values are single strings containing the same options as would
   be specified in the command line.
 * The _arguments_ values can contain the option for other structure response
   files. Which will be recursively inserted at the location of the option.
 * The _options_ field has an array of values for structured options.
-* The _options_ values can be either a single option name (for flag options) or
-  an object.
-* The _options_ values that are an object contain a single field with the base
-  option name (i.e. with an option prefix).
-* The _options_ value that is an object the field value in the object can be
-  either a single value or an array of values.
-* The arguments and option names are not specified, and as such are
-  implementation defined.
+* The _options_ values will follow an option specific schema.
+* The _arguments_ are not specified, and as such are implementation defined.
+* The _options_ are specified with both a schema and semantics for each.
 
 === Command Line
 
@@ -357,7 +357,8 @@ information: `arguments` or `options`.
 There are two additional, optional, fields: `$schema` and `version`. The
 `$schema` field points at the released JSON Schema.
 footnote:jschema[JSON Schema: A Media Type for Describing JSON Documents (http://json-schema.org/latest/json-schema-core.html)]
-The `version` field indicated the response format of the file. The version number follows those specified in the capability introspection version
+The `version` field indicated the response format of the file. The version
+number follows those specified in the capability introspection version
 numbering and semantics.
 
 The `arguments` field specifies a *single* array value of strings. Each string
@@ -386,35 +387,21 @@ One can refer to it in a main response file that compiles a {CPP} source file:
 include::example-args-recurse-main.json[]
 ----
 
-The effect is that the options in `common.json` ar inserted in the arguments
+The effect is that the options in `common.json` are inserted in the arguments
 array at the location of the `--std_rsp=common.json` argument.
 
 The `options` field specifies a *single* array value of options values. An
-option value can be either a single string or a JSON object (option object).
-The option object contains fields for each option to be used with each having
-a value that is a single string or an array of strings. For example:
-
-[source,json]
-----
-include::example-options.json[]
-----
+option value can be any value that follows the schema for the collection of
+specified options.
 
 When compared to having the `arguments` field there are more constraints to the
 syntax of the options:
 
 * The option names do not contain prefix characters (i.e. the `--`, `-`, `/`,
   etc) and without the value separator (i.e. `=`, `:`, etc).
-* Flags, i.e. options without a value, must be specified as the single string
-  in the options array.
-* Options, i.e. when there is a value (i.e. `--opt=value` command line argument)
-  must be specified as part of an option object. I.e. as `{ "opt": "value" }`.
-* Options that can be specified multiple times they can be specified as multiple
-  separate entries in the `options` array. Or can specified once, and the
-  multiple values specified as an array in the value. I.e. as
-  `{ "opt": [ "value0", "value1" ] }`.
 
-But like the `arguments` field, additional response files can be inserted at the
-indicated location by specifying a `{ "std_rsp": "file.json" }` option.
+Like the `arguments` field, additional response files can be inserted at the
+indicated location by specifying a `{ "std-rsp": "file.json" }` option.
 
 Do note though that even though the option names have a specific naming format
 they are still defined by the tool. The goal of having the restrictions on the

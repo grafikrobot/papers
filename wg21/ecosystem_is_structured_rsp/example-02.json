@@ -1,11 +1,12 @@
 {
   "options": [
-    "fPIC",
-    { "O": "0" },
-    "fno-inline",
-    { "W": [ "all", "error" ] },
-    "g",
-    { "I": [ "util/include" ] },
-    "c"
+    "position-independent-code",
+    { "optimization": "none" },
+    "no-inline",
+    { "warnings": "all"},
+    "warnings-as-errors",
+    {"debug-symbols": "on"},
+    { "include": [ "util/include" ] },
+    "compile"
   ]
 }
