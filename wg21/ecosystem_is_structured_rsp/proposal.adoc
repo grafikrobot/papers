@@ -742,7 +742,7 @@ _Value_:
   (for `string`) A pathname to a file containing structured options
   (<<strctopt>>). +
 _Value_:
-  (for `array`) A list of pathname `string`'s to files containing structured
+  (for `array`) A list of pathname `string` items to files containing structured
   options (<<strctopt>>) +
 _Description_:
   One or more references to files that include additional structured options
