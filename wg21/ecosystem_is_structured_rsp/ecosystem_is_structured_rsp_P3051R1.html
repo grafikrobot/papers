@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.22">
 <meta name="author" content="René Ferdinand Rivera Morell">
-<meta name="copyright" content="Copyright 2023 René Ferdinand Rivera Morell">
+<meta name="copyright" content="Copyright 2024 René Ferdinand Rivera Morell">
 <title>Structured Response Files</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
@@ -1030,7 +1030,7 @@ Reply-to:
 Copyright: 
 </td>
 <td class="hdlist2">
-<p>Copyright 2023 René Ferdinand Rivera Morell, Creative Commons Attribution 4.0 International License (CC BY 4.0)</p>
+<p>Copyright 2024 René Ferdinand Rivera Morell, Creative Commons Attribution 4.0 International License (CC BY 4.0)</p>
 </td>
 </tr>
 </table>
@@ -1599,7 +1599,7 @@ For example, given a <code>common.json</code> response file as such:</p>
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_opt-1.0.0.json"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"arguments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"--std.opt=common.json"</span><span class="p">,</span><span class="w"> </span><span class="s2">"main.cpp"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-o"</span><span class="p">,</span><span class="w"> </span><span class="s2">"main.o"</span><span class="w"> </span><span class="p">]</span><span class="w">
+  </span><span class="nl">"arguments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"--std-opt=common.json"</span><span class="p">,</span><span class="w"> </span><span class="s2">"main.cpp"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-o"</span><span class="p">,</span><span class="w"> </span><span class="s2">"main.o"</span><span class="w"> </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span></code></pre>
 </div>
 </div>
@@ -1774,19 +1774,24 @@ the modern structure tool invocation.</p>
 <div class="sect1">
 <h2 id="_questions"><a class="anchor" href="#_questions"></a>7. Questions</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Why use a new option (<code>--std-opt=<em>file</em></code>) instead of existing response file
-methods like <code>@<em>file</em></code>?::</p>
-</div>
-<div class="paragraph">
-<p>Implementing support in tools for using the same response file options would:
-* Mean that the option to add the structured response files would vary from
-  tool to tool as some use different styles for specifying the file.
-* It would be harder to implement as it would require inspecting the file
-  content to determine the parsing method needed.</p>
-</div>
 <div class="dlist">
 <dl>
+<dt class="hdlist1">Why use a new option (<code>--std-opt=<em>file</em></code>) instead of existing response file methods like <code>@<em>file</em></code>?</dt>
+<dd>
+<p>Implementing support in tools for using the same response file options would:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Mean that the option to add the structured response files would vary from
+tool to tool as some use different styles for specifying the file.</p>
+</li>
+<li>
+<p>It would be harder to implement as it would require inspecting the file
+content to determine the parsing method needed.</p>
+</li>
+</ul>
+</div>
+</dd>
 <dt class="hdlist1">Why have an <code>arguments</code> field instead of just using the <code>options</code> field?</dt>
 <dd>
 <p>Having an <code>arguments</code> field has a couple of benefits:</p>

@@ -1,5 +1,5 @@
 = Structured Response Files
-:copyright: Copyright 2023 René Ferdinand Rivera Morell
+:copyright: Copyright {docyear} René Ferdinand Rivera Morell
 :license: Creative Commons Attribution 4.0 International License (CC BY 4.0)
 :email: grafikrobot@gmail.com
 :authors: René Ferdinand Rivera Morell
@@ -469,8 +469,7 @@ the modern structure tool invocation.
 
 == Questions
 
-Why use a new option (`--std-{opt}=__file__`) instead of existing response file
-methods like `@__file__`?::
+Why use a new option (`--std-{opt}=__file__`) instead of existing response file methods like `@__file__`?::
 
 Implementing support in tools for using the same response file options would:
 * Mean that the option to add the structured response files would vary from
