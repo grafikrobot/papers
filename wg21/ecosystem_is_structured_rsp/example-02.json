@@ -1,12 +1,12 @@
 {
   "options": [
     "position-independent-code",
-    { "optimization": "none" },
+    { "name": "optimization", "level": "off" },
     "no-inline",
-    { "warnings": "all"},
+    { "name": "warnings", "level": "all" },
     "warnings-as-errors",
-    {"debug-symbols": "on"},
-    { "include": [ "util/include" ] },
+    { "name": "debug-symbols", "value": "on" },
+    { "name": "include", "dirs": [ "util/include" ] },
     "compile"
   ]
 }

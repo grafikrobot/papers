@@ -9,7 +9,7 @@ import asciidoctor ;
 
 local name = ecosystem_is_structured_rsp ;
 local docn = P3051 ;
-local docr = R0 ;
+local docr = R1 ;
 local xxxx = $(docn)$(docr) ;
 
 project /wg21_$(name)

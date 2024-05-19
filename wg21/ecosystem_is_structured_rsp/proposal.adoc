@@ -21,6 +21,7 @@
 :tip-caption: ☀
 :warning-caption: ⚠
 :table-caption: Table
+:opt: opt
 
 ++++
 <style>
@@ -44,6 +45,11 @@ the best way to communicate compiling {CPP}.
 
 
 == Revision History
+
+=== Revision 1 (May 2024)
+
+Specify that `options` use abstract features instead of literal arguments, per
+SG15 feedback. Addition of wording.
 
 === Revision 0 (December 2023)
 
@@ -94,7 +100,7 @@ restrictions of some of the compiler drivers.
 
 Example response file:
 
-[source,rsp]
+[source,{opt}]
 ----
 # Several options on line
 -c --target=x86_64-unknown-linux-gnu
@@ -116,7 +122,7 @@ footnote:Clang[Clang Compiler User’s Manual (https://clang.llvm.org/docs/Users
 
 Example response file:
 
-[source,rsp]
+[source,{opt}]
 ----
 -o "hello" -Wl,--start-group "bin/hello.o" -Wl,-Bstatic -Wl,-Bdynamic -Wl,--end-group -fPIC -g
 ----
@@ -133,7 +139,7 @@ footnote:GCC[GCC Documentation (https://gcc.gnu.org/onlinedocs/gcc-13.2.0/gcc/Ov
 
 Example response file for "Linux":
 
-[source,rsp]
+[source,{opt}]
 ----
 # compile with these options
   -O0
@@ -142,7 +148,7 @@ Example response file for "Linux":
 
 Example response file for "Windows":
 
-[source,rsp]
+[source,{opt}]
 ----
 # compile with these options
   /0d
@@ -157,7 +163,7 @@ footnote:ICC[Intel(R) oneAPI DP{CPP}/{CPP} Compiler Developer Guide and Referenc
 
 * Use of `--options-file __filename__,...`, or `-optf __filename__,...`.
 
-[source,rsp]
+[source,{opt}]
 ----
 -O0
 ----
@@ -173,7 +179,7 @@ footnote:NVCC[NVIDIA CUDA Compiler Driver NVCC Documentation
 
 Example response file:
 
-[source,rsp]
+[source,{opt}]
 ----
 "hello.cpp" -c -Fo"bin\hello.obj" -TP /wd4675 /EHs /GR /Zc:throwingNew /Z7 /Od /Ob0 /W3 /MDd /Zc:forScope /Zc:wchar_t /Zc:inline /favor:blend
 ----
@@ -247,25 +253,19 @@ footnote:JSONCompileDb[JSON Compilation Database Format Specification (https://c
 
 With that context, here are two example structured response files:
 
-[%header,cols="1,1"]
-|===
+*Simple Arguments:*
 
-| Simple Arguments
-| Structured Options
-
-a|
 [source,json]
 ----
 include::example-01.json[]
 ----
 
-a|
+*Structured Options:*
+
 [source,json]
 ----
 include::example-02.json[]
 ----
-
-|===
 
 NOTE: The names and values in the `options` example is for exposition only. It
 may not reflect the actual names and values as proposed, now or in the future.
@@ -293,7 +293,7 @@ an array of option names or option objects. Where the option objects contain an
 option name and structured value. Some advantages of this style of structured
 data are:
 
-* The option names do indicate a particular option prefix (i.e. `-`, `--`,
+* The option names do not indicate a particular option prefix (i.e. `-`, `--`,
   `/`, etc) making it possible to use tool agnostic common names.
 * The ability to use arrays, or possibly objects, for the option values allows
   for logical groupings avoiding extra tracking of such as is present in
@@ -307,11 +307,6 @@ Some possible disadvantages:
 * If this style is also to be supported in the JSON compile database format it
   means more work to accomplish that. But again, the hope is that there is an
   easier mapping from internal structures to this format.
-
-One additional aspect of how the _arguments_ and _options_ are specified is that
-the goal is to allow for a simple transformation between them if that is needed.
-Although the _options_ to _arguments_ transformation is an easier one than the
-converse.
 
 The design we are proposing has the following key points:
 
@@ -336,16 +331,16 @@ We propose to add a single new command line option as a requirement to
 implementing this capability:
 
 --
-`$ tool --std-rsp=__file__`
+`$ tool --std-{opt}=__file__`
 --
 
 Or:
 
 --
-`$ tool -std-rsp:__file__`
+`$ tool -std-{opt}:__file__`
 --
 
-The `std-rsp` command line option, which can be repeated, will read the
+The `std-{opt}` command line option, which can be repeated, will read the
 indicated file and parse the JSON text contents to configure the tool as needed.
 
 === File Format
@@ -371,7 +366,7 @@ compile invocation for GCC, and compatible compiler front-ends, would look like:
 include::example-arguments.json[]
 ----
 
-You can also include `--std_rsp=__file__` options in the list of arguments to
+You can also include `--std-{opt}=__file__` options in the list of arguments to
 include the arguments that are referenced in another response file, and so on.
 For example, given a `common.json` response file as such:
 
@@ -388,7 +383,7 @@ include::example-args-recurse-main.json[]
 ----
 
 The effect is that the options in `common.json` are inserted in the arguments
-array at the location of the `--std_rsp=common.json` argument.
+array at the location of the `--std-{opt}=common.json` argument.
 
 The `options` field specifies a *single* array value of options values. An
 option value can be any value that follows the schema for the collection of
@@ -401,7 +396,7 @@ syntax of the options:
   etc) and without the value separator (i.e. `=`, `:`, etc).
 
 Like the `arguments` field, additional response files can be inserted at the
-indicated location by specifying a `{ "std-rsp": "file.json" }` option.
+indicated location by specifying a `{ "std.{opt}": "file.json" }` option.
 
 Do note though that even though the option names have a specific naming format
 they are still defined by the tool. The goal of having the restrictions on the
@@ -467,10 +462,15 @@ mind:
 . Specify `options` fields as "Flags" or "Names"?
 . Specify the `options` in this proposal or a separate proposal?
 
+The discussions in WG21/SG15 concluded that it's preferable to use "names" for
+the keys. This allows, as outlined in previous sections, a dual operation. The
+"arguments" for some form of backward compatibility. And the "options" for
+the modern structure tool invocation.
 
 == Questions
 
-Why use a new option (`--std_rsp=__file__`) instead of existing response file methods like `@__file__`?::
+Why use a new option (`--std-{opt}=__file__`) instead of existing response file
+methods like `@__file__`?::
 
 Implementing support in tools for using the same response file options would:
 * Mean that the option to add the structured response files would vary from
@@ -489,62 +489,293 @@ Having an `arguments` field has a couple of benefits:
   the `arguments` field in both.
 
 
-== Implementation Experience
-
-Here is a simple implementation, as a Python 3 script, that can accept any
-number of arguments will translate any referenced structured response files to
-use and return a list of arguments to pass to `g++``. Note, it's not very
-smart, as it makes various generalizations about option syntax for GCC. But it
-does show the simplicity of a possible minimal integration:
-
-[source,python]
-----
-include::stdrsp.py[]
-----
-
-Usage:
-
-[source,shell]
-----
-$ stdrsp.py --std_rsp=example-02.json
--fPIC -O0 -fno-inline -Wall -Werror -g -I"util/include" -c
-$ g++ `stdrsp.py --std_rsp=example-02.json` main.cpp
-$ ls -1 main.o
-main.o
-----
-
 == Polls
 
-None yet.
+=== SG15: P3051R0 (2034-03-19)
 
+SG15 wants to pursue defining a common response file format starting with
+supporting utf8 simple command lines, accepting the limitations for
+non-unicode arguments for the first version.
 
-////
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+| 6  | 6 | 0 | 0 | 0
+|===
+
+Result: Consensus
+
+SG15 wants to persue defining common structured tool configuration arguments as
+part of the response file format.
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+| 6  | 3 | 3 | 0 | 0
+|===
+
+Result: Consensus
 
 == Wording
 
 Wording is relative to
-link:https://github.com/cplusplus/ecosystem-is/tree/d9ea1239e883b54425002873bb8ebf5f3559dbad[ecosystem-is/d9ea1239].
-footnote:[Working Draf, {CPP} Ecosystem International Standard 2023-11-10 (https://github.com/cplusplus/ecosystem-is/tree/d9ea1239e883b54425002873bb8ebf5f3559dbad)]
+link:https://github.com/cplusplus/ecosystem-is/tree/56aeadb86d52a15aa4ec948a1eb8f247a8b703d8[ecosystem-is/56aeadb].
+footnote:[Working Draft, {CPP} Ecosystem International Standard 2023-11-10 (https://github.com/cplusplus/ecosystem-is/tree/56aeadb86d52a15aa4ec948a1eb8f247a8b703d8)]
 
-=== Specification: Structured Response File
+=== Specification: Structured Options
 
 Insert clause after _Introspection_ [intspct].
 
 [.ins.text-justify]
-[#rsp,reftext=rsp]
-==== Structure Response File [.right]#[<<rsp>>]#
+[#strctopt,reftext=strctopt]
+==== Structured Options [.right]#[<<strctopt>>]#
 
-[#rsp-pre,reftext=rsp.pre]
-===== Preamble [.right]#[<<rsp-pre>>]#
+[#strctopt-pre,reftext=strctopt.pre]
+===== Preamble [.right]#[<<strctopt-pre>>]#
 
-This clause specifies the `std.rsp` capability ([intspct.cap]) version `1.0.0`.
+This clause describes options, output, and formats that control the behavior
+of applications through the specification of arguments and options from
+_structured options_.
 
-[#rsp-overview,reftext=rsp.overview]
-==== Overview [.right]#[<<rsp-overview>>]#
+This clause specifies the `std.strctopt` capability ([intspct.cap]) version
+`1.0.0`.
 
-???
+An application can implement this capability.
 
- ////
+An application that implements the `std.strctopt` capability shall include the
+`std.strctopt` field and version value in the introspection JSON text output
+([intspct.schema.cap]).
+
+[.ins.text-justify]
+[#strctopt-overview,reftext=strctopt.overview]
+==== Overview [.right]#[<<strctopt-overview>>]#
+
+--
+`_application_ [ __std-strctopt-input-opt__ __file__ ]`
+--
+
+[#strctopt-options,reftext=strctopt.options]
+===== Options [.right]#[<<strctopt-options>>]#
+
+Applications shall accept one of two options syntax variations: `--name=value`
+or `-name:value`.
+
+Applications shall indicate an error if invoked with an option syntax variation
+that it does not support.
+
+[#strctopt-opt-input,reftext=strctopt.opt.input]
+===== Input Option [.right]#[<<strctopt-opt-input>>]#
+
+`__std-strctopt-input-opt__`::
+The pathname of a file to read the _structured options_ from.
+The option is specified as `--std-{opt}=__file__` or `-std-{opt}:__file__`.
+If __file__ is '`-`', the standard input shall be used.
+
+[#strctopt-file,reftext=strctopt.file]
+===== Files [.right]#[<<strctopt-file>>]#
+
+An application shall read a valid JSON text file that conforms to the
+_structured options_ schema (<<strctopt-schema>>).
+
+An application shall interpret the information in the file as if the options
+and arguments in the file occur in the same position as the
+`__std-strctopt-input-opt__` argument of the list of arguments given to the
+application. Given either directly as part of the application command line or
+as part of the arguments field (<<strctopt-field-args>>).
+
+[#strctopt-schema,reftext=strctopt.schema]
+===== Schema [.right]#[<<strctopt-schema>>]#
+
+A _structured options_ JSON text file shall contain one _structured options_
+JSON object (<<strctopt-schema-obj>>).
+
+[#strctopt-schema-obj,reftext=strctopt.schema.obj]
+====== Structured Options Object [.right]#[<<strctopt-schema-obj>>]#
+
+The _structured options object_ is the root JSON object of the structured
+options JSON text.
+
+A _structure options object_ can have the following fields.
+
+[#strctopt-field-schema,reftext=strctopt.schema.schema]
+====== JSON Schema Field [.right]#[<<strctopt-field-schema>>]#
+
+_Name_: `$schema` +
+_Type_: `string` +
+_Value_:
+  The value shall be a reference to a JSON Schema specification. +
+_Description_:
+  A _structure options object_ can contain this field.
+  If a _structure options object_ does not contain this field the value shall
+  be a reference to the JSON Schema corresponding to the current edition of this
+  standard.
+
+[#strctopt-field-ver,reftext=strctopt.schema.ver]
+====== Version Field [.right]#[<<strctopt-field-ver>>]#
+
+_Name_: `version` +
+_Type_: `string` +
+_Value_: `1` or `1.0` or `1.0.0` +
+_Description_:
+  The version field indicates the version of the _structured options_
+  represented in the contents of the JSON text.
+
+[#strctopt-field-args,reftext=strctopt.schema.args]
+====== Arguments Field [.right]#[<<strctopt-field-args>>]#
+
+_Name_: `arguments` +
+_Type_: `array` +
+_Value_:
+  The value shall be a JSON `array`. The items in the `array` shall be of JSON
+  `string` types.
+_Description_:
+  The arguments field specifies items to be interpreted directly as if they
+  occur in the command line of the program.
+
+The application shall process the items as if they replace the
+`__std-strctopt-input-opt__` argument.
+
+[#strctopt-field-opts,reftext=strctopt.schema.opts]
+====== Options Field [.right]#[<<strctopt-field-opts>>]#
+
+_Name_: `options` +
+_Type_: `array` +
+_Value_:
+  The value shall be a JSON `array`. The items in the `array` shall be of either
+  JSON `string` or `object` types. +
+_Items_: (for `string`) The item shall be a single _flag option_. +
+_Items_: (for `object`) The item shall be a valid _structured option_. +
+_Description_:
+  A _structured options object_ can contain this field.
+
+[#strctopt-names,reftext=strctopt.schema.names]
+====== Names [.right]#[<<strctopt-strctopt-names>>]#
+
+_name_: ::
+  one or more of: +
+  U+0061 .. U+007A LATIN SMALL LETTER A .. Z +
+  U+0030 .. u+0039 DIGIT ZERO .. NINE +
+  U+005F LOW LINE U+002D HYPHEN-MINUS
+_scope_: ::
+  _name_ _scope-designator_ _scope_~opt~
+_scope-designator_: ::
+  U+002E FULL STOP
+
+The _name_ `std` is reserved for _flag options_ and _structured options_
+defined in this standard.
+
+Applications can specify vendor designated _name_ parts outside of this
+standard.
+
+[#strctopt-flag-opt,reftext=strctopt.schema.flag]
+====== Flag Option [.right]#[<<strctopt-flag-opt>>]#
+
+_flag-option_: ::
+  one of: _yes-flag_ _no-flag_
+_yes-flag_: ::
+  one of: _yes-flag-name_ _scoped-yes-flag-name_
+_yes-flag-name_: ::
+  _name_
+_scoped-yes-flag-name_: ::
+  _scope_~opt~ _name_
+_no-flag_: ::
+  one of: _no-flag-name_ _scoped-no-flag-name_
+_no-flag-name_: ::
+  _no-flag-prefix_ _name_
+_scoped-no-flag-name_: ::
+  _scope_~opt~ _no-flag-name_
+_no-flag-prefix_: ::
+  U+006E LATIN SMALL LETTER N U+006F LATIN SMALL LETTER O +
+  U+002D HYPHEN-MINUS
+
+A _flag option_ is an option that allows or prevents the specified semantics
+of the option.
+
+A _flag option_ shall be either a _yes-flag_ or _no-flag_.
+
+A _yes-flag_ allows the semantics in the application as specified by effects of
+that behavior.
+
+A _no-flag_ prevents the semantics in the application as specified by effects
+of that behavior.
+
+A flag option without a _scope_ shall be equivalent the same flag option with a
+`std.` scope.
+
+[#strctopt-struct-opt,reftext=strctopt.schema.struct]
+====== Structured Option [.right]#[<<strctopt-struct-opt>>]#
+
+A structured option JSON object shall contain a _structured-option-name_
+field.
+
+A structured option JSON object can contain additional fields as specified by
+the option specification.
+
+_Name_: `name` +
+_Type_: `string` +
+_Value_: A valid _structured-option-name_. +
+_Description_: The name of the structured option.
+
+_structured-option-name_: ::
+  _scope_~opt~ _name_
+
+A  structured option without a _scope_ shall be equivalent to the same
+structured option with a `std.` _scope_.
+
+[#strctopt-opt-opt,reftext=strctopt.schema.opt.opt]
+====== Option `std.opt` [.right]#[<<strctopt-opt-opt>>]#
+
+The `std.opt` option defines an option to refer to additional structured
+options (<<strctopt>>) to process.
+
+An application shall implement this option.
+
+The `std.opt` option shall have the following fields.
+
+_Name_: `name` +
+_Type_: `string` +
+_Value_: `std.opt` +
+_Description_: The name of the option.
+
+_Name_: `files` +
+_Type_: `string` or `array` +
+_Value_:
+  (for `string`) A pathname to a file containing structured options
+  (<<strctopt>>). +
+_Value_:
+  (for `array`) A list of pathname `string`'s to files containing structured
+  options (<<strctopt>>) +
+_Description_:
+  One or more references to files that include additional structured options
+  (<<strctopt>>) that are processed as if they occur at the location of the
+  `std.opt` option.
+
+=== JSON Schema
+
+Insert clause after _Annex A_.
+
+[.ins.text-justify]
+[#strctopt-json-schema,reftext=strctoptjschm]
+==== Annex B (informative) Structured Options _JSON Schema_ [.right]#[<<strctopt-json-schema>>]#
+
+[#strctopt-json-schema-general,reftext=strctoptjschm.general]
+===== General [.right]#[<<strctopt-json-schema-general>>]#
+
+This Annex defines the structured options capability schema
+(<<strctopt-schema>>) in terms of a _JSON Schema_. A _JSON Schema_ refers to the
+IETF RFC draft "JSON Schema: A Media Type for Describing JSON Documents" as
+specified in https://json-schema.org/draft/2020-12/json-schema-core.html.
+
+This JSON Schema can be referenced as the `$schema` field with URI value of
+`"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_opt-1.0.0.json"`.
+
+[#strctopt-json-schema-spec,reftext=strctoptjschm.spec]
+===== JSON Schema Specification [.right]#[<<strctopt-json-schema-spec>>]#
+
+[source,json]
+----
+include::std_opt-1.0.0.json[]
+----
 
 == License
 

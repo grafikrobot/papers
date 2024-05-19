@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_opt-1.0.0.json",
+  "title": "Structured Options Version 1.0.0 JSON Schema",
+  "$defs": {},
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "description": "JSON Schema URI for the version of the structured options format.",
+      "type": "string",
+      "format": "uri"
+    },
+    "version": {
+      "description": "The Structured Options format version.",
+      "type": "string",
+      "enum": [
+        "1",
+        "1.0",
+        "1.0.0"
+      ]
+    },
+    "arguments": {
+      "description": "Application direct arguments.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "options": {
+      "description": "Application structured options.",
+      "type": "array",
+      "items": {
+        "oneOf": [
+
+        ]
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_rsp-1.0.0.json",
+  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_opt-1.0.0.json",
   "version": "1",
-  "arguments": [ "--std_rsp=common.json", "main.cpp", "-o", "main.o" ]
+  "arguments": [ "--std.opt=common.json", "main.cpp", "-o", "main.o" ]
 }
