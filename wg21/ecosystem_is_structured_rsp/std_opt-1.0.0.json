@@ -2,7 +2,25 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_opt-1.0.0.json",
   "title": "Structured Options Version 1.0.0 JSON Schema",
-  "$defs": {},
+  "$defs": {
+    "Version": {
+      "type": "string",
+      "pattern": "^[0-9]+([.][0-9]+){0,2}$"
+    },
+    "Name": {
+      "type": "string",
+      "pattern": "^[a-z0-9_\\-.]*[a-z0-9_-]+$"
+    },
+    "StringOrArray": {
+      "type": [
+        "string",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    }
+  },
   "type": "object",
   "properties": {
     "$schema": {
@@ -13,11 +31,7 @@
     "version": {
       "description": "The Structured Options format version.",
       "type": "string",
-      "enum": [
-        "1",
-        "1.0",
-        "1.0.0"
-      ]
+      "$ref": "#/$defs/Version"
     },
     "arguments": {
       "description": "Application direct arguments.",
@@ -31,9 +45,56 @@
       "type": "array",
       "items": {
         "oneOf": [
-
+          {
+            "$ref": "#/$opts/Std.Opt"
+          },
+          {
+            "$ref": "#/$opts/Any"
+          }
         ]
       }
+    }
+  },
+  "$opts": {
+    "Std.Opt": {
+      "description": "Recursive reference to one or more structured option files.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "enum": [
+            "std.opt",
+            "opt"
+          ]
+        },
+        "files": {
+          "$ref": "#/$defs/StringOrArray"
+        },
+        "required": [
+          "name",
+          "files"
+        ]
+      },
+      "additionalProperties": false
+    },
+    "Any": {
+      "description": "Any other structured option.",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "$ref": "#/$defs/Name"
+            },
+            "required": [
+              "name"
+            ]
+          },
+          "additionalProperties": true
+        },
+        {
+          "$ref": "#/$defs/Name"
+        }
+      ]
     }
   }
 }
