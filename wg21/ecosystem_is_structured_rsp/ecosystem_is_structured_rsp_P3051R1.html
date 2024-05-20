@@ -839,7 +839,7 @@ pre.rouge .ss {
 <span id="author" class="author">René Ferdinand Rivera Morell</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> P3051R1,</span>
-<span id="revdate">2024-05-19</span>
+<span id="revdate">2024-05-20</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -872,7 +872,7 @@ pre.rouge .ss {
 <li><a href="#_questions">7. Questions</a></li>
 <li><a href="#_polls">8. Polls</a>
 <ul class="sectlevel2">
-<li><a href="#_sg15_p3051r0_2034_03_19">8.1. SG15: P3051R0 (2034-03-19)</a></li>
+<li><a href="#_sg15_p3051r0_2024_03_19">8.1. SG15: P3051R0 (2024-03-19)</a></li>
 </ul>
 </li>
 <li><a href="#_wording">9. Wording</a>
@@ -998,7 +998,7 @@ Document #:
 Date: 
 </td>
 <td class="hdlist2">
-<p>2024-05-19</p>
+<p>2024-05-20</p>
 </td>
 </tr>
 <tr>
@@ -1818,7 +1818,7 @@ the <code>arguments</code> field in both.</p>
 <h2 id="_polls"><a class="anchor" href="#_polls"></a>8. Polls</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_sg15_p3051r0_2034_03_19"><a class="anchor" href="#_sg15_p3051r0_2034_03_19"></a>8.1. SG15: P3051R0 (2034-03-19)</h3>
+<h3 id="_sg15_p3051r0_2024_03_19"><a class="anchor" href="#_sg15_p3051r0_2024_03_19"></a>8.1. SG15: P3051R0 (2024-03-19)</h3>
 <div class="paragraph">
 <p>SG15 wants to pursue defining a common response file format starting with
 supporting utf8 simple command lines, accepting the limitations for
@@ -1937,18 +1937,7 @@ of applications through the specification of arguments and options from
 </div>
 </div>
 <div class="sect4">
-<h5 id="strctopt-options"><a class="anchor" href="#strctopt-options"></a>9.1.2.1. Options <span class="right">[<a href="#strctopt-options">strctopt.options</a>]</span></h5>
-<div class="paragraph">
-<p>Applications shall accept one of two options syntax variations: <code>--name=value</code>
-or <code>-name:value</code>.</p>
-</div>
-<div class="paragraph">
-<p>Applications shall indicate an error if invoked with an option syntax variation
-that it does not support.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="strctopt-opt-input"><a class="anchor" href="#strctopt-opt-input"></a>9.1.2.2. Input Option <span class="right">[<a href="#strctopt-opt-input">strctopt.opt.input</a>]</span></h5>
+<h5 id="strctopt-input"><a class="anchor" href="#strctopt-input"></a>9.1.2.1. Input Option <span class="right">[<a href="#strctopt-input">strctopt.input</a>]</span></h5>
 <div class="dlist">
 <dl>
 <dt class="hdlist1"><code><em>std-strctopt-input-opt</em></code></dt>
@@ -1961,7 +1950,7 @@ If <em>file</em> is &#8216;-&#8217;, the standard input shall be used.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="strctopt-file"><a class="anchor" href="#strctopt-file"></a>9.1.2.3. Files <span class="right">[<a href="#strctopt-file">strctopt.file</a>]</span></h5>
+<h5 id="strctopt-file"><a class="anchor" href="#strctopt-file"></a>9.1.2.2. Files <span class="right">[<a href="#strctopt-file">strctopt.file</a>]</span></h5>
 <div class="paragraph">
 <p>An application shall read a valid JSON text file that conforms to the
 <em>structured options</em> schema (<a href="#strctopt-schema">strctopt.schema</a>).</p>
@@ -1975,13 +1964,13 @@ as part of the arguments field (<a href="#strctopt-field-args">strctopt.schema.a
 </div>
 </div>
 <div class="sect4">
-<h5 id="strctopt-schema"><a class="anchor" href="#strctopt-schema"></a>9.1.2.4. Schema <span class="right">[<a href="#strctopt-schema">strctopt.schema</a>]</span></h5>
+<h5 id="strctopt-schema"><a class="anchor" href="#strctopt-schema"></a>9.1.2.3. Schema <span class="right">[<a href="#strctopt-schema">strctopt.schema</a>]</span></h5>
 <div class="paragraph">
 <p>A <em>structured options</em> JSON text file shall contain one <em>structured options</em>
 JSON object (<a href="#strctopt-schema-obj">strctopt.schema.obj</a>).</p>
 </div>
 <div class="sect5">
-<h6 id="strctopt-schema-obj"><a class="anchor" href="#strctopt-schema-obj"></a>9.1.2.4.1. Structured Options Object <span class="right">[<a href="#strctopt-schema-obj">strctopt.schema.obj</a>]</span></h6>
+<h6 id="strctopt-schema-obj"><a class="anchor" href="#strctopt-schema-obj"></a>9.1.2.3.1. Structured Options Object <span class="right">[<a href="#strctopt-schema-obj">strctopt.schema.obj</a>]</span></h6>
 <div class="paragraph">
 <p>The <em>structured options object</em> is the root JSON object of the structured
 options JSON text.</p>
@@ -1991,7 +1980,7 @@ options JSON text.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="strctopt-field-schema"><a class="anchor" href="#strctopt-field-schema"></a>9.1.2.4.2. JSON Schema Field <span class="right">[<a href="#strctopt-field-schema">strctopt.schema.schema</a>]</span></h6>
+<h6 id="strctopt-field-schema"><a class="anchor" href="#strctopt-field-schema"></a>9.1.2.3.2. JSON Schema Field <span class="right">[<a href="#strctopt-field-schema">strctopt.schema.schema</a>]</span></h6>
 <div class="paragraph">
 <p><em>Name</em>: <code>$schema</code><br>
 <em>Type</em>: <code>string</code><br>
@@ -2001,11 +1990,11 @@ options JSON text.</p>
   A <em>structure options object</em> can contain this field.
   If a <em>structure options object</em> does not contain this field the value shall
   be a reference to the JSON Schema corresponding to the current edition of this
-  standard.</p>
+  standard (<a href="#strctopt-json-schema">strctoptjschm</a>).</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="strctopt-field-ver"><a class="anchor" href="#strctopt-field-ver"></a>9.1.2.4.3. Version Field <span class="right">[<a href="#strctopt-field-ver">strctopt.schema.ver</a>]</span></h6>
+<h6 id="strctopt-field-ver"><a class="anchor" href="#strctopt-field-ver"></a>9.1.2.3.3. Version Field <span class="right">[<a href="#strctopt-field-ver">strctopt.schema.ver</a>]</span></h6>
 <div class="paragraph">
 <p><em>Name</em>: <code>version</code><br>
 <em>Type</em>: <code>string</code><br>
@@ -2016,7 +2005,7 @@ options JSON text.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="strctopt-field-args"><a class="anchor" href="#strctopt-field-args"></a>9.1.2.4.4. Arguments Field <span class="right">[<a href="#strctopt-field-args">strctopt.schema.args</a>]</span></h6>
+<h6 id="strctopt-field-args"><a class="anchor" href="#strctopt-field-args"></a>9.1.2.3.4. Arguments Field <span class="right">[<a href="#strctopt-field-args">strctopt.schema.args</a>]</span></h6>
 <div class="paragraph">
 <p><em>Name</em>: <code>arguments</code><br>
 <em>Type</em>: <code>array</code><br>
@@ -2033,7 +2022,7 @@ options JSON text.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="strctopt-field-opts"><a class="anchor" href="#strctopt-field-opts"></a>9.1.2.4.5. Options Field <span class="right">[<a href="#strctopt-field-opts">strctopt.schema.opts</a>]</span></h6>
+<h6 id="strctopt-field-opts"><a class="anchor" href="#strctopt-field-opts"></a>9.1.2.3.5. Options Field <span class="right">[<a href="#strctopt-field-opts">strctopt.schema.opts</a>]</span></h6>
 <div class="paragraph">
 <p><em>Name</em>: <code>options</code><br>
 <em>Type</em>: <code>array</code><br>
@@ -2047,7 +2036,7 @@ options JSON text.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="strctopt-names"><a class="anchor" href="#strctopt-names"></a>9.1.2.4.6. Names <span class="right">[<a href="#strctopt-strctopt-names">[strctopt-strctopt-names]</a>]</span></h6>
+<h6 id="strctopt-names"><a class="anchor" href="#strctopt-names"></a>9.1.2.3.6. Names <span class="right">[<a href="#strctopt-strctopt-names">[strctopt-strctopt-names]</a>]</span></h6>
 <div class="dlist">
 <dl>
 <dt class="hdlist1"><em>name</em>: </dt>
@@ -2077,7 +2066,7 @@ standard.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="strctopt-flag-opt"><a class="anchor" href="#strctopt-flag-opt"></a>9.1.2.4.7. Flag Option <span class="right">[<a href="#strctopt-flag-opt">strctopt.schema.flag</a>]</span></h6>
+<h6 id="strctopt-flag-opt"><a class="anchor" href="#strctopt-flag-opt"></a>9.1.2.3.7. Flag Option <span class="right">[<a href="#strctopt-flag-opt">strctopt.schema.flag</a>]</span></h6>
 <div class="dlist">
 <dl>
 <dt class="hdlist1"><em>flag-option</em>: </dt>
@@ -2136,7 +2125,7 @@ of that behavior.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="strctopt-struct-opt"><a class="anchor" href="#strctopt-struct-opt"></a>9.1.2.4.8. Structured Option <span class="right">[<a href="#strctopt-struct-opt">strctopt.schema.struct</a>]</span></h6>
+<h6 id="strctopt-struct-opt"><a class="anchor" href="#strctopt-struct-opt"></a>9.1.2.3.8. Structured Option <span class="right">[<a href="#strctopt-struct-opt">strctopt.schema.struct</a>]</span></h6>
 <div class="paragraph">
 <p>A structured option JSON object shall contain a <em>structured-option-name</em>
 field.</p>
@@ -2165,7 +2154,7 @@ structured option with a <code>std.</code> <em>scope</em>.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="strctopt-opt-opt"><a class="anchor" href="#strctopt-opt-opt"></a>9.1.2.4.9. Option <code>std.opt</code> <span class="right">[<a href="#strctopt-opt-opt">strctopt.schema.opt.opt</a>]</span></h6>
+<h6 id="strctopt-opt-opt"><a class="anchor" href="#strctopt-opt-opt"></a>9.1.2.3.9. Option <code>std.opt</code> <span class="right">[<a href="#strctopt-opt-opt">strctopt.schema.opt.opt</a>]</span></h6>
 <div class="paragraph">
 <p>The <code>std.opt</code> option defines an option to refer to additional structured
 options (<a href="#strctopt">strctopt</a>) to process.</p>

@@ -490,7 +490,7 @@ Having an `arguments` field has a couple of benefits:
 
 == Polls
 
-=== SG15: P3051R0 (2034-03-19)
+=== SG15: P3051R0 (2024-03-19)
 
 SG15 wants to pursue defining a common response file format starting with
 supporting utf8 simple command lines, accepting the limitations for
@@ -553,17 +553,8 @@ An application that implements the `std.strctopt` capability shall include the
 `_application_ [ __std-strctopt-input-opt__ __file__ ]`
 --
 
-[#strctopt-options,reftext=strctopt.options]
-===== Options [.right]#[<<strctopt-options>>]#
-
-Applications shall accept one of two options syntax variations: `--name=value`
-or `-name:value`.
-
-Applications shall indicate an error if invoked with an option syntax variation
-that it does not support.
-
-[#strctopt-opt-input,reftext=strctopt.opt.input]
-===== Input Option [.right]#[<<strctopt-opt-input>>]#
+[#strctopt-input,reftext=strctopt.input]
+===== Input Option [.right]#[<<strctopt-input>>]#
 
 `__std-strctopt-input-opt__`::
 The pathname of a file to read the _structured options_ from.
@@ -607,7 +598,7 @@ _Description_:
   A _structure options object_ can contain this field.
   If a _structure options object_ does not contain this field the value shall
   be a reference to the JSON Schema corresponding to the current edition of this
-  standard.
+  standard (<<strctopt-json-schema>>).
 
 [#strctopt-field-ver,reftext=strctopt.schema.ver]
 ====== Version Field [.right]#[<<strctopt-field-ver>>]#
