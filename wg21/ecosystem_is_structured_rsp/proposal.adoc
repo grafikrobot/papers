@@ -626,7 +626,7 @@ _Name_: `arguments` +
 _Type_: `array` +
 _Value_:
   The value shall be a JSON `array`. The items in the `array` shall be of JSON
-  `string` types.
+  `string` types. +
 _Description_:
   The arguments field specifies items to be interpreted directly as if they
   occur in the command line of the program.
