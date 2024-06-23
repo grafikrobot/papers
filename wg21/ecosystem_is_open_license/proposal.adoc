@@ -1,0 +1,262 @@
+:copyright: Copyright {docyear} René Ferdinand Rivera Morell
+:license: Creative Commons Attribution 4.0 International License (CC BY 4.0)
+:email: grafikrobot@gmail.com
+:authors: René Ferdinand Rivera Morell
+:audience: WG21
+:revdate: {docdate}
+:version-label!:
+:reproducible:
+:nofooter:
+:sectanchors:
+:sectnums:
+:sectnumlevels: 10
+:source-highlighter: rouge
+:source-language: {CPP}
+:toc: left
+:toclevels: 2
+:caution-caption: ⚑
+:important-caption: ‼
+:note-caption: ℹ
+:tip-caption: ☀
+:warning-caption: ⚠
+:table-caption: Table
+:opt: opt
+
+++++
+<style>
+include::../std-min.css[]
+</style>
+++++
+
+[horizontal]
+Document #: :: ISO/IEC/JTC1/SC22/WG21/{revnumber}
+Date: :: {revdate}
+Audience: :: {audience}
+Authors: :: {authors}
+Reply-to: :: {email}
+Copyright: :: {copyright}, {license}
+
+
+== Abstract
+
+Advocate and explain the requirement that the {CPP} Ecosystem IS (EcoIS) adopt a
+license that allows for open and free development and publication.
+
+
+== Revision History
+
+=== Revision 0 (July 2024)
+
+Initial text.
+
+
+== Motivation
+
+Traditionally, and by default, ISO standards development follows a closed garden
+model. In the model all material submitted towards ISO standards is, by default,
+copyrighted to ISO for their exclusive right.
+footnote:ISODeclaration[Declaration for participants in ISO activities (https://www.iso.org/declaration-for-participants-in-iso-activities.html)]
+Such a model creates some problems for the success of the EcoIS. The EcoIS will
+be most successful if it is both developed and adopted by the widest possible
+participants in the {CPP} tooling ecosystem. Participants such as: developers
+of source and executable code analyzers, build systems, source and executable
+processors, integrated development environments, debuggers, and so on. But the
+plurality of those participants: are not members of ISO, can not afford the
+commitment to participate directly in ISO, and are not likely to adopt a
+standard they can not readily access.
+
+
+== Proposal
+
+Our proposal is to develop the EcoIS from individually copyrighted content with
+a license that allows for unfettered use by ISO for development and commercial
+use. Specifically it would be that:
+
+. Individual Pnnn papers would be copyrighted by the authors and licensed under
+  the "Creative Commons Attribution 4.0 International License" (CC-BY-4.0).
+  footnote:CCBY4[Creative Commons Attribution 4.0 International License (https://creativecommons.org/licenses/by/4.0/)]
+. The resulting EcoIS Nnnnn draft paper and published International Standard
+  would be copyrighted by the collection of authors, ISO/IEC.
+. The resulting EcoIS Nnnnn draft paper and published International Standard
+  would be licensed under CC-BY-4.0 and include required attribution.
+
+You may ask, is that allowed? And the answer is, yes. ISO has specific wording
+in the _Declaration for participants in ISO activities_
+footnote:ISODeclaration[]
+, in the _ISO/IEC Directives, Part 1_
+footnote:ISODirectives[ISO/IEC Directives, Part 1 Procedures for the technical work — Consolidated ISO Supplement — Procedures specific to ISO (https://www.iso.org/directives-and-policies.html)]
+, and in the _Clearing content added to standards_
+footnote:ISOClearance[Clearing content added to standards (https://connect.iso.org/display/ipr/Clearing+content+added+to+standards)]
+that makes this possible.
+
+Lets look at those and explain how the wording allows this application below.
+
+
+== ISO and Copyright
+
+Contrary to common belief ISO does not have a singular copyright ownership
+policy. Instead it has a dual copyright model that by default does indeed
+retain copyright ownership of all materials. But it has an exception to make it
+possible to use already copyrighted material to incorporate and republish into
+ISO standards.
+
+Let consider the _Declaration for participants in ISO activities_
+footnote:ISODeclaration[] which we all agree to when doing anything, and even
+when we log in to the iso.org web site. Bel is the full text of that
+declaration with the key parts underlined:
+
+[quote,Declaration for participants in ISO activities]
+____
++I+. Copyright
+
+You may participate in drafting ISO and ISO/IEC standards and you may submit
+content to the ISO and ISO/IEC standards development process. By participating
+in the ISO standards development process you get access to all kinds of
+information filed during this process such as standards and their drafts,
+content, etc. Content can be any kind of content submitted in the standards
+development process, such as publications, documents, text, figures, images,
+software, etc., to be considered for inclusion in ISO and ISO/IEC standards.
+You agree that:
+
+1) The full copyright in all ISO standards and their drafts shall be owned by
+ISO. In the case of ISO/IEC standards, such ownership shall be held jointly by
+ISO and IEC.
+
+[.underline]
+2) Content, such as publications, documents, text, figures, images or other
+content that you submit to the ISO or ISO/IEC standards development process
+may be copyright protected. Copyright in such content remains with the initial
+copyright owner. If you offer such content, you undertake to declare this to
+ISO or ISO/IEC, identify the name of the copyright holder and assist ISO or
+ISO/IEC in obtaining appropriate permission to i) share the content in the
+standards development process, ii) to publish the content, or parts thereof,
+in original or modified form in ISO or ISO/IEC standards and iii) to exploit
+the content as part of an ISO or ISO/IEC standard according to ISO and IEC
+practice. If you or the organization you are representing own/s the copyright
+in the content, such permission is implicitly granted to ISO or ISO/IEC, upon
+submission of the content to the standards development process. More details
+about the scope of the above permission are available at
+link:https://connect.iso.org/x/SYBGAQ[connect.iso.org/x/SYBGAQ].
+
+3) You agree to respect copyright in the standards, draft standards, and
+content of others submitted to the standards development process. You are
+allowed to share the standards and drafts thereof within the standards
+development process according to ISO's copyright policy, POCOSA. POCOSA does
+not permit you to post standards and drafts thereof on the Internet for free
+public access.
+
+4) Participation in the drafting of the standards, and content to the
+standards development process, are provided without any payment by ISO or IEC
+to you or any third party.
+
+5) Full copyright includes but is not limited to the exclusive right of
+reproduction, distribution, making available to the public, translation,
+adaptation, in any existing or future electronic or printed format, for the
+entire term of copyright protection.
+____
+
+Before moving on to the other places where ISO repeats this allowance lets
+consider each point in the above:
+
+[quote]
+Content, such as publications, documents, text, figures, images or other
+content that you submit to the ISO or ISO/IEC standards development process
+may be copyright protected.
+
+That gives the context under which the rest of the paragraph applies. It
+recognizes that it's a reality that aspects, and even entirety, of content
+used for ISO standards can have an existing copyright. That copyright could be
+held by anyone. For example it might be an external standards organization like
+the OASIS Open Standards Organization. Or it could even be individual persons.
+
+[quote]
+Copyright in such content remains with the initial copyright owner.
+
+That is likely the most important sentence in the clause. It supports the
+understood International Law that copyright is not automatically transferred.
+Which means that I, René Ferdinand Rivera Morell, post a paper to ISO/WG21 that
+I have personally assigned my copyright to ISO must respect that copyright.
+For example see this same paper and the copyright notice in the header.
+
+[quote]
+If you offer such content, you undertake to declare this to
+ISO or ISO/IEC, identify the name of the copyright holder and assist ISO or
+ISO/IEC in obtaining appropriate permission to i) share the content in the
+standards development process, ii) to publish the content, or parts thereof,
+in original or modified form in ISO or ISO/IEC standards and iii) to exploit
+the content as part of an ISO or ISO/IEC standard according to ISO and IEC
+practice.
+
+This next rather long sentence essentially says that in such cases ISO/IEC
+must be allowed to everything they are allowed to do if ISO held the full
+copyright to the content. But how can ISO be allowed o do that? The legal
+mechanism for accomplishing it is through licensing. Which is essentially what
+that sentence is. It's a very permissive, succinctly spelled out, license
+grant. But one is not legally limited to using solely those license terms.
+One can use any terms that include the above allowances. Once such license is
+CC-BY-4.0. footnote:CCBY4[]
+
+[quote]
+If you or the organization you are representing own/s the copyright
+in the content, such permission is implicitly granted to ISO or ISO/IEC, upon
+submission of the content to the standards development process.
+
+Granting such licensing can be a laborious process requiring filling out signed
+forms by all parties, and ISO does allow for that, but it can also be done in a
+simpler blanket declaration as long as both sides give it. Which is what the
+above is doing for the ISO side of the contract. And what copyright holders do
+by appropriate use and application of the CC-BY-4.0 license.
+
+The ISO/IEC Directives footnote:ISODirectives[] repeat the same information but
+in less legally formal terms. Here's the relevant clause in that document with
+similarly underlined text to highlight the important paragraphs.
+
+[quote,ISO/IEC Directives, Part 1 Procedures for the technical work — Consolidated ISO Supplement — Procedures specific to ISO]
+____
+2.13 Copyright
+
+The copyright for all drafts and International Standards and other publications
+belongs to ISO, IEC or ISO and IEC, respectively as represented by the Office
+of the CEO.
+
+[.underline]
+The content of, for example, an International Standard may originate from a
+number of sources, including existing national standards, articles published in
+scientific or trade journals, original research and development work,
+descriptions of commercialized products, etc. These sources may be subject to
+one or more rights.
+
+[.underline]
+In ISO and IEC, there is an understanding that original material contributed to
+becoming a part of an ISO, IEC or ISO/IEC publication can be copied and
+distributed within the ISO and/or IEC systems (as relevant) as part of the
+consensus building process, this being without prejudice to the rights of the
+original copyright owner to exploit the original text elsewhere. Where the
+material is already subject to copyright, the right should be granted to ISO
+and/or IEC to reproduce and circulate the material. This is frequently done
+without recourse to a written agreement or, at most, to a simple written
+statement of acceptance. Where contributors wish a formal signed agreement
+concerning the copyright of any submissions they make to ISO and/or IEC, such
+requests shall be addressed to ISO Central Secretariat or the IEC Secretariat,
+respectively.
+
+Attention is drawn to the fact that the respective members of ISO and IEC have
+the right to adopt and re-publish any respective ISO and/or IEC document as
+their national standard. Similar forms of endorsement do or may exist (for
+example, with regional standardization organizations).
+____
+
+As you may have noticed an important condition to this alternative copyright
+route to be available is for the paper, draft, etc to be originally copyrighted.
+Which currently, for all the EcoIS content is the case. Including this very
+paper that you are reading. See the following for such:
+
+* link:https://wg21.link/P2717[P2717] SG15 Tooling: Tool Introspection
+* link:https://wg21.link/P3051[P3051] SG15 Tooling: Structured Response Files
+
+== License
+
+This work is licensed under the Creative Commons Attribution 4.0 International
+License. To view a copy of this license, visit
+http://creativecommons.org/licenses/by/4.0/ or send a letter to Creative
+Commons, PO Box 1866, Mountain View, CA 94042, USA.
