@@ -7,7 +7,7 @@ http://www.boost.org/LICENSE_1_0.txt)
 
 import asciidoctor ;
 
-local name = ecosystem_is_structured_options ;
+local name = ecosystem_is_structured_core_opt ;
 local docn = D3335 ;
 local docr = R0 ;
 local xxxx = $(docn)$(docr) ;
