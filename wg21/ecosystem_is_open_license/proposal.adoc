@@ -103,7 +103,7 @@ ISO standards.
 
 Let consider the _Declaration for participants in ISO activities_
 footnote:ISODeclaration[] which we all agree to when doing anything, and even
-when we log in to the iso.org web site. Bel is the full text of that
+when we log in to the iso.org web site. Bellow is the full text of that
 declaration with the key parts underlined:
 
 [quote,Declaration for participants in ISO activities]
@@ -202,11 +202,9 @@ If you or the organization you are representing own/s the copyright
 in the content, such permission is implicitly granted to ISO or ISO/IEC, upon
 submission of the content to the standards development process.
 
-Granting such licensing can be a laborious process requiring filling out signed
-forms by all parties, and ISO does allow for that, but it can also be done in a
-simpler blanket declaration as long as both sides give it. Which is what the
-above is doing for the ISO side of the contract. And what copyright holders do
-by appropriate use and application of the CC-BY-4.0 license.
+The above makes it rather simple to give ISO the appropriate license grant by
+making it an implicit part of submitting content to ISO. Which copyright
+holders can do by appropriate use and application of the CC-BY-4.0 license.
 
 The ISO/IEC Directives footnote:ISODirectives[] repeat the same information but
 in less legally formal terms. Here's the relevant clause in that document with
