@@ -1,0 +1,193 @@
+= Structured Core Options
+:copyright: Copyright {docyear} René Ferdinand Rivera Morell
+:license: Creative Commons Attribution 4.0 International License (CC BY 4.0)
+:email: grafikrobot@gmail.com
+:authors: René Ferdinand Rivera Morell
+:audience: SG15
+:revdate: {docdate}
+:version-label!:
+:reproducible:
+:nofooter:
+:sectanchors:
+:sectnums:
+:sectnumlevels: 10
+:source-highlighter: rouge
+:source-language: {CPP}
+:toc: left
+:toclevels: 2
+:caution-caption: ⚑
+:important-caption: ‼
+:note-caption: ℹ
+:tip-caption: ☀
+:warning-caption: ⚠
+:table-caption: Table
+:opt: opt
+
+++++
+<style>
+include::../std-min.css[]
+</style>
+++++
+
+[horizontal]
+Document #: :: ISO/IEC/JTC1/SC22/WG21/{revnumber}
+Date: :: {revdate}
+Audience: :: {audience}
+Authors: :: {authors}
+Reply-to: :: {email}
+Copyright: :: {copyright}, {license}
+
+
+== Abstract
+
+Specify a minimal set of core _structured options_
+footnote:P3851[P3051; Structured Response Files(https://wg21.link/P3051)]
+for {CPP} compiler front ends.
+
+
+== Revision History
+
+=== Revision 0 (July 2024)
+
+Initial text.
+
+
+== Motivation
+
+Tools in the {CPP} ecosystem have dealt with using a myriad of different options
+to invoke {CPP} compiler front ends for decades. Although we have found ways to
+manage the variety it is advantageous to agree on a common language to reduce
+the growing complexities that the variety creates.
+
+Having a standard common set of structured options allows for:
+
+* Reuse of implementation by tools that interface with compiler front ends.
+* Wider adoption of tools that use, as consumers or producers, the common
+  options.
+* Lowers the barriers for unexperienced users as they have less to learn.
+* Can be a basis for other standards to form a common configuration vocabulary.
+
+
+== Scope
+
+This proposal aims to specify a set of {CPP} compiler frontend _structured
+options_ footnote:P3851[] sufficient to build common {CPP} use cases. This
+includes specifying both the names and semantics of the _structured options_.
+
+This *does not* aim to standardize compiler frontend command line arguments.
+Although vendors are free to adopt the names and semantics specified if they
+wish. And we encourage such adoption.
+
+
+== Design
+
+The approach for the names and semantics of the options follows these goals:
+
+* Prefer widely used terms in current tools, not just {CPP} compiler front ends.
+* Use widely understood semantics.
+* Improve the structure of the data.
+
+=== Options
+
+==== Include Directories
+
+[cols="1,2,4",options="header"]
+|===
+| Tool
+| Name
+| Semantics
+
+| MSVC
+| `I`, `INCLUDE` env var
+| Adds the directory to the include search list.
+
+| GCC
+| `I`
+| Adds the directory to the include search list.
+
+| CMake
+| `include_directories()` or `INCLUDE_DIRECTORIES`
+| Adds the directories to the include search list.
+
+| B2
+| `include`
+| Adds the directory, order unspecified, to the include search list.
+|===
+
+Name::
+Use `std.include` or shortened `include`.
+
+Value::
+The option would be either a single `string` or an `array` of `string`-s. Each
+`string` is a pathname of which interpretation is up to the application.
+
+Semantics::
+Adds the listed pathnames to the end of the include directories of the
+application. It is up to the application to interpret how the composed list of
+directories is used. But it commonly interpreted as `#include` preprocessor
+directives to look for files in the order of the include directories list.
+
+== Wording
+
+Wording is relative to
+link:https://wg21.link/P3051R1[P3051R1 Structured Response Files].
+
+=== Specification: Structured Options
+
+Insert clause after _Structured Options_ [strctopt].
+
+[.ins.text-justify]
+[#strctopt-core,reftext=strctopt.core]
+==== Structured Core Options [.right]#[<<strctopt-core>>]#
+
+[#strctopt-core-pre,reftext=strctopt.core.pre]
+===== Preamble [.right]#[<<strctopt-core-pre>>]#
+
+This clause describes the schema and semantics of core _structured options_
+([strctopt.schema.struct]) for {CPP} compiler front-ends.
+
+This clause specifies the `std.strctopt.core` capability ([intspct.cap])
+vresion `1.0.0`.
+
+An application can implement this capability.
+
+An application that implements the `std.strctopt.core` capability shall include
+the `std.strctopt.core` field and version value in the introspection JSON
+text output ([intspct.schema.cap]).
+
+[.ins.text-justify]
+[#strctopt-core-inc,reftext=strctopt.core.inc]
+==== Include Directories [.right]#[<<strctopt-core-inc>>]#
+
+The `std.include` option defines an option to specify a list of directory
+pathnames that a {CPP} preprocessor uses to search for inclusion.
+
+The `std.include` option shall have the following fields.
+
+_Name_: `name` +
+_Type_: `string` +
+_Value_: `std.include` +
+_Description_: The name of the option.
+
+_Name_: `files` +
+_Type_: `string` or `array` +
+_Value_:
+  (for `string`) A pathname to a directory. +
+_Value_:
+  (for `array`) A list of pathname `string` items to directories. +
+_Description_:
+  One or more entries to directories that are appended in the order given to
+  the list of directories searched by the header inclusion of a {CPP}
+  preprocessor.
+
+[.ins.text-justify]
+[#strctopt-core-xxx,reftext=strctopt.core.xxx]
+==== Xxx [.right]#[<<strctopt-core-xxx>>]#
+
+
+== License
+
+This work is licensed under the Creative Commons Attribution 4.0 International
+License. To view a copy of this license, visit
+http://creativecommons.org/licenses/by/4.0/ or send a letter to Creative
+Commons, PO Box 1866, Mountain View, CA 94042, USA.
