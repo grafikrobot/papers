@@ -93,7 +93,7 @@ retain copyright ownership of all materials. But it has an exception to make it
 possible to use already copyrighted material to incorporate and republish into
 ISO standards.
 
-Let consider the _Declaration for participants in ISO activities_
+Lets consider the _Declaration for participants in ISO activities_
 footnote:ISODeclaration[] which we all agree to when doing anything, and even
 when we log in to the iso.org web site. Bellow is the full text of that
 declaration with the key parts underlined:
@@ -167,8 +167,8 @@ Copyright in such content remains with the initial copyright owner.
 
 That is likely the most important sentence in the clause. It supports the
 understood International Law that copyright is not automatically transferred.
-Which means that I, René Ferdinand Rivera Morell, post a paper to ISO/WG21 that
-I have personally assigned my copyright to ISO must respect that copyright.
+Which means that I, René Ferdinand Rivera Morell, can post a paper to ISO/WG21 that
+I have personally assigned my copyright to and ISO must respect that copyright.
 For example see this same paper and the copyright notice in the header.
 
 [quote]
@@ -181,7 +181,7 @@ the content as part of an ISO or ISO/IEC standard according to ISO and IEC
 practice.
 
 This next rather long sentence essentially says that in such cases ISO/IEC
-must be allowed to do everything they are allowed to do if ISO held the full
+must be allowed to do everything that they are allowed to do if ISO held the original
 copyright to the content. But how can ISO be allowed o do that? The legal
 mechanism for accomplishing it is through licensing. Which is essentially what
 that sentence is. It's a very permissive, succinctly spelled out, license
@@ -197,6 +197,8 @@ submission of the content to the standards development process.
 The above makes it rather simple to give ISO the appropriate license grant by
 making it an implicit part of submitting content to ISO. Which copyright
 holders can do by appropriate use and application of the CC-BY-4.0 license.
+As this same paper does by including the license in the header and in the
+<<License>> section at the end.
 
 The ISO/IEC Directives footnote:ISODirectives[] repeat the same information but
 in less legally formal terms. Here's the relevant clause in that document with
@@ -244,6 +246,8 @@ paper that you are reading. See the following for such:
 
 * link:https://wg21.link/P2717[P2717] SG15 Tooling: Tool Introspection
 * link:https://wg21.link/P3051[P3051] SG15 Tooling: Structured Response Files
+
+Which follow the first step in the <<Proposal>> workflow above.
 
 == License
 
