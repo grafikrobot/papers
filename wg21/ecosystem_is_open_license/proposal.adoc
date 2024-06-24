@@ -3,7 +3,7 @@
 :license: Creative Commons Attribution 4.0 International License (CC BY 4.0)
 :email: grafikrobot@gmail.com
 :authors: René Ferdinand Rivera Morell
-:audience: WG21
+:audience: SG15
 :revdate: {docdate}
 :version-label!:
 :reproducible:
@@ -69,28 +69,20 @@ standard they can not readily access.
 
 == Proposal
 
-Our proposal is to develop the EcoIS from individually copyrighted content with
-a license that allows for unfettered use by ISO for development and commercial
-use. Specifically it would be that:
-
-. Individual Pnnn papers would be copyrighted by the authors and licensed under
-  the "Creative Commons Attribution 4.0 International License" (CC-BY-4.0).
-  footnote:CCBY4[Creative Commons Attribution 4.0 International License (https://creativecommons.org/licenses/by/4.0/)]
-. The resulting EcoIS Nnnnn draft paper and published International Standard
-  would be copyrighted by the collection of authors, ISO/IEC.
-. The resulting EcoIS Nnnnn draft paper and published International Standard
-  would be licensed under CC-BY-4.0 and include required attribution.
-
-You may ask, is that allowed? And the answer is, yes. ISO has specific wording
-in the _Declaration for participants in ISO activities_
-footnote:ISODeclaration[]
-, in the _ISO/IEC Directives, Part 1_
+As allowed by the _Declaration for participants in ISO activities_
+footnote:ISODeclaration[], and the _ISO/IEC Directives, Part 1_
 footnote:ISODirectives[ISO/IEC Directives, Part 1 Procedures for the technical work — Consolidated ISO Supplement — Procedures specific to ISO (https://www.iso.org/directives-and-policies.html)]
-, and in the _Clearing content added to standards_
-footnote:ISOClearance[Clearing content added to standards (https://connect.iso.org/display/ipr/Clearing+content+added+to+standards)]
-that makes this possible.
+we propose to develop the EcoIS from individually copyrighted content with
+the "Creative Commons Attribution 4.0 International License" (CC-BY-4.0) license.
+footnote:CCBY4[Creative Commons Attribution 4.0 International License (https://creativecommons.org/licenses/by/4.0/)] following the following process:
 
-Lets look at those and explain how the wording allows this application below.
+. Individual submitted Pnnnn papers are copyrighted by the authors and CC-BY-4.0
+  licensed.
+. The project editor merges the Pnnnn into the EcoIS Nnnnn draft with collected
+  author copyrights, ISO/IEC copyright and CC-BY-4.0 license with required
+  attributions per CC-BY-4.0.
+. ISO distributes that draft as usual, with the copyrights and license.
+. ISO publishes the final document, with the copyrights and license.
 
 
 == ISO and Copyright
@@ -189,7 +181,7 @@ the content as part of an ISO or ISO/IEC standard according to ISO and IEC
 practice.
 
 This next rather long sentence essentially says that in such cases ISO/IEC
-must be allowed to everything they are allowed to do if ISO held the full
+must be allowed to do everything they are allowed to do if ISO held the full
 copyright to the content. But how can ISO be allowed o do that? The legal
 mechanism for accomplishing it is through licensing. Which is essentially what
 that sentence is. It's a very permissive, succinctly spelled out, license
