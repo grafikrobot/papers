@@ -208,9 +208,10 @@ part of an ISO or ISO/IEC standard according to ISO and IEC practice.
 
 This next rather long sentence essentially is a permissive license grant to ISO
 that gives ISO the rights to use the contents in manner specified above. We
-note that any license grant that allows ISO to use the content in the manner
-specified above is an acceptable license grant for the ISO. In particular, we
-note that CC-BY is such a license grant.
+note we do not have to use this specific license grant, and that any license
+grant that allows ISO to use the content in the manner specified above is an
+acceptable license grant for the ISO. In particular, we note that CC-BY is such
+a license grant.
 
 [quote]
 If you or the organization you are representing own/s the copyright
