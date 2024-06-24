@@ -1,8 +1,8 @@
 = {CPP} Ecosystem IS Open License
-:copyright: Copyright {docyear} René Ferdinand Rivera Morell
+:copyright: Copyright {docyear} René Ferdinand Rivera Morell, Jayesh Badwaik
 :license: Creative Commons Attribution 4.0 International License (CC BY 4.0)
-:email: grafikrobot@gmail.com
-:authors: René Ferdinand Rivera Morell
+:email: grafikrobot@gmail.com, jayesh@badwaik.dev
+:authors: René Ferdinand Rivera Morell, Jayesh Badwaik
 :audience: WG21
 :revdate: {docdate}
 :version-label!:
@@ -46,6 +46,7 @@ for seamless use of the standard by the community and to facilitate community
 contributions back to the standard. We outline the proposals and explain how it
 fits within the current copyright policy of the ISO.
 
+
 == Revision History
 
 === Revision 0 (July 2024)
@@ -55,7 +56,7 @@ Initial text.
 
 == Motivation
 
-Ecosystem IS aims to facilitate the interoperation of tools and systems that
+EcoIS aims to facilitate the interoperation of tools and systems that
 implement, and interface with, the {CPP} International Standard (ISO/IEC
 14882). The ecosystem of tools and systems is quite diverse and evolving
 swiftly in response to evolving technologies and user needs. Furthermore, a
@@ -76,18 +77,17 @@ be able to use the standard in their own tools and systems, and be able to
 contribute back to the standard in a seamless manner.
 
 
-
 == Proposal
 
 Our proposal is to develop the EcoIS from individually copyrighted content with
 a license that allows for unfettered use by ISO for development and commercial
 use. Specifically it would be that:
 
-. Individual Pnnn papers would be copyrighted by the authors and licensed under
+. Individual Pnnnn papers would be copyrighted by the authors and licensed under
   the "Creative Commons Attribution 4.0 International License" (CC-BY-4.0).
   footnote:CCBY4[Creative Commons Attribution 4.0 International License (https://creativecommons.org/licenses/by/4.0/)]
 . The resulting EcoIS Nnnnn draft paper and published International Standard
-  would be copyrighted by the collection of authors, ISO/IEC.
+  would be copyrighted by the collection of authors and ISO/IEC.
 . The resulting EcoIS Nnnnn draft paper and published International Standard
   would be licensed under CC-BY-4.0 and include required attribution.
 
@@ -97,13 +97,17 @@ use. Specifically it would be that:
 In this section, we justify the proposal under the current copyright policy of
 the ISO. The main aspects of copyright policy that one must consider when
 working on an ISO standard are outlined in _Declaration for participants in ISO
-activities_ footnote:ISODeclaration[] , in the _ISO/IEC Directives, Part 1_.
+activities_
+footnote:ISODeclaration[Declaration for participants in ISO activities (https://www.iso.org/declaration-for-participants-in-iso-activities.html)]
+and in the _ISO/IEC Directives, Part 1_
+footnote:ISODirectives[ISO/IEC Directives, Part 1 Procedures for the technical work — Consolidated ISO Supplement — Procedures specific to ISO (https://www.iso.org/directives-and-policies.html)]
 which outlines the copyright policy for anyone involved in the ISO
 standardization process.
 
 The complete text of the section on copyright from  _Declaration for
-participants in ISO activities_ is reproduced here for the reader's benefit,
-with the key parts underlined:
+participants in ISO activities_ footnote:ISODeclaration[] is reproduced here
+for the reader's benefit, with the key parts underlined:
+
 [quote,Declaration for participants in ISO activities]
 ____
 +I+. Copyright
@@ -171,7 +175,7 @@ In preparation for the arguments that follow, we note that it is not unusual in
 the copyright law for the copyright holder to hold full copyright to only the
 complete work, while the individual contributors can still hold a copyright to
 their individual parts. In particular, it is possible for a document containing
-the entire text of the ecoIS standard to be copyrighted by the collection of
+the entire text of the EcoIS standard to be copyrighted by the collection of
 authors, while the actual standard, as published, is copyrighted by ISO.
 
 
@@ -180,8 +184,8 @@ Content, such as publications, documents, text, figures, images or other
 content that you submit to the ISO or ISO/IEC standards development process
 may be copyright protected.
 
-The paragraph provides the context under which the rest of the paragraph is
-supposed to be applied. The paragraph recognizes that parts, or even entirety,
+The sentence provides the context under which the rest of the paragraph is
+supposed to be applied. The sentence recognizes that parts, or even entirety,
 of the content used for ISO standards can have an existing copyright. For
 example, the copyright for such content could be held by an external standards
 organization or by an individual person.
@@ -190,7 +194,7 @@ organization or by an individual person.
 Copyright in such content remains with the initial copyright owner.
 
 The declaration asserts that, in such cases, the copyright remains with the
-original copyright holder. Such an assertion is inline with the observation
+original copyright holder. Such an assertion is in line with the observation
 made in a previous statement, that even though the ISO holds the full copyright
 to the complete work, the individual contributors can still hold a copyright to
 their individual contributions.
@@ -207,7 +211,7 @@ or modified form in ISO or ISO/IEC standards and iii) to exploit the content as
 part of an ISO or ISO/IEC standard according to ISO and IEC practice.
 
 This next rather long sentence essentially is a permissive license grant to ISO
-that gives ISO the rights to use the contents in manner specified above. We
+that gives ISO the rights to use the contents in the manner specified above. We
 note we do not have to use this specific license grant, and that any license
 grant that allows ISO to use the content in the manner specified above is an
 acceptable license grant for the ISO. In particular, we note that CC-BY is such
@@ -221,7 +225,6 @@ submission of the content to the standards development process.
 The above makes it rather simple to give ISO the appropriate license grant by
 making it an implicit part of submitting content to ISO. We note that the
 application of CC-BY license is compatible with this implicit grant.
-
 
 The ISO/IEC Directives footnote:ISODirectives[] repeat the same information but
 in less legally formal terms. Here's the relevant clause in that document with

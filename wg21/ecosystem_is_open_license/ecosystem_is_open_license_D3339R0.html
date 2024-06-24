@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.23">
-<meta name="author" content="René Ferdinand Rivera Morell">
-<meta name="copyright" content="Copyright 2024 René Ferdinand Rivera Morell">
+<meta name="author" content="René Ferdinand Rivera Morell, Jayesh Badwaik">
+<meta name="copyright" content="Copyright 2024 René Ferdinand Rivera Morell, Jayesh Badwaik">
 <title>C&#43;&#43; Ecosystem IS Open License</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
@@ -754,8 +754,8 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 <div id="header">
 <h1>C&#43;&#43; Ecosystem IS Open License</h1>
 <div class="details">
-<span id="author" class="author">René Ferdinand Rivera Morell</span><br>
-<span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
+<span id="author" class="author">René Ferdinand Rivera Morell, Jayesh Badwaik</span><br>
+<span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a>, <a href="mailto:jayesh@badwaik.dev">jayesh@badwaik.dev</a></span><br>
 <span id="revnumber"> D3339R0,</span>
 <span id="revdate">2024-06-23</span>
 </div>
@@ -896,7 +896,7 @@ Date:
 Audience: 
 </td>
 <td class="hdlist2">
-<p>SG15</p>
+<p>WG21</p>
 </td>
 </tr>
 <tr>
@@ -904,7 +904,7 @@ Audience:
 Authors: 
 </td>
 <td class="hdlist2">
-<p>René Ferdinand Rivera Morell</p>
+<p>René Ferdinand Rivera Morell, Jayesh Badwaik</p>
 </td>
 </tr>
 <tr>
@@ -912,7 +912,7 @@ Authors:
 Reply-to: 
 </td>
 <td class="hdlist2">
-<p><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></p>
+<p><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a>, <a href="mailto:jayesh@badwaik.dev">jayesh@badwaik.dev</a></p>
 </td>
 </tr>
 <tr>
@@ -920,7 +920,7 @@ Reply-to:
 Copyright: 
 </td>
 <td class="hdlist2">
-<p>Copyright 2024 René Ferdinand Rivera Morell, Creative Commons Attribution 4.0 International License (CC BY 4.0)</p>
+<p>Copyright 2024 René Ferdinand Rivera Morell, Jayesh Badwaik, Creative Commons Attribution 4.0 International License (CC BY 4.0)</p>
 </td>
 </tr>
 </table>
@@ -931,8 +931,11 @@ Copyright:
 <h2 id="_abstract"><a class="anchor" href="#_abstract"></a>1. Abstract</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Advocate and explain the requirement that the C&#43;&#43; Ecosystem IS (EcoIS) adopt a
-license that allows for open and free development and publication.</p>
+<p>In this paper, we advocate for the C&#43;&#43; Ecosystem IS (EcoIS) to adopt a CC-BY
+license for the development and publication of the standard in order to allow
+for seamless use of the standard by the community and to facilitate community
+contributions back to the standard. We outline the proposals and explain how it
+fits within the current copyright policy of the ISO.</p>
 </div>
 </div>
 </div>
@@ -951,18 +954,27 @@ license that allows for open and free development and publication.</p>
 <h2 id="_motivation"><a class="anchor" href="#_motivation"></a>3. Motivation</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Traditionally, and by default, ISO standards development follows a closed garden
-model. In the model all material submitted towards ISO standards is, by default,
-copyrighted to ISO for their exclusive right.
-<sup class="footnote" id="_footnote_ISODeclaration">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>
-Such a model creates some problems for the success of the EcoIS. The EcoIS will
-be most successful if it is both developed and adopted by the widest possible
-participants in the C&#43;&#43; tooling ecosystem. Participants such as: developers
-of source and executable code analyzers, build systems, source and executable
-processors, integrated development environments, debuggers, and so on. But the
-plurality of those participants: are not members of ISO, can not afford the
-commitment to participate directly in ISO, and are not likely to adopt a
-standard they can not readily access.</p>
+<p>EcoIS aims to facilitate the interoperation of tools and systems that
+implement, and interface with, the C&#43;&#43; International Standard (ISO/IEC
+14882). The ecosystem of tools and systems is quite diverse and evolving
+swiftly in response to evolving technologies and user needs. Furthermore, a
+significant portion of the tools and systems are developed by loosely formed
+communities of developers across different countries and companies.</p>
+</div>
+<div class="paragraph">
+<p>In order for the EcoIS to be effective, it must be able to incorporate the
+ideas and experiences of the community in a timely manner without excessive
+overhead. In particular, the community should be able to contribute to the
+EcoIS and be able to then use EcoIS in their own ecosystems with as little
+friction as possible.</p>
+</div>
+<div class="paragraph">
+<p>The CC-BY license, created by the Creative Commons organization, allows one to
+share and adapt licensed material as long as appropriate credit is given. Such
+a license would allow the EcoIS to be developed and published in a way that is
+open and free to use by the community. With such a license, the community will
+be able to use the standard in their own tools and systems, and be able to
+contribute back to the standard in a seamless manner.</p>
 </div>
 </div>
 </div>
@@ -970,29 +982,24 @@ standard they can not readily access.</p>
 <h2 id="_proposal"><a class="anchor" href="#_proposal"></a>4. Proposal</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As allowed by the <em>Declaration for participants in ISO activities</em>
-<sup class="footnoteref">[<a class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>, and the <em>ISO/IEC Directives, Part 1</em>
-<sup class="footnote" id="_footnote_ISODirectives">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup>
-we propose to develop the EcoIS from individually copyrighted content with
-the "Creative Commons Attribution 4.0 International License" (CC-BY-4.0) license.
-<sup class="footnote" id="_footnote_CCBY4">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup> following the following process:</p>
+<p>Our proposal is to develop the EcoIS from individually copyrighted content with
+a license that allows for unfettered use by ISO for development and commercial
+use. Specifically it would be that:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Individual submitted Pnnnn papers are copyrighted by the authors and CC-BY-4.0
-licensed.</p>
+<p>Individual Pnnnn papers would be copyrighted by the authors and licensed under
+the "Creative Commons Attribution 4.0 International License" (CC-BY-4.0).
+<sup class="footnote" id="_footnote_CCBY4">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup></p>
 </li>
 <li>
-<p>The project editor merges the Pnnnn into the EcoIS Nnnnn draft with collected
-author copyrights, ISO/IEC copyright and CC-BY-4.0 license with required
-attributions per CC-BY-4.0.</p>
+<p>The resulting EcoIS Nnnnn draft paper and published International Standard
+would be copyrighted by the collection of authors and ISO/IEC.</p>
 </li>
 <li>
-<p>ISO distributes that draft as usual, with the copyrights and license.</p>
-</li>
-<li>
-<p>ISO publishes the final document, with the copyrights and license.</p>
+<p>The resulting EcoIS Nnnnn draft paper and published International Standard
+would be licensed under CC-BY-4.0 and include required attribution.</p>
 </li>
 </ol>
 </div>
@@ -1002,17 +1009,20 @@ attributions per CC-BY-4.0.</p>
 <h2 id="_iso_and_copyright"><a class="anchor" href="#_iso_and_copyright"></a>5. ISO and Copyright</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Contrary to common belief ISO does not have a singular copyright ownership
-policy. Instead it has a dual copyright model that by default does indeed
-retain copyright ownership of all materials. But it has an exception to make it
-possible to use already copyrighted material to incorporate and republish into
-ISO standards.</p>
+<p>In this section, we justify the proposal under the current copyright policy of
+the ISO. The main aspects of copyright policy that one must consider when
+working on an ISO standard are outlined in <em>Declaration for participants in ISO
+activities</em>
+<sup class="footnote" id="_footnote_ISODeclaration">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup>
+and in the <em>ISO/IEC Directives, Part 1</em>
+<sup class="footnote" id="_footnote_ISODirectives">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup>
+which outlines the copyright policy for anyone involved in the ISO
+standardization process.</p>
 </div>
 <div class="paragraph">
-<p>Lets consider the <em>Declaration for participants in ISO activities</em>
-<sup class="footnoteref">[<a class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup> which we all agree to when doing anything, and even
-when we log in to the iso.org web site. Bellow is the full text of that
-declaration with the key parts underlined:</p>
+<p>The complete text of the section on copyright from  <em>Declaration for
+participants in ISO activities</em> <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup> is reproduced here
+for the reader&#8217;s benefit, with the key parts underlined:</p>
 </div>
 <div class="quoteblock">
 <blockquote>
@@ -1075,8 +1085,28 @@ entire term of copyright protection.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Before moving on to the other places where ISO repeats this allowance lets
-consider each point in the above:</p>
+<p>Let&#8217;s break down the underlying text to understand the implications of the
+copyright policy for the EcoIS.</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+1) The full copyright in all ISO standards and their drafts shall be owned by
+ISO. In the case of ISO/IEC standards, such ownership shall be held jointly by
+ISO and IEC.
+</blockquote>
+</div>
+<div class="paragraph">
+<p>The sentence asserts that the full copyright for ISO standards is held by ISO.
+And in the case of joint standards, the copyright is held jointly by ISO and
+IEC.</p>
+</div>
+<div class="paragraph">
+<p>In preparation for the arguments that follow, we note that it is not unusual in
+the copyright law for the copyright holder to hold full copyright to only the
+complete work, while the individual contributors can still hold a copyright to
+their individual parts. In particular, it is possible for a document containing
+the entire text of the EcoIS standard to be copyrighted by the collection of
+authors, while the actual standard, as published, is copyrighted by ISO.</p>
 </div>
 <div class="quoteblock">
 <blockquote>
@@ -1086,11 +1116,11 @@ may be copyright protected.
 </blockquote>
 </div>
 <div class="paragraph">
-<p>That gives the context under which the rest of the paragraph applies. It
-recognizes that it&#8217;s a reality that aspects, and even entirety, of content
-used for ISO standards can have an existing copyright. That copyright could be
-held by anyone. For example it might be an external standards organization like
-the OASIS Open Standards Organization. Or it could even be individual persons.</p>
+<p>The sentence provides the context under which the rest of the paragraph is
+supposed to be applied. The sentence recognizes that parts, or even entirety,
+of the content used for ISO standards can have an existing copyright. For
+example, the copyright for such content could be held by an external standards
+organization or by an individual person.</p>
 </div>
 <div class="quoteblock">
 <blockquote>
@@ -1098,32 +1128,33 @@ Copyright in such content remains with the initial copyright owner.
 </blockquote>
 </div>
 <div class="paragraph">
-<p>That is likely the most important sentence in the clause. It supports the
-understood International Law that copyright is not automatically transferred.
-Which means that I, René Ferdinand Rivera Morell, can post a paper to ISO/WG21 that
-I have personally assigned my copyright to and ISO must respect that copyright.
-For example see this same paper and the copyright notice in the header.</p>
+<p>The declaration asserts that, in such cases, the copyright remains with the
+original copyright holder. Such an assertion is in line with the observation
+made in a previous statement, that even though the ISO holds the full copyright
+to the complete work, the individual contributors can still hold a copyright to
+their individual contributions.</p>
+</div>
+<div class="paragraph">
+<p>The assertion is further in line with the understood International Law that
+copyright is not automatically transferred.</p>
 </div>
 <div class="quoteblock">
 <blockquote>
-If you offer such content, you undertake to declare this to
-ISO or ISO/IEC, identify the name of the copyright holder and assist ISO or
-ISO/IEC in obtaining appropriate permission to i) share the content in the
-standards development process, ii) to publish the content, or parts thereof,
-in original or modified form in ISO or ISO/IEC standards and iii) to exploit
-the content as part of an ISO or ISO/IEC standard according to ISO and IEC
-practice.
+If you offer such content, you undertake to declare this to ISO or ISO/IEC,
+identify the name of the copyright holder and assist ISO or ISO/IEC in
+obtaining appropriate permission to i) share the content in the standards
+development process, ii) to publish the content, or parts thereof, in original
+or modified form in ISO or ISO/IEC standards and iii) to exploit the content as
+part of an ISO or ISO/IEC standard according to ISO and IEC practice.
 </blockquote>
 </div>
 <div class="paragraph">
-<p>This next rather long sentence essentially says that in such cases ISO/IEC
-must be allowed to do everything that they are allowed to do if ISO held the original
-copyright to the content. But how can ISO be allowed o do that? The legal
-mechanism for accomplishing it is through licensing. Which is essentially what
-that sentence is. It&#8217;s a very permissive, succinctly spelled out, license
-grant. But one is not legally limited to using solely those license terms.
-One can use any terms that include the above allowances. Once such license is
-CC-BY-4.0. <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup></p>
+<p>This next rather long sentence essentially is a permissive license grant to ISO
+that gives ISO the rights to use the contents in the manner specified above. We
+note we do not have to use this specific license grant, and that any license
+grant that allows ISO to use the content in the manner specified above is an
+acceptable license grant for the ISO. In particular, we note that CC-BY is such
+a license grant.</p>
 </div>
 <div class="quoteblock">
 <blockquote>
@@ -1134,13 +1165,11 @@ submission of the content to the standards development process.
 </div>
 <div class="paragraph">
 <p>The above makes it rather simple to give ISO the appropriate license grant by
-making it an implicit part of submitting content to ISO. Which copyright
-holders can do by appropriate use and application of the CC-BY-4.0 license.
-As this same paper does by including the license in the header and in the
-<a href="#_license">License</a> section at the end.</p>
+making it an implicit part of submitting content to ISO. We note that the
+application of CC-BY license is compatible with this implicit grant.</p>
 </div>
 <div class="paragraph">
-<p>The ISO/IEC Directives <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup> repeat the same information but
+<p>The ISO/IEC Directives <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup> repeat the same information but
 in less legally formal terms. Here&#8217;s the relevant clause in that document with
 similarly underlined text to highlight the important paragraphs.</p>
 </div>
@@ -1203,9 +1232,6 @@ paper that you are reading. See the following for such:</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>Which follow the first step in the <a href="#_proposal">Proposal</a> workflow above.</p>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -1223,13 +1249,13 @@ Commons, PO Box 1866, Mountain View, CA 94042, USA.</p>
 <div id="footnotes">
 <hr>
 <div class="footnote" id="_footnotedef_1">
-<a href="#_footnoteref_1">1</a>. Declaration for participants in ISO activities (<a href="https://www.iso.org/declaration-for-participants-in-iso-activities.html" class="bare">https://www.iso.org/declaration-for-participants-in-iso-activities.html</a>)
+<a href="#_footnoteref_1">1</a>. Creative Commons Attribution 4.0 International License (<a href="https://creativecommons.org/licenses/by/4.0/" class="bare">https://creativecommons.org/licenses/by/4.0/</a>)
 </div>
 <div class="footnote" id="_footnotedef_2">
-<a href="#_footnoteref_2">2</a>. ISO/IEC Directives, Part 1 Procedures for the technical work — Consolidated ISO Supplement — Procedures specific to ISO (<a href="https://www.iso.org/directives-and-policies.html" class="bare">https://www.iso.org/directives-and-policies.html</a>)
+<a href="#_footnoteref_2">2</a>. Declaration for participants in ISO activities (<a href="https://www.iso.org/declaration-for-participants-in-iso-activities.html" class="bare">https://www.iso.org/declaration-for-participants-in-iso-activities.html</a>)
 </div>
 <div class="footnote" id="_footnotedef_3">
-<a href="#_footnoteref_3">3</a>. Creative Commons Attribution 4.0 International License (<a href="https://creativecommons.org/licenses/by/4.0/" class="bare">https://creativecommons.org/licenses/by/4.0/</a>)
+<a href="#_footnoteref_3">3</a>. ISO/IEC Directives, Part 1 Procedures for the technical work — Consolidated ISO Supplement — Procedures specific to ISO (<a href="https://www.iso.org/directives-and-policies.html" class="bare">https://www.iso.org/directives-and-policies.html</a>)
 </div>
 </div>
 </body>
