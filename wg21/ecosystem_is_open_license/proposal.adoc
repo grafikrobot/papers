@@ -49,7 +49,7 @@ fits within the current copyright policy of the ISO.
 
 == Revision History
 
-=== Revision 0 (July 2024)
+=== Revision 0 (June 2024)
 
 Initial text.
 
