@@ -778,14 +778,14 @@ the IETF RFC draft "JSON Schema: A Media Type for Describing JSON Documents" as
 specified in https://json-schema.org/draft/2020-12/json-schema-core.html.
 
 This JSON Schema can be referenced as the `$schema` field with URI value of
-`"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_opt-1.0.0.json"`.
+`"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_param-1.0.0.json"`.
 
 [#strctparam-json-schema-spec,reftext=strctparamjschm.spec]
 ===== JSON Schema Specification [.right]#[<<strctparam-json-schema-spec>>]#
 
 [source,json]
 ----
-include::std_opt-1.0.0.json[]
+include::std_param-1.0.0.json[]
 ----
 
 == License

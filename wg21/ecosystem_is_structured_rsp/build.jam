@@ -46,7 +46,7 @@ local validations ;
 for local json in [ glob example-*.json ]
 {
 	validations += [ make $(json:B:S=.check)
-		: $(json) std_opt-1.0.0.json
+		: $(json) std_param-1.0.0.json
 		: @json-validate ] ;
 	explicit $(json:B:S=.check) ;
 }
@@ -56,7 +56,7 @@ local checks ;
 for local json in [ glob test_fail-*.json ]
 {
 	local t = [ make $(json:B:S=.check)
-		: $(json) std_opt-1.0.0.json
+		: $(json) std_param-1.0.0.json
 		: @json-validate ] ;
 	checks += $(t) ;
 	explicit $(json:B:S=.check) ;
