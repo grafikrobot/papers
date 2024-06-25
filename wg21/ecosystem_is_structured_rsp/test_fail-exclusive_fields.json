@@ -1,0 +1,7 @@
+{
+  "arguments": ["-O0", "-g"],
+  "options": [
+    "no-inline",
+    { "name": "warnings", "level": "all" }
+  ]
+}

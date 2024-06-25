@@ -8,8 +8,8 @@ http://www.boost.org/LICENSE_1_0.txt)
 import asciidoctor ;
 
 local name = ecosystem_is_structured_rsp ;
-local docn = P3051 ;
-local docr = R1 ;
+local docn = D3051 ;
+local docr = R2 ;
 local xxxx = $(docn)$(docr) ;
 
 project /wg21_$(name)
@@ -51,3 +51,14 @@ for local json in [ glob example-*.json ]
 	explicit $(json:B:S=.check) ;
 }
 alias validate : $(validations) ;
+
+local checks ;
+for local json in [ glob test_fail-*.json ]
+{
+	local t = [ make $(json:B:S=.check)
+		: $(json) std_opt-1.0.0.json
+		: @json-validate ] ;
+	checks += $(t) ;
+	explicit $(json:B:S=.check) ;
+}
+alias check : $(checks) ;
