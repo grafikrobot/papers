@@ -573,7 +573,7 @@ If __file__ is '`-`', the standard input shall be used.
 ===== Files [.right]#[<<strctparam-file>>]#
 
 An application shall read a valid JSON text file that conforms to the
-_structured options_ schema (<<strctparam-schema>>).
+_structured [.chg]#parameters#_ schema (<<strctparam-schema>>).
 
 An application shall interpret the information in the file as if the options
 and arguments in the file occur in the same position as the
@@ -737,7 +737,7 @@ structured option with a `std.` _scope_.
 ===== Option `std.[.chg]#param#` [.right]#[<<strctparam-opt-opt>>]#
 
 The `std.[.chg]#param#` option defines an option to refer to additional
-structured options (<<strctparam>>) to process.
+_structured [.chg]#parameters#_ (<<strctparam>>) to process.
 
 An application shall implement this option.
 
@@ -767,14 +767,14 @@ Insert clause after _Annex A_.
 
 [.ins.text-justify]
 [#strctparam-json-schema,reftext=strctparamjschm]
-==== Annex B (informative) Structured Options _JSON Schema_ [.right]#[<<strctparam-json-schema>>]#
+==== Annex B (informative) Structured [.chg]#Parameters# _JSON Schema_ [.right]#[<<strctparam-json-schema>>]#
 
 [#strctparam-json-schema-general,reftext=strctparamjschm.general]
 ===== General [.right]#[<<strctparam-json-schema-general>>]#
 
-This Annex defines the structured options capability schema
-(<<strctparam-schema>>) in terms of a _JSON Schema_. A _JSON Schema_ refers to the
-IETF RFC draft "JSON Schema: A Media Type for Describing JSON Documents" as
+This Annex defines the structured [.chg]#parameters# capability schema
+(<<strctparam-schema>>) in terms of a _JSON Schema_. A _JSON Schema_ refers to
+the IETF RFC draft "JSON Schema: A Media Type for Describing JSON Documents" as
 specified in https://json-schema.org/draft/2020-12/json-schema-core.html.
 
 This JSON Schema can be referenced as the `$schema` field with URI value of
