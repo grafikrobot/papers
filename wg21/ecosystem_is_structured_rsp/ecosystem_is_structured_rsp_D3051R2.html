@@ -1582,7 +1582,7 @@ compile invocation for GCC, and compatible compiler front-ends, would look like:
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_opt-1.0.0.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_param-1.0.0.json"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"arguments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"-fPIC"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-O0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-fno-inline"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-Wall"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-Werror"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-g"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-I</span><span class="se">\"</span><span class="s2">util/include</span><span class="se">\"</span><span class="s2">"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-c"</span><span class="w"> </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span></code></pre>
@@ -1596,7 +1596,7 @@ For example, given a <code>common.json</code> response file as such:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_opt-1.0.0.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_param-1.0.0.json"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"arguments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"-fPIC"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-O0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-fno-inline"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-Wall"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-Werror"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-g"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-I</span><span class="se">\"</span><span class="s2">util/include</span><span class="se">\"</span><span class="s2">"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-c"</span><span class="w"> </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span></code></pre>
@@ -1608,9 +1608,9 @@ For example, given a <code>common.json</code> response file as such:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_opt-1.0.0.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_param-1.0.0.json"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"arguments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"--std-opt=common.json"</span><span class="p">,</span><span class="w"> </span><span class="s2">"main.cpp"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-o"</span><span class="p">,</span><span class="w"> </span><span class="s2">"main.o"</span><span class="w"> </span><span class="p">]</span><span class="w">
+  </span><span class="nl">"arguments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"--std-param=common.json"</span><span class="p">,</span><span class="w"> </span><span class="s2">"main.cpp"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-o"</span><span class="p">,</span><span class="w"> </span><span class="s2">"main.o"</span><span class="w"> </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span></code></pre>
 </div>
 </div>
@@ -2239,8 +2239,8 @@ specified in <a href="https://json-schema.org/draft/2020-12/json-schema-core.htm
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://json-schema.org/draft/2020-12/schema"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_opt-1.0.0.json"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Structured Options Version 1.0.0 JSON Schema"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_param-1.0.0.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Structured Parameters Version 1.0.0 JSON Schema"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"$defs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"Version"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -2263,12 +2263,12 @@ specified in <a href="https://json-schema.org/draft/2020-12/json-schema-core.htm
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JSON Schema URI for the version of the structured options format."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JSON Schema URI for the version of the structured parameters format."</span><span class="p">,</span><span class="w">
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uri"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The Structured Options format version."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The Structured Parameters format version."</span><span class="p">,</span><span class="w">
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Version"</span><span class="w">
     </span><span class="p">},</span><span class="w">
@@ -2285,7 +2285,7 @@ specified in <a href="https://json-schema.org/draft/2020-12/json-schema-core.htm
       </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"oneOf"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
           </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opts/Std.Opt"</span><span class="w">
+            </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opts/Std.Param"</span><span class="w">
           </span><span class="p">},</span><span class="w">
           </span><span class="p">{</span><span class="w">
             </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opts/Any"</span><span class="w">
@@ -2295,14 +2295,14 @@ specified in <a href="https://json-schema.org/draft/2020-12/json-schema-core.htm
     </span><span class="p">}</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nl">"$opts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"Std.Opt"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Recursive reference to one or more structured option files."</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"Std.Param"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Recursive reference to one or more structured parameters files."</span><span class="p">,</span><span class="w">
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="nl">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"std.opt"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"opt"</span><span class="w">
+            </span><span class="s2">"std.param"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"param"</span><span class="w">
           </span><span class="p">]</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="nl">"files"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
