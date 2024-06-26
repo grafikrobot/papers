@@ -55,6 +55,18 @@
       }
     }
   },
+  "oneOf": [
+    {
+      "required": [
+        "arguments"
+      ]
+    },
+    {
+      "required": [
+        "options"
+      ]
+    }
+  ],
   "$opts": {
     "Std.Param": {
       "description": "Recursive reference to one or more structured parameters files.",

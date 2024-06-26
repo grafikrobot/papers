@@ -52,12 +52,18 @@ for local json in [ glob example-*.json ]
 }
 alias validate : $(validations) ;
 
+rule json-validate-fail ( targets + : sources + : properties * )
+{
+	FAIL_EXPECTED $(targets) ;
+	json-validate $(targets) : $(sources) ;
+}
+
 local checks ;
 for local json in [ glob test_fail-*.json ]
 {
 	local t = [ make $(json:B:S=.check)
 		: $(json) std_param-1.0.0.json
-		: @json-validate ] ;
+		: @json-validate-fail ] ;
 	checks += $(t) ;
 	explicit $(json:B:S=.check) ;
 }
