@@ -19,28 +19,11 @@
 :note-caption: ℹ
 :tip-caption: ☀
 :warning-caption: ⚠
-:table-caption: Table 
+:table-caption: Table
 
 ++++
 <style>
-.sectionbody > div > .ins {
-  border-left: solid 0.4em green;
-  padding-left: 1em;
-  text-decoration: underline solid green;
-  text-underline-offset: 0.3em;
-}
-.def > .content :first-child {
-  margin-left: 0;
-}
-.def > .content > * {
-  margin-left: 3em;
-}
-.icon .title {
-  font-size: 250%;
-}
-.imageblock svg {
-  width: 100% !important;
-}
+include::../std-min.css[]
 </style>
 ++++
 
@@ -60,10 +43,14 @@ Standard (ISO/IEC 14882).
 
 == Revision History
 
-=== Revision 3 (June 2023)
+=== Revision 3 (June 2024)
 
-Specifies explicit steps for bootstrap review process with CWG to do wording
-review. Tweak the goals terms and order to mirror the draft outline.
+* Remove parallel process as not relevant at this point.
+* Specifies explicit steps for review process. We will follow the regular
+  review of Evolution Working Group design approval and Core Wording Group for
+  wording approval.
+* Tweak the goals terms and order to mirror the draft outline.
+* Update timeline to reflect current and near future expectations.
 
 === Revision 2 (February 2023)
 
@@ -111,7 +98,7 @@ way. It can contain various aspects of the {CPP} Ecosystem:
 We will need a common language to refer to the many components
 and aspects of the ecosystem. With a shared understanding of components like:
 compilers, linkers, analyzers, debuggers, package managers, preprocessors,
-source files, object files, library files, shared library files, executables, 
+source files, object files, library files, shared library files, executables,
 and more, we can subsequently formulate specifications for them.
 
 . _Format Specifications_ :
@@ -150,12 +137,10 @@ above defines an ideal completion, the goals for a first edition of this
 standard include:
 
 . Definitions.
-. Build System <==> Package Manager Interoperation.
-. Minimum set of recognized file extensions.
 . Tool introspection.
+. Command line portability.
 . Portable diagnostics format via SARIF.
 footnote:SARIF[https://sarifweb.azurewebsites.net/[Static Analysis Results Interchange Format (SARIF)]]
-. Command line portability.
 
 NOTE: This is not a closed set of goals. It is what we think is achievable with
 what we know now. We welcome additional goals if people come with complete
@@ -174,52 +159,16 @@ information of the IS.
 * P2717 Tool Introspection
 footnote:[Tool Introspection. _René Ferdinand Rivera Morell_ (https://wg21.link/P2717)]
 
-=== Package Format
+=== Portable Command Line Interface
 
-Specification of formats and operation of interoperability between build
-systems and package managers. Current work:
+A key aspect of interoperation between tools in the ecosystem is having a
+common language to express tool commands, i.e. in compiler drivers, that can
+be understood and/or translated between different tools and platforms. This
+aims to define a standard structured response file format that can become the
+best way to communicate compiling {CPP}.
 
-* Metadata to support {CPP} packaging
-footnote:[Metadata to support {CPP} packaging (https://github.com/isocpp/pkg-fmt)]
-* D2800R0 Dependency flag soup needs some fiber
-footnote:[Dependency flag soup needs some fiber (https://isocpp.org/files/papers/D2800R0.html)]
-* P2673 Common Description Format for {CPP} Libraries and Packages
-footnote:[Common Description Format for {CPP} Libraries and Packages (https://wg21.link/p2673r0)]
-
-And previous work on this:
-
-* The CppCon 2022 presentation "The Case For a Standardized Package Description
-Format",
-footnote:[CppCon 2022: The Case For a Standardized Package Description Format, _Luis Caro Campos_ (https://cppcon.digital-medium.co.uk/session/2022/the-case-for-a-standardized-package-description-format/)]
-prompted ongoing work to specify standard communication format between package
-managers and build systems.
-* P2577 {CPP} Modules Discovery in Prebuilt Library Releases
-footnote:P2577[{CPP} Modules Discovery in Prebuilt Library Releases, _Daniel Ruoso_ (https://github.com/cplusplus/papers/issues/1232)]
-* P2536 Distributing {CPP} Module Libraries with dependencies json files.
-footnote:P2536[Distributing {CPP} Module Libraries with dependencies json files. _Olga Arkhipova_ (https://github.com/cplusplus/papers/issues/1199)]
-* P2473 Distributing {CPP} Module Libraries.
-footnote:P2473[Distributing {CPP} Module Libraries. _Daniel Ruoso_ (https://github.com/cplusplus/papers/issues/1131)]
-* P1767 Packaging {CPP} Modules.
-footnote:P1767[Packaging {CPP} Modules. _Richard Smith_ (https://github.com/cplusplus/papers/issues/522)]
-* `libman`, A Dependency Manager ➔ Build System Bridge
-footnote:libman[`libman`, A Dependency Manager ➔ Build System Bridge _Colby Pike_ (https://api.csswg.org/bikeshed/?force=1&url=https://raw.githubusercontent.com/vector-of-bool/libman/develop/data/spec.bs)]
-* P1313 Let's Talk About Package Specification.
-footnote:P1313[Let's Talk About Package Specification. _Matthew Woehlke_ (https://wg21.link/p1313)]
-* P1177 Package Ecosystem Plan.
-footnote:P1177[Package Ecosystem Plan. _René Ferdinand Rivera Morell_ (https://github.com/cplusplus/papers/issues/48)]
-
-=== File Name Extensions
-
-Specification of a minimal set of file name extension understood, and for what
-they are understood, by the various tools in the ecosystem. Current work is
-forthcoming.
-
-Previous work on this:
-
-* P1838 Modules User-Facing Lexicon and File Extensions.
-footnote:[Modules User-Facing Lexicon and File Extensions. _Bryce Adelstein Lelbach_, _Boris Kolpackov_ (https://github.com/cplusplus/papers/issues/727)]
-* P1177 Package Ecosystem Plan.
-footnote:P1177[]
+* P3051 Structured Response Files
+footnote:[Structured Response Files _René Ferdinand Rivera Morell (https://wg21.link/P3051)]
 
 === Diagnostics Output
 
@@ -231,14 +180,6 @@ specific to each tool generating it. Recently some tools have implemented
 the common structured output as SARIF format.footnote:SARIF[]
 The format is designed for presenting results of static analysis. But is
 finding alternate uses. We aim to incorporate the SARIF format.
-
-=== Response File
-
-A key aspect of interoperation between tools in the ecosystem is having a
-common language to express tool commands, i.e. in compiler drivers, that can
-be understood and/or translated between different tools and platforms. This
-aims to define a standard structured response file format that can become the
-best way to communicate compiling {CPP}.
 
 == Timeline
 
@@ -255,14 +196,7 @@ for them to build their tools on.
 Hence we aim to publish a standard quickly and provide updates to it as quickly.
 The goal is to publish this new IS on a two (2) year cycle starting in 2023.
 This means publishing the first edition in 2025. Subsequent versions would then
-publish in 2027, 2029, and so on. Because we plan on a small initial standard
-document we will follow the 24 month standards development track (SDT 24).
-footnote:sdt24[Standards Development Track, 24 Months:
-ISO/IEC Directives, Part 1 —
-Consolidated ISO Supplement —
-Procedure for the technical work
-— Procedures specific to ISO _Section 2.1.6.1 General_
-(https://isotc.iso.org/livelink/livelink?func=ll&objId=4230452&objAction=browse&sort=subtype)]
+publish in 2027, 2029, and so on.
 
 The timeline that follows lists milestones for relevant WG21 meetings.
 
@@ -284,24 +218,21 @@ one or more papers merged into it, and will have outlines for the rest of the
 content, as possible. We will ask EWG approval on this content to checkpoint
 the work so far and the work going forward.
 
-=== 2024.2: Proposal
+=== 2024.3: Proposal
 
 Goal:: Submit formal proposal to create work item for the publication of
 the new IS.
 
 The proposal will include an initial, mostly complete, draft of the
-intended content of the IS. Submitting at this meeting allows following the
-SDT 24 track of development footnote:sdt24[] with a target publication in
-Q3 2025. The goal being to avoid the rush of the preparations for the {CPP} 26
-IS. As the work will be completed by Q1 2025.
+intended content of the IS.
 
 NOTE: Provide for an 8 week ballot period on proposal acceptance.
 
-=== 2025.1: Committee Draft (CD) Finalized
+=== 2025.2: Committee Draft (CD) Finalized
 
 Goal:: Approve Committee Draft for National Body comments.
 
-From submitting an initial draft in 2024.2 we will have completed incorporating
+From submitting an initial draft in 2024.3 we will have completed incorporating
 any detail changes that the draft text will be ready to get voted on. This will
 mark, approximately, 1.5 years since the beginning of work on the new IS. The
 goal at this WG21 meeting will be to address any urgent issues that could
@@ -310,7 +241,7 @@ prevent NB balloting of the IS draft.
 NOTE: Provide for an 8 week ballot period on proposal acceptance.
 And 2 (4?) weeks of comment compilation time.
 
-=== 2025.2: Draft International Standard (DIS) Finalized
+=== 2025.3: Draft International Standard (DIS) Finalized
 
 Goal:: Resolve collected NB comments and approve the final draft of the IS.
 
@@ -325,74 +256,11 @@ image::timeline.drawio.svg[opts=inline]
 
 == Process
 
-We expect the development of the IS to use two processes that mesh into the
-existing processes of WG21:
+The development and review process should follow the usual 3-stage pipeline:
 
-Bootstrap::
-Initial development and review in Tooling Study Group (SG15), followed by
-review and approvals in Evolution Working Group (EWG). Followed by wording
-review in Core Language Wording (CWG). And from there to polls for WG21 plenary
-votes.
-
-Parallel::
-Development and review can originate in any existing study group depending as
-appropriate. Followed for review and approval by a new Tooling Working Group
-(TWG). TWG would include consideration of wording of the IS itself. And, hence,
-produce polls for WG21 plenary votes.
-
-=== Bootstrap
-
-We would use the _Bootstrap_ process for the first edition of the IS. Following
-this process for the first edition has some advantages:
-
-* It's a process we know. Which means it reduces initial overhead.
-* The reduced overhead allows us to concentrate more time on the IS development
-  itself.
-* Gives us time to recruit people for the subsequent editions of the IS.
-* Contributors build up knowledge on the process to prepare for the next
-  IS edition.
-
-But it has some drawbacks:
-
-* It places higher burden on time for the EWG and CWG groups to review the
-  work.
-* The EWG and CWG groups usual experts might not all be familiar with the
-  tooling and ecosystem domain.
-
-Those are significant drawbacks although we think are ameliorated by: First,
-scheduling the IS to complete a full year before the {CPP}26 time frame. And,
-second, limiting the scope of the IS early in the time line resulting in more
-time spent in SG15 on draft wording details.
-
-Wording review in the Bootstrap process would follow these steps:
-
-. Checkpoint vote in EWG with first edition outline and introspection
-  preliminary wording. Target is 2023.2 (Varna) meeting for this.
-. SG15 design and wording approval for Introspection and one other feature.
-. EWG design and wording for Introspection and one other feature.
-. CWG wording review for Introspection and one other feature.
-. Continue with SG15, EWG, and CWG sequence with additional features.
-. Final approval from SG15, EWG, and CWG for WG21 plenary voting to start ISO
-  work item. Target for this is 2024.2 meeting.
-
-=== Parallel
-
-After the first edition of the IS we would switch to the _Parallel_ process.
-Visually this process would alter the regular flow of WG21 in minor ways
-resulting in:
-
-image::process.drawio.svg[opts=inline]
-
-Here the drawbacks from the _Bootstrap_ process are addressed. And we maintain
-the advantages as we will have people ready and able to develop and process
-further editions of the IS.
-
-This process structure will, clearly, change over time as the IS grows and
-experts fill similar roles to what we now have in WG21. Hence we expect to
-eventually need a wording group and narrower domain specific study groups.
-
-NOTE: SG15 would cease to operate. As TWG would assume the same
-responsibilities.
+. Design and wording pre-review occurs in Tooling (SG15).
+. Design review approval happens in Core Language Evolution (EWG).
+. Wording review and approval is managed by Core Language Wording (CWG).
 
 === Train Model
 
@@ -401,10 +269,25 @@ is, we will release what we have now not what we could have in the future.
 
 == Polls
 
+=== SG15: P2656R2 (2024-06-23)
+
+_Remove the proposed parallel process from the process section._
+
+Unanimous Consent
+
+_Forward the initial set of Ecosystem IS papers (P2656, P3342, P3051, and
+P2717), with the agreed changes, to EWG with the request to create a work item._
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+|  8 | 0 | 0 | 0 | 0
+|===
+
 === SG15: P2656R1 (2023-02-10)
 
-SG15 thinks that the initial Ecosystem IS should include recommended /
-recognized file extensions.
+_SG15 thinks that the initial Ecosystem IS should include recommended /
+recognized file extensions._
 
 [options="header,autowidth",cols="^0,^0,^0,^0,^0"]
 |===
@@ -412,8 +295,8 @@ recognized file extensions.
 |  3 | 4 | 3 | 0 | 0
 |===
 
-SG15 is interested in a structured diagnostics format in the initial Ecosystem
-IS.
+_SG15 is interested in a structured diagnostics format in the initial Ecosystem
+IS._
 
 [options="header,autowidth",cols="^0,^0,^0,^0,^0"]
 |===
@@ -423,7 +306,8 @@ IS.
 
 === SG15: P2656R1 (2022-12-16)
 
-SG15 recommends a two year timeline for the tooling IS as described in D2656R1.
+_SG15 recommends a two year timeline for the tooling IS as described in
+D2656R1._
 
 [options="header,autowidth",cols="^0,^0,^0,^0,^0"]
 |===
@@ -433,8 +317,8 @@ SG15 recommends a two year timeline for the tooling IS as described in D2656R1.
 
 *Author*: SF
 
-SG15 recommends a three year timeline for the tooling IS offset from the C++
-Language IS.
+_SG15 recommends a three year timeline for the tooling IS offset from the C++
+Language IS._
 
 [options="header,autowidth",cols="^0,^0,^0,^0,^0"]
 |===
@@ -444,10 +328,24 @@ Language IS.
 
 *Author*: F
 
+=== EWG: P2656R0 (2022-11-10)
+
+_EWG is in favor of further work in the direction of starting an additional IS
+for Tooling Interaction as proposed by P2656, and would like to see this again
+with a proposed scope, process, details, etc._
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+| 29 | 6 | 1 | 0 | 0
+|===
+
+*Result*: strong consensus
+
 === SG15: P2656R0 (2022-11-09)
 
-SG15 recommends to WG21 to create a new Tooling IS with the scope and goals
-described in P2656R0 when an approved working document has been produced.
+_SG15 recommends to WG21 to create a new Tooling IS with the scope and goals
+described in P2656R0 when an approved working document has been produced._
 
 [options="header,autowidth",cols="^0,^0,^0,^0,^0"]
 |===
@@ -459,18 +357,4 @@ described in P2656R0 when an approved working document has been produced.
 
 *Author*: SF
 
-*Attendance*: 20 
-
-=== EWG: P2656R0 (2022-11-10)
-
-EWG is in favor of further work in the direction of starting an additional IS
-for Tooling Interaction as proposed by P2656, and would like to see this again
-with a proposed scope, process, details, etc:
-
-[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
-|===
-| SF | F | N | A | SA
-| 29 | 6 | 1 | 0 | 0
-|===
-
-*Result*: strong consensus
+*Attendance*: 20

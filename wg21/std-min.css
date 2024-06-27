@@ -91,3 +91,9 @@ specifying the caption symbol properties:
 .def>.content>* {
 	margin-left: 3em;
 }
+
+/* SVG needs to be relative sized so that it doesn´t look too small or too large.
+*/
+.imageblock svg {
+	width: 100% !important;
+}

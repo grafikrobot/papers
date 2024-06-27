@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.18">
+<meta name="generator" content="Asciidoctor 2.0.23">
 <meta name="author" content="René Ferdinand Rivera Morell, et al.">
 <meta name="copyright" content="Copyright 2022 René Ferdinand Rivera Morell">
 <title>C++ Ecosystem International Standard</title>
@@ -757,7 +757,7 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 <span id="author" class="author">René Ferdinand Rivera Morell, et al.</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> D2656R3,</span>
-<span id="revdate">2023-05-27</span>
+<span id="revdate">2024-06-27</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -765,7 +765,7 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 <li><a href="#_abstract">1. Abstract</a></li>
 <li><a href="#_revision_history">2. Revision History</a>
 <ul class="sectlevel2">
-<li><a href="#_revision_3_june_2023">2.1. Revision 3 (June 2023)</a></li>
+<li><a href="#_revision_3_june_2024">2.1. Revision 3 (June 2024)</a></li>
 <li><a href="#_revision_2_february_2023">2.2. Revision 2 (February 2023)</a></li>
 <li><a href="#_revision_1_december_2022">2.3. Revision 1 (December 2022)</a></li>
 <li><a href="#_revision_0_october_2022">2.4. Revision 0 (October 2022)</a></li>
@@ -777,34 +777,31 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 <ul class="sectlevel2">
 <li><a href="#_definitions">5.1. Definitions</a></li>
 <li><a href="#_introspection">5.2. Introspection</a></li>
-<li><a href="#_package_format">5.3. Package Format</a></li>
-<li><a href="#_file_name_extensions">5.4. File Name Extensions</a></li>
-<li><a href="#_diagnostics_output">5.5. Diagnostics Output</a></li>
-<li><a href="#_response_file">5.6. Response File</a></li>
+<li><a href="#_portable_command_line_interface">5.3. Portable Command Line Interface</a></li>
+<li><a href="#_diagnostics_output">5.4. Diagnostics Output</a></li>
 </ul>
 </li>
 <li><a href="#_timeline">6. Timeline</a>
 <ul class="sectlevel2">
 <li><a href="#_2023_2_plan">6.1. 2023.2: Plan</a></li>
 <li><a href="#_2023_3_pre_draft">6.2. 2023.3: Pre-Draft</a></li>
-<li><a href="#_2024_2_proposal">6.3. 2024.2: Proposal</a></li>
-<li><a href="#_2025_1_committee_draft_cd_finalized">6.4. 2025.1: Committee Draft (CD) Finalized</a></li>
-<li><a href="#_2025_2_draft_international_standard_dis_finalized">6.5. 2025.2: Draft International Standard (DIS) Finalized</a></li>
+<li><a href="#_2024_3_proposal">6.3. 2024.3: Proposal</a></li>
+<li><a href="#_2025_2_committee_draft_cd_finalized">6.4. 2025.2: Committee Draft (CD) Finalized</a></li>
+<li><a href="#_2025_3_draft_international_standard_dis_finalized">6.5. 2025.3: Draft International Standard (DIS) Finalized</a></li>
 </ul>
 </li>
 <li><a href="#_process">7. Process</a>
 <ul class="sectlevel2">
-<li><a href="#_bootstrap">7.1. Bootstrap</a></li>
-<li><a href="#_parallel">7.2. Parallel</a></li>
-<li><a href="#_train_model">7.3. Train Model</a></li>
+<li><a href="#_train_model">7.1. Train Model</a></li>
 </ul>
 </li>
 <li><a href="#_polls">8. Polls</a>
 <ul class="sectlevel2">
-<li><a href="#_sg15_p2656r1_2023_02_10">8.1. SG15: P2656R1 (2023-02-10)</a></li>
-<li><a href="#_sg15_p2656r1_2022_12_16">8.2. SG15: P2656R1 (2022-12-16)</a></li>
-<li><a href="#_sg15_p2656r0_2022_11_09">8.3. SG15: P2656R0 (2022-11-09)</a></li>
+<li><a href="#_sg15_p2656r2_2024_06_23">8.1. SG15: P2656R2 (2024-06-23)</a></li>
+<li><a href="#_sg15_p2656r1_2023_02_10">8.2. SG15: P2656R1 (2023-02-10)</a></li>
+<li><a href="#_sg15_p2656r1_2022_12_16">8.3. SG15: P2656R1 (2022-12-16)</a></li>
 <li><a href="#_ewg_p2656r0_2022_11_10">8.4. EWG: P2656R0 (2022-11-10)</a></li>
+<li><a href="#_sg15_p2656r0_2022_11_09">8.5. SG15: P2656R0 (2022-11-09)</a></li>
 </ul>
 </li>
 </ul>
@@ -814,23 +811,104 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 <div id="preamble">
 <div class="sectionbody">
 <style>
-.sectionbody > div > .ins {
-  border-left: solid 0.4em green;
-  padding-left: 1em;
-  text-decoration: underline solid green;
-  text-underline-offset: 0.3em;
+/* Insertions: Marked by green underlined text. */
+
+.sectionbody>div>.ins {
+	text-decoration: underline solid green;
+	text-underline-offset: 0.3em;
 }
-.def > .content :first-child {
-  margin-left: 0;
+
+span.ins {
+	text-decoration: underline solid green;
+	text-underline-offset: 0.3em;
 }
-.def > .content > * {
-  margin-left: 3em;
+
+/* Deletions: Marked by red strikeout text. */
+
+.sectionbody>div>.del {
+	text-decoration: line-through solid red;
 }
-.icon .title {
-  font-size: 250%;
+
+span.del {
+	text-decoration: line-through solid red;
 }
+
+/* Rev-to-rev Change: Marked by blue sidebar, or squiggle text. */
+
+.sectionbody div.chg {
+	border-left: solid 0.2em blue;
+	padding-left: 0.3em;
+	margin-left: -0.5em;
+}
+
+span.chg {
+	text-decoration: underline wavy blue;
+}
+
+/* Information Preamble: Table like indented. */
+
+#preamble div.hdlist {
+	margin-left: 40%;
+}
+
+#preamble div.hdlist td.hdlist1 {
+	width: 8em;
+	padding: 0;
+}
+
+#preamble div.hdlist td.hdlist2 p {
+	margin-bottom: 0.25em;
+}
+
+/* Admonition Icons: Use simple, large, colored, glyphs for icons. Requires
+specifying the caption symbol properties:
+
+:caution-caption: ⚑
+:important-caption: ‼
+:note-caption: ℹ
+:tip-caption: ☀
+:warning-caption: ⚠
+*/
+
+.admonitionblock .icon .title {
+	font-size: 2.5em;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, .5);
+}
+
+.caution .icon .title {
+	color: rgba(192, 51, 0, 1);
+}
+
+.important .icon .title {
+	color: rgba(192, 0, 0, 1);
+}
+
+.note .icon .title {
+	color: rgba(26, 64, 128, 1);
+}
+
+.tip .icon .title {
+	color: rgba(255, 192, 0, 1);
+}
+
+.warning .icon .title {
+	color: rgba(192, 102, 0, 1);
+}
+
+/* ??? */
+
+.def>.content :first-child {
+	margin-left: 0;
+}
+
+.def>.content>* {
+	margin-left: 3em;
+}
+
+/* SVG needs to be relative sized so that it doesn´t look too small or too large.
+*/
 .imageblock svg {
-  width: 100% !important;
+	width: 100% !important;
 }
 </style>
 <div class="dlist">
@@ -841,7 +919,7 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 </dd>
 <dt class="hdlist1">Date: </dt>
 <dd>
-<p>2023-05-27</p>
+<p>2024-06-27</p>
 </dd>
 <dt class="hdlist1">Audience: </dt>
 <dd>
@@ -871,10 +949,24 @@ Standard (ISO/IEC 14882).</p>
 <h2 id="_revision_history"><a class="anchor" href="#_revision_history"></a>2. Revision History</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_revision_3_june_2023"><a class="anchor" href="#_revision_3_june_2023"></a>2.1. Revision 3 (June 2023)</h3>
-<div class="paragraph">
-<p>Specifies explicit steps for bootstrap review process with CWG to do wording
-review. Tweak the goals terms and order to mirror the draft outline.</p>
+<h3 id="_revision_3_june_2024"><a class="anchor" href="#_revision_3_june_2024"></a>2.1. Revision 3 (June 2024)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Remove parallel process as not relevant at this point.</p>
+</li>
+<li>
+<p>Specifies explicit steps for review process. We will follow the regular
+review of Evolution Working Group design approval and Core Wording Group for
+wording approval.</p>
+</li>
+<li>
+<p>Tweak the goals terms and order to mirror the draft outline.</p>
+</li>
+<li>
+<p>Update timeline to reflect current and near future expectations.</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
@@ -1003,20 +1095,14 @@ standard include:</p>
 <p>Definitions.</p>
 </li>
 <li>
-<p>Build System &#8656;&#8658; Package Manager Interoperation.</p>
-</li>
-<li>
-<p>Minimum set of recognized file extensions.</p>
-</li>
-<li>
 <p>Tool introspection.</p>
+</li>
+<li>
+<p>Command line portability.</p>
 </li>
 <li>
 <p>Portable diagnostics format via SARIF.
 <sup class="footnote" id="_footnote_SARIF">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup></p>
-</li>
-<li>
-<p>Command line portability.</p>
 </li>
 </ol>
 </div>
@@ -1057,95 +1143,25 @@ information of the IS.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_package_format"><a class="anchor" href="#_package_format"></a>5.3. Package Format</h3>
+<h3 id="_portable_command_line_interface"><a class="anchor" href="#_portable_command_line_interface"></a>5.3. Portable Command Line Interface</h3>
 <div class="paragraph">
-<p>Specification of formats and operation of interoperability between build
-systems and package managers. Current work:</p>
+<p>A key aspect of interoperation between tools in the ecosystem is having a
+common language to express tool commands, i.e. in compiler drivers, that can
+be understood and/or translated between different tools and platforms. This
+aims to define a standard structured response file format that can become the
+best way to communicate compiling C&#43;&#43;.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Metadata to support C&#43;&#43; packaging
+<p>P3051 Structured Response Files
 <sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup></p>
 </li>
-<li>
-<p>D2800R0 Dependency flag soup needs some fiber
-<sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup></p>
-</li>
-<li>
-<p>P2673 Common Description Format for C&#43;&#43; Libraries and Packages
-<sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnotedef_5" title="View footnote.">5</a>]</sup></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>And previous work on this:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The CppCon 2022 presentation "The Case For a Standardized Package Description
-Format",
-<sup class="footnote">[<a id="_footnoteref_6" class="footnote" href="#_footnotedef_6" title="View footnote.">6</a>]</sup>
-prompted ongoing work to specify standard communication format between package
-managers and build systems.</p>
-</li>
-<li>
-<p>P2577 C&#43;&#43; Modules Discovery in Prebuilt Library Releases
-<sup class="footnote" id="_footnote_P2577">[<a id="_footnoteref_7" class="footnote" href="#_footnotedef_7" title="View footnote.">7</a>]</sup></p>
-</li>
-<li>
-<p>P2536 Distributing C&#43;&#43; Module Libraries with dependencies json files.
-<sup class="footnote" id="_footnote_P2536">[<a id="_footnoteref_8" class="footnote" href="#_footnotedef_8" title="View footnote.">8</a>]</sup></p>
-</li>
-<li>
-<p>P2473 Distributing C&#43;&#43; Module Libraries.
-<sup class="footnote" id="_footnote_P2473">[<a id="_footnoteref_9" class="footnote" href="#_footnotedef_9" title="View footnote.">9</a>]</sup></p>
-</li>
-<li>
-<p>P1767 Packaging C&#43;&#43; Modules.
-<sup class="footnote" id="_footnote_P1767">[<a id="_footnoteref_10" class="footnote" href="#_footnotedef_10" title="View footnote.">10</a>]</sup></p>
-</li>
-<li>
-<p><code>libman</code>, A Dependency Manager ➔ Build System Bridge
-<sup class="footnote" id="_footnote_libman">[<a id="_footnoteref_11" class="footnote" href="#_footnotedef_11" title="View footnote.">11</a>]</sup></p>
-</li>
-<li>
-<p>P1313 Let&#8217;s Talk About Package Specification.
-<sup class="footnote" id="_footnote_P1313">[<a id="_footnoteref_12" class="footnote" href="#_footnotedef_12" title="View footnote.">12</a>]</sup></p>
-</li>
-<li>
-<p>P1177 Package Ecosystem Plan.
-<sup class="footnote" id="_footnote_P1177">[<a id="_footnoteref_13" class="footnote" href="#_footnotedef_13" title="View footnote.">13</a>]</sup></p>
-</li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_file_name_extensions"><a class="anchor" href="#_file_name_extensions"></a>5.4. File Name Extensions</h3>
-<div class="paragraph">
-<p>Specification of a minimal set of file name extension understood, and for what
-they are understood, by the various tools in the ecosystem. Current work is
-forthcoming.</p>
-</div>
-<div class="paragraph">
-<p>Previous work on this:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>P1838 Modules User-Facing Lexicon and File Extensions.
-<sup class="footnote">[<a id="_footnoteref_14" class="footnote" href="#_footnotedef_14" title="View footnote.">14</a>]</sup></p>
-</li>
-<li>
-<p>P1177 Package Ecosystem Plan.
-<sup class="footnoteref">[<a class="footnote" href="#_footnotedef_13" title="View footnote.">13</a>]</sup></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_diagnostics_output"><a class="anchor" href="#_diagnostics_output"></a>5.5. Diagnostics Output</h3>
+<h3 id="_diagnostics_output"><a class="anchor" href="#_diagnostics_output"></a>5.4. Diagnostics Output</h3>
 <div class="paragraph">
 <p>C&#43;&#43; tools spend a lot of their time reading the output of other tools and
 processing it to either do more work or to present it to users. Unfortunately
@@ -1155,16 +1171,6 @@ specific to each tool generating it. Recently some tools have implemented
 the common structured output as SARIF format.<sup class="footnoteref">[<a class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>
 The format is designed for presenting results of static analysis. But is
 finding alternate uses. We aim to incorporate the SARIF format.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_response_file"><a class="anchor" href="#_response_file"></a>5.6. Response File</h3>
-<div class="paragraph">
-<p>A key aspect of interoperation between tools in the ecosystem is having a
-common language to express tool commands, i.e. in compiler drivers, that can
-be understood and/or translated between different tools and platforms. This
-aims to define a standard structured response file format that can become the
-best way to communicate compiling C&#43;&#43;.</p>
 </div>
 </div>
 </div>
@@ -1198,9 +1204,7 @@ for them to build their tools on.</p>
 <p>Hence we aim to publish a standard quickly and provide updates to it as quickly.
 The goal is to publish this new IS on a two (2) year cycle starting in 2023.
 This means publishing the first edition in 2025. Subsequent versions would then
-publish in 2027, 2029, and so on. Because we plan on a small initial standard
-document we will follow the 24 month standards development track (SDT 24).
-<sup class="footnote" id="_footnote_sdt24">[<a id="_footnoteref_15" class="footnote" href="#_footnotedef_15" title="View footnote.">15</a>]</sup></p>
+publish in 2027, 2029, and so on.</p>
 </div>
 <div class="paragraph">
 <p>The timeline that follows lists milestones for relevant WG21 meetings.</p>
@@ -1240,7 +1244,7 @@ the work so far and the work going forward.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_2024_2_proposal"><a class="anchor" href="#_2024_2_proposal"></a>6.3. 2024.2: Proposal</h3>
+<h3 id="_2024_3_proposal"><a class="anchor" href="#_2024_3_proposal"></a>6.3. 2024.3: Proposal</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Goal</dt>
@@ -1252,10 +1256,7 @@ the new IS.</p>
 </div>
 <div class="paragraph">
 <p>The proposal will include an initial, mostly complete, draft of the
-intended content of the IS. Submitting at this meeting allows following the
-SDT 24 track of development <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_15" title="View footnote.">15</a>]</sup> with a target publication in
-Q3 2025. The goal being to avoid the rush of the preparations for the C&#43;&#43; 26
-IS. As the work will be completed by Q1 2025.</p>
+intended content of the IS.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1271,7 +1272,7 @@ Provide for an 8 week ballot period on proposal acceptance.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_2025_1_committee_draft_cd_finalized"><a class="anchor" href="#_2025_1_committee_draft_cd_finalized"></a>6.4. 2025.1: Committee Draft (CD) Finalized</h3>
+<h3 id="_2025_2_committee_draft_cd_finalized"><a class="anchor" href="#_2025_2_committee_draft_cd_finalized"></a>6.4. 2025.2: Committee Draft (CD) Finalized</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Goal</dt>
@@ -1281,7 +1282,7 @@ Provide for an 8 week ballot period on proposal acceptance.
 </dl>
 </div>
 <div class="paragraph">
-<p>From submitting an initial draft in 2024.2 we will have completed incorporating
+<p>From submitting an initial draft in 2024.3 we will have completed incorporating
 any detail changes that the draft text will be ready to get voted on. This will
 mark, approximately, 1.5 years since the beginning of work on the new IS. The
 goal at this WG21 meeting will be to address any urgent issues that could
@@ -1302,7 +1303,7 @@ And 2 (4?) weeks of comment compilation time.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_2025_2_draft_international_standard_dis_finalized"><a class="anchor" href="#_2025_2_draft_international_standard_dis_finalized"></a>6.5. 2025.2: Draft International Standard (DIS) Finalized</h3>
+<h3 id="_2025_3_draft_international_standard_dis_finalized"><a class="anchor" href="#_2025_3_draft_international_standard_dis_finalized"></a>6.5. 2025.3: Draft International Standard (DIS) Finalized</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Goal</dt>
@@ -1921,1007 +1922,23 @@ the IS. In comparison to the C++ IS that would look like:</p>
 <h2 id="_process"><a class="anchor" href="#_process"></a>7. Process</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We expect the development of the IS to use two processes that mesh into the
-existing processes of WG21:</p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Bootstrap</dt>
-<dd>
-<p>Initial development and review in Tooling Study Group (SG15), followed by
-review and approvals in Evolution Working Group (EWG). Followed by wording
-review in Core Language Wording (CWG). And from there to polls for WG21 plenary
-votes.</p>
-</dd>
-<dt class="hdlist1">Parallel</dt>
-<dd>
-<p>Development and review can originate in any existing study group depending as
-appropriate. Followed for review and approval by a new Tooling Working Group
-(TWG). TWG would include consideration of wording of the IS itself. And, hence,
-produce polls for WG21 plenary votes.</p>
-</dd>
-</dl>
-</div>
-<div class="sect2">
-<h3 id="_bootstrap"><a class="anchor" href="#_bootstrap"></a>7.1. Bootstrap</h3>
-<div class="paragraph">
-<p>We would use the <em>Bootstrap</em> process for the first edition of the IS. Following
-this process for the first edition has some advantages:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>It&#8217;s a process we know. Which means it reduces initial overhead.</p>
-</li>
-<li>
-<p>The reduced overhead allows us to concentrate more time on the IS development
-itself.</p>
-</li>
-<li>
-<p>Gives us time to recruit people for the subsequent editions of the IS.</p>
-</li>
-<li>
-<p>Contributors build up knowledge on the process to prepare for the next
-IS edition.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>But it has some drawbacks:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>It places higher burden on time for the EWG and CWG groups to review the
-work.</p>
-</li>
-<li>
-<p>The EWG and CWG groups usual experts might not all be familiar with the
-tooling and ecosystem domain.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Those are significant drawbacks although we think are ameliorated by: First,
-scheduling the IS to complete a full year before the C&#43;&#43;26 time frame. And,
-second, limiting the scope of the IS early in the time line resulting in more
-time spent in SG15 on draft wording details.</p>
-</div>
-<div class="paragraph">
-<p>Wording review in the Bootstrap process would follow these steps:</p>
+<p>The development and review process should follow the usual 3-stage pipeline:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Checkpoint vote in EWG with first edition outline and introspection
-preliminary wording. Target is 2023.2 (Varna) meeting for this.</p>
+<p>Design and wording pre-review occurs in Tooling (SG15).</p>
 </li>
 <li>
-<p>SG15 design and wording approval for Introspection and one other feature.</p>
+<p>Design review approval happens in Core Language Evolution (EWG).</p>
 </li>
 <li>
-<p>EWG design and wording for Introspection and one other feature.</p>
-</li>
-<li>
-<p>CWG wording review for Introspection and one other feature.</p>
-</li>
-<li>
-<p>Continue with SG15, EWG, and CWG sequence with additional features.</p>
-</li>
-<li>
-<p>Final approval from SG15, EWG, and CWG for WG21 plenary voting to start ISO
-work item. Target for this is 2024.2 meeting.</p>
+<p>Wording review and approval is managed by Core Language Wording (CWG).</p>
 </li>
 </ol>
 </div>
-</div>
 <div class="sect2">
-<h3 id="_parallel"><a class="anchor" href="#_parallel"></a>7.2. Parallel</h3>
-<div class="paragraph">
-<p>After the first edition of the IS we would switch to the <em>Parallel</em> process.
-Visually this process would alter the regular flow of WG21 in minor ways
-resulting in:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<svg host="65bd71144e" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="773px" height="692px" viewBox="-0.5 -0.5 773 692" content="&lt;mxfile&gt;&lt;diagram id=&quot;mIr1bIi28X3ZeA4p8WJ_&quot; name=&quot;Page-1&quot;&gt;7Zzhc6I6EMD/GmfuPlwHCKB+tGq9vmnf3Zze9HMKUTMHxAfR2vfXvwQCKomVjoT6qPauxSUE2d+yu9lEOmAYbicxXC0fiY+CjmX42w4YdSzL7Bs2+8Mlr0LiOr1MsoixL2Q7wRT/i4TQENI19lFy0JASElC8OhR6JIqQRw9kMI7Jy2GzOQkOz7qCCyQJph4MZOkT9ukyk/YcYyf/jvBimZ/ZNMSeEOaNhSBZQp+87InAuAOGMSE02wq3QxRw7eV6yY67O7K3+GAximiVA6x+dsQGBmtxceKD0df8amOyjnzEDzA64PZliSmarqDH974wwEy2pGHA3plsc04iKoCZ7GpuExqTP4WW0hY4CIYkIHHaO/Ad1PPtouXeHsu0xuaA7ZEvSlznBsUUbfdE4iIniISIxq+sidjbF/oWFme54v3LDp+dt1nuoQO5yUFhMoui651W2YZQ7BElSzoe+CGOOpYbsNPcPsdsa8G3JkzVq/P0f6jFiERIVnk/fZ2p2FyTXVmTPYUinRr0aEt6nML5DTtqirx1fCPr8xfaYPTCDpnE/zO1gn5zanUktY5wzNwmJu0wUQCa06Ur3+q390yQW2IL1Gk7zamzq4hOmQp5nDlQmvvPmuQ7viVpBBqwBiZYbXc7c7VPJ2beEfsIWV/ZHhnRkETMuzCFea9nhsZDJq7f67q2+MR78nn6OgZWjqc1RMciP3nDqZumJsY9bYytyoxZjroOWEbZUr5FuvkRfFUZZj18bRnkEeJ/I/pC4j84WrQVMbA/EHHerwbGTmXGsy3LAI1HFJK4tY7adj+SsqmNslv9Tl6HKMZea111ORSrkld9hOWRal2Eu5Vj8S80D/LRRzsZl8Nxs4yBNsb96oxhtGhvulWOxc3ylasktY2ZjMpu+g5Buo4R62yGEtpW0OVw3CxouW5TG2irMujfPOm6RUu4wUzdLeUsBWVFdU4fZ7mmVBtnUJnz98f7jsU+q8H+3P2oFfQADPt95yJAl29op9ckaI3VLrtyaH73KS3VKScwRJm9jMNn5HPT4O/KJ3sgvDr/AGlWXTvyEdvpVKQssFGnoq8qY7qVbW2Gtq3NDaQksEm8uWnpwFt9JDd+mvCAEXnrZ0jbmx1IWWCjpPUVZcxeZdIPnwR1ORFUzYXpQ62vOmNWH7o/Qm+JIz6ye0AwjlpcUi8H6GZh6yvTWEZ1D+6vPdjmUlw5SjfLWF+pxnrX/DaNoUdbW44rx+dmGeur0ux6Os2YtWD/b9N/xgOGOGnvPV0O0o7ZJG991RpQGfcdDlDymlAU1sq4KNRUZHnMFHQwbrJQo3FZUvWUmy9LQquavfYFES5nX80S1rcoyawemUeQwmeY1DxRdkGMy9lXo4zzuZraGQ9JOvE13pBgvb+Itt66pnKd/R4nw7BctlEmCmSDMJ+hiaxm/bWpqpE4ukjryrMF6ScS++k4+CM4g5F1a9pVOA+MrgmAZs5mibOt4AwUnO06OOvKtR/w8xXzQXDufiRmXcF5RkjwYYAvy1/bVgXAKn9dOPqzZqeOE05WMDor/XL28Gad6Z0J1WpUFzuRXo73rsp+tGV28uTmlE9Fp8IvPxfhghdBYLRIvtZ3UwPVTe2mryo39djlPzK77KUn3VYxcR2ZCaiBiS1n2/fTH+yo+zFH89eM/zY5n/vZJ6XSCAZV6aKk7GQJV3xzHqDtgH9bml0ninyxOfICmCTYe1vnrH2uVjaWTt+L3d0bhwvyi7UUfsw2+I+Q/2CcMeUW6xgSTB/N4TqLC6m81PgoHeQffMFbZrPH4q1RSYwCSPEGHXSu4iPO8JPgNJbk6EtpVL9EOCHr2EPioB3kk/2Uv7RMYbxAVOonNZbioqvZz/HIvARHAuc8u1F3oXECYxiSyJeDJfiWUP7dewYNr1CQzjO+WSxh4v3z6nMbymBZ9hii0TlOYc/wgCo+dmtwAo7si08h+46CDaLYgzKzL3dfR/dTdtBgtYoJ61Nb/nwHQxxwEy8M6FKoib2uoXDlXQXFOly5c3Llx3soDlkzPi8MQ6747DeT/BzNrmgP0L6RO2kjbdVJ+j6iKI44yytWCauqLKkN68klHtWwGkn+gJxcZsrUi+FtpZGsrRrJgmxnUQZTuIshiRKclFfzPiui9ie3M9N2GjS0k/XvyzI0K9s5QgleREo7m6UJbTpaZOHpbjb9ejW3t8zNajQxOVmGvyxzM4W5kRDyhzIZ0xXy8JyNcPmC1g1KKF6INXAKSxRLXg+n+a4WKFug4olbagus44lbzvEVGgWbp3SRnPGNh61iadSQhCGmFPEh6Jf5Ou10FaAIxq9HXExtJHf3QJXpINMGTqXpINfuur1uR89swfGsyVE9EqiWCpYqGdZbwQJOZ7+C1b/p8QZFBasvK/3TVLDMrn3jqG/09xax5K5Mq9RVfXUs5+Qc4rsGzyRkToKKL7kZOIJeqtOr939rYY/K+9cy/XNyuHzWMoDrup79hQCltdWNruuxVeOaayj4oFAA8id9nRsIyh1pDAP5R7xa0CVYkN2vLZmQu6rPitjb3QOas+a751yD8X8=&lt;/diagram&gt;&lt;/mxfile&gt;">
-    <defs/>
-    <g>
-        <rect x="91" y="261" width="490" height="310" fill="#d5e8d4" stroke="#212e1a" pointer-events="all"/>
-        <rect x="1" y="271" width="80" height="50" fill="#999999" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 78px; height: 1px; padding-top: 296px; margin-left: 2px;">
-                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                Admin
-                                <br/>
-                                Group
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="41" y="300" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    Admin...
-                </text>
-            </switch>
-        </g>
-        <rect x="1" y="391" width="80" height="50" fill="#999999" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 78px; height: 1px; padding-top: 416px; margin-left: 2px;">
-                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                Saf./Secur.
-                                <br/>
-                                Review Grp
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="41" y="420" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    Saf./Secur....
-                </text>
-            </switch>
-        </g>
-        <rect x="1" y="331" width="80" height="50" fill="#999999" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 78px; height: 1px; padding-top: 356px; margin-left: 2px;">
-                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                Direction
-                                <br/>
-                                Group
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="41" y="360" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    Direction...
-                </text>
-            </switch>
-        </g>
-        <rect x="1" y="451" width="80" height="50" fill="#999999" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 78px; height: 1px; padding-top: 476px; margin-left: 2px;">
-                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                ABI Review
-                                <br/>
-                                Group
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="41" y="480" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    ABI Review...
-                </text>
-            </switch>
-        </g>
-        <rect x="101" y="271" width="110" height="50" fill="#6d8764" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 296px; margin-left: 102px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG1
-                                </font>
-                                <br/>
-                                Concurrency
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="156" y="300" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG1...
-                </text>
-            </switch>
-        </g>
-        <rect x="221" y="271" width="110" height="50" fill="#6d8764" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 296px; margin-left: 222px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG2
-                                </font>
-                                <br/>
-                                Modules
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="276" y="300" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG2...
-                </text>
-            </switch>
-        </g>
-        <rect x="341" y="271" width="110" height="50" fill="#6d8764" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 296px; margin-left: 342px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG4
-                                    <br/>
-                                </font>
-                                Networking
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="396" y="300" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG4...
-                </text>
-            </switch>
-        </g>
-        <rect x="461" y="271" width="110" height="50" fill="#6d8764" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 296px; margin-left: 462px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG5
-                                    <br/>
-                                </font>
-                                Tx. Memory
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="516" y="300" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG5...
-                </text>
-            </switch>
-        </g>
-        <rect x="101" y="331" width="110" height="50" fill="#6d8764" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 356px; margin-left: 102px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG6
-                                    <br/>
-                                </font>
-                                Numerics
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="156" y="360" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG6...
-                </text>
-            </switch>
-        </g>
-        <rect x="221" y="331" width="110" height="50" fill="#6d8764" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 356px; margin-left: 222px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG7
-                                </font>
-                                <br/>
-                                Reflection
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="276" y="360" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG7...
-                </text>
-            </switch>
-        </g>
-        <rect x="341" y="331" width="110" height="50" fill="#6d8764" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 356px; margin-left: 342px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG9
-                                </font>
-                                <br/>
-                                Ranges
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="396" y="360" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG9...
-                </text>
-            </switch>
-        </g>
-        <rect x="461" y="331" width="110" height="50" fill="#6d8764" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 356px; margin-left: 462px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG10
-                                    <br/>
-                                </font>
-                                Feature Test
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="516" y="360" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG10...
-                </text>
-            </switch>
-        </g>
-        <rect x="101" y="391" width="110" height="50" fill="#6d8764" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 416px; margin-left: 102px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG12
-                                    <br/>
-                                </font>
-                                U. Behavior
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="156" y="420" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG12...
-                </text>
-            </switch>
-        </g>
-        <rect x="461" y="581" width="110" height="50" fill="#a3c995" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 606px; margin-left: 462px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG13
-                                    <br/>
-                                </font>
-                                HMI, I/O
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="516" y="610" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG13...
-                </text>
-            </switch>
-        </g>
-        <rect x="221" y="391" width="110" height="50" fill="#6d8764" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 416px; margin-left: 222px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG14
-                                </font>
-                                <br/>
-                                <font style="font-size: 12px">
-                                    Game, Embedded,
-                                    <br/>
-                                    Low Latency
-                                </font>
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="276" y="420" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG14...
-                </text>
-            </switch>
-        </g>
-        <rect x="341" y="391" width="110" height="50" fill="#6d8764" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 416px; margin-left: 342px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG16
-                                </font>
-                                <br/>
-                                Text
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="396" y="420" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG16...
-                </text>
-            </switch>
-        </g>
-        <rect x="461" y="391" width="110" height="50" fill="#6d8764" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 416px; margin-left: 462px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG17
-                                </font>
-                                <br/>
-                                EWG Incubator
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="516" y="420" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG17...
-                </text>
-            </switch>
-        </g>
-        <rect x="101" y="451" width="110" height="50" fill="#6d8764" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 476px; margin-left: 102px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG18
-                                </font>
-                                <br/>
-                                LEWG Incubator
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="156" y="480" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG18...
-                </text>
-            </switch>
-        </g>
-        <rect x="221" y="451" width="110" height="50" fill="#6d8764" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 476px; margin-left: 222px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG19
-                                </font>
-                                <br/>
-                                Machine Learning
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="276" y="480" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG19...
-                </text>
-            </switch>
-        </g>
-        <rect x="341" y="451" width="110" height="50" fill="#6d8764" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 476px; margin-left: 342px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG20
-                                </font>
-                                <br/>
-                                Education
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="396" y="480" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG20...
-                </text>
-            </switch>
-        </g>
-        <rect x="461" y="451" width="110" height="50" fill="#6d8764" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 476px; margin-left: 462px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG21
-                                </font>
-                                <br/>
-                                Contracts
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="516" y="480" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG21...
-                </text>
-            </switch>
-        </g>
-        <rect x="101" y="511" width="110" height="50" fill="#6d8764" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 536px; margin-left: 102px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG22
-                                </font>
-                                <br/>
-                                C/C++ Liaison
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="156" y="540" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG22...
-                </text>
-            </switch>
-        </g>
-        <rect x="101" y="581" width="110" height="50" fill="#a3c995" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 606px; margin-left: 102px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG3
-                                </font>
-                                <br/>
-                                Filesystem
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="156" y="610" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG3...
-                </text>
-            </switch>
-        </g>
-        <rect x="221" y="581" width="110" height="50" fill="#a3c995" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 606px; margin-left: 222px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG8
-                                </font>
-                                <br/>
-                                Concepts
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="276" y="610" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG8...
-                </text>
-            </switch>
-        </g>
-        <rect x="341" y="581" width="110" height="50" fill="#a3c995" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 606px; margin-left: 342px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    SG11
-                                </font>
-                                <br/>
-                                Databases
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="396" y="610" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG11...
-                </text>
-            </switch>
-        </g>
-        <rect x="101" y="191" width="150" height="50" fill="#1ba1e2" stroke="#00263d" stroke-width="3" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 216px; margin-left: 102px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    Core Evolution
-                                </font>
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="176" y="220" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    Core Evolution
-                </text>
-            </switch>
-        </g>
-        <rect x="111" y="141" width="130" height="40" fill="#a07133" stroke="#3d2b14" stroke-width="3" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 128px; height: 1px; padding-top: 161px; margin-left: 112px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    Core Wording
-                                </font>
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="176" y="165" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    Core Wording
-                </text>
-            </switch>
-        </g>
-        <rect x="271" y="141" width="130" height="40" fill="#a07133" stroke="#3d2b14" stroke-width="3" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 128px; height: 1px; padding-top: 161px; margin-left: 272px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    Lib Wording
-                                </font>
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="336" y="165" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    Lib Wording
-                </text>
-            </switch>
-        </g>
-        <rect x="421" y="141" width="150" height="100" fill="#1ba1e2" stroke="#00263d" stroke-width="3" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 191px; margin-left: 422px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    Tooling
-                                </font>
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="496" y="195" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    Tooling
-                </text>
-            </switch>
-        </g>
-        <rect x="101" y="641" width="110" height="50" fill="#a3c995" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 666px; margin-left: 102px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <span style="font-size: 13px">
-                                    SG15
-                                </span>
-                                <br/>
-                                <font style="font-size: 12px">
-                                    Tooling
-                                </font>
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="156" y="670" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    SG15...
-                </text>
-            </switch>
-        </g>
-        <rect x="341" y="41" width="165" height="30" fill="#e6e6e6" stroke="#666666" stroke-width="3" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 163px; height: 1px; padding-top: 56px; margin-left: 342px;">
-                        <div data-drawio-colors="color: #333333; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 13px; font-family: Helvetica; color: rgb(51, 51, 51); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                SC 22 (Pgmg Langs)
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="424" y="60" fill="#333333" font-family="Helvetica" font-size="13px" text-anchor="middle">
-                    SC 22 (Pgmg Langs)
-                </text>
-            </switch>
-        </g>
-        <rect x="341" y="1" width="165" height="30" fill="#e6e6e6" stroke="#666666" stroke-width="3" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 163px; height: 1px; padding-top: 16px; margin-left: 342px;">
-                        <div data-drawio-colors="color: #333333; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 13px; font-family: Helvetica; color: rgb(51, 51, 51); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                ISO/IEC JTC 1 (IT)
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="424" y="20" fill="#333333" font-family="Helvetica" font-size="13px" text-anchor="middle">
-                    ISO/IEC JTC 1 (IT)
-                </text>
-            </switch>
-        </g>
-        <path d="M 381.5 90.5 L 360.5 90.5 L 360.5 35.24 L 346 35.24 L 371 11.5 L 396 35.24 L 381.5 35.24 Z" fill-opacity="0.5" fill="#404040" stroke="rgb(0, 0, 0)" stroke-opacity="0.5" stroke-linejoin="round" stroke-miterlimit="10" pointer-events="all"/>
-        <rect x="1" y="1" width="310" height="70" fill="none" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 308px; height: 1px; padding-top: 36px; margin-left: 2px;">
-                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 13px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <h3>
-                                    <font face="Garamond">
-                                        3-stage pipeline
-                                    </font>
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="156" y="40" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="13px" text-anchor="middle">
-                    3-stage pipeline
-                </text>
-            </switch>
-        </g>
-        <rect x="601" y="1" width="170" height="30" fill="none" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 168px; height: 1px; padding-top: 16px; margin-left: 602px;">
-                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 13px; font-family: Garamond; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font face="Helvetica">
-                                    (F)DIS Approval
-                                </font>
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="686" y="20" fill="rgb(0, 0, 0)" font-family="Garamond" font-size="13px" text-anchor="middle">
-                    (F)DIS Approval
-                </text>
-            </switch>
-        </g>
-        <rect x="601" y="41" width="170" height="30" fill="none" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 168px; height: 1px; padding-top: 56px; margin-left: 602px;">
-                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 13px; font-family: Garamond; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font face="Helvetica">
-                                    CD &amp; PDTS Approval
-                                </font>
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="686" y="60" fill="rgb(0, 0, 0)" font-family="Garamond" font-size="13px" text-anchor="middle">
-                    CD &amp; PDTS Approval
-                </text>
-            </switch>
-        </g>
-        <rect x="601" y="91" width="170" height="30" fill="none" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 168px; height: 1px; padding-top: 106px; margin-left: 602px;">
-                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 13px; font-family: Garamond; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font face="Helvetica">
-                                    Internal Approval
-                                </font>
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="686" y="110" fill="rgb(0, 0, 0)" font-family="Garamond" font-size="13px" text-anchor="middle">
-                    Internal Approval
-                </text>
-            </switch>
-        </g>
-        <rect x="601" y="146" width="170" height="30" fill="none" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 168px; height: 1px; padding-top: 161px; margin-left: 602px;">
-                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 13px; font-family: Garamond; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font face="Helvetica" size="1">
-                                    <b style="font-size: 14px">
-                                        3: Wording &amp; Consistency
-                                    </b>
-                                </font>
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="686" y="165" fill="rgb(0, 0, 0)" font-family="Garamond" font-size="13px" text-anchor="middle">
-                    3: Wording &amp; Consistency
-                </text>
-            </switch>
-        </g>
-        <rect x="601" y="201" width="170" height="30" fill="none" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 168px; height: 1px; padding-top: 216px; margin-left: 602px;">
-                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 13px; font-family: Garamond; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font face="Helvetica" size="1">
-                                    <b style="font-size: 14px">
-                                        2: Design &amp; Target (IS/TS)
-                                    </b>
-                                </font>
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="686" y="220" fill="rgb(0, 0, 0)" font-family="Garamond" font-size="13px" text-anchor="middle">
-                    2: Design &amp; Target (IS/TS)
-                </text>
-            </switch>
-        </g>
-        <rect x="601" y="261" width="170" height="310" fill="none" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 168px; height: 1px; padding-top: 416px; margin-left: 602px;">
-                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 13px; font-family: Garamond; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font face="Helvetica" size="1">
-                                    <b style="font-size: 14px">
-                                        1: Domain Specific Investigation &amp; Incubation
-                                    </b>
-                                </font>
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="686" y="420" fill="rgb(0, 0, 0)" font-family="Garamond" font-size="13px" text-anchor="middle">
-                    1: Domain Specific Investi...
-                </text>
-            </switch>
-        </g>
-        <rect x="1" y="91" width="580" height="30" fill="#647687" stroke="#314354" stroke-width="3" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 578px; height: 1px; padding-top: 106px; margin-left: 2px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <b>
-                                    WG21 - C++ Committee (full plenary)
-                                </b>
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="291" y="110" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    WG21 - C++ Committee (full plenary)
-                </text>
-            </switch>
-        </g>
-        <path d="M 190 260.5 L 161 260.5 L 161 151.99 L 143 151.99 L 175.5 121.5 L 208 151.99 L 190 151.99 Z" fill-opacity="0.5" fill="#404040" stroke="rgb(0, 0, 0)" stroke-opacity="0.5" stroke-linejoin="round" stroke-miterlimit="10" pointer-events="all"/>
-        <rect x="601" y="581" width="170" height="50" fill="none" stroke="none" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 168px; height: 1px; padding-top: 606px; margin-left: 602px;">
-                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 13px; font-family: Garamond; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font face="Helvetica">
-                                    Completed, inactive
-                                </font>
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="686" y="610" fill="rgb(0, 0, 0)" font-family="Garamond" font-size="13px" text-anchor="middle">
-                    Completed, inactive
-                </text>
-            </switch>
-        </g>
-        <rect x="261" y="191" width="150" height="50" fill="#1ba1e2" stroke="#00263d" stroke-width="3" pointer-events="all"/>
-        <g transform="translate(-0.5 -0.5)">
-            <switch>
-                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 216px; margin-left: 262px;">
-                        <div data-drawio-colors="color: #ffffff; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
-                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
-                                <font style="font-size: 13px">
-                                    Lib Evolution
-                                </font>
-                            </div>
-                        </div>
-                    </div>
-                </foreignObject>
-                <text x="336" y="220" fill="#ffffff" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    Lib Evolution
-                </text>
-            </switch>
-        </g>
-        <path d="M 344.5 260.5 L 315.5 260.5 L 315.5 151.99 L 297.5 151.99 L 330 121.5 L 362.5 151.99 L 344.5 151.99 Z" fill-opacity="0.5" fill="#404040" stroke="rgb(0, 0, 0)" stroke-opacity="0.5" stroke-linejoin="round" stroke-miterlimit="10" pointer-events="all"/>
-        <path d="M 510 260.5 L 481 260.5 L 481 151.99 L 463 151.99 L 495.5 121.5 L 528 151.99 L 510 151.99 Z" fill-opacity="0.5" fill="#404040" stroke="rgb(0, 0, 0)" stroke-opacity="0.5" stroke-linejoin="round" stroke-miterlimit="10" pointer-events="all"/>
-    </g>
-    <switch>
-        <g requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"/>
-        <a transform="translate(0,-5)" xlink:href="https://www.diagrams.net/doc/faq/svg-export-text-problems" target="_blank">
-            <text text-anchor="middle" font-size="10px" x="50%" y="100%">
-                Viewer does not support full SVG 1.1
-            </text>
-        </a>
-    </switch>
-</svg>
-</div>
-</div>
-<div class="paragraph">
-<p>Here the drawbacks from the <em>Bootstrap</em> process are addressed. And we maintain
-the advantages as we will have people ready and able to develop and process
-further editions of the IS.</p>
-</div>
-<div class="paragraph">
-<p>This process structure will, clearly, change over time as the IS grows and
-experts fill similar roles to what we now have in WG21. Hence we expect to
-eventually need a wording group and narrower domain specific study groups.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">ℹ</div>
-</td>
-<td class="content">
-SG15 would cease to operate. As TWG would assume the same
-responsibilities.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_train_model"><a class="anchor" href="#_train_model"></a>7.3. Train Model</h3>
+<h3 id="_train_model"><a class="anchor" href="#_train_model"></a>7.1. Train Model</h3>
 <div class="paragraph">
 <p>Like the C&#43;&#43; process we are going to follow the train model of releases. That
 is, we will release what we have now not what we could have in the future.</p>
@@ -2933,10 +1950,50 @@ is, we will release what we have now not what we could have in the future.</p>
 <h2 id="_polls"><a class="anchor" href="#_polls"></a>8. Polls</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_sg15_p2656r1_2023_02_10"><a class="anchor" href="#_sg15_p2656r1_2023_02_10"></a>8.1. SG15: P2656R1 (2023-02-10)</h3>
+<h3 id="_sg15_p2656r2_2024_06_23"><a class="anchor" href="#_sg15_p2656r2_2024_06_23"></a>8.1. SG15: P2656R2 (2024-06-23)</h3>
 <div class="paragraph">
-<p>SG15 thinks that the initial Ecosystem IS should include recommended /
-recognized file extensions.</p>
+<p><em>Remove the proposed parallel process from the process section.</em></p>
+</div>
+<div class="paragraph">
+<p>Unanimous Consent</p>
+</div>
+<div class="paragraph">
+<p><em>Forward the initial set of Ecosystem IS papers (P2656, P3342, P3051, and
+P2717), with the agreed changes, to EWG with the request to create a work item.</em></p>
+</div>
+<table class="tableblock frame-all grid-all fit-content">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">SF</th>
+<th class="tableblock halign-center valign-top">F</th>
+<th class="tableblock halign-center valign-top">N</th>
+<th class="tableblock halign-center valign-top">A</th>
+<th class="tableblock halign-center valign-top">SA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_sg15_p2656r1_2023_02_10"><a class="anchor" href="#_sg15_p2656r1_2023_02_10"></a>8.2. SG15: P2656R1 (2023-02-10)</h3>
+<div class="paragraph">
+<p><em>SG15 thinks that the initial Ecosystem IS should include recommended /
+recognized file extensions.</em></p>
 </div>
 <table class="tableblock frame-all grid-all fit-content">
 <colgroup>
@@ -2966,8 +2023,8 @@ recognized file extensions.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>SG15 is interested in a structured diagnostics format in the initial Ecosystem
-IS.</p>
+<p><em>SG15 is interested in a structured diagnostics format in the initial Ecosystem
+IS.</em></p>
 </div>
 <table class="tableblock frame-all grid-all fit-content">
 <colgroup>
@@ -2998,9 +2055,10 @@ IS.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_sg15_p2656r1_2022_12_16"><a class="anchor" href="#_sg15_p2656r1_2022_12_16"></a>8.2. SG15: P2656R1 (2022-12-16)</h3>
+<h3 id="_sg15_p2656r1_2022_12_16"><a class="anchor" href="#_sg15_p2656r1_2022_12_16"></a>8.3. SG15: P2656R1 (2022-12-16)</h3>
 <div class="paragraph">
-<p>SG15 recommends a two year timeline for the tooling IS as described in D2656R1.</p>
+<p><em>SG15 recommends a two year timeline for the tooling IS as described in
+D2656R1.</em></p>
 </div>
 <table class="tableblock frame-all grid-all fit-content">
 <colgroup>
@@ -3033,8 +2091,8 @@ IS.</p>
 <p><strong>Author</strong>: SF</p>
 </div>
 <div class="paragraph">
-<p>SG15 recommends a three year timeline for the tooling IS offset from the C++
-Language IS.</p>
+<p><em>SG15 recommends a three year timeline for the tooling IS offset from the C++
+Language IS.</em></p>
 </div>
 <table class="tableblock frame-all grid-all fit-content">
 <colgroup>
@@ -3068,10 +2126,48 @@ Language IS.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_sg15_p2656r0_2022_11_09"><a class="anchor" href="#_sg15_p2656r0_2022_11_09"></a>8.3. SG15: P2656R0 (2022-11-09)</h3>
+<h3 id="_ewg_p2656r0_2022_11_10"><a class="anchor" href="#_ewg_p2656r0_2022_11_10"></a>8.4. EWG: P2656R0 (2022-11-10)</h3>
 <div class="paragraph">
-<p>SG15 recommends to WG21 to create a new Tooling IS with the scope and goals
-described in P2656R0 when an approved working document has been produced.</p>
+<p><em>EWG is in favor of further work in the direction of starting an additional IS
+for Tooling Interaction as proposed by P2656, and would like to see this again
+with a proposed scope, process, details, etc.</em></p>
+</div>
+<table class="tableblock frame-all grid-all fit-content">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">SF</th>
+<th class="tableblock halign-center valign-top">F</th>
+<th class="tableblock halign-center valign-top">N</th>
+<th class="tableblock halign-center valign-top">A</th>
+<th class="tableblock halign-center valign-top">SA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">29</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Result</strong>: strong consensus</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sg15_p2656r0_2022_11_09"><a class="anchor" href="#_sg15_p2656r0_2022_11_09"></a>8.5. SG15: P2656R0 (2022-11-09)</h3>
+<div class="paragraph">
+<p><em>SG15 recommends to WG21 to create a new Tooling IS with the scope and goals
+described in P2656R0 when an approved working document has been produced.</em></p>
 </div>
 <table class="tableblock frame-all grid-all fit-content">
 <colgroup>
@@ -3110,44 +2206,6 @@ described in P2656R0 when an approved working document has been produced.</p>
 <p><strong>Attendance</strong>: 20</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_ewg_p2656r0_2022_11_10"><a class="anchor" href="#_ewg_p2656r0_2022_11_10"></a>8.4. EWG: P2656R0 (2022-11-10)</h3>
-<div class="paragraph">
-<p>EWG is in favor of further work in the direction of starting an additional IS
-for Tooling Interaction as proposed by P2656, and would like to see this again
-with a proposed scope, process, details, etc:</p>
-</div>
-<table class="tableblock frame-all grid-all fit-content">
-<colgroup>
-<col>
-<col>
-<col>
-<col>
-<col>
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-center valign-top">SF</th>
-<th class="tableblock halign-center valign-top">F</th>
-<th class="tableblock halign-center valign-top">N</th>
-<th class="tableblock halign-center valign-top">A</th>
-<th class="tableblock halign-center valign-top">SA</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">29</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">6</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Result</strong>: strong consensus</p>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -3160,43 +2218,7 @@ with a proposed scope, process, details, etc:</p>
 <a href="#_footnoteref_2">2</a>. Tool Introspection. <em>René Ferdinand Rivera Morell</em> (<a href="https://wg21.link/P2717" class="bare">https://wg21.link/P2717</a>)
 </div>
 <div class="footnote" id="_footnotedef_3">
-<a href="#_footnoteref_3">3</a>. Metadata to support C&#43;&#43; packaging (<a href="https://github.com/isocpp/pkg-fmt" class="bare">https://github.com/isocpp/pkg-fmt</a>)
-</div>
-<div class="footnote" id="_footnotedef_4">
-<a href="#_footnoteref_4">4</a>. Dependency flag soup needs some fiber (<a href="https://isocpp.org/files/papers/D2800R0.html" class="bare">https://isocpp.org/files/papers/D2800R0.html</a>)
-</div>
-<div class="footnote" id="_footnotedef_5">
-<a href="#_footnoteref_5">5</a>. Common Description Format for C&#43;&#43; Libraries and Packages (<a href="https://wg21.link/p2673r0" class="bare">https://wg21.link/p2673r0</a>)
-</div>
-<div class="footnote" id="_footnotedef_6">
-<a href="#_footnoteref_6">6</a>. CppCon 2022: The Case For a Standardized Package Description Format, <em>Luis Caro Campos</em> (<a href="https://cppcon.digital-medium.co.uk/session/2022/the-case-for-a-standardized-package-description-format/" class="bare">https://cppcon.digital-medium.co.uk/session/2022/the-case-for-a-standardized-package-description-format/</a>)
-</div>
-<div class="footnote" id="_footnotedef_7">
-<a href="#_footnoteref_7">7</a>. C&#43;&#43; Modules Discovery in Prebuilt Library Releases, <em>Daniel Ruoso</em> (<a href="https://github.com/cplusplus/papers/issues/1232" class="bare">https://github.com/cplusplus/papers/issues/1232</a>)
-</div>
-<div class="footnote" id="_footnotedef_8">
-<a href="#_footnoteref_8">8</a>. Distributing C&#43;&#43; Module Libraries with dependencies json files. <em>Olga Arkhipova</em> (<a href="https://github.com/cplusplus/papers/issues/1199" class="bare">https://github.com/cplusplus/papers/issues/1199</a>)
-</div>
-<div class="footnote" id="_footnotedef_9">
-<a href="#_footnoteref_9">9</a>. Distributing C&#43;&#43; Module Libraries. <em>Daniel Ruoso</em> (<a href="https://github.com/cplusplus/papers/issues/1131" class="bare">https://github.com/cplusplus/papers/issues/1131</a>)
-</div>
-<div class="footnote" id="_footnotedef_10">
-<a href="#_footnoteref_10">10</a>. Packaging C&#43;&#43; Modules. <em>Richard Smith</em> (<a href="https://github.com/cplusplus/papers/issues/522" class="bare">https://github.com/cplusplus/papers/issues/522</a>)
-</div>
-<div class="footnote" id="_footnotedef_11">
-<a href="#_footnoteref_11">11</a>. <code>libman</code>, A Dependency Manager ➔ Build System Bridge <em>Colby Pike</em> (<a href="https://api.csswg.org/bikeshed/?force=1&amp;url=https://raw.githubusercontent.com/vector-of-bool/libman/develop/data/spec.bs" class="bare">https://api.csswg.org/bikeshed/?force=1&amp;url=https://raw.githubusercontent.com/vector-of-bool/libman/develop/data/spec.bs</a>)
-</div>
-<div class="footnote" id="_footnotedef_12">
-<a href="#_footnoteref_12">12</a>. Let&#8217;s Talk About Package Specification. <em>Matthew Woehlke</em> (<a href="https://wg21.link/p1313" class="bare">https://wg21.link/p1313</a>)
-</div>
-<div class="footnote" id="_footnotedef_13">
-<a href="#_footnoteref_13">13</a>. Package Ecosystem Plan. <em>René Ferdinand Rivera Morell</em> (<a href="https://github.com/cplusplus/papers/issues/48" class="bare">https://github.com/cplusplus/papers/issues/48</a>)
-</div>
-<div class="footnote" id="_footnotedef_14">
-<a href="#_footnoteref_14">14</a>. Modules User-Facing Lexicon and File Extensions. <em>Bryce Adelstein Lelbach</em>, <em>Boris Kolpackov</em> (<a href="https://github.com/cplusplus/papers/issues/727" class="bare">https://github.com/cplusplus/papers/issues/727</a>)
-</div>
-<div class="footnote" id="_footnotedef_15">
-<a href="#_footnoteref_15">15</a>. Standards Development Track, 24 Months: ISO/IEC Directives, Part 1 — Consolidated ISO Supplement — Procedure for the technical work — Procedures specific to ISO <em>Section 2.1.6.1 General</em> (<a href="https://isotc.iso.org/livelink/livelink?func=ll&amp;objId=4230452&amp;objAction=browse&amp;sort=subtype" class="bare">https://isotc.iso.org/livelink/livelink?func=ll&amp;objId=4230452&amp;objAction=browse&amp;sort=subtype</a>)
+<a href="#_footnoteref_3">3</a>. Structured Response Files _René Ferdinand Rivera Morell (<a href="https://wg21.link/P3051" class="bare">https://wg21.link/P3051</a>)
 </div>
 </div>
 </body>
