@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_param-1.0.0.json",
+  "$schema": "https://isocpp.org/release/schema/std_param-1.0.0.json",
   "version": "1",
   "arguments": [ "--std-param=common.json", "main.cpp", "-o", "main.o" ]
 }

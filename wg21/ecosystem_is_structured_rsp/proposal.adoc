@@ -21,7 +21,6 @@
 :tip-caption: ☀
 :warning-caption: ⚠
 :table-caption: Table
-:opt: param
 
 ++++
 <style>
@@ -48,11 +47,15 @@ the best way to communicate compiling {CPP}.
 
 === Revision 2 (June 2024)
 
-Wording changes:
 * Only allow one of `arguments` or `options` fields at a time.
 * Define the concept of "processing" arguments and options.
 * Rename the wording section from "Structured Options" to
   "Structured Parameters" to avoid conflagration withe options.
+* Change `options` to a a JSON `object` moving to a unique structured option
+  model.
+* Add design considerations section to track design choice rationale.
+* Remove _flag options_ as they are not needed as they can be expressed more
+  naturally as a boolean value.
 
 === Revision 1 (May 2024)
 
@@ -108,7 +111,7 @@ restrictions of some of the compiler drivers.
 
 Example response file:
 
-[source,{opt}]
+[source,param]
 ----
 # Several options on line
 -c --target=x86_64-unknown-linux-gnu
@@ -130,7 +133,7 @@ footnote:Clang[Clang Compiler User’s Manual (https://clang.llvm.org/docs/Users
 
 Example response file:
 
-[source,{opt}]
+[source,param]
 ----
 -o "hello" -Wl,--start-group "bin/hello.o" -Wl,-Bstatic -Wl,-Bdynamic -Wl,--end-group -fPIC -g
 ----
@@ -147,7 +150,7 @@ footnote:GCC[GCC Documentation (https://gcc.gnu.org/onlinedocs/gcc-13.2.0/gcc/Ov
 
 Example response file for "Linux":
 
-[source,{opt}]
+[source,param]
 ----
 # compile with these options
   -O0
@@ -156,7 +159,7 @@ Example response file for "Linux":
 
 Example response file for "Windows":
 
-[source,{opt}]
+[source,param]
 ----
 # compile with these options
   /0d
@@ -171,7 +174,7 @@ footnote:ICC[Intel(R) oneAPI DP{CPP}/{CPP} Compiler Developer Guide and Referenc
 
 * Use of `--options-file __filename__,...`, or `-optf __filename__,...`.
 
-[source,{opt}]
+[source,param]
 ----
 -O0
 ----
@@ -187,7 +190,7 @@ footnote:NVCC[NVIDIA CUDA Compiler Driver NVCC Documentation
 
 Example response file:
 
-[source,{opt}]
+[source,param]
 ----
 "hello.cpp" -c -Fo"bin\hello.obj" -TP /wd4675 /EHs /GR /Zc:throwingNew /Z7 /Od /Ob0 /W3 /MDd /Zc:forScope /Zc:wchar_t /Zc:inline /favor:blend
 ----
@@ -297,8 +300,8 @@ And there are some disadvantages:
   complexity and ambiguities of command line syntax.
 
 The _structured options_ example shows specifying an "__options__" key with
-an array of option names or option objects. Where the option objects contain an
-option name and structured value. Some advantages of this style of structured
+a dictionary of option names and option values. Where the option objects contain
+an option name and structured value. Some advantages of this style of structured
 data are:
 
 * The option names do not indicate a particular option prefix (i.e. `-`, `--`,
@@ -328,7 +331,7 @@ The design we are proposing has the following key points:
   be specified in the command line.
 * The _arguments_ values can contain the option for other structure response
   files. Which will be recursively inserted at the location of the option.
-* The _options_ field has an array of values for structured options.
+* The _options_ field has a dictionaty of kesy and values for structured options.
 * The _options_ values will follow an option specific schema.
 * The _arguments_ are not specified, and as such are implementation defined.
 * The _options_ are specified with both a schema and semantics for each.
@@ -339,16 +342,16 @@ We propose to add a single new command line option as a requirement to
 implementing this capability:
 
 --
-`$ tool --std-{opt}=__file__`
+`$ tool --std-param=__file__`
 --
 
 Or:
 
 --
-`$ tool -std-{opt}:__file__`
+`$ tool -std-param:__file__`
 --
 
-The `std-{opt}` command line option, which can be repeated, will read the
+The `std-param` command line option, which can be repeated, will read the
 indicated file and parse the JSON text contents to configure the tool as needed.
 
 === File Format
@@ -374,7 +377,7 @@ compile invocation for GCC, and compatible compiler front-ends, would look like:
 include::example-arguments.json[]
 ----
 
-You can also include `--std-{opt}=__file__` options in the list of arguments to
+You can also include `--std-param=__file__` options in the list of arguments to
 include the arguments that are referenced in another response file, and so on.
 For example, given a `common.json` response file as such:
 
@@ -391,9 +394,9 @@ include::example-args-recurse-main.json[]
 ----
 
 The effect is that the options in `common.json` are inserted in the arguments
-array at the location of the `--std-{opt}=common.json` argument.
+array at the location of the `--std-param=common.json` argument.
 
-The `options` field specifies a *single* array value of options values. An
+The `options` field specifies a dictionary value of option keys and values. An
 option value can be any value that follows the schema for the collection of
 specified options.
 
@@ -403,8 +406,9 @@ syntax of the options:
 * The option names do not contain prefix characters (i.e. the `--`, `-`, `/`,
   etc) and without the value separator (i.e. `=`, `:`, etc).
 
-Like the `arguments` field, additional response files can be inserted at the
-indicated location by specifying a `{ "std.{opt}": "file.json" }` option.
+Additional response files can be inherited by specifying a
+`{ "std.param": { "pre": [ "file.json" ] } }` option. Or they can be appended by
+specifying a `{ "std.param": { "post": [ "file.json" ] } }` option.
 
 Do note though that even though the option names have a specific naming format
 they are still defined by the tool. The goal of having the restrictions on the
@@ -464,20 +468,40 @@ either flags or names as the `options` fields. Specifying the fields can be
 accomplished in a further proposal that specifies either flags or names as
 common specified syntax.
 
-There are a set of possible design questions for this proposal that come to
-mind:
+== Considerations
 
-. Specify `options` fields as "Flags" or "Names"?
-. Specify the `options` in this proposal or a separate proposal?
+Specify `options` fields as "Flags" or "Names"?::
 
 The discussions in WG21/SG15 concluded that it's preferable to use "names" for
 the keys. This allows, as outlined in previous sections, a dual operation. The
 "arguments" for some form of backward compatibility. And the "options" for
 the modern structure tool invocation.
 
-== Questions
+Specify the `options` in this proposal or a separate proposal?::
 
-Why use a new option (`--std-{opt}=__file__`) instead of existing response file methods like `@__file__`?::
+We decided early on that it would be best to separate out specifying additional
+options in further proposals. A key advantage of the separation is that groups
+of such option definitions can indicate a capability. And hence other tools can
+introspect which option groups are supported.
+
+Structured options as an array.::
+
+In previous revisions of this feature we used a `JSON` array for the `options`.
+While that approach facilitated translation ability to traditional command
+parameters it did it at the expense of increased complexity for the handling
+of the ordinality of the structured options.
+
+Structured options need merge rules.::
+
+We recognize that having structured options as a dictionary means that when
+multiple structured arguments files are present we need to define how multiple
+specifications for the options need to operate. But we also recognize that
+such rules can´t be defined in a vacuum. Future papers that define options
+will define such rules as they are needed. And while categories of such rules
+will be shared across different specific options the effect they have will be
+option specific.
+
+Why use a new option (`--std-param=__file__`) instead of existing response file methods like `@__file__`?::
 
 Implementing support in tools for using the same response file options would:
 * Mean that the option to add the structured response files would vary from
@@ -498,11 +522,35 @@ Having an `arguments` field has a couple of benefits:
 
 == Polls
 
+=== SG15: P3051R1 (2024-06-23)
+
+_Structured options should be an unordered dictionary instead of an ordered
+list._
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+| 3  | 5 | 0 | 0 | 0
+|===
+
+`std.param` _should look like:_ `"param": {"pre": [], "post": []}`
+
+Unanimous Consent
+
+_Forward the initial set of Ecosystem IS papers (P2656, P3342, P3051, and
+P2717), with the agreed changes, to EWG with the request to create a work item._
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+| 8  | 0 | 0 | 0 | 0
+|===
+
 === SG15: P3051R0 (2024-03-19)
 
-SG15 wants to pursue defining a common response file format starting with
+_SG15 wants to pursue defining a common response file format starting with
 supporting utf8 simple command lines, accepting the limitations for
-non-unicode arguments for the first version.
+non-unicode arguments for the first version._
 
 [options="header,autowidth",cols="^0,^0,^0,^0,^0"]
 |===
@@ -512,8 +560,8 @@ non-unicode arguments for the first version.
 
 Result: Consensus
 
-SG15 wants to persue defining common structured tool configuration arguments as
-part of the response file format.
+_SG15 wants to persue defining common structured tool configuration arguments as
+part of the response file format._
 
 [options="header,autowidth",cols="^0,^0,^0,^0,^0"]
 |===
@@ -535,14 +583,14 @@ Insert clause after _Introspection_ [intspct].
 
 [.ins.text-justify]
 [#strctparam,reftext=strctparam]
-==== Structured [.chg]#Parameters# [.right]#[<<strctparam>>]#
+==== Structured Parameters [.right]#[<<strctparam>>]#
 
 [#strctparam-pre,reftext=strctparam.pre]
 ===== Preamble [.right]#[<<strctparam-pre>>]#
 
 This clause describes options, output, and formats that control the behavior
 of applications through the specification of arguments and options from
-_structured [.chg]#parameters#_.
+_structured parameters_.
 
 This clause specifies the `std.strctparam` capability ([intspct.cap]) version
 `1.0.0`.
@@ -565,45 +613,48 @@ An application that implements the `std.strctparam` capability shall include the
 ===== Input Option [.right]#[<<strctparam-input>>]#
 
 `__std-strctparam-input__`::
-The pathname of a file to read the _structured [.chg]#parameters#_ from.
-The option is specified as `--std-{opt}=__file__` or `-std-{opt}:__file__`.
+The pathname of a file to read the _structured parameters_ from.
+The option is specified as `--std-param=__file__` or `-std-param:__file__`.
 If __file__ is '`-`', the standard input shall be used.
 
 [#strctparam-file,reftext=strctparam.file]
 ===== Files [.right]#[<<strctparam-file>>]#
 
 An application shall read a valid JSON text file that conforms to the
-_structured [.chg]#parameters#_ schema (<<strctparam-schema>>).
+_structured parameters_ schema (<<strctparam-schema>>).
 
 An application shall interpret the information in the file as if the options
 and arguments in the file occur in the same position as the
-`__std-strctparam-input__` [.chg]#parameter# of the list of
-[.chg]#parameters# given to the application. Given either directly as part of
+`__std-strctparam-input__` parameter of the list of
+parameters given to the application. Given either directly as part of
 the application command line or as part of the arguments field
 (<<strctparam-field-args>>).
 
-[.chg]
-An application shall _process_ an argument or option in the file by applying the
-semantics to change the state of the application that is relevant to the
-argument or option at the point that the application sees the argument or
-option.
+An application _processes_ arguments and options by applying the semantics of
+the arguments and options to change the state of the application that is
+relevant to the arguments and options.
+
+An application shall process arguments in the file in the order that they
+appear.
+
+An application shall _process_ options in the file as if the a new modified
+state replaces the current state.
 
 [#strctparam-schema,reftext=strctparam.schema]
 ===== Schema [.right]#[<<strctparam-schema>>]#
 
-A _structured [.chg]#parameters#_ JSON text file shall contain one
-_structured [.chg]#parameters#_ JSON object (<<strctparam-schema-param>>).
+A _structured parameters_ JSON text file shall contain one
+_structured parameters_ JSON object (<<strctparam-schema-param>>).
 
 [#strctparam-schema-param,reftext=strctparam.schema.param]
-===== Structured [.chg]#Parameters# Object [.right]#[<<strctparam-schema-param>>]#
+===== Structured Parameters Object [.right]#[<<strctparam-schema-param>>]#
 
-The _structured [.chg]#parameters# object_ is the root JSON object of the
-structured [.chg]#parameters# JSON text.
+The _structured parameters object_ is the root JSON object of the
+structured parameters JSON text.
 
-A _structured [.chg]#parameters# object_ can have the following fields.
+A _structured parameters object_ can have the following fields.
 
-[.chg]
-A _structured [.chg]#parameters# object_ shall have only one of `arguments` and
+A _structured parameters object_ shall have only one of `arguments` and
 `options` fields.
 
 [#strctparam-field-schema,reftext=strctparam.schema.schema]
@@ -614,8 +665,8 @@ _Type_: `string` +
 _Value_:
   The value shall be a reference to a JSON Schema specification. +
 _Description_:
-  A _structured [.chg]#parameters# object_ can contain this field.
-  If a _structured [.chg]#parameters# object_ does not contain this field the
+  A _structured parameters object_ can contain this field.
+  If a _structured parameters object_ does not contain this field the
   value shall be a reference to the JSON Schema corresponding to the current
   edition of this standard (<<strctparam-json-schema>>).
 
@@ -626,10 +677,10 @@ _Name_: `version` +
 _Type_: `string` +
 _Value_: `1` or `1.0` or `1.0.0` +
 _Description_:
-  The version field indicates the version of the _structured [.chg]#parameters#_
+  The version field indicates the version of the _structured parameters_
   represented in the contents of the JSON text.
-  [.chg]#If a _structured parameters object_ does not contain this field the
-  value shall be '1.0.0'.#
+  If a _structured parameters object_ does not contain this field the
+  value shall be '1.0.0'.
 
 [#strctparam-field-args,reftext=strctparam.schema.args]
 ===== Arguments Field [.right]#[<<strctparam-field-args>>]#
@@ -650,17 +701,14 @@ The application shall process the items as if they replace the
 ===== Options Field [.right]#[<<strctparam-field-opts>>]#
 
 _Name_: `options` +
-_Type_: `array` +
-_Value_:
-  The value shall be a JSON `array`. The items in the `array` shall be of either
-  JSON `string` or `object` types. +
-_Items_: (for `string`) The item shall be a single _flag option_. +
-_Items_: (for `object`) The item shall be a valid _structured option_. +
+_Type_: `object` +
+_Value_: The value shall be a JSON `object`. +
 _Description_:
-  A _structured [.chg]#parameters# object_ can contain this field.
+  A _structured parameters object_ can contain this _structured options_ field.
+  The keys of items shall be _name_ (<<strctparam-names>>) values.
 
 [#strctparam-names,reftext=strctparam.schema.names]
-===== Names [.right]#[<<strctparam-strctparam-names>>]#
+===== Names [.right]#[<<strctparam-names>>]#
 
 _name_: ::
   one or more of: +
@@ -672,94 +720,59 @@ _scope_: ::
 _scope-designator_: ::
   U+002E FULL STOP
 
-The _name_ `std` is reserved for _flag options_ and _structured options_
-defined in this standard.
+The _name_ `std` is reserved for _structured options_ defined in this standard.
 
 Applications can specify vendor designated _name_ parts outside of this
 standard.
 
-[#strctparam-flag-opt,reftext=strctparam.schema.flag]
-===== Flag Option [.right]#[<<strctparam-flag-opt>>]#
+[#strctparam-opt-param,reftext=strctparam.schema.opt.param]
+===== Structured Option `std.param` [.right]#[<<strctparam-opt-param>>]#
 
-_flag-option_: ::
-  one of: _yes-flag_ _no-flag_
-_yes-flag_: ::
-  one of: _yes-flag-name_ _scoped-yes-flag-name_
-_yes-flag-name_: ::
-  _name_
-_scoped-yes-flag-name_: ::
-  _scope_~opt~ _name_
-_no-flag_: ::
-  one of: _no-flag-name_ _scoped-no-flag-name_
-_no-flag-name_: ::
-  _no-flag-prefix_ _name_
-_scoped-no-flag-name_: ::
-  _scope_~opt~ _no-flag-name_
-_no-flag-prefix_: ::
-  U+006E LATIN SMALL LETTER N U+006F LATIN SMALL LETTER O +
-  U+002D HYPHEN-MINUS
-
-A _flag option_ is an option that allows or prevents the specified semantics
-of the option.
-
-A _flag option_ shall be either a _yes-flag_ or _no-flag_.
-
-A _yes-flag_ allows the semantics in the application as specified by effects of
-that behavior.
-
-A _no-flag_ prevents the semantics in the application as specified by effects
-of that behavior.
-
-A flag option without a _scope_ shall be equivalent the same flag option with a
-`std.` scope.
-
-[#strctparam-struct-opt,reftext=strctparam.schema.struct]
-===== Structured Option [.right]#[<<strctparam-struct-opt>>]#
-
-A structured option JSON object shall contain a _structured-option-name_
-field.
-
-A structured option JSON object can contain additional fields as specified by
-the option specification.
-
-_Name_: `name` +
-_Type_: `string` +
-_Value_: A valid _structured-option-name_. +
-_Description_: The name of the structured option.
-
-_structured-option-name_: ::
-  _scope_~opt~ _name_
-
-A  structured option without a _scope_ shall be equivalent to the same
-structured option with a `std.` _scope_.
-
-[#strctparam-opt-opt,reftext=strctparam.schema.opt.opt]
-===== Option `std.[.chg]#param#` [.right]#[<<strctparam-opt-opt>>]#
-
-The `std.[.chg]#param#` option defines an option to refer to additional
-_structured [.chg]#parameters#_ (<<strctparam>>) to process.
+The `std.param` _structured option_ defines an option to refer to additional
+_structured parameters_ (<<strctparam>>) to process.
 
 An application shall implement this option.
 
-The `std.[.chg]#param#` option shall have the following fields.
+The `std.param` option shall have the following fields.
 
-_Name_: `name` +
-_Type_: `string` +
-_Value_: `std.[.chg]#param#` +
-_Description_: The name of the option.
-
-_Name_: `files` +
+_Name_: `pre` +
 _Type_: `string` or `array` +
 _Value_:
-  (for `string`) A pathname to a file containing _structured [.chg]#parameters#_
+  (for `string`) A pathname to a file containing _structured parameters_
   (<<strctparam>>). +
 _Value_:
   (for `array`) A list of pathname `string` items to files containing
-  _structured [.chg]#parameters#_ (<<strctparam>>) +
+  _structured parameters_ (<<strctparam>>) +
 _Description_:
   One or more references to files that include additional _structured
-  [.chg]#parameters#_ (<<strctparam>>) that are processed as if they occur at
-  the location of the `std.[.chg]#param#` option.
+  parameters_ (<<strctparam>>).
+
+_Name_: `post` +
+_Type_: `string` or `array` +
+_Value_:
+  (for `string`) A pathname to a file containing _structured parameters_
+  (<<strctparam>>). +
+_Value_:
+  (for `array`) A list of pathname `string` items to files containing
+  _structured parameters_ (<<strctparam>>) +
+_Description_:
+  One or more references to files that include additional _structured
+  parameters_ (<<strctparam>>).
+
+A `string` value in the `pre` or `post` field shall be as if the value was given
+as an `array` with the `string` value as the only value in the `array`.
+
+An application shall process the _structured parameters_ in the `pre` field
+before processing the _structured options_ where the `std.param` option is
+specified.
+
+An application shall process the _structured parameters_ in the `post` field
+after processing the _structured options_ where the `std.param` option is
+specified.
+
+An application shall process the _structured parameters_ in the `pre` and `post`
+field in the order given in the value applying semantics as specified in the
+parameters or options of the _structured parameters_.
 
 === JSON Schema
 
@@ -767,18 +780,18 @@ Insert clause after _Annex A_.
 
 [.ins.text-justify]
 [#strctparam-json-schema,reftext=strctparamjschm]
-==== Annex B (informative) Structured [.chg]#Parameters# _JSON Schema_ [.right]#[<<strctparam-json-schema>>]#
+==== Annex B (informative) Structured Parameters _JSON Schema_ [.right]#[<<strctparam-json-schema>>]#
 
 [#strctparam-json-schema-general,reftext=strctparamjschm.general]
 ===== General [.right]#[<<strctparam-json-schema-general>>]#
 
-This Annex defines the structured [.chg]#parameters# capability schema
+This Annex defines the structured parameters capability schema
 (<<strctparam-schema>>) in terms of a _JSON Schema_. A _JSON Schema_ refers to
 the IETF RFC draft "JSON Schema: A Media Type for Describing JSON Documents" as
 specified in https://json-schema.org/draft/2020-12/json-schema-core.html.
 
 This JSON Schema can be referenced as the `$schema` field with URI value of
-`"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_param-1.0.0.json"`.
+`"https://isocpp.org/release/schema/std_param-1.0.0.json"`.
 
 [#strctparam-json-schema-spec,reftext=strctparamjschm.spec]
 ===== JSON Schema Specification [.right]#[<<strctparam-json-schema-spec>>]#

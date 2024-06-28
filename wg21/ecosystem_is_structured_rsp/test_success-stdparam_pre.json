@@ -1,0 +1,6 @@
+{
+  "options": {
+    "inline": false,
+    "std.param": { "pre": "file.json" }
+  }
+}

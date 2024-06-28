@@ -67,4 +67,12 @@ for local json in [ glob test_fail-*.json ]
 	checks += $(t) ;
 	explicit $(json:B:S=.check) ;
 }
+for local json in [ glob test_success-*.json ]
+{
+	local t = [ make $(json:B:S=.check)
+		: $(json) std_param-1.0.0.json
+		: @json-validate ] ;
+	checks += $(t) ;
+	explicit $(json:B:S=.check) ;
+}
 alias check : $(checks) ;

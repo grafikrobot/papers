@@ -1,0 +1,6 @@
+{
+  "options": {
+    "inline": false,
+    "std.param": { "post": "file.json" }
+  }
+}
