@@ -1,5 +1,5 @@
 = C++ Ecosystem International Standard
-:copyright: Copyright 2022 René Ferdinand Rivera Morell
+:copyright: Copyright {docyear} René Ferdinand Rivera Morell
 :email: grafikrobot@gmail.com
 :authors: René Ferdinand Rivera Morell, et al.
 :audience: EWG
