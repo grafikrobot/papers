@@ -3,7 +3,7 @@
 :license: Creative Commons Attribution 4.0 International License (CC BY 4.0)
 :email: grafikrobot@gmail.com
 :authors: René Ferdinand Rivera Morell
-:audience: EWG
+:audience: EWG, LEWG
 :revdate: {docdate}
 :version-label!:
 :reproducible:
@@ -322,8 +322,8 @@ Some possible disadvantages:
 The design we are proposing has the following key points:
 
 * The format of the file is well formed JSON text.
-* The top level of that is a JSON object with one of, or both, _arguments_
-  and _options_ fields.
+* The top level of that is a JSON object with one of _arguments_ or _options_
+  fields.
 * The addition of one command line option to specify the structured response
   file.
 * The _arguments_ field has a single array value with string values.

@@ -54,8 +54,12 @@ alias validate : $(validations) ;
 
 rule json-validate-fail ( targets + : sources + : properties * )
 {
-	FAIL_EXPECTED $(targets) ;
-	json-validate $(targets) : $(sources) ;
+	# FAIL_EXPECTED $(targets) ;
+}
+
+actions json-validate-fail
+{
+	check-jsonschema -v --traceback-mode=full --schemafile "$(>[2])" "$(>[1])" | grep -q "Schema validation errors" && echo "failed" > "$(<)"
 }
 
 local checks ;

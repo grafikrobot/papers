@@ -2,7 +2,7 @@
 :copyright: Copyright {docyear} René Ferdinand Rivera Morell
 :email: grafikrobot@gmail.com
 :authors: René Ferdinand Rivera Morell, et al.
-:audience: EWG
+:audience: EWG, LEWG
 :revdate: {docdate}
 :version-label!:
 :reproducible:
