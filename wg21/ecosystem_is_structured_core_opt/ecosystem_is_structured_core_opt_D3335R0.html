@@ -749,6 +749,88 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 .pygments .tok-c { color: #999 !important; }
 
 </style>
+<style>
+pre.rouge table td { padding: 5px; }
+pre.rouge table pre { margin: 0; }
+pre.rouge, pre.rouge .w {
+  color: #586e75;
+}
+pre.rouge .err {
+  color: #002b36;
+  background-color: #dc322f;
+}
+pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cpf, pre.rouge .c1, pre.rouge .cs {
+  color: #657b83;
+}
+pre.rouge .cp {
+  color: #b58900;
+}
+pre.rouge .nt {
+  color: #b58900;
+}
+pre.rouge .o, pre.rouge .ow {
+  color: #93a1a1;
+}
+pre.rouge .p, pre.rouge .pi {
+  color: #93a1a1;
+}
+pre.rouge .gi {
+  color: #859900;
+}
+pre.rouge .gd {
+  color: #dc322f;
+}
+pre.rouge .gh {
+  color: #268bd2;
+  background-color: #002b36;
+  font-weight: bold;
+}
+pre.rouge .k, pre.rouge .kn, pre.rouge .kp, pre.rouge .kr, pre.rouge .kv {
+  color: #6c71c4;
+}
+pre.rouge .kc {
+  color: #cb4b16;
+}
+pre.rouge .kt {
+  color: #cb4b16;
+}
+pre.rouge .kd {
+  color: #cb4b16;
+}
+pre.rouge .s, pre.rouge .sb, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .sh, pre.rouge .sx, pre.rouge .s1 {
+  color: #859900;
+}
+pre.rouge .sa {
+  color: #6c71c4;
+}
+pre.rouge .sr {
+  color: #2aa198;
+}
+pre.rouge .si {
+  color: #d33682;
+}
+pre.rouge .se {
+  color: #d33682;
+}
+pre.rouge .nn {
+  color: #b58900;
+}
+pre.rouge .nc {
+  color: #b58900;
+}
+pre.rouge .no {
+  color: #b58900;
+}
+pre.rouge .na {
+  color: #268bd2;
+}
+pre.rouge .m, pre.rouge .mb, pre.rouge .mf, pre.rouge .mh, pre.rouge .mi, pre.rouge .il, pre.rouge .mo, pre.rouge .mx {
+  color: #859900;
+}
+pre.rouge .ss {
+  color: #859900;
+}
+</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -757,7 +839,7 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 <span id="author" class="author">René Ferdinand Rivera Morell</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> D3335R0,</span>
-<span id="revdate">2024-06-22</span>
+<span id="revdate">2024-07-07</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -772,15 +854,11 @@ pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
 <li><a href="#_scope">4. Scope</a></li>
 <li><a href="#_design">5. Design</a>
 <ul class="sectlevel2">
-<li><a href="#_options">5.1. Options</a></li>
+<li><a href="#_examples">5.1. Examples</a></li>
+<li><a href="#_options">5.2. Options</a></li>
 </ul>
 </li>
-<li><a href="#_wording">6. Wording</a>
-<ul class="sectlevel2">
-<li><a href="#_specification_structured_options">6.1. Specification: Structured Options</a></li>
-</ul>
-</li>
-<li><a href="#_license">7. License</a></li>
+<li><a href="#_license">6. License</a></li>
 </ul>
 </div>
 </div>
@@ -881,6 +959,12 @@ specifying the caption symbol properties:
 .def>.content>* {
 	margin-left: 3em;
 }
+
+/* SVG needs to be relative sized so that it doesn´t look too small or too large.
+*/
+.imageblock svg {
+	width: 100% !important;
+}
 </style>
 <div class="hdlist">
 <table>
@@ -897,7 +981,7 @@ Document #:
 Date: 
 </td>
 <td class="hdlist2">
-<p>2024-06-22</p>
+<p>2024-07-07</p>
 </td>
 </tr>
 <tr>
@@ -940,8 +1024,8 @@ Copyright:
 <h2 id="_abstract"><a class="anchor" href="#_abstract"></a>1. Abstract</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Specify a minimal set of core <em>structured options</em>
-<sup class="footnote" id="_footnote_P3851">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>
+<p>Specify a minimal set of core structured options
+<sup class="footnote" id="_footnote_P3051">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>
 for C&#43;&#43; compiler front ends.</p>
 </div>
 </div>
@@ -994,7 +1078,7 @@ options.</p>
 <div class="paragraph">
 <p>This proposal aims to specify a set of C&#43;&#43; compiler frontend <em>structured
 options</em> <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup> sufficient to build common C&#43;&#43; use cases. This
-includes specifying both the names and semantics of the <em>structured options</em>.</p>
+includes specifying both the names and semantics of the structured options.</p>
 </div>
 <div class="paragraph">
 <p>This <strong>does not</strong> aim to standardize compiler frontend command line arguments.
@@ -1023,9 +1107,380 @@ wish. And we encourage such adoption.</p>
 </ul>
 </div>
 <div class="sect2">
-<h3 id="_options"><a class="anchor" href="#_options"></a>5.1. Options</h3>
+<h3 id="_examples"><a class="anchor" href="#_examples"></a>5.1. Examples</h3>
 <div class="sect3">
-<h4 id="_include_directories"><a class="anchor" href="#_include_directories"></a>5.1.1. Include Directories</h4>
+<h4 id="_hello_world"><a class="anchor" href="#_hello_world"></a>5.1.1. Hello World</h4>
+<div class="paragraph">
+<p>This is the classic simplest C&#43;&#43; program with the twist that we want to
+allow full debugging when running it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="s2">"g++"</span> <span class="nt">-O0</span> <span class="nt">-fno-inline</span> <span class="nt">-Wall</span> <span class="nt">-g</span> <span class="nt">-static</span> <span class="s2">"hello.cpp"</span> <span class="nt">-o</span> <span class="s2">"hello"</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="s2">"cl"</span> <span class="s2">"hello.cpp"</span> /Fehello <span class="nt">-TP</span> /EHs /GR /Z7 /Od /Ob0 /W3 /Op /MLd /DEBUG
+  /subsystem:console</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Those invocations can be represented as a somewhat more meaningful structured
+options. This specification is formulated to be a single cross-vendor object
+by using a <code>vendor</code> specific section to represent options that only <code>msvc</code>
+understands. And that other tools could ignore.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello.cpp"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"exec"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"optimization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"compile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"off"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"inline"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"warnings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"enable"</span><span class="p">:</span><span class="w"> </span><span class="s2">"all"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"debugging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"enable"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"runtime"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"multithread"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"debug"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"static"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"vendor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"msvc"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"subsystem"</span><span class="p">:</span><span class="w"> </span><span class="s2">"console"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_compile_and_link"><a class="anchor" href="#_compile_and_link"></a>5.1.2. Compile And Link</h4>
+<div class="paragraph">
+<p>A single invocation that does everything is not particularly common, except as
+basic textbook examples. Here we see the more common case of compiling to
+produce an object file for the TU. Then linking to get the final executable.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="s2">"g++"</span> <span class="nt">--fPIC</span> <span class="nt">-O0</span> <span class="nt">-fno-inline</span> <span class="nt">-Wall</span> <span class="nt">-g</span> <span class="nt">-c</span> <span class="nt">-o</span> <span class="s2">"hello.o"</span> <span class="s2">"hello.cpp"</span>
+<span class="s2">"g++"</span> <span class="nt">-g</span> <span class="s2">"hello.o"</span> <span class="nt">-o</span> <span class="s2">"hello"</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The compile only equivalent structured options:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello.cpp"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello.o"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"optimization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"compile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"off"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"inline"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"warnings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"enable"</span><span class="p">:</span><span class="w"> </span><span class="s2">"all"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"debugging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"enable"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"runtime"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"multithread"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"debug"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"static"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Followed by the structured options to accomplish the link:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello.o"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"exec"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"debugging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"enable"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_many_sources"><a class="anchor" href="#_many_sources"></a>5.1.3. Many Sources</h4>
+<div class="paragraph">
+<p>This is a single command B2 uses to bootstrap its engine on Linux with GCC, and
+Windows with MSVC. This is a variation on a simple basic invocation that builds
+many files with some extra options.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">g++ <span class="nt">-x</span> c++ <span class="nt">-std</span><span class="o">=</span>c++11 <span class="nt">-pthread</span> <span class="nt">-O2</span> <span class="nt">-s</span> <span class="nt">-DNDEBUG</span> bindjam.cpp builtins.cpp
+  class.cpp command.cpp compile.cpp constants.cpp cwd.cpp debug.cpp
+  debugger.cpp events.cpp execcmd.cpp execnt.cpp execunix.cpp filent.cpp
+  filesys.cpp fileunix.cpp frames.cpp <span class="k">function</span>.cpp glob.cpp hash.cpp
+  hcache.cpp hdrmacro.cpp headers.cpp jam_strings.cpp jam.cpp jamgram.cpp
+  lists.cpp make.cpp make1.cpp md5.cpp mem.cpp modules.cpp native.cpp
+  option.cpp output.cpp parse.cpp pathnt.cpp pathsys.cpp pathunix.cpp
+  regexp.cpp rules.cpp scan.cpp search.cpp startup.cpp tasks.cpp
+  timestamp.cpp value.cpp variable.cpp w32_getreg.cpp mod_command_db.cpp
+  mod_db.cpp mod_jam_builtin.cpp mod_jam_class.cpp mod_jam_errors.cpp
+  mod_jam_modules.cpp mod_order.cpp mod_path.cpp mod_property_set.cpp
+  mod_regex.cpp mod_sequence.cpp mod_set.cpp mod_string.cpp mod_summary.cpp
+  mod_sysinfo.cpp mod_version.cpp <span class="nt">-o</span> b2</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Other than many more files this example doesn&#8217;t differ much from the
+<a href="#_hello_world">Hello World</a> example.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"bindjam.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"builtins.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"class.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"command.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"compile.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"constants.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cwd.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"debug.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"debugger.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"events.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"execcmd.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"execnt.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"execunix.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"filent.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"filesys.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"fileunix.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"frames.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"function.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"glob.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"hash.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"hcache.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"hdrmacro.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"headers.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"jam_strings.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"jam.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"jamgram.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lists.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"make.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"make1.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"md5.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mem.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"modules.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"native.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"option.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"output.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"parse.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pathnt.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pathsys.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pathunix.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"regexp.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"rules.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"scan.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"search.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"startup.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tasks.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"timestamp.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"value.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"variable.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"w32_getreg.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_command_db.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_db.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_jam_builtin.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_jam_class.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_jam_errors.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_jam_modules.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_order.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_path.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_property_set.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_regex.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_sequence.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_set.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_string.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_summary.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_sysinfo.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_version.cpp"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"exec"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b2"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"define"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"NDEBUG"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c++"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"standard"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"optimization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"compile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"safe"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"link"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msvc.global_data"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"runtime"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"multithread"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"debug"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"static"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell"><span class="s2">"cl"</span> /nologo /MP /MT /TP /Feb2 /wd4996 /wd4675 /O2 /GL /EHsc /Zc:wchar_t /Gw
+  <span class="nt">-DNDEBUG</span>  bindjam.cpp builtins.cpp class.cpp command.cpp compile.cpp
+  constants.cpp cwd.cpp debug.cpp debugger.cpp events.cpp execcmd.cpp
+  execnt.cpp execunix.cpp filent.cpp filesys.cpp fileunix.cpp frames.cpp
+  <span class="k">function</span>.cpp glob.cpp hash.cpp hcache.cpp hdrmacro.cpp headers.cpp jam.cpp
+  jamgram.cpp lists.cpp make.cpp make1.cpp md5.cpp mem.cpp modules.cpp
+  native.cpp option.cpp output.cpp parse.cpp pathnt.cpp pathsys.cpp
+  pathunix.cpp regexp.cpp rules.cpp scan.cpp search.cpp jam_strings.cpp
+  startup.cpp tasks.cpp timestamp.cpp value.cpp variable.cpp w32_getreg.cpp
+  mod_command_db.cpp mod_db.cpp mod_jam_builtin.cpp mod_jam_class.cpp
+  mod_jam_errors.cpp mod_jam_modules.cpp mod_order.cpp mod_path.cpp
+  mod_property_set.cpp mod_regex.cpp mod_sequence.cpp mod_set.cpp
+  mod_string.cpp mod_summary.cpp mod_sysinfo.cpp mod_version.cpp
+  /link kernel32.lib advapi32.lib user32.lib
+  /MANIFEST:EMBED /MANIFESTINPUT:b2.exe.manifest</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>msvc</code> equivalent has the addition of listing some system libraries and
+the special Windows embedded manifest for the executable.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"bindjam.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"builtins.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"class.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"command.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"compile.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"constants.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cwd.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"debug.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"debugger.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"events.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"execcmd.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"execnt.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"execunix.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"filent.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"filesys.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"fileunix.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"frames.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"function.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"glob.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"hash.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"hcache.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"hdrmacro.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"headers.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"jam_strings.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"jam.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"jamgram.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lists.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"make.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"make1.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"md5.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mem.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"modules.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"native.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"option.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"output.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"parse.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pathnt.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pathsys.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pathunix.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"regexp.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"rules.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"scan.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"search.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"startup.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tasks.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"timestamp.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"value.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"variable.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"w32_getreg.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_command_db.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_db.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_jam_builtin.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_jam_class.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_jam_errors.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_jam_modules.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_order.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_path.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_property_set.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_regex.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_sequence.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_set.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_string.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_summary.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_sysinfo.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mod_version.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"kernel32.lib"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"advapi32.lib"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"user32.lib"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"exec"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b2"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"define"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"NDEBUG"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c++"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"standard"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"optimization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"compile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"safe"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"link"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msvc.global_data"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"runtime"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"multithread"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"debug"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"static"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"vendor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"msvc"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"manifest"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b2.exe.manifest"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"embed"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_options"><a class="anchor" href="#_options"></a>5.2. Options</h3>
+<div class="paragraph">
+<p>INFO: In the tables below compiler drivers or front ends we list the
+un-prefixed option name. And for build systems we list any abstraction for the
+option. But importantly, we don&#8217;t list if the build system only allows for
+specifying the raw option. As it doesn&#8217;t add any more information than what is
+given for the compiler driver information.</p>
+</div>
+<div class="sect3">
+<h4 id="_include_directories"><a class="anchor" href="#_include_directories"></a>5.2.1. Include Directories</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 14.2857%;">
@@ -1064,7 +1519,7 @@ wish. And we encourage such adoption.</p>
 </table>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">Name</dt>
+<dt class="hdlist1">Key</dt>
 <dd>
 <p>Use <code>std.include</code> or shortened <code>include</code>.</p>
 </dd>
@@ -1082,81 +1537,323 @@ directives to look for files in the order of the include directories list.</p>
 </dd>
 </dl>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"include"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/opt/boost_config/include"</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"include"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"/opt/boost_config/include"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"/opt/openssl/include"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre>
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_define_preprocessor_symbols"><a class="anchor" href="#_define_preprocessor_symbols"></a>5.2.2. Define Preprocessor Symbols</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tool</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>D</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines a preprocessor symbol to a value overriding any previous definition.
+  If no value is given <code>1</code> is used as the value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>D</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines a preprocessor symbol to a value overriding any previous definition.
+  If no value is given <code>1</code> is used as the value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>define</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines a preprocessor symbol to a value overriding any previous definition.
+  If no value is given no value is used and the value is up to the compiler.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Key</dt>
+<dd>
+<p>Use <code>std.define</code> or shortened <code>define</code>.</p>
+</dd>
+<dt class="hdlist1">Value</dt>
+<dd>
+<p>The option will be a dictionary where the keys are the preprocessor symbol to
+define and the values are mapped from JSON to corresponding preprocessor
+values.</p>
+</dd>
+<dt class="hdlist1">Semantics</dt>
+<dd>
+<p>For each symbol (the key name) the C&#43;&#43; preprocessor will define the symbol to
+the value. The value will be converted from JSON values as:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>JSON <code>number</code> is converted to a string and pasted.</p>
+</li>
+<li>
+<p>JSON <code>string</code> is used directly.</p>
+</li>
+<li>
+<p>JSON <code>boolean</code> is converted as <code>true</code> &#8658; <code>1</code> and <code>false</code> &#8658; <code>0</code>.</p>
+</li>
+<li>
+<p>JSON <code>null</code> converts to nothing, and hence the default implementation value
+should be used.</p>
+</li>
+</ul>
 </div>
-<div class="sect1">
-<h2 id="_wording"><a class="anchor" href="#_wording"></a>6. Wording</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Wording is relative to
-<a href="https://wg21.link/P3051R1">P3051R1 Structured Response Files</a>.</p>
+</dd>
+</dl>
 </div>
-<div class="sect2">
-<h3 id="_specification_structured_options"><a class="anchor" href="#_specification_structured_options"></a>6.1. Specification: Structured Options</h3>
-<div class="paragraph">
-<p>Insert clause after <em>Structured Options</em> [strctopt].</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"define"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"BOOST_ALL_NO_LIB"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"_WIN32_WINNT"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x0600"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"_GNU_SOURCE"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"U_USING_ICU_NAMESPACE"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"NOMINMAX"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre>
 </div>
-<div class="sect3 ins text-justify">
-<h4 id="strctopt-core"><a class="anchor" href="#strctopt-core"></a>6.1.1. Structured Core Options <span class="right">[<a href="#strctopt-core">strctopt.core</a>]</span></h4>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_undefine_preprocessor_symbols"><a class="anchor" href="#_undefine_preprocessor_symbols"></a>5.2.3. Undefine Preprocessor Symbols</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tool</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>U</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Undefines the given preprocessor symbol.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>U</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Undefines the given preprocessor symbol.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>undef</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Undefines the given preprocessor symbol.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Key</dt>
+<dd>
+<p>Use <code>std.undef</code> or shortened <code>undef</code>.</p>
+</dd>
+<dt class="hdlist1">Value</dt>
+<dd>
+<p>The option would be either a single <code>string</code> or an <code>array</code> of <code>string</code>-s. Each
+<code>string</code> is a symbol to undefine.</p>
+</dd>
+<dt class="hdlist1">Semantics</dt>
+<dd>
+<p>For each <code>string</code> in the value undefines the preprocessor symbol. The option
+is evaluated after the <code>define</code> option.</p>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"undef"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"NDEBUG"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_source"><a class="anchor" href="#_source"></a>5.2.4. Source</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tool</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Tc</code>, <code>TC</code>, <code>Tp</code>, <code>TP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specified a source file is a C (<code>Tc</code> or <code>TC</code>) or C&#43;&#43; (<code>Tp</code> or <code>TP</code>) file.
+  Otherwise the file extension is used.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-x <em>language</em></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specified source files are the given language. Otherwise the file extension
+  is used.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>set_property(SOURCE <em>language</em> &#8230;&#8203;)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specified source files are the given language. Otherwise the file extension
+  is used.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[ cast _ <em>language</em> : &#8230;&#8203; ]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specified source files are the given language. Otherwise the file extension
+  is used.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Key</dt>
+<dd>
+<p>Use <code>std.source</code> or shortened <code>source</code>.</p>
+</dd>
+<dt class="hdlist1">Value</dt>
+<dd>
+<p>Can be a single <code>string</code>, an <code>object</code>, or an <code>array</code> (with strings or objects).</p>
+</dd>
+<dt class="hdlist1">Semantics</dt>
+<dd>
+<p>Adds the sources given to the set of files to process. Depending on the value
+the semantics can be adjusted:</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>string</code></dt>
+<dd>
+<p>The single file is added to the set. The type of file is determined by the file
+extension.<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"main.cpp"</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>object</code></dt>
+<dd>
+<p>Specifying an <code>object</code> defines additional properties for the source.<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"main.cpp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c++"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+</dd>
+<dt class="hdlist1"><code>array</code></dt>
+<dd>
+<p>An array can contain either <code>string</code> or <code>object</code> values for the source. Each
+source in the array is added in order.<br></p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"main.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"utils.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"algo.cpp"</span><span class="p">,</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"api.i"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
 <div class="sect4">
-<h5 id="strctopt-core-pre"><a class="anchor" href="#strctopt-core-pre"></a>6.1.1.1. Preamble <span class="right">[<a href="#strctopt-core-pre">strctopt.core.pre</a>]</span></h5>
+<h5 id="_source_object"><a class="anchor" href="#_source_object"></a>5.2.4.1. Source Object</h5>
 <div class="paragraph">
-<p>This clause describes the schema and semantics of core <em>structured options</em>
-([strctopt.schema.struct]) for C&#43;&#43; compiler front-ends.</p>
+<p>When a source is specified as an <code>object</code> it consist of a single key and value
+item. Where the key is the filename of the source. And the value is the
+kind of file it is. The minimal set of file types that a tool should support
+are:</p>
 </div>
-<div class="paragraph">
-<p>This clause specifies the <code>std.strctopt.core</code> capability ([intspct.cap])
-vresion <code>1.0.0</code>.</p>
-</div>
-<div class="paragraph">
-<p>An application can implement this capability.</p>
-</div>
-<div class="paragraph">
-<p>An application that implements the <code>std.strctopt.core</code> capability shall include
-the <code>std.strctopt.core</code> field and version value in the introspection JSON
-text output ([intspct.schema.cap]).</p>
-</div>
-</div>
-</div>
-<div class="sect3 ins text-justify">
-<h4 id="strctopt-core-inc"><a class="anchor" href="#strctopt-core-inc"></a>6.1.2. Include Directories <span class="right">[<a href="#strctopt-core-inc">strctopt.core.inc</a>]</span></h4>
-<div class="paragraph">
-<p>The <code>std.include</code> option defines an option to specify a list of directory
-pathnames that a C&#43;&#43; preprocessor uses to search for inclusion.</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>c++</code></dt>
+<dd>
+<p>A file to interpreted as containing C&#43;&#43; source code to process.</p>
+</dd>
+<dt class="hdlist1"><code>object</code></dt>
+<dd>
+<p>A compiled TU binary object to process, usually to link.</p>
+</dd>
+<dt class="hdlist1"><code>library</code></dt>
+<dd>
+<p>A collection of compiled TUs to process, usually to link.</p>
+</dd>
+</dl>
 </div>
 <div class="paragraph">
-<p>The <code>std.include</code> option shall have the following fields.</p>
-</div>
-<div class="paragraph">
-<p><em>Name</em>: <code>name</code><br>
-<em>Type</em>: <code>string</code><br>
-<em>Value</em>: <code>std.include</code><br>
-<em>Description</em>: The name of the option.</p>
-</div>
-<div class="paragraph">
-<p><em>Name</em>: <code>files</code><br>
-<em>Type</em>: <code>string</code> or <code>array</code><br>
-<em>Value</em>:
-  (for <code>string</code>) A pathname to a directory.<br>
-<em>Value</em>:
-  (for <code>array</code>) A list of pathname <code>string</code> items to directories.<br>
-<em>Description</em>:
-  One or more entries to directories that are appended in the order given to
-  the list of directories searched by the header inclusion of a C&#43;&#43;
-  preprocessor.</p>
+<p>The choice of using an <code>object</code> with the single filename+type is to allow
+an abbreviated method to override the default file type determination.</p>
 </div>
 </div>
-<div class="sect3 ins text-justify">
-<h4 id="strctopt-core-xxx"><a class="anchor" href="#strctopt-core-xxx"></a>6.1.3. Xxx <span class="right">[<a href="#strctopt-core-xxx">strctopt.core.xxx</a>]</span></h4>
-
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_license"><a class="anchor" href="#_license"></a>7. License</h2>
+<h2 id="_license"><a class="anchor" href="#_license"></a>6. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This work is licensed under the Creative Commons Attribution 4.0 International

@@ -1,0 +1,9 @@
+{
+  "source": "hello.o",
+  "output": {
+    "exec": "hello"
+  },
+  "debugging": {
+    "enable": true
+  }
+}

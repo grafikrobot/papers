@@ -1,0 +1,6 @@
+{
+  "compile": {
+    "source": "main.cpp",
+    "output": "main.o"
+  }
+}

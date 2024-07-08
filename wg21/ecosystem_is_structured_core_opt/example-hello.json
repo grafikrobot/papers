@@ -1,0 +1,26 @@
+{
+  "source": "hello.cpp",
+  "output": {
+    "exec": "hello"
+  },
+  "optimization": {
+    "compile": "off",
+    "inline": false
+  },
+  "warnings": {
+    "enable": "all"
+  },
+  "debugging": {
+    "enable": true
+  },
+  "runtime": {
+    "multithread": false,
+    "debug": true,
+    "static": true
+  },
+  "vendor": {
+    "msvc": {
+      "subsystem": "console"
+    }
+  }
+}

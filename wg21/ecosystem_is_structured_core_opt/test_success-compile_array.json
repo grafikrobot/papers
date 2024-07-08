@@ -1,0 +1,8 @@
+{
+  "compile": {
+    "source": [
+      "main.cpp",
+      "engine.cpp"
+    ]
+  }
+}

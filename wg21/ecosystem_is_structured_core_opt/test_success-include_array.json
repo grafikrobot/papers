@@ -1,0 +1,6 @@
+{
+  "include": [
+    "/opt/boost_config/include",
+    "/opt/openssl/include"
+  ]
+}

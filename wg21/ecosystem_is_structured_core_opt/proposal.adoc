@@ -40,8 +40,8 @@ Copyright: :: {copyright}, {license}
 
 == Abstract
 
-Specify a minimal set of core _structured options_
-footnote:P3851[P3051; Structured Response Files(https://wg21.link/P3051)]
+Specify a minimal set of core structured options
+footnote:P3051[P3051; Structured Response Files(https://wg21.link/P3051)]
 for {CPP} compiler front ends.
 
 
@@ -71,8 +71,8 @@ Having a standard common set of structured options allows for:
 == Scope
 
 This proposal aims to specify a set of {CPP} compiler frontend _structured
-options_ footnote:P3851[] sufficient to build common {CPP} use cases. This
-includes specifying both the names and semantics of the _structured options_.
+options_ footnote:P3051[] sufficient to build common {CPP} use cases. This
+includes specifying both the names and semantics of the structured options.
 
 This *does not* aim to standardize compiler frontend command line arguments.
 Although vendors are free to adopt the names and semantics specified if they
@@ -87,34 +87,143 @@ The approach for the names and semantics of the options follows these goals:
 * Use widely understood semantics.
 * Improve the structure of the data.
 
+=== Examples
+
+==== Hello World
+
+This is the classic simplest {CPP} program with the twist that we want to
+allow full debugging when running it.
+
+[source,shell]
+----
+"g++" -O0 -fno-inline -Wall -g -static "hello.cpp" -o "hello"
+----
+
+[source,shell]
+----
+"cl" "hello.cpp" /Fehello -TP /EHs /GR /Z7 /Od /Ob0 /W3 /Op /MLd /DEBUG
+  /subsystem:console
+----
+
+Those invocations can be represented as a somewhat more meaningful structured
+options. This specification is formulated to be a single cross-vendor object
+by using a `vendor` specific section to represent options that only `msvc`
+understands. And that other tools could ignore.
+
+[source,json]
+----
+include::example-hello.json[]
+----
+
+==== Compile And Link
+
+A single invocation that does everything is not particularly common, except as
+basic textbook examples. Here we see the more common case of compiling to
+produce an object file for the TU. Then linking to get the final executable.
+
+[source,shell]
+----
+"g++" --fPIC -O0 -fno-inline -Wall -g -c -o "hello.o" "hello.cpp"
+"g++" -g "hello.o" -o "hello"
+----
+
+The compile only equivalent structured options:
+
+[source,json]
+----
+include::example-hello_compile.json[]
+----
+
+Followed by the structured options to accomplish the link:
+
+[source,json]
+----
+include::example-hello_link.json[]
+----
+
+==== Many Sources
+
+This is a single command B2 uses to bootstrap its engine on Linux with GCC, and
+Windows with MSVC. This is a variation on a simple basic invocation that builds
+many files with some extra options.
+
+[source,shell]
+----
+g++ -x c++ -std=c++11 -pthread -O2 -s -DNDEBUG bindjam.cpp builtins.cpp
+  class.cpp command.cpp compile.cpp constants.cpp cwd.cpp debug.cpp
+  debugger.cpp events.cpp execcmd.cpp execnt.cpp execunix.cpp filent.cpp
+  filesys.cpp fileunix.cpp frames.cpp function.cpp glob.cpp hash.cpp
+  hcache.cpp hdrmacro.cpp headers.cpp jam_strings.cpp jam.cpp jamgram.cpp
+  lists.cpp make.cpp make1.cpp md5.cpp mem.cpp modules.cpp native.cpp
+  option.cpp output.cpp parse.cpp pathnt.cpp pathsys.cpp pathunix.cpp
+  regexp.cpp rules.cpp scan.cpp search.cpp startup.cpp tasks.cpp
+  timestamp.cpp value.cpp variable.cpp w32_getreg.cpp mod_command_db.cpp
+  mod_db.cpp mod_jam_builtin.cpp mod_jam_class.cpp mod_jam_errors.cpp
+  mod_jam_modules.cpp mod_order.cpp mod_path.cpp mod_property_set.cpp
+  mod_regex.cpp mod_sequence.cpp mod_set.cpp mod_string.cpp mod_summary.cpp
+  mod_sysinfo.cpp mod_version.cpp -o b2
+----
+
+Other than many more files this example doesn't differ much from the
+<<Hello World>> example.
+
+[source,json]
+----
+include::example-b2_bootstrap_gcc_linux.json[]
+----
+
+[source,shell]
+----
+"cl" /nologo /MP /MT /TP /Feb2 /wd4996 /wd4675 /O2 /GL /EHsc /Zc:wchar_t /Gw
+  -DNDEBUG  bindjam.cpp builtins.cpp class.cpp command.cpp compile.cpp
+  constants.cpp cwd.cpp debug.cpp debugger.cpp events.cpp execcmd.cpp
+  execnt.cpp execunix.cpp filent.cpp filesys.cpp fileunix.cpp frames.cpp
+  function.cpp glob.cpp hash.cpp hcache.cpp hdrmacro.cpp headers.cpp jam.cpp
+  jamgram.cpp lists.cpp make.cpp make1.cpp md5.cpp mem.cpp modules.cpp
+  native.cpp option.cpp output.cpp parse.cpp pathnt.cpp pathsys.cpp
+  pathunix.cpp regexp.cpp rules.cpp scan.cpp search.cpp jam_strings.cpp
+  startup.cpp tasks.cpp timestamp.cpp value.cpp variable.cpp w32_getreg.cpp
+  mod_command_db.cpp mod_db.cpp mod_jam_builtin.cpp mod_jam_class.cpp
+  mod_jam_errors.cpp mod_jam_modules.cpp mod_order.cpp mod_path.cpp
+  mod_property_set.cpp mod_regex.cpp mod_sequence.cpp mod_set.cpp
+  mod_string.cpp mod_summary.cpp mod_sysinfo.cpp mod_version.cpp
+  /link kernel32.lib advapi32.lib user32.lib
+  /MANIFEST:EMBED /MANIFESTINPUT:b2.exe.manifest
+----
+
+The `msvc` equivalent has the addition of listing some system libraries and
+the special Windows embedded manifest for the executable.
+
+[source,json]
+----
+include::example-b2_bootstrap_msvc.json[]
+----
+
 === Options
+
+INFO: In the tables below compiler drivers or front ends we list the
+un-prefixed option name. And for build systems we list any abstraction for the
+option. But importantly, we don't list if the build system only allows for
+specifying the raw option. As it doesn't add any more information than what is
+given for the compiler driver information.
 
 ==== Include Directories
 
 [cols="1,2,4",options="header"]
 |===
-| Tool
-| Name
-| Semantics
-
-| MSVC
-| `I`, `INCLUDE` env var
-| Adds the directory to the include search list.
-
-| GCC
-| `I`
-| Adds the directory to the include search list.
-
-| CMake
-| `include_directories()` or `INCLUDE_DIRECTORIES`
-| Adds the directories to the include search list.
-
-| B2
-| `include`
-| Adds the directory, order unspecified, to the include search list.
+| Tool | Name
+  | Semantics
+| MSVC | `I`, `INCLUDE` env var
+  | Adds the directory to the include search list.
+| GCC | `I`
+  | Adds the directory to the include search list.
+| CMake | `include_directories()` or `INCLUDE_DIRECTORIES`
+  | Adds the directories to the include search list.
+| B2 | `include`
+  | Adds the directory, order unspecified, to the include search list.
 |===
 
-Name::
+Key::
 Use `std.include` or shortened `include`.
 
 Value::
@@ -127,6 +236,196 @@ application. It is up to the application to interpret how the composed list of
 directories is used. But it commonly interpreted as `#include` preprocessor
 directives to look for files in the order of the include directories list.
 
+[source,json]
+----
+include::test_success-include_string.json[]
+----
+
+[source,json]
+----
+include::test_success-include_array.json[]
+----
+
+==== Define Preprocessor Symbols
+
+[cols="1,2,4",options="header"]
+|===
+| Tool | Name
+  | Semantics
+| MSVC | `D`
+  | Defines a preprocessor symbol to a value overriding any previous definition.
+  If no value is given `1` is used as the value.
+| GCC | `D`
+  | Defines a preprocessor symbol to a value overriding any previous definition.
+  If no value is given `1` is used as the value.
+| CMake |
+  | N/A
+| B2 | `define`
+  | Defines a preprocessor symbol to a value overriding any previous definition.
+  If no value is given no value is used and the value is up to the compiler.
+|===
+
+Key::
+Use `std.define` or shortened `define`.
+
+Value::
+The option will be a dictionary where the keys are the preprocessor symbol to
+define and the values are mapped from JSON to corresponding preprocessor
+values.
+
+Semantics::
+For each symbol (the key name) the {CPP} preprocessor will define the symbol to
+the value. The value will be converted from JSON values as:
+* JSON `number` is converted to a string and pasted.
+* JSON `string` is used directly.
+* JSON `boolean` is converted as `true` => `1` and `false` => `0`.
+* JSON `null` converts to nothing, and hence the default implementation value
+  should be used.
+
+[source,json]
+----
+include::test_success-define.json[]
+----
+
+==== Undefine Preprocessor Symbols
+
+[cols="1,2,4",options="header"]
+|===
+| Tool | Name
+  | Semantics
+| MSVC | `U`
+  | Undefines the given preprocessor symbol.
+| GCC | `U`
+  | Undefines the given preprocessor symbol.
+| CMake |
+  | N/A
+| B2 | `undef`
+  | Undefines the given preprocessor symbol.
+|===
+
+Key::
+Use `std.undef` or shortened `undef`.
+
+Value::
+The option would be either a single `string` or an `array` of `string`-s. Each
+`string` is a symbol to undefine.
+
+Semantics::
+For each `string` in the value undefines the preprocessor symbol. The option
+is evaluated after the `define` option.
+
+[source,json]
+----
+include::test_success-undef.json[]
+----
+
+==== Source
+
+[cols="1,2,4",options="header"]
+|===
+| Tool | Name
+  | Semantics
+| MSVC | `Tc`, `TC`, `Tp`, `TP`
+  | Specified a source file is a C (`Tc` or `TC`) or {CPP} (`Tp` or `TP`) file.
+  Otherwise the file extension is used.
+| GCC | `-x _language_`
+  | Specified source files are the given language. Otherwise the file extension
+  is used.
+| CMake | `set_property(SOURCE _language_ ...)`
+  | Specified source files are the given language. Otherwise the file extension
+  is used.
+| B2 | `[ cast _ _language_ : ... ]`
+  | Specified source files are the given language. Otherwise the file extension
+  is used.
+|===
+
+Key::
+Use `std.source` or shortened `source`.
+
+Value::
+Can be a single `string`, an `object`, or an `array` (with strings or objects).
+
+Semantics::
+Adds the sources given to the set of files to process. Depending on the value
+the semantics can be adjusted:
+
+`string`:::
+The single file is added to the set. The type of file is determined by the file
+extension. +
++
+[source,json]
+----
+include::test_success-source_string.json[]
+----
+
+`object`:::
+Specifying an `object` defines additional properties for the source. +
++
+[source,json]
+----
+include::test_success-source_typed.json[]
+----
+
+`array`:::
+An array can contain either `string` or `object` values for the source. Each
+source in the array is added in order. +
++
+[source,json]
+----
+include::test_success-source_array.json[]
+----
+
+===== Source Object
+
+When a source is specified as an `object` it consist of a single key and value
+item. Where the key is the filename of the source. And the value is the
+kind of file it is. The minimal set of file types that a tool should support
+are:
+
+`c++`::
+  A file to interpreted as containing {CPP} source code to process.
+`object`::
+  A compiled TU binary object to process, usually to link.
+`library`::
+  A collection of compiled TUs to process, usually to link.
+
+The choice of using an `object` with the single filename+type is to allow
+an abbreviated method to override the default file type determination.
+
+
+////
+==== Qwerty
+
+[cols="1,2,4",options="header"]
+|===
+| Tool | Name
+  | Semantics
+| MSVC |
+  |
+| GCC |
+  |
+| CMake |
+  |
+| B2 |
+  |
+|===
+
+Key::
+Use `std.qwerty` or shortened `qwerty`.
+
+Value::
+The option would be..
+
+Semantics::
+Does this..
+
+[source,json]
+----
+include::test_success-qwerty.json[]
+----
+////
+
+////
 == Wording
 
 Wording is relative to
@@ -134,7 +433,7 @@ link:https://wg21.link/P3051R1[P3051R1 Structured Response Files].
 
 === Specification: Structured Options
 
-Insert clause after _Structured Options_ [strctopt].
+Insert clause after Structured Options [strctopt].
 
 [.ins.text-justify]
 [#strctopt-core,reftext=strctopt.core]
@@ -143,7 +442,7 @@ Insert clause after _Structured Options_ [strctopt].
 [#strctopt-core-pre,reftext=strctopt.core.pre]
 ===== Preamble [.right]#[<<strctopt-core-pre>>]#
 
-This clause describes the schema and semantics of core _structured options_
+This clause describes the schema and semantics of core structured options
 ([strctopt.schema.struct]) for {CPP} compiler front-ends.
 
 This clause specifies the `std.strctopt.core` capability ([intspct.cap])
@@ -183,6 +482,7 @@ _Description_:
 [.ins.text-justify]
 [#strctopt-core-xxx,reftext=strctopt.core.xxx]
 ==== Xxx [.right]#[<<strctopt-core-xxx>>]#
+////
 
 
 == License

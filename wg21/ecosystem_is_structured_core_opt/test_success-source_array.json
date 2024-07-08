@@ -1,0 +1,10 @@
+{
+  "source": [
+    "main.cpp",
+    "utils.cpp",
+    "algo.cpp",
+    {
+      "api.i": "c"
+    }
+  ]
+}
