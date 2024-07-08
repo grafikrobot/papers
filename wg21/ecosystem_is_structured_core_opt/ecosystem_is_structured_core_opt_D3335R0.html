@@ -839,7 +839,7 @@ pre.rouge .ss {
 <span id="author" class="author">René Ferdinand Rivera Morell</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> D3335R0,</span>
-<span id="revdate">2024-07-07</span>
+<span id="revdate">2024-07-08</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -854,8 +854,28 @@ pre.rouge .ss {
 <li><a href="#_scope">4. Scope</a></li>
 <li><a href="#_design">5. Design</a>
 <ul class="sectlevel2">
-<li><a href="#_examples">5.1. Examples</a></li>
-<li><a href="#_options">5.2. Options</a></li>
+<li><a href="#_examples">5.1. Examples</a>
+<ul class="sectlevel3">
+<li><a href="#_hello_world">5.1.1. Hello World</a></li>
+<li><a href="#_compile_and_link">5.1.2. Compile And Link</a></li>
+<li><a href="#_many_sources">5.1.3. Many Sources</a></li>
+</ul>
+</li>
+<li><a href="#_options">5.2. Options</a>
+<ul class="sectlevel3">
+<li><a href="#_source">5.2.1. Source</a></li>
+<li><a href="#_output">5.2.2. Output</a></li>
+<li><a href="#_include_directories">5.2.3. Include Directories</a></li>
+<li><a href="#_library_directories">5.2.4. Library Directories</a></li>
+<li><a href="#_define_preprocessor_symbols">5.2.5. Define Preprocessor Symbols</a></li>
+<li><a href="#_undefine_preprocessor_symbols">5.2.6. Undefine Preprocessor Symbols</a></li>
+<li><a href="#_language">5.2.7. Language</a></li>
+<li><a href="#_optimization">5.2.8. Optimization</a></li>
+<li><a href="#_runtime">5.2.9. Runtime</a></li>
+<li><a href="#_debugging">5.2.10. Debugging</a></li>
+<li><a href="#_vendor">5.2.11. Vendor</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_license">6. License</a></li>
@@ -981,7 +1001,7 @@ Document #:
 Date: 
 </td>
 <td class="hdlist2">
-<p>2024-07-07</p>
+<p>2024-07-08</p>
 </td>
 </tr>
 <tr>
@@ -1472,248 +1492,24 @@ the special Windows embedded manifest for the executable.</p>
 </div>
 <div class="sect2">
 <h3 id="_options"><a class="anchor" href="#_options"></a>5.2. Options</h3>
-<div class="paragraph">
-<p>INFO: In the tables below compiler drivers or front ends we list the
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">ℹ</div>
+</td>
+<td class="content">
+In the tables below compiler drivers or front ends we list the
 un-prefixed option name. And for build systems we list any abstraction for the
 option. But importantly, we don&#8217;t list if the build system only allows for
 specifying the raw option. As it doesn&#8217;t add any more information than what is
-given for the compiler driver information.</p>
-</div>
-<div class="sect3">
-<h4 id="_include_directories"><a class="anchor" href="#_include_directories"></a>5.2.1. Include Directories</h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 14.2857%;">
-<col style="width: 28.5714%;">
-<col style="width: 57.1429%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Tool</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Semantics</th>
+given for the compiler driver information.
+</td>
 </tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>I</code>, <code>INCLUDE</code> env var</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Adds the directory to the include search list.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>I</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Adds the directory to the include search list.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>include_directories()</code> or <code>INCLUDE_DIRECTORIES</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Adds the directories to the include search list.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>include</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Adds the directory, order unspecified, to the include search list.</p></td>
-</tr>
-</tbody>
 </table>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Key</dt>
-<dd>
-<p>Use <code>std.include</code> or shortened <code>include</code>.</p>
-</dd>
-<dt class="hdlist1">Value</dt>
-<dd>
-<p>The option would be either a single <code>string</code> or an <code>array</code> of <code>string</code>-s. Each
-<code>string</code> is a pathname of which interpretation is up to the application.</p>
-</dd>
-<dt class="hdlist1">Semantics</dt>
-<dd>
-<p>Adds the listed pathnames to the end of the include directories of the
-application. It is up to the application to interpret how the composed list of
-directories is used. But it commonly interpreted as <code>#include</code> preprocessor
-directives to look for files in the order of the include directories list.</p>
-</dd>
-</dl>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nl">"include"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/opt/boost_config/include"</span><span class="w">
-</span><span class="p">}</span></code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nl">"include"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="s2">"/opt/boost_config/include"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"/opt/openssl/include"</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span></code></pre>
-</div>
-</div>
 </div>
 <div class="sect3">
-<h4 id="_define_preprocessor_symbols"><a class="anchor" href="#_define_preprocessor_symbols"></a>5.2.2. Define Preprocessor Symbols</h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 14.2857%;">
-<col style="width: 28.5714%;">
-<col style="width: 57.1429%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Tool</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Semantics</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>D</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Defines a preprocessor symbol to a value overriding any previous definition.
-  If no value is given <code>1</code> is used as the value.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>D</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Defines a preprocessor symbol to a value overriding any previous definition.
-  If no value is given <code>1</code> is used as the value.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>define</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Defines a preprocessor symbol to a value overriding any previous definition.
-  If no value is given no value is used and the value is up to the compiler.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Key</dt>
-<dd>
-<p>Use <code>std.define</code> or shortened <code>define</code>.</p>
-</dd>
-<dt class="hdlist1">Value</dt>
-<dd>
-<p>The option will be a dictionary where the keys are the preprocessor symbol to
-define and the values are mapped from JSON to corresponding preprocessor
-values.</p>
-</dd>
-<dt class="hdlist1">Semantics</dt>
-<dd>
-<p>For each symbol (the key name) the C&#43;&#43; preprocessor will define the symbol to
-the value. The value will be converted from JSON values as:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>JSON <code>number</code> is converted to a string and pasted.</p>
-</li>
-<li>
-<p>JSON <code>string</code> is used directly.</p>
-</li>
-<li>
-<p>JSON <code>boolean</code> is converted as <code>true</code> &#8658; <code>1</code> and <code>false</code> &#8658; <code>0</code>.</p>
-</li>
-<li>
-<p>JSON <code>null</code> converts to nothing, and hence the default implementation value
-should be used.</p>
-</li>
-</ul>
-</div>
-</dd>
-</dl>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nl">"define"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"BOOST_ALL_NO_LIB"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"_WIN32_WINNT"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x0600"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"_GNU_SOURCE"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"U_USING_ICU_NAMESPACE"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"NOMINMAX"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span></code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_undefine_preprocessor_symbols"><a class="anchor" href="#_undefine_preprocessor_symbols"></a>5.2.3. Undefine Preprocessor Symbols</h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 14.2857%;">
-<col style="width: 28.5714%;">
-<col style="width: 57.1429%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Tool</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Semantics</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>U</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Undefines the given preprocessor symbol.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>U</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Undefines the given preprocessor symbol.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>undef</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Undefines the given preprocessor symbol.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Key</dt>
-<dd>
-<p>Use <code>std.undef</code> or shortened <code>undef</code>.</p>
-</dd>
-<dt class="hdlist1">Value</dt>
-<dd>
-<p>The option would be either a single <code>string</code> or an <code>array</code> of <code>string</code>-s. Each
-<code>string</code> is a symbol to undefine.</p>
-</dd>
-<dt class="hdlist1">Semantics</dt>
-<dd>
-<p>For each <code>string</code> in the value undefines the preprocessor symbol. The option
-is evaluated after the <code>define</code> option.</p>
-</dd>
-</dl>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nl">"undef"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="s2">"NDEBUG"</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span></code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_source"><a class="anchor" href="#_source"></a>5.2.4. Source</h4>
+<h4 id="_source"><a class="anchor" href="#_source"></a>5.2.1. Source</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 14.2857%;">
@@ -1820,7 +1616,7 @@ source in the array is added in order.<br></p>
 </dl>
 </div>
 <div class="sect4">
-<h5 id="_source_object"><a class="anchor" href="#_source_object"></a>5.2.4.1. Source Object</h5>
+<h5 id="_source_object"><a class="anchor" href="#_source_object"></a>5.2.1.1. Source Object</h5>
 <div class="paragraph">
 <p>When a source is specified as an <code>object</code> it consist of a single key and value
 item. Where the key is the filename of the source. And the value is the
@@ -1847,6 +1643,624 @@ are:</p>
 <p>The choice of using an <code>object</code> with the single filename+type is to allow
 an abbreviated method to override the default file type determination.</p>
 </div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_output"><a class="anchor" href="#_output"></a>5.2.2. Output</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tool</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Key</dt>
+<dd>
+<p>Use <code>std.output</code> or shortened <code>output</code>.</p>
+</dd>
+<dt class="hdlist1">Value</dt>
+<dd>
+<p>The option would be..</p>
+</dd>
+<dt class="hdlist1">Semantics</dt>
+<dd>
+<p>Does this..</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_include_directories"><a class="anchor" href="#_include_directories"></a>5.2.3. Include Directories</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tool</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>I</code>, <code>INCLUDE</code> env var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Adds the directory to the include search list.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>I</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Adds the directory to the include search list.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>include_directories()</code> or <code>INCLUDE_DIRECTORIES</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Adds the directories to the include search list.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>include</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Adds the directory, order unspecified, to the include search list.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Key</dt>
+<dd>
+<p>Use <code>std.include</code> or shortened <code>include</code>.</p>
+</dd>
+<dt class="hdlist1">Value</dt>
+<dd>
+<p>The option would be either a single <code>string</code> or an <code>array</code> of <code>string</code>-s. Each
+<code>string</code> is a pathname of which interpretation is up to the application.</p>
+</dd>
+<dt class="hdlist1">Semantics</dt>
+<dd>
+<p>Adds the listed pathnames to the end of the include directories of the
+application. It is up to the application to interpret how the composed list of
+directories is used. But it commonly interpreted as <code>#include</code> preprocessor
+directives to look for files in the order of the include directories list.</p>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"include"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/opt/boost_config/include"</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"include"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"/opt/boost_config/include"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"/opt/openssl/include"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_library_directories"><a class="anchor" href="#_library_directories"></a>5.2.4. Library Directories</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tool</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Key</dt>
+<dd>
+<p>Use <code>std.library</code> or shortened <code>library</code>.</p>
+</dd>
+<dt class="hdlist1">Value</dt>
+<dd>
+<p>The option would be..</p>
+</dd>
+<dt class="hdlist1">Semantics</dt>
+<dd>
+<p>Does this..</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_define_preprocessor_symbols"><a class="anchor" href="#_define_preprocessor_symbols"></a>5.2.5. Define Preprocessor Symbols</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tool</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>D</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines a preprocessor symbol to a value overriding any previous definition.
+  If no value is given <code>1</code> is used as the value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>D</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines a preprocessor symbol to a value overriding any previous definition.
+  If no value is given <code>1</code> is used as the value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>define</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines a preprocessor symbol to a value overriding any previous definition.
+  If no value is given no value is used and the value is up to the compiler.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Key</dt>
+<dd>
+<p>Use <code>std.define</code> or shortened <code>define</code>.</p>
+</dd>
+<dt class="hdlist1">Value</dt>
+<dd>
+<p>The option will be a dictionary where the keys are the preprocessor symbol to
+define and the values are mapped from JSON to corresponding preprocessor
+values.</p>
+</dd>
+<dt class="hdlist1">Semantics</dt>
+<dd>
+<p>For each symbol (the key name) the C&#43;&#43; preprocessor will define the symbol to
+the value. The value will be converted from JSON values as:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>JSON <code>number</code> is converted to a string and pasted.</p>
+</li>
+<li>
+<p>JSON <code>string</code> is used directly.</p>
+</li>
+<li>
+<p>JSON <code>boolean</code> is converted as <code>true</code> &#8658; <code>1</code> and <code>false</code> &#8658; <code>0</code>.</p>
+</li>
+<li>
+<p>JSON <code>null</code> converts to nothing, and hence the default implementation value
+should be used.</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"define"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"BOOST_ALL_NO_LIB"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"_WIN32_WINNT"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x0600"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"_GNU_SOURCE"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"U_USING_ICU_NAMESPACE"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"NOMINMAX"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_undefine_preprocessor_symbols"><a class="anchor" href="#_undefine_preprocessor_symbols"></a>5.2.6. Undefine Preprocessor Symbols</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tool</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>U</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Undefines the given preprocessor symbol.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>U</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Undefines the given preprocessor symbol.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>undef</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Undefines the given preprocessor symbol.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Key</dt>
+<dd>
+<p>Use <code>std.undef</code> or shortened <code>undef</code>.</p>
+</dd>
+<dt class="hdlist1">Value</dt>
+<dd>
+<p>The option would be either a single <code>string</code> or an <code>array</code> of <code>string</code>-s. Each
+<code>string</code> is a symbol to undefine.</p>
+</dd>
+<dt class="hdlist1">Semantics</dt>
+<dd>
+<p>For each <code>string</code> in the value undefines the preprocessor symbol. The option
+is evaluated after the <code>define</code> option.</p>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"undef"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"NDEBUG"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_language"><a class="anchor" href="#_language"></a>5.2.7. Language</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tool</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Key</dt>
+<dd>
+<p>Use <code>std.language</code> or shortened <code>language</code>.</p>
+</dd>
+<dt class="hdlist1">Value</dt>
+<dd>
+<p>The option would be..</p>
+</dd>
+<dt class="hdlist1">Semantics</dt>
+<dd>
+<p>Does this..</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_optimization"><a class="anchor" href="#_optimization"></a>5.2.8. Optimization</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tool</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Key</dt>
+<dd>
+<p>Use <code>std.optimization</code> or shortened <code>optimization</code>.</p>
+</dd>
+<dt class="hdlist1">Value</dt>
+<dd>
+<p>The option would be..</p>
+</dd>
+<dt class="hdlist1">Semantics</dt>
+<dd>
+<p>Does this..</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_runtime"><a class="anchor" href="#_runtime"></a>5.2.9. Runtime</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tool</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Key</dt>
+<dd>
+<p>Use <code>std.runtime</code> or shortened <code>runtime</code>.</p>
+</dd>
+<dt class="hdlist1">Value</dt>
+<dd>
+<p>The option would be..</p>
+</dd>
+<dt class="hdlist1">Semantics</dt>
+<dd>
+<p>Does this..</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_debugging"><a class="anchor" href="#_debugging"></a>5.2.10. Debugging</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tool</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Key</dt>
+<dd>
+<p>Use <code>std.debugging</code> or shortened <code>debugging</code>.</p>
+</dd>
+<dt class="hdlist1">Value</dt>
+<dd>
+<p>The option would be..</p>
+</dd>
+<dt class="hdlist1">Semantics</dt>
+<dd>
+<p>Does this..</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_vendor"><a class="anchor" href="#_vendor"></a>5.2.11. Vendor</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tool</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Key</dt>
+<dd>
+<p>Use <code>std.vendor</code> or shortened <code>vendor</code>.</p>
+</dd>
+<dt class="hdlist1">Value</dt>
+<dd>
+<p>The option would be..</p>
+</dd>
+<dt class="hdlist1">Semantics</dt>
+<dd>
+<p>Does this..</p>
+</dd>
+</dl>
 </div>
 </div>
 </div>
