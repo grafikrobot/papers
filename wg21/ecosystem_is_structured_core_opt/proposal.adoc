@@ -286,24 +286,46 @@ an abbreviated method to override the default file type determination.
 |===
 | Tool | Name
   | Semantics
-| MSVC |
-  |
-| GCC |
-  |
-| CMake |
-  |
-| B2 |
-  |
+| MSVC | `FA`, `Fa`, `Fd`, `Fe`, `Fi`, `Fm`, `Fo`, `Fp`, `FR`
+  | Set the name of the generated output. The option specifies the kind of
+    output generated as: `FA`, `Fa` (assembly); `Fd` (debug); `Fe` (executable);
+    `Fi` (preprocessed); `Fm` (mapfile); `Fo` (object); `Fp` (pch);
+    `FR` (browser)
+| GCC | `o`, along with `c`, `S`, and `E`
+  | Sets the file to output with (`o`). And with the related options controls
+    the kind of output to generate: `c` (compile -> object),
+    `S` (compile -> assembly), `E` (preprocessed).
+| CMake | `add_executable`, `add_library`
+  | Defines a target for an executable or library.
+| B2 | `exe`, `obj`, `lib`
+  | Defines a target of the given type: `exe` (executable), `obj` (object),
+    `lib` (static or dynamic library).
 |===
 
 Key::
 Use `std.output` or shortened `output`.
 
 Value::
-The option would be..
+Is an `object` with single entry.
 
 Semantics::
-Does this..
+Specifies the output file, and kind of output, to generate when processing the
+sources.
+
+[source,json]
+----
+include::test_success-output_single.json[]
+----
+
+The key in the entry specifies the filename of the output. And the value in the
+entry specifies the kind of output. The kind of output also indicates the
+type of operation to the tool will do. Possible kinds of outputs:
+
+`exec`:: Links the compiled sources into an executable file.
+`object`:: Compiles the sources into a linkable object file.
+`dynamic_lib`:: Links the compiled sources into a dynamically loadable library.
+`archive_lib`:: Collects the compiled sources into an archive library of object
+  files.
 
 ==== Include Directories
 
@@ -381,8 +403,10 @@ Does this..
 | GCC | `D`
   | Defines a preprocessor symbol to a value overriding any previous definition.
   If no value is given `1` is used as the value.
-| CMake |
-  | N/A
+| CMake
+  | `add_compile_definitions`, `target_compile_definitions`, `COMPILE_DEFINITIONS`
+  | Defines a preprocessor symbol to a value overriding any previous definition.
+  If no value is given no value is used and the value is up to the compiler.
 | B2 | `define`
   | Defines a preprocessor symbol to a value overriding any previous definition.
   If no value is given no value is used and the value is up to the compiler.

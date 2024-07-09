@@ -1,7 +1,7 @@
 {
   "source": "hello.o",
   "output": {
-    "exec": "hello"
+    "hello": "exec"
   },
   "debugging": {
     "enable": true

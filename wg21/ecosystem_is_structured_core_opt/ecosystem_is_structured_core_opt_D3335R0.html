@@ -1156,7 +1156,7 @@ understands. And that other tools could ignore.</p>
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello.cpp"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"exec"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello"</span><span class="w">
+    </span><span class="nl">"hello"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exec"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nl">"optimization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"compile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"off"</span><span class="p">,</span><span class="w">
@@ -1203,7 +1203,7 @@ produce an object file for the TU. Then linking to get the final executable.</p>
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello.cpp"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello.o"</span><span class="w">
+    </span><span class="nl">"hello.o"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nl">"optimization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"compile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"off"</span><span class="p">,</span><span class="w">
@@ -1231,7 +1231,7 @@ produce an object file for the TU. Then linking to get the final executable.</p>
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello.o"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"exec"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello"</span><span class="w">
+    </span><span class="nl">"hello"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exec"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nl">"debugging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"enable"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
@@ -1339,7 +1339,7 @@ many files with some extra options.</p>
     </span><span class="s2">"mod_version.cpp"</span><span class="w">
   </span><span class="p">],</span><span class="w">
   </span><span class="nl">"output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"exec"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b2"</span><span class="w">
+    </span><span class="nl">"b2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exec"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nl">"define"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"NDEBUG"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
@@ -1458,7 +1458,7 @@ the special Windows embedded manifest for the executable.</p>
     </span><span class="s2">"user32.lib"</span><span class="w">
   </span><span class="p">],</span><span class="w">
   </span><span class="nl">"output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"exec"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b2"</span><span class="w">
+    </span><span class="nl">"b2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exec"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nl">"define"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"NDEBUG"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
@@ -1663,23 +1663,29 @@ an abbreviated method to override the default file type determination.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>FA</code>, <code>Fa</code>, <code>Fd</code>, <code>Fe</code>, <code>Fi</code>, <code>Fm</code>, <code>Fo</code>, <code>Fp</code>, <code>FR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set the name of the generated output. The option specifies the kind of
+    output generated as: <code>FA</code>, <code>Fa</code> (assembly); <code>Fd</code> (debug); <code>Fe</code> (executable);
+    <code>Fi</code> (preprocessed); <code>Fm</code> (mapfile); <code>Fo</code> (object); <code>Fp</code> (pch);
+    <code>FR</code> (browser)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>o</code>, along with <code>c</code>, <code>S</code>, and <code>E</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the file to output with (<code>o</code>). And with the related options controls
+    the kind of output to generate: <code>c</code> (compile &#8594; object),
+    <code>S</code> (compile &#8594; assembly), <code>E</code> (preprocessed).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add_executable</code>, <code>add_library</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines a target for an executable or library.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>exe</code>, <code>obj</code>, <code>lib</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines a target of the given type: <code>exe</code> (executable), <code>obj</code> (object),
+    <code>lib</code> (static or dynamic library).</p></td>
 </tr>
 </tbody>
 </table>
@@ -1691,11 +1697,47 @@ an abbreviated method to override the default file type determination.</p>
 </dd>
 <dt class="hdlist1">Value</dt>
 <dd>
-<p>The option would be..</p>
+<p>Is an <code>object</code> with single entry.</p>
 </dd>
 <dt class="hdlist1">Semantics</dt>
 <dd>
-<p>Does this..</p>
+<p>Specifies the output file, and kind of output, to generate when processing the
+sources.</p>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"a.out"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exec"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The key in the entry specifies the filename of the output. And the value in the
+entry specifies the kind of output. The kind of output also indicates the
+type of operation to the tool will do. Possible kinds of outputs:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>exec</code></dt>
+<dd>
+<p>Links the compiled sources into an executable file.</p>
+</dd>
+<dt class="hdlist1"><code>object</code></dt>
+<dd>
+<p>Compiles the sources into a linkable object file.</p>
+</dd>
+<dt class="hdlist1"><code>dynamic_lib</code></dt>
+<dd>
+<p>Links the compiled sources into a dynamically loadable library.</p>
+</dd>
+<dt class="hdlist1"><code>archive_lib</code></dt>
+<dd>
+<p>Collects the compiled sources into an archive library of object
+files.</p>
 </dd>
 </dl>
 </div>
@@ -1861,8 +1903,9 @@ directives to look for files in the order of the include directories list.</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add_compile_definitions</code>, <code>target_compile_definitions</code>, <code>COMPILE_DEFINITIONS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines a preprocessor symbol to a value overriding any previous definition.
+  If no value is given no value is used and the value is up to the compiler.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>

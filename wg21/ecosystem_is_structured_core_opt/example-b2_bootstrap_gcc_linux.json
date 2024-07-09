@@ -67,7 +67,7 @@
     "mod_version.cpp"
   ],
   "output": {
-    "exec": "b2"
+    "b2": "exec"
   },
   "define": {
     "NDEBUG": null

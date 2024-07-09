@@ -70,7 +70,7 @@
     "user32.lib"
   ],
   "output": {
-    "exec": "b2"
+    "b2": "exec"
   },
   "define": {
     "NDEBUG": null

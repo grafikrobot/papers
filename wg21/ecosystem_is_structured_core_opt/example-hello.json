@@ -1,7 +1,7 @@
 {
   "source": "hello.cpp",
   "output": {
-    "exec": "hello"
+    "hello": "exec"
   },
   "optimization": {
     "compile": "off",

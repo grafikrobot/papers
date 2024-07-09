@@ -1,7 +1,7 @@
 {
   "source": "hello.cpp",
   "output": {
-    "object": "hello.o"
+    "hello.o": "object"
   },
   "optimization": {
     "compile": "off",
