@@ -1,0 +1,6 @@
+{
+  "library_dirs": [
+    "/opt/boost_config/lib",
+    "/opt/openssl/lib"
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "include": [
+  "include_dirs": [
     "/opt/boost_config/include",
     "/opt/openssl/include"
   ]

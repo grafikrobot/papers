@@ -839,7 +839,7 @@ pre.rouge .ss {
 <span id="author" class="author">René Ferdinand Rivera Morell</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> D3335R0,</span>
-<span id="revdate">2024-07-08</span>
+<span id="revdate">2024-07-10</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -854,26 +854,27 @@ pre.rouge .ss {
 <li><a href="#_scope">4. Scope</a></li>
 <li><a href="#_design">5. Design</a>
 <ul class="sectlevel2">
-<li><a href="#_examples">5.1. Examples</a>
+<li><a href="#_file_references">5.1. File References</a></li>
+<li><a href="#_lists">5.2. Lists</a></li>
+<li><a href="#_examples">5.3. Examples</a>
 <ul class="sectlevel3">
-<li><a href="#_hello_world">5.1.1. Hello World</a></li>
-<li><a href="#_compile_and_link">5.1.2. Compile And Link</a></li>
-<li><a href="#_many_sources">5.1.3. Many Sources</a></li>
+<li><a href="#_hello_world">5.3.1. Hello World</a></li>
+<li><a href="#_compile_and_link">5.3.2. Compile And Link</a></li>
+<li><a href="#_many_sources">5.3.3. Many Sources</a></li>
 </ul>
 </li>
-<li><a href="#_options">5.2. Options</a>
+<li><a href="#_options">5.4. Options</a>
 <ul class="sectlevel3">
-<li><a href="#_source">5.2.1. Source</a></li>
-<li><a href="#_output">5.2.2. Output</a></li>
-<li><a href="#_include_directories">5.2.3. Include Directories</a></li>
-<li><a href="#_library_directories">5.2.4. Library Directories</a></li>
-<li><a href="#_define_preprocessor_symbols">5.2.5. Define Preprocessor Symbols</a></li>
-<li><a href="#_undefine_preprocessor_symbols">5.2.6. Undefine Preprocessor Symbols</a></li>
-<li><a href="#_language">5.2.7. Language</a></li>
-<li><a href="#_optimization">5.2.8. Optimization</a></li>
-<li><a href="#_runtime">5.2.9. Runtime</a></li>
-<li><a href="#_debugging">5.2.10. Debugging</a></li>
-<li><a href="#_vendor">5.2.11. Vendor</a></li>
+<li><a href="#_source">5.4.1. Source</a></li>
+<li><a href="#_output">5.4.2. Output</a></li>
+<li><a href="#_include_directories">5.4.3. Include Directories</a></li>
+<li><a href="#_library_directories">5.4.4. Library Directories</a></li>
+<li><a href="#_define_preprocessor_symbols">5.4.5. Define Preprocessor Symbols</a></li>
+<li><a href="#_undefine_preprocessor_symbols">5.4.6. Undefine Preprocessor Symbols</a></li>
+<li><a href="#_language">5.4.7. Language</a></li>
+<li><a href="#_optimization">5.4.8. Optimization</a></li>
+<li><a href="#_debugging">5.4.9. Debugging</a></li>
+<li><a href="#_vendor">5.4.10. Vendor</a></li>
 </ul>
 </li>
 </ul>
@@ -1001,7 +1002,7 @@ Document #:
 Date: 
 </td>
 <td class="hdlist2">
-<p>2024-07-08</p>
+<p>2024-07-10</p>
 </td>
 </tr>
 <tr>
@@ -1127,9 +1128,56 @@ wish. And we encourage such adoption.</p>
 </ul>
 </div>
 <div class="sect2">
-<h3 id="_examples"><a class="anchor" href="#_examples"></a>5.1. Examples</h3>
+<h3 id="_file_references"><a class="anchor" href="#_file_references"></a>5.1. File References</h3>
+<div class="paragraph">
+<p>In various places the options need to refer to file names and paths. And in
+some of those instances it&#8217;s also possible to want to specify one or more
+attributes to the file. For example when indicating the language for a source
+file. We looked at various ways to achieve an arrangement to make that
+specification both optional and future proof. The schema we ended up with is
+multi-stage:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Solitary String</dt>
+<dd>
+<p>A <code>"file.ext"</code> can be given such that it is up to the tool to determine any
+other file attributes as it can. Many times this means that the tool will use
+the extension to determine things like source language or output format.</p>
+</dd>
+<dt class="hdlist1">Object With String Key+Value</dt>
+<dd>
+<p>A <code>{ "file.ext": "value" }</code> specifies the <code>file.ext</code> will set a default
+attribute of <code>value</code>. What the default attribute depends on the option we are
+specifying. For example, for a source it would indicate the source language.</p>
+</dd>
+<dt class="hdlist1">Object With Object Value</dt>
+<dd>
+<p>A <code>{ "file.ext": { "a": <em>value</em>, &#8230;&#8203; }}</code> would indicate specific attributes for
+the "file.ext".</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>This staged schema allows a minimal syntax for the common use cases. And
+incrementally specifying more information as needed.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_lists"><a class="anchor" href="#_lists"></a>5.2. Lists</h3>
+<div class="paragraph">
+<p>We need to support specifying lists of homogeneous values, like files, while
+also minimizing the amount of syntax for common cases. In the case of
+indicating a list of values the approach we take is to allow for a single
+value to be equivalent to a single element array (without adding array margers).
+For example: <code>"file.ext"</code> &#8594; <code>[ "file.ext" ]</code>, or <code>{ "file.ext": "value" }</code>
+&#8594; <code>[ { "file.ext": "value" } ]</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_examples"><a class="anchor" href="#_examples"></a>5.3. Examples</h3>
 <div class="sect3">
-<h4 id="_hello_world"><a class="anchor" href="#_hello_world"></a>5.1.1. Hello World</h4>
+<h4 id="_hello_world"><a class="anchor" href="#_hello_world"></a>5.3.1. Hello World</h4>
 <div class="paragraph">
 <p>This is the classic simplest C&#43;&#43; program with the twist that we want to
 allow full debugging when running it.</p>
@@ -1183,7 +1231,7 @@ understands. And that other tools could ignore.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_compile_and_link"><a class="anchor" href="#_compile_and_link"></a>5.1.2. Compile And Link</h4>
+<h4 id="_compile_and_link"><a class="anchor" href="#_compile_and_link"></a>5.3.2. Compile And Link</h4>
 <div class="paragraph">
 <p>A single invocation that does everything is not particularly common, except as
 basic textbook examples. Here we see the more common case of compiling to
@@ -1241,7 +1289,7 @@ produce an object file for the TU. Then linking to get the final executable.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_many_sources"><a class="anchor" href="#_many_sources"></a>5.1.3. Many Sources</h4>
+<h4 id="_many_sources"><a class="anchor" href="#_many_sources"></a>5.3.3. Many Sources</h4>
 <div class="paragraph">
 <p>This is a single command B2 uses to bootstrap its engine on Linux with GCC, and
 Windows with MSVC. This is a variation on a simple basic invocation that builds
@@ -1491,7 +1539,7 @@ the special Windows embedded manifest for the executable.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_options"><a class="anchor" href="#_options"></a>5.2. Options</h3>
+<h3 id="_options"><a class="anchor" href="#_options"></a>5.4. Options</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1508,8 +1556,22 @@ given for the compiler driver information.
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>The options specified below show first how the concept is specified in two kinds
+of tools, compiler driver/front-ends and build systems. This is a small, but
+hopefully representative, sampling of syntax and semantics. The tools
+considered are:
+MSVC,
+<sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup>
+GCC,
+<sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup>
+CMake,
+<sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup>
+B2
+<sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnotedef_5" title="View footnote.">5</a>]</sup></p>
+</div>
 <div class="sect3">
-<h4 id="_source"><a class="anchor" href="#_source"></a>5.2.1. Source</h4>
+<h4 id="_source"><a class="anchor" href="#_source"></a>5.4.1. Source</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 14.2857%;">
@@ -1526,27 +1588,24 @@ given for the compiler driver information.
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Tc</code>, <code>TC</code>, <code>Tp</code>, <code>TP</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specified a source file is a C (<code>Tc</code> or <code>TC</code>) or C&#43;&#43; (<code>Tp</code> or <code>TP</code>) file.
-  Otherwise the file extension is used.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>file</em></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A file specified as a regular argument is added as a source to process.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-x <em>language</em></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specified source files are the given language. Otherwise the file extension
-  is used.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>file</em></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A file specified as a regular argument is added as a source to process.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>set_property(SOURCE <em>language</em> &#8230;&#8203;)</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specified source files are the given language. Otherwise the file extension
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>file</em></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A file specified as an argument to a target is added as a source to process.
   is used.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[ cast _ <em>language</em> : &#8230;&#8203; ]</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specified source files are the given language. Otherwise the file extension
-  is used.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><em>file</em></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A file specified as an argument to a target is added as a source to process.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1616,7 +1675,7 @@ source in the array is added in order.<br></p>
 </dl>
 </div>
 <div class="sect4">
-<h5 id="_source_object"><a class="anchor" href="#_source_object"></a>5.2.1.1. Source Object</h5>
+<h5 id="_source_object"><a class="anchor" href="#_source_object"></a>5.4.1.1. Source Object</h5>
 <div class="paragraph">
 <p>When a source is specified as an <code>object</code> it consist of a single key and value
 item. Where the key is the filename of the source. And the value is the
@@ -1646,7 +1705,7 @@ an abbreviated method to override the default file type determination.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_output"><a class="anchor" href="#_output"></a>5.2.2. Output</h4>
+<h4 id="_output"><a class="anchor" href="#_output"></a>5.4.2. Output</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 14.2857%;">
@@ -1743,7 +1802,7 @@ files.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_include_directories"><a class="anchor" href="#_include_directories"></a>5.2.3. Include Directories</h4>
+<h4 id="_include_directories"><a class="anchor" href="#_include_directories"></a>5.4.3. Include Directories</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 14.2857%;">
@@ -1784,7 +1843,7 @@ files.</p>
 <dl>
 <dt class="hdlist1">Key</dt>
 <dd>
-<p>Use <code>std.include</code> or shortened <code>include</code>.</p>
+<p>Use <code>std.include_dirs</code> or shortened <code>include_dirs</code>.</p>
 </dd>
 <dt class="hdlist1">Value</dt>
 <dd>
@@ -1803,14 +1862,14 @@ directives to look for files in the order of the include directories list.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nl">"include"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/opt/boost_config/include"</span><span class="w">
+  </span><span class="nl">"include_dirs"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/opt/boost_config/include"</span><span class="w">
 </span><span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nl">"include"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="nl">"include_dirs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="s2">"/opt/boost_config/include"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"/opt/openssl/include"</span><span class="w">
   </span><span class="p">]</span><span class="w">
@@ -1819,7 +1878,7 @@ directives to look for files in the order of the include directories list.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_library_directories"><a class="anchor" href="#_library_directories"></a>5.2.4. Library Directories</h4>
+<h4 id="_library_directories"><a class="anchor" href="#_library_directories"></a>5.4.4. Library Directories</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 14.2857%;">
@@ -1836,23 +1895,27 @@ directives to look for files in the order of the include directories list.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/link /LIBPATH:<em>dir</em></code> or <code>LIB</code> env var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Adds to the list of directories to search for link libs. The <code>LIBPATH</code>
+    paths are searched before the <code>LIB</code> paths.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>L</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>link_directories(AFTER/BEFORE &#8230;&#8203;)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Adds to the list of directories which will be used by the linker to search
+    for libraries. Specifying <code>AFTER</code> or <code>BEFORE</code> will append or prepend the
+    given directories to the existing list of directories.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>library-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Adds to the list of directories which will be used by the linker to search
+    for libraries.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1860,21 +1923,41 @@ directives to look for files in the order of the include directories list.</p>
 <dl>
 <dt class="hdlist1">Key</dt>
 <dd>
-<p>Use <code>std.library</code> or shortened <code>library</code>.</p>
+<p>Use <code>std.library_dirs</code> or shortened <code>library_dirs</code>.</p>
 </dd>
 <dt class="hdlist1">Value</dt>
 <dd>
-<p>The option would be..</p>
+<p>The option would be either a single <code>string</code> or an <code>array</code> of <code>string</code>-s. Each
+<code>string</code> is a pathname of which interpretation is up to the application.</p>
 </dd>
 <dt class="hdlist1">Semantics</dt>
 <dd>
-<p>Does this..</p>
+<p>Adds the listed pathnames to the end of the library search directories of the
+application. It is up to the application to interpret how the composed list of
+directories is used.</p>
 </dd>
 </dl>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"library_dirs"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/opt/boost_config/lib"</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"library_dirs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"/opt/boost_config/lib"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"/opt/openssl/lib"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
 </div>
 <div class="sect3">
-<h4 id="_define_preprocessor_symbols"><a class="anchor" href="#_define_preprocessor_symbols"></a>5.2.5. Define Preprocessor Symbols</h4>
+<h4 id="_define_preprocessor_symbols"><a class="anchor" href="#_define_preprocessor_symbols"></a>5.4.5. Define Preprocessor Symbols</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 14.2857%;">
@@ -1966,7 +2049,7 @@ should be used.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_undefine_preprocessor_symbols"><a class="anchor" href="#_undefine_preprocessor_symbols"></a>5.2.6. Undefine Preprocessor Symbols</h4>
+<h4 id="_undefine_preprocessor_symbols"><a class="anchor" href="#_undefine_preprocessor_symbols"></a>5.4.6. Undefine Preprocessor Symbols</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 14.2857%;">
@@ -2016,7 +2099,7 @@ should be used.</p>
 </dd>
 <dt class="hdlist1">Semantics</dt>
 <dd>
-<p>For each <code>string</code> in the value undefines the preprocessor symbol. The option
+<p>For each <code>string</code> in the value "undefines" the preprocessor symbol. The option
 is evaluated after the <code>define</code> option.</p>
 </dd>
 </dl>
@@ -2032,7 +2115,7 @@ is evaluated after the <code>define</code> option.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_language"><a class="anchor" href="#_language"></a>5.2.7. Language</h4>
+<h4 id="_language"><a class="anchor" href="#_language"></a>5.4.7. Language</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 14.2857%;">
@@ -2049,23 +2132,27 @@ is evaluated after the <code>define</code> option.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Tc</code>, <code>TC</code>, <code>Tp</code>, <code>TP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specified a source file is a C (<code>Tc</code> or <code>TC</code>) or C&#43;&#43; (<code>Tp</code> or <code>TP</code>) file.
+  Otherwise the file extension is used.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>x <em>language</em></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specified source files are the given language. Otherwise the file extension
+  is used.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>set_property(SOURCE <em>language</em> &#8230;&#8203;)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specified source files are the given language. Otherwise the file extension
+  is used.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[ cast _ <em>language</em> : &#8230;&#8203; ]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specified source files are the given language. Otherwise the file extension
+  is used.</p></td>
 </tr>
 </tbody>
 </table>
@@ -2077,17 +2164,29 @@ is evaluated after the <code>define</code> option.</p>
 </dd>
 <dt class="hdlist1">Value</dt>
 <dd>
-<p>The option would be..</p>
+<p>The option value is a single <code>string</code> indicating the name of a language.
+The set of values is open. But at minimum <code>c++</code> and <code>c</code> must be recognized.
+Other values could be: <code>assembly</code>, <code>objective-c</code>, <code>objective-c++</code>, <code>fortran</code>,
+<code>go</code>, <code>d</code>, <code>ada</code>.</p>
 </dd>
 <dt class="hdlist1">Semantics</dt>
 <dd>
-<p>Does this..</p>
+<p>The given language sets the one to use for sources that do not otherwise
+specify one. The tool should indicate an error for languages it doesn&#8217;t
+recognize.</p>
 </dd>
 </dl>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c++"</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
 </div>
 <div class="sect3">
-<h4 id="_optimization"><a class="anchor" href="#_optimization"></a>5.2.8. Optimization</h4>
+<h4 id="_optimization"><a class="anchor" href="#_optimization"></a>5.4.8. Optimization</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 14.2857%;">
@@ -2104,13 +2203,13 @@ is evaluated after the <code>define</code> option.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Od</code>, <code>O1</code>, <code>O2</code>, <code>Os</code>, <code>Ot</code>, <code>Ox</code>, and more</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Disables (<code>Od</code>) or enables (the rest) code generation optimizations.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>O0</code>, <code>O1</code>, <code>O2</code>, <code>O3</code>, <code>Os</code>, <code>Og</code>, <code>Oz</code>, and more</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Disables (<code>O0</code>) or enables (the rest) code generation optimizations.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
@@ -2119,8 +2218,10 @@ is evaluated after the <code>define</code> option.</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;optimization&gt;off</code>, <code>&lt;optimization&gt;minimal</code>, <code>&lt;optimization&gt;speed</code>,
+    <code>&lt;optimization&gt;space</code>, <code>&lt;optimization&gt;debug</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Disables (<code>off</code>) or enables (the rest) code generation optimizations for
+    the targets it&#8217;s applied to.</p></td>
 </tr>
 </tbody>
 </table>
@@ -2132,72 +2233,43 @@ is evaluated after the <code>define</code> option.</p>
 </dd>
 <dt class="hdlist1">Value</dt>
 <dd>
-<p>The option would be..</p>
+<p>The option value is a single <code>string</code> indicating the level of optimization.</p>
 </dd>
 <dt class="hdlist1">Semantics</dt>
 <dd>
-<p>Does this..</p>
+<p>The level of optimization is applied to all the sources being processed.
+The set of values for <code>optimization</code> is fixed, but tools are free to ignore
+or use equivalent for the various values. Which optimizations the tool performs
+for each value is up to the tool. The only required semantic is for <code>off</code> that
+must disable all optimizations. Possible values:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>off</code> - Disable optimizations.</p>
+</li>
+<li>
+<p><code>minimal</code> - Optimizations that may improve speed and space.</p>
+</li>
+<li>
+<p><code>safe</code> - More optimizations that need more work.</p>
+</li>
+<li>
+<p><code>speed</code> - Prefer speed over space optimizations.</p>
+</li>
+<li>
+<p><code>space</code> - Prefer smaller binaries over speed optimizations.</p>
+</li>
+<li>
+<p><code>debug</code> - Optimize such that debugging capabilities are preserved.</p>
+</li>
+</ul>
+</div>
 </dd>
 </dl>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_runtime"><a class="anchor" href="#_runtime"></a>5.2.9. Runtime</h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 14.2857%;">
-<col style="width: 28.5714%;">
-<col style="width: 57.1429%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Tool</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Semantics</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MSVC</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">GCC</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CMake</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">B2</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Key</dt>
-<dd>
-<p>Use <code>std.runtime</code> or shortened <code>runtime</code>.</p>
-</dd>
-<dt class="hdlist1">Value</dt>
-<dd>
-<p>The option would be..</p>
-</dd>
-<dt class="hdlist1">Semantics</dt>
-<dd>
-<p>Does this..</p>
-</dd>
-</dl>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_debugging"><a class="anchor" href="#_debugging"></a>5.2.10. Debugging</h4>
+<h4 id="_debugging"><a class="anchor" href="#_debugging"></a>5.4.9. Debugging</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 14.2857%;">
@@ -2252,7 +2324,7 @@ is evaluated after the <code>define</code> option.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_vendor"><a class="anchor" href="#_vendor"></a>5.2.11. Vendor</h4>
+<h4 id="_vendor"><a class="anchor" href="#_vendor"></a>5.4.10. Vendor</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 14.2857%;">
@@ -2325,6 +2397,18 @@ Commons, PO Box 1866, Mountain View, CA 94042, USA.</p>
 <hr>
 <div class="footnote" id="_footnotedef_1">
 <a href="#_footnoteref_1">1</a>. P3051; Structured Response Files(<a href="https://wg21.link/P3051" class="bare">https://wg21.link/P3051</a>)
+</div>
+<div class="footnote" id="_footnotedef_2">
+<a href="#_footnoteref_2">2</a>. MSVC, Compiler options listed by category (<a href="https://learn.microsoft.com/en-us/cpp/build/reference/compiler-options-listed-by-category" class="bare">https://learn.microsoft.com/en-us/cpp/build/reference/compiler-options-listed-by-category</a>)
+</div>
+<div class="footnote" id="_footnotedef_3">
+<a href="#_footnoteref_3">3</a>. GCC Command Options (<a href="https://gcc.gnu.org/onlinedocs/gcc-14.1.0/gcc/Invoking-GCC.html" class="bare">https://gcc.gnu.org/onlinedocs/gcc-14.1.0/gcc/Invoking-GCC.html</a>)
+</div>
+<div class="footnote" id="_footnotedef_4">
+<a href="#_footnoteref_4">4</a>. CMake Reference Documentation (<a href="https://cmake.org/cmake/help/latest/index.html" class="bare">https://cmake.org/cmake/help/latest/index.html</a>)
+</div>
+<div class="footnote" id="_footnotedef_5">
+<a href="#_footnoteref_5">5</a>. B2 User Manual (<a href="https://www.bfgroup.xyz/b2/manual/release/index.html" class="bare">https://www.bfgroup.xyz/b2/manual/release/index.html</a>)
 </div>
 </div>
 </body>

@@ -22,6 +22,7 @@
 :warning-caption: ⚠
 :table-caption: Table
 :opt: opt
+:pp: ++
 
 ++++
 <style>
@@ -86,6 +87,41 @@ The approach for the names and semantics of the options follows these goals:
 * Prefer widely used terms in current tools, not just {CPP} compiler front ends.
 * Use widely understood semantics.
 * Improve the structure of the data.
+
+=== File References
+
+In various places the options need to refer to file names and paths. And in
+some of those instances it's also possible to want to specify one or more
+attributes to the file. For example when indicating the language for a source
+file. We looked at various ways to achieve an arrangement to make that
+specification both optional and future proof. The schema we ended up with is
+multi-stage:
+
+Solitary String::
+A `"file.ext"` can be given such that it is up to the tool to determine any
+other file attributes as it can. Many times this means that the tool will use
+the extension to determine things like source language or output format.
+
+Object With String Key+Value::
+A `{ "file.ext": "value" }` specifies the `file.ext` will set a default
+attribute of `value`. What the default attribute depends on the option we are
+specifying. For example, for a source it would indicate the source language.
+
+Object With Object Value::
+A `{ "file.ext": { "a": _value_, ... }}` would indicate specific attributes for
+the "file.ext".
+
+This staged schema allows a minimal syntax for the common use cases. And
+incrementally specifying more information as needed.
+
+=== Lists
+
+We need to support specifying lists of homogeneous values, like files, while
+also minimizing the amount of syntax for common cases. In the case of
+indicating a list of values the approach we take is to allow for a single
+value to be equivalent to a single element array (without adding array margers).
+For example: `"file.ext"` -> `[ "file.ext" ]`, or `{ "file.ext": "value" }`
+-> `[ { "file.ext": "value" } ]`
 
 === Examples
 
@@ -207,24 +243,34 @@ option. But importantly, we don't list if the build system only allows for
 specifying the raw option. As it doesn't add any more information than what is
 given for the compiler driver information.
 
+The options specified below show first how the concept is specified in two kinds
+of tools, compiler driver/front-ends and build systems. This is a small, but
+hopefully representative, sampling of syntax and semantics. The tools
+considered are:
+MSVC,
+footnote:[MSVC, Compiler options listed by category (https://learn.microsoft.com/en-us/cpp/build/reference/compiler-options-listed-by-category)]
+GCC,
+footnote:[GCC Command Options (https://gcc.gnu.org/onlinedocs/gcc-14.1.0/gcc/Invoking-GCC.html)]
+CMake,
+footnote:[CMake Reference Documentation (https://cmake.org/cmake/help/latest/index.html)]
+B2
+footnote:[B2 User Manual (https://www.bfgroup.xyz/b2/manual/release/index.html)]
+
 ==== Source
 
 [cols="1,2,4",options="header"]
 |===
 | Tool | Name
   | Semantics
-| MSVC | `Tc`, `TC`, `Tp`, `TP`
-  | Specified a source file is a C (`Tc` or `TC`) or {CPP} (`Tp` or `TP`) file.
-  Otherwise the file extension is used.
-| GCC | `-x _language_`
-  | Specified source files are the given language. Otherwise the file extension
+| MSVC | `_file_`
+  | A file specified as a regular argument is added as a source to process.
+| GCC | `_file_`
+  | A file specified as a regular argument is added as a source to process.
+| CMake | `_file_`
+  | A file specified as an argument to a target is added as a source to process.
   is used.
-| CMake | `set_property(SOURCE _language_ ...)`
-  | Specified source files are the given language. Otherwise the file extension
-  is used.
-| B2 | `[ cast _ _language_ : ... ]`
-  | Specified source files are the given language. Otherwise the file extension
-  is used.
+| B2 | `_file_`
+  | A file specified as an argument to a target is added as a source to process.
 |===
 
 Key::
@@ -344,7 +390,7 @@ type of operation to the tool will do. Possible kinds of outputs:
 |===
 
 Key::
-Use `std.include` or shortened `include`.
+Use `std.include_dirs` or shortened `include_dirs`.
 
 Value::
 The option would be either a single `string` or an `array` of `string`-s. Each
@@ -358,12 +404,12 @@ directives to look for files in the order of the include directories list.
 
 [source,json]
 ----
-include::test_success-include_string.json[]
+include::test_success-include_dirs_string.json[]
 ----
 
 [source,json]
 ----
-include::test_success-include_array.json[]
+include::test_success-include_dirs_array.json[]
 ----
 
 ==== Library Directories
@@ -372,24 +418,41 @@ include::test_success-include_array.json[]
 |===
 | Tool | Name
   | Semantics
-| MSVC |
+| MSVC | `/link /LIBPATH:__dir__` or `LIB` env var
+  | Adds to the list of directories to search for link libs. The `LIBPATH`
+    paths are searched before the `LIB` paths.
+| GCC | `L`
   |
-| GCC |
-  |
-| CMake |
-  |
-| B2 |
-  |
+| CMake | `link_directories(AFTER/BEFORE ...)`
+  | Adds to the list of directories which will be used by the linker to search
+    for libraries. Specifying `AFTER` or `BEFORE` will append or prepend the
+    given directories to the existing list of directories.
+| B2 | `library-path`
+  | Adds to the list of directories which will be used by the linker to search
+    for libraries.
 |===
 
 Key::
-Use `std.library` or shortened `library`.
+Use `std.library_dirs` or shortened `library_dirs`.
 
 Value::
-The option would be..
+The option would be either a single `string` or an `array` of `string`-s. Each
+`string` is a pathname of which interpretation is up to the application.
 
 Semantics::
-Does this..
+Adds the listed pathnames to the end of the library search directories of the
+application. It is up to the application to interpret how the composed list of
+directories is used.
+
+[source,json]
+----
+include::test_success-library_dirs_string.json[]
+----
+
+[source,json]
+----
+include::test_success-library_dirs_array.json[]
+----
 
 ==== Define Preprocessor Symbols
 
@@ -458,7 +521,7 @@ The option would be either a single `string` or an `array` of `string`-s. Each
 `string` is a symbol to undefine.
 
 Semantics::
-For each `string` in the value undefines the preprocessor symbol. The option
+For each `string` in the value "undefines" the preprocessor symbol. The option
 is evaluated after the `define` option.
 
 [source,json]
@@ -472,24 +535,38 @@ include::test_success-undef.json[]
 |===
 | Tool | Name
   | Semantics
-| MSVC |
-  |
-| GCC |
-  |
-| CMake |
-  |
-| B2 |
-  |
+| MSVC | `Tc`, `TC`, `Tp`, `TP`
+  | Specified a source file is a C (`Tc` or `TC`) or {CPP} (`Tp` or `TP`) file.
+  Otherwise the file extension is used.
+| GCC | `x _language_`
+  | Specified source files are the given language. Otherwise the file extension
+  is used.
+| CMake | `set_property(SOURCE _language_ ...)`
+  | Specified source files are the given language. Otherwise the file extension
+  is used.
+| B2 | `[ cast _ _language_ : ... ]`
+  | Specified source files are the given language. Otherwise the file extension
+  is used.
 |===
 
 Key::
 Use `std.language` or shortened `language`.
 
 Value::
-The option would be..
+The option value is a single `string` indicating the name of a language.
+The set of values is open. But at minimum `c{pp}` and `c` must be recognized.
+Other values could be: `assembly`, `objective-c`, `objective-c{pp}`, `fortran`,
+`go`, `d`, `ada`.
 
 Semantics::
-Does this..
+The given language sets the one to use for sources that do not otherwise
+specify one. The tool should indicate an error for languages it doesn't
+recognize.
+
+[source,json]
+----
+include::test_success-language.json[]
+----
 
 ==== Optimization
 
@@ -497,49 +574,37 @@ Does this..
 |===
 | Tool | Name
   | Semantics
-| MSVC |
-  |
-| GCC |
-  |
+| MSVC | `Od`, `O1`, `O2`, `Os`, `Ot`, `Ox`, and more
+  | Disables (`Od`) or enables (the rest) code generation optimizations.
+| GCC | `O0`, `O1`, `O2`, `O3`, `Os`, `Og`, `Oz`, and more
+  | Disables (`O0`) or enables (the rest) code generation optimizations.
 | CMake |
   |
-| B2 |
-  |
+| B2
+  | `<optimization>off`, `<optimization>minimal`, `<optimization>speed`,
+    `<optimization>space`, `<optimization>debug`
+  | Disables (`off`) or enables (the rest) code generation optimizations for
+    the targets it's applied to.
 |===
 
 Key::
 Use `std.optimization` or shortened `optimization`.
 
 Value::
-The option would be..
+The option value is a single `string` indicating the level of optimization.
 
 Semantics::
-Does this..
-
-==== Runtime
-
-[cols="1,2,4",options="header"]
-|===
-| Tool | Name
-  | Semantics
-| MSVC |
-  |
-| GCC |
-  |
-| CMake |
-  |
-| B2 |
-  |
-|===
-
-Key::
-Use `std.runtime` or shortened `runtime`.
-
-Value::
-The option would be..
-
-Semantics::
-Does this..
+The level of optimization is applied to all the sources being processed.
+The set of values for `optimization` is fixed, but tools are free to ignore
+or use equivalent for the various values. Which optimizations the tool performs
+for each value is up to the tool. The only required semantic is for `off` that
+must disable all optimizations. Possible values:
+* `off` - Disable optimizations.
+* `minimal` - Optimizations that may improve speed and space.
+* `safe` - More optimizations that need more work.
+* `speed` - Prefer speed over space optimizations.
+* `space` - Prefer smaller binaries over speed optimizations.
+* `debug` - Optimize such that debugging capabilities are preserved.
 
 ==== Debugging
 
