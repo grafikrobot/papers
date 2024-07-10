@@ -256,6 +256,13 @@ footnote:[CMake Reference Documentation (https://cmake.org/cmake/help/latest/ind
 B2
 footnote:[B2 User Manual (https://www.bfgroup.xyz/b2/manual/release/index.html)]
 
+And subsequently show the chosen key, value, and semantics of the option. The
+schema for the value is explained in the value if it's brief. But otherwise
+defined in the semantics of each. As mentioned previously there can be multiple
+value types for an option. Each of those is outlined to the extent that the
+specific option allows (currently). The explanations of the options are not
+exhaustively precise. That is left for future wording.
+
 ==== Source
 
 [cols="1,2,4",options="header"]
