@@ -10,9 +10,7 @@
   "warnings": {
     "enable": "all"
   },
-  "debugging": {
-    "enable": true
-  },
+  "debug": true,
   "runtime": {
     "multithread": false,
     "debug": true,

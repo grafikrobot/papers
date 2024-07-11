@@ -1,0 +1,28 @@
+{
+  "debugging": {
+    "enable": true,
+    "vendor": {
+      "gcc": {
+        "compressed": true
+      }
+    }
+  },
+  "optimization": {
+    "compile": "safe",
+    "link": true,
+    "vendor": {
+      "msvc": {
+        "global_data": true
+      }
+    }
+  },
+  "vendor": {
+    "msvc": {
+      "manifest": {
+        "source": "b2.exe.manifest",
+        "embed": true
+      },
+      "subsystem": "console"
+    }
+  }
+}

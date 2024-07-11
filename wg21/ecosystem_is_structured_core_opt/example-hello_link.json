@@ -3,7 +3,5 @@
   "output": {
     "hello": "exec"
   },
-  "debugging": {
-    "enable": true
-  }
+  "debug": true
 }
