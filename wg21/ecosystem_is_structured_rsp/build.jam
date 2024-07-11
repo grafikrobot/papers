@@ -8,7 +8,7 @@ http://www.boost.org/LICENSE_1_0.txt)
 import asciidoctor ;
 
 local name = ecosystem_is_structured_rsp ;
-local docn = D3051 ;
+local docn = P3051 ;
 local docr = R2 ;
 local xxxx = $(docn)$(docr) ;
 
