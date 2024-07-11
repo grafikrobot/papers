@@ -1683,6 +1683,10 @@ source in the array is added in order.<br></p>
 </dl>
 </div>
 </dd>
+<dt class="hdlist1">Merge Semantics</dt>
+<dd>
+<p>The sources in this specification are appended to any existing sources.</p>
+</dd>
 </dl>
 </div>
 <div class="sect4">
@@ -1703,11 +1707,19 @@ are:</p>
 <dd>
 <p>A compiled TU binary object to process, usually to link.</p>
 </dd>
-<dt class="hdlist1"><code>library</code></dt>
+<dt class="hdlist1"><code>dynamic_lib</code></dt>
 <dd>
-<p>A collection of compiled TUs to process, usually to link.</p>
+<p>A collection of compiled TUs to process, usually to resolve at load time.</p>
+</dd>
+<dt class="hdlist1"><code>archive_lib</code></dt>
+<dd>
+<p>A collection of compiled TUs to process, usually to resolve at link link.</p>
 </dd>
 </dl>
+</div>
+<div class="paragraph">
+<p>Source types to match the <code>output</code> and <code>language</code> options should be
+supported in addition to those above.</p>
 </div>
 <div class="paragraph">
 <p>The choice of using an <code>object</code> with the single filename+type is to allow
@@ -1887,6 +1899,14 @@ directives to look for files in the order of the include directories list.</p>
 </span><span class="p">}</span></code></pre>
 </div>
 </div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Merge Semantics</dt>
+<dd>
+<p>The directories in this specification are appended to any existing directories.</p>
+</dd>
+</dl>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_library_directories"><a class="anchor" href="#_library_directories"></a>5.4.4. Library Directories</h4>
@@ -1965,6 +1985,14 @@ directories is used.</p>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span></code></pre>
 </div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Merge Semantics</dt>
+<dd>
+<p>The directories in this specification are appended to any existing directories.</p>
+</dd>
+</dl>
 </div>
 </div>
 <div class="sect3">
@@ -2058,6 +2086,16 @@ should be used.</p>
 </span><span class="p">}</span></code></pre>
 </div>
 </div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Merge Semantics</dt>
+<dd>
+<p>The definitions in this specification either: add to existing set of definitions
+when the symbol doesn&#8217;t exist, or replace the definitions when the symbol
+already exists.</p>
+</dd>
+</dl>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_undefine_preprocessor_symbols"><a class="anchor" href="#_undefine_preprocessor_symbols"></a>5.4.6. Undefine Preprocessor Symbols</h4>
@@ -2123,6 +2161,16 @@ is evaluated after the <code>define</code> option.</p>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span></code></pre>
 </div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Merge Semantics</dt>
+<dd>
+<p>The undefs in this specification either: add to existing set of undefs
+when the symbol doesn&#8217;t exist, or replace the undefs when the symbol
+already exists.</p>
+</dd>
+</dl>
 </div>
 </div>
 <div class="sect3">
@@ -2194,6 +2242,14 @@ recognize.</p>
   </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c++"</span><span class="w">
 </span><span class="p">}</span></code></pre>
 </div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Merge Semantics</dt>
+<dd>
+<p>The language in this specification replaces an existing language specification.</p>
+</dd>
+</dl>
 </div>
 </div>
 <div class="sect3">
@@ -2301,6 +2357,25 @@ optimizations. When <code>false</code>, or not present, disables link time optim
 </dd>
 </dl>
 </div>
+<div class="paragraph">
+<p>An optimization value of a <code>string</code> is equivalent to the following <code>object</code>
+specifications:
+* <code>off</code> - <code>{ "compile": "off", "link": false }</code>
+* <code>minimal</code> - <code>{ "compile": "minimal" }</code>
+* <code>safe</code> - <code>{ "compile": "safe" }</code>
+* <code>speed</code> - <code>{ "compile": "speed" }</code>
+* <code>space</code> - <code>{ "compile": "space" }</code>
+* <code>debug</code> - <code>{ "compile": "debug" }</code></p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Merge Semantics</dt>
+<dd>
+<p>The fields in the <code>object</code> value replace existing optimization fields. For
+a single <code>string</code> value the equivalent <code>object</code> for that value is merged.</p>
+</dd>
+</dl>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_debug"><a class="anchor" href="#_debug"></a>5.4.9. Debug</h4>
@@ -2363,6 +2438,14 @@ value is <code>false</code>, disables generation of debug information.</p>
   </span><span class="nl">"debug"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span><span class="p">}</span></code></pre>
 </div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Merge Semantics</dt>
+<dd>
+<p>The debug value in this specification replaces an existing debug value.</p>
+</dd>
+</dl>
 </div>
 </div>
 <div class="sect3">
@@ -2432,6 +2515,17 @@ vendors.</p>
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span></code></pre>
 </div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Merge Semantics</dt>
+<dd>
+<p>The semantics are up to the vendor to specify for the individual options they
+define. Above that, if a vendor key in this specification is not present in the
+existing specification it is added. Otherwise, for a key in the vendor <code>object</code>
+in this specification is not present in the existing specification it is added.</p>
+</dd>
+</dl>
 </div>
 </div>
 </div>
