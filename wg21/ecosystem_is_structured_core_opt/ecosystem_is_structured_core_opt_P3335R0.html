@@ -2359,14 +2359,27 @@ optimizations. When <code>false</code>, or not present, disables link time optim
 </div>
 <div class="paragraph">
 <p>An optimization value of a <code>string</code> is equivalent to the following <code>object</code>
-specifications:
-* <code>off</code> - <code>{ "compile": "off", "link": false }</code>
-* <code>minimal</code> - <code>{ "compile": "minimal" }</code>
-* <code>safe</code> - <code>{ "compile": "safe" }</code>
-* <code>speed</code> - <code>{ "compile": "speed" }</code>
-* <code>space</code> - <code>{ "compile": "space" }</code>
-* <code>debug</code> - <code>{ "compile": "debug" }</code></p>
+specifications:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>off</code> - <code>{ "compile": "off", "link": false }</code></p>
+</li>
+<li>
+<p><code>minimal</code> - <code>{ "compile": "minimal" }</code></p>
+</li>
+<li>
+<p><code>safe</code> - <code>{ "compile": "safe" }</code></p>
+</li>
+<li>
+<p><code>speed</code> - <code>{ "compile": "speed" }</code></p>
+</li>
+<li>
+<p><code>space</code> - <code>{ "compile": "space" }</code></p>
+</li>
+<li>
+<p><code>debug</code> - <code>{ "compile": "debug" }</code></p>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Merge Semantics</dt>
@@ -2375,6 +2388,9 @@ specifications:
 a single <code>string</code> value the equivalent <code>object</code> for that value is merged.</p>
 </dd>
 </dl>
+</div>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect3">
@@ -2487,7 +2503,7 @@ vendors.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nl">"debugging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nl">"debug"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"enable"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
     </span><span class="nl">"vendor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nl">"gcc"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">

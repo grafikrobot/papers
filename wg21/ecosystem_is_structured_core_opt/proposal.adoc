@@ -664,6 +664,7 @@ optimizations. When `false`, or not present, disables link time optimizations.
 
 An optimization value of a `string` is equivalent to the following `object`
 specifications:
+
 * `off` - `{ "compile": "off", "link": false }`
 * `minimal` - `{ "compile": "minimal" }`
 * `safe` - `{ "compile": "safe" }`

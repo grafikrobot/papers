@@ -1,5 +1,5 @@
 {
-  "debugging": {
+  "debug": {
     "enable": true,
     "vendor": {
       "gcc": {
