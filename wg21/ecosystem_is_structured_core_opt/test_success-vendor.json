@@ -1,12 +1,4 @@
 {
-  "debug": {
-    "enable": true,
-    "vendor": {
-      "gcc": {
-        "compressed": true
-      }
-    }
-  },
   "optimization": {
     "compile": "safe",
     "link": true,

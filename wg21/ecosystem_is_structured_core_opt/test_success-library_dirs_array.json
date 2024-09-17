@@ -1,6 +1,3 @@
 {
-  "library_dirs": [
-    "/opt/boost_config/lib",
-    "/opt/openssl/lib"
-  ]
+  "library_dirs": ["/opt/boost_config/lib", "/opt/openssl/lib"]
 }

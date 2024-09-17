@@ -1,8 +1,6 @@
 {
-  "source": "hello.cpp",
-  "output": {
-    "hello.o": "object"
-  },
+  "source": [{ "name": "hello.cpp" }],
+  "output": [{ "name": "hello.o", "kind": "object" }],
   "optimization": {
     "compile": "off",
     "inline": false
@@ -10,7 +8,6 @@
   "warnings": {
     "enable": "all"
   },
-  "debug": true,
   "runtime": {
     "multithread": false,
     "debug": true,

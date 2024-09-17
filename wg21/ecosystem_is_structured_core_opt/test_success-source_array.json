@@ -1,10 +1,17 @@
 {
   "source": [
-    "main.cpp",
-    "utils.cpp",
-    "algo.cpp",
     {
-      "api.i": "c"
+      "name": "main.cpp"
+    },
+    {
+      "name": "utils.cpp"
+    },
+    {
+      "name": "algo.cpp"
+    },
+    {
+      "name": "api.i",
+      "language": "c"
     }
   ]
 }

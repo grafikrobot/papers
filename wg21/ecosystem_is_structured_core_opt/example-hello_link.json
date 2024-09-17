@@ -1,7 +1,9 @@
 {
-  "source": "hello.o",
-  "output": {
-    "hello": "exec"
-  },
-  "debug": true
+  "source": [{ "name": "hello.o" }],
+  "output": [
+    {
+      "name": "hello",
+      "kind": "exec"
+    }
+  ]
 }

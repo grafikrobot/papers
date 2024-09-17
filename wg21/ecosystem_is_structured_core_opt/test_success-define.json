@@ -1,9 +1,9 @@
 {
-  "define": {
-    "BOOST_ALL_NO_LIB": 1,
-    "_WIN32_WINNT": "0x0600",
-    "_GNU_SOURCE": true,
-    "U_USING_ICU_NAMESPACE": false,
-    "NOMINMAX": null
-  }
+  "define": [
+    { "name": "BOOST_ALL_NO_LIB", "value": 1 },
+    { "name": "_WIN32_WINNT", "value": "0x0600" },
+    { "name": "_GNU_SOURCE", "value": true },
+    { "name": "U_USING_ICU_NAMESPACE", "value": false },
+    { "name": "NOMINMAX", "value": null }
+  ]
 }

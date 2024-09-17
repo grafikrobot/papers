@@ -1,0 +1,56 @@
+== Wording
+
+Wording is relative to
+link:https://wg21.link/P3051R1[P3051R1 Structured Response Files].
+
+=== Specification: Structured Options
+
+Insert clause after Structured Options [strctopt].
+
+[.ins.text-justify]
+[#strctopt-core,reftext=strctopt.core]
+==== Structured Core Options [.right]#[<<strctopt-core>>]#
+
+[#strctopt-core-pre,reftext=strctopt.core.pre]
+===== Preamble [.right]#[<<strctopt-core-pre>>]#
+
+This clause describes the schema and semantics of core structured options
+([strctopt.schema.struct]) for {CPP} compiler front-ends.
+
+This clause specifies the `std.strctopt.core` capability ([intspct.cap])
+vresion `1.0.0`.
+
+An application can implement this capability.
+
+An application that implements the `std.strctopt.core` capability shall include
+the `std.strctopt.core` field and version value in the introspection JSON
+text output ([intspct.schema.cap]).
+
+[.ins.text-justify]
+[#strctopt-core-inc,reftext=strctopt.core.inc]
+==== Include Directories [.right]#[<<strctopt-core-inc>>]#
+
+The `std.include` option defines an option to specify a list of directory
+pathnames that a {CPP} preprocessor uses to search for inclusion.
+
+The `std.include` option shall have the following fields.
+
+_Name_: `name` +
+_Type_: `string` +
+_Value_: `std.include` +
+_Description_: The name of the option.
+
+_Name_: `files` +
+_Type_: `string` or `array` +
+_Value_:
+  (for `string`) A pathname to a directory. +
+_Value_:
+  (for `array`) A list of pathname `string` items to directories. +
+_Description_:
+  One or more entries to directories that are appended in the order given to
+  the list of directories searched by the header inclusion of a {CPP}
+  preprocessor.
+
+[.ins.text-justify]
+[#strctopt-core-xxx,reftext=strctopt.core.xxx]
+==== Xxx [.right]#[<<strctopt-core-xxx>>]#

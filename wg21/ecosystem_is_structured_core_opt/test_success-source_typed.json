@@ -1,5 +1,8 @@
 {
-  "source": {
-    "main.cpp": "c++"
-  }
+  "source": [
+    {
+      "name": "main.cpp",
+      "language": "c++"
+    }
+  ]
 }
