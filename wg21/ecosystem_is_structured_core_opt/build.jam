@@ -6,10 +6,11 @@ http://www.boost.org/LICENSE_1_0.txt)
 |#
 
 import asciidoctor ;
+import toolset ;
 
 local name = ecosystem_is_structured_core_opt ;
 local docn = P3335 ;
-local docr = R1 ;
+local docr = R2 ;
 local xxxx = $(docn)$(docr) ;
 
 project /wg21_$(name)
@@ -51,3 +52,19 @@ install html : $(name)_$(xxxx).html : <location>. ;
 # 	explicit $(json:B:S=.check) ;
 # }
 # alias validate : $(validations) ;
+
+_ = " " ;
+toolset.flags asciidoctor-latexcore FLAGS : <flags> ;
+actions asciidoctor-latexcore
+{
+	asciidoctor $(FLAGS) -o$(_)"$(<:D=)" -D$(_)"$(<:D)" "$(>)" --trace
+}
+
+for local wording in [ glob wording-*.adoc ]
+{
+	make $(name)_$(xxxx)_$(wording:B).tex
+		: $(wording)
+		: @asciidoctor-latexcore
+		: <use>../../asciidoctor-latexcore//latexcore <location>.
+		;
+}

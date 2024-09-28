@@ -1,4 +1,5 @@
 = Structured Core Options
+:doctype: book
 :copyright: Copyright {docyear} René Ferdinand Rivera Morell
 :license: Creative Commons Attribution 4.0 International License (CC BY 4.0)
 :email: grafikrobot@gmail.com
@@ -37,6 +38,9 @@ Audience: :: {audience}
 Authors: :: {authors}
 Reply-to: :: {email}
 Copyright: :: {copyright}, {license}
+
+
+= Proposal
 
 
 == Abstract
@@ -731,6 +735,19 @@ in this specification is not present in the existing specification it is added.
 include::test_success-vendor.json[]
 ----
 
+
+= Wording
+
+Wording is relative to
+link:https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p3342r0.pdf[P3342R0 Working Draft, Standard for C++ Ecosystem].
+
+NOTE: Replace 7 Structured Parameters Core Options [strctparamopt] with
+<<strctopt-core>> below.
+
+include::wording-strctopt-core.adoc[leveloffset=1]
+
+
+= Colophon
 
 == License
 

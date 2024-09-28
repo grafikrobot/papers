@@ -1,0 +1,59 @@
+%!TEX root = ecosystem.tex
+
+% Structured Core Options
+\rSec0[strctopt.core]{Structured Core Options}
+
+% Preamble
+\rSec1[strctopt.core.pre]{Preamble}
+
+\pnum
+This clause describes the schema and semantics of core structured options
+\iref{strctopt.schema.struct} for C++ compiler front-ends.
+
+\pnum
+This clause specifies the \verb{std.strctopt.core} capability \iref{intspct.cap}
+vresion \verb{1.0.0}.
+
+\pnum
+An application can implement this capability.
+
+\pnum
+An application that implements the \verb{std.strctopt.core} capability shall include
+the \verb{std.strctopt.core} field and version value in the introspection JSON
+text output \iref{intspct.schema.cap}.
+
+% Include Directories
+\rSec1[strctopt.core.inc]{Include Directories}
+
+\pnum
+The \verb{std.include} option defines an option to specify a list of directory
+pathnames that a C++ preprocessor uses to search for inclusion.
+
+\pnum
+The \verb{std.include} option shall have the following fields.
+
+
+\begin{itemdescr}
+\pnum \fldname \verb{name}
+\pnum \fldtype \verb{string}
+\pnum \fldval \verb{std.include}
+\pnum \flddesc The name of the option.
+\end{itemdescr}
+
+
+\begin{itemdescr}
+\pnum \fldname \verb{files}
+\pnum \fldtype \verb{string} or \verb{array}
+\pnum \fldval
+  (for \verb{string}) A pathname to a directory.
+\pnum \fldval
+  (for \verb{array}) A list of pathname \verb{string} items to directories.
+\pnum \flddesc
+  One or more entries to directories that are appended in the order given to
+  the list of directories searched by the header inclusion of a C++
+  preprocessor.
+\end{itemdescr}
+
+% Xxx
+\rSec1[strctopt.core.xxx]{Xxx}
+
