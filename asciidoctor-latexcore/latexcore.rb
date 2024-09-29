@@ -31,10 +31,7 @@ module AsciidoctorLaTexCore
 ) if tex_root
 
 			# section 0
-			result << %(\
-\% #{node.title.strip}
-\\rSec#{node.level}[#{node.reftext}]{#{node.title.strip}}
-)
+			result << gen_section_title(node)
 
 			# content
 			result << %(\
@@ -52,10 +49,7 @@ module AsciidoctorLaTexCore
 
 		def convert_section node
 			result = []
-			result << %(\
-\% #{node.title.strip}
-\\rSec#{node.level}[#{node.reftext}]{#{node.title.strip}}
-)
+			result << gen_section_title(node)
 			result << %(\
 #{node.content})
 			result.join LF
@@ -93,6 +87,10 @@ module AsciidoctorLaTexCore
 
 		def convert_listing node
 			result = []
+			result << %(
+\\begin{outputblock}
+#{texify(node.content)}
+\\end{outputblock})
 			result.join LF
 		end
 
@@ -120,7 +118,7 @@ module AsciidoctorLaTexCore
 
 		def convert_paragraph node
 			result = []
-			if node.role == 'itemdescr'
+			if role?(node, 'itemdescr')
 				result << %(
 \\begin{itemdescr}
 #{texify(node.content)}
@@ -171,22 +169,13 @@ module AsciidoctorLaTexCore
 		alias convert_video skip
 
 		def convert_inline_anchor node
-			target = node.target
 			case node.type
 			when :xref
-				unless (text = node.text)
-					if AbstractNode === (ref = (@refs ||= node.document.catalog[:refs])[refid = node.attributes['refid']] || (refid.nil_or_empty? ? (top = get_root_document node) : nil))
-						if (@resolving_xref ||= (outer = true)) && outer && (text = ref.xreftext node.attr 'xrefstyle', nil, true)
-							text = text if ref.context === :section && ref.level < 2 && text == ref.title
-						else
-							text = top ? nil : %(\\iref{#{refid}})
-						end
-						@resolving_xref = nil if outer
-					else
-						text = %(\\iref{#{refid}})
-					end
-				end
-				text
+				node_refid = node.attributes['refid']
+				root_doc = get_root_document node
+				ref = root_doc.resolve_id(node_refid)
+				iref = ref ? ref.xreftext : node.text
+				%(\\iref{#{iref}})
 			else
 				logger.warn %(unknown anchor type: #{node.type.inspect})
 				nil
@@ -232,23 +221,21 @@ module AsciidoctorLaTexCore
 			when :double
 				texify(node.text)
 			else
-				if node.role && IGNORED_SCOPES.include?(node.role)
+				if IGNORED_SCOPES.include?(role?(node))
 					nil
-				elsif node.role
-					case node.role
-					when 'iref'
-						%(\\#{node.role}{#{texify(node.text).sub(/^\(\[/,'').sub(/\]\)$/,'')}})
-					when 'fldname'
-						%(\\pnum \\fldname)
-					when 'fldtype'
-						%(\\pnum \\fldtype)
-					when 'fldval'
-						%(\\pnum \\fldval)
-					when 'flddesc'
-						%(\\pnum \\flddesc)
-					else
-						%(\\#{node.role}{#{texify(node.text)}})
-					end
+				elsif role?(node, 'iref')
+					%(\\iref{#{texify(node.text)
+						.sub(/^\(\[/,'').sub(/\]\)$/,'')}})
+				elsif role?(node, 'fldname')
+					%(\\pnum \\fldname)
+				elsif role?(node, 'fldtype')
+					%(\\pnum \\fldtype)
+				elsif role?(node, 'fldval')
+					%(\\pnum \\fldval)
+				elsif role?(node, 'flddesc')
+					%(\\pnum \\flddesc)
+				elsif role? node
+					%(\\#{role? node}{#{texify(node.text)}})
 				else
 					texify(node.text)
 				end
@@ -268,6 +255,35 @@ module AsciidoctorLaTexCore
 				node = node.parent_document
 			end
 			node
+		end
+
+		def role? node, role_name = nil
+			if role_name
+				(node.has_role? role_name) ? role_name : nil
+			elsif node.role
+				node.roles[0]
+			else
+				nil
+			end
+		end
+
+		def gen_section_title node
+			result = []
+			node_level = node.level - (node.document.attributes['leveldedent'] || '0').to_i
+			if role?(node, 'ignore')
+				nil
+			elsif role?(node, 'infannex')
+				result << %(\
+\% #{node.title.strip}
+\\infannex[#{node.reftext}]{#{node.title.strip}}
+)
+			else
+				result << %(\
+\% #{node.title.strip}
+\\rSec#{node_level}[#{node.reftext}]{#{node.title.strip}}
+)
+			end
+			return result
 		end
 	end
 

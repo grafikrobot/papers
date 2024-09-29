@@ -1,0 +1,5 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://isocpp.org/release/schema/std_opt_core-1.0.0.json",
+  "title": "Structured Core Options Version 1.0.0 JSON Schema"
+}

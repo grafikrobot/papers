@@ -1,0 +1,32 @@
+[.ignore]
+[#strctopt-core-jschm-annex,reftext=strctoptcorejschm]
+= Annex C
+:texroot: ecosystem.tex
+
+:leveldedent: 1
+
+[.infannex]
+[.ins.text-justify]
+[#strctopt-core-jschm,reftext=strctoptcorejschm]
+== Structured Core Options JSON Schema [.right]#[<<strctopt-core-jschm>>]#
+
+
+[#strctopt-core-jschm-g,reftext=strctoptcorejschm.general]
+=== General [.right]#[<<strctopt-core-jschm-g>>]#
+
+This Annex defines the structured parameter core options schema
+[.iref]#([<<strctopt-core,strctopt.core>>])# in terms os a _JSON Schema_.
+
+This _JSON Schema_ can be referenced as the `$schema` field with URI value of
+`"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_opt_core-1.0.0.json"`.
+
+
+[#strctopt-core-jschm-s,reftext=strctoptcorejschm.spec]
+=== JSON Schema Specification [.right]#[<<strctopt-core-jschm-s>>]#
+
+[source,json]
+----
+include::std_opt_core-1.0.0.json[]
+----
+
+:leveldedent: 0

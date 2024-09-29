@@ -849,12 +849,12 @@ pre.rouge .ss {
 <span id="author" class="author">René Ferdinand Rivera Morell</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> P3335R2,</span>
-<span id="revdate">2024-09-27</span>
+<span id="revdate">2024-09-28</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel0">
-<li><a href="#_proposal">Proposal</a>
+<li><a href="#_proposal">I: Proposal</a>
 <ul class="sectlevel1">
 <li><a href="#_abstract">1. Abstract</a></li>
 <li><a href="#_revision_history">2. Revision History</a>
@@ -893,7 +893,7 @@ pre.rouge .ss {
 </li>
 </ul>
 </li>
-<li><a href="#_wording">Wording</a>
+<li><a href="#_wording">II: Wording</a>
 <ul class="sectlevel1">
 <li><a href="#strctopt-core">6. Structured Core Options <span class="right">[strctopt.core]</span></a>
 <ul class="sectlevel2">
@@ -902,11 +902,21 @@ pre.rouge .ss {
 <li><a href="#strctopt-core-xxx">6.3. Xxx <span class="right">[strctopt.core.xxx]</span></a></li>
 </ul>
 </li>
+<li><a href="#strctopt-core-jschm-annex">7. Annex C</a>
+<ul class="sectlevel2">
+<li><a href="#strctopt-core-jschm">7.1. Structured Core Options JSON Schema <span class="right">[strctoptcorejschm]</span></a>
+<ul class="sectlevel3">
+<li><a href="#strctopt-core-jschm-g">7.1.1. General <span class="right">[strctoptcorejschm.general]</span></a></li>
+<li><a href="#strctopt-core-jschm-s">7.1.2. JSON Schema Specification <span class="right">[strctoptcorejschm.spec]</span></a></li>
 </ul>
 </li>
-<li><a href="#_colophon">Colophon</a>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_colophone">III: Colophone</a>
 <ul class="sectlevel1">
-<li><a href="#_license">7. License</a></li>
+<li><a href="#_license">8. License</a></li>
 </ul>
 </li>
 </ul>
@@ -1031,7 +1041,7 @@ Document #:
 Date: 
 </td>
 <td class="hdlist2">
-<p>2024-09-27</p>
+<p>2024-09-28</p>
 </td>
 </tr>
 <tr>
@@ -1070,7 +1080,7 @@ Copyright:
 </div>
 </div>
 </div>
-<h1 id="_proposal" class="sect0"><a class="anchor" href="#_proposal"></a>Proposal</h1>
+<h1 id="_proposal" class="sect0"><a class="anchor" href="#_proposal"></a>I: Proposal</h1>
 <div class="sect1">
 <h2 id="_abstract"><a class="anchor" href="#_abstract"></a>1. Abstract</h2>
 <div class="sectionbody">
@@ -2464,7 +2474,7 @@ in this specification is not present in the existing specification it is added.<
 </div>
 </div>
 </div>
-<h1 id="_wording" class="sect0"><a class="anchor" href="#_wording"></a>Wording</h1>
+<h1 id="_wording" class="sect0"><a class="anchor" href="#_wording"></a>II: Wording</h1>
 <div class="openblock partintro">
 <div class="content">
 <div class="paragraph">
@@ -2478,7 +2488,7 @@ in this specification is not present in the existing specification it is added.<
 <div class="title">ℹ</div>
 </td>
 <td class="content">
-Replace 7 Structured Parameters Core Options [strctparamopt] with
+Replace <em>7 Structured Parameters Core Options</em> [strctparamopt] with
 <a href="#strctopt-core">strctopt.core</a> below.
 </td>
 </tr>
@@ -2538,13 +2548,55 @@ pathnames that a C&#43;&#43; preprocessor uses to search for inclusion.</p>
 </div>
 <div class="sect2 ins text-justify">
 <h3 id="strctopt-core-xxx"><a class="anchor" href="#strctopt-core-xxx"></a>6.3. Xxx <span class="right">[<a href="#strctopt-core-xxx">strctopt.core.xxx</a>]</span></h3>
-
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">ℹ</div>
+</td>
+<td class="content">
+Insert <a href="#strctopt-core-jschm-annex">strctoptcorejschm</a> (below) after <em>Annex B</em>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
-<h1 id="_colophon" class="sect0"><a class="anchor" href="#_colophon"></a>Colophon</h1>
+</div>
+<div class="sect1 ignore">
+<h2 id="strctopt-core-jschm-annex"><a class="anchor" href="#strctopt-core-jschm-annex"></a>7. Annex C</h2>
+<div class="sectionbody">
+<div class="sect2 infannex ins text-justify">
+<h3 id="strctopt-core-jschm"><a class="anchor" href="#strctopt-core-jschm"></a>7.1. Structured Core Options JSON Schema <span class="right">[<a href="#strctopt-core-jschm">strctoptcorejschm</a>]</span></h3>
+<div class="sect3">
+<h4 id="strctopt-core-jschm-g"><a class="anchor" href="#strctopt-core-jschm-g"></a>7.1.1. General <span class="right">[<a href="#strctopt-core-jschm-g">strctoptcorejschm.general</a>]</span></h4>
+<div class="paragraph">
+<p>This Annex defines the structured parameter core options schema
+<span class="iref">([<a href="#strctopt-core">strctopt.core</a>])</span> in terms os a <em>JSON Schema</em>.</p>
+</div>
+<div class="paragraph">
+<p>This <em>JSON Schema</em> can be referenced as the <code>$schema</code> field with URI value of
+<code>"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_opt_core-1.0.0.json"</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="strctopt-core-jschm-s"><a class="anchor" href="#strctopt-core-jschm-s"></a>7.1.2. JSON Schema Specification <span class="right">[<a href="#strctopt-core-jschm-s">strctoptcorejschm.spec</a>]</span></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://json-schema.org/draft/2020-12/schema"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://isocpp.org/release/schema/std_opt_core-1.0.0.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Structured Core Options Version 1.0.0 JSON Schema"</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<h1 id="_colophone" class="sect0"><a class="anchor" href="#_colophone"></a>III: Colophone</h1>
 <div class="sect1">
-<h2 id="_license"><a class="anchor" href="#_license"></a>7. License</h2>
+<h2 id="_license"><a class="anchor" href="#_license"></a>8. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This work is licensed under the Creative Commons Attribution 4.0 International

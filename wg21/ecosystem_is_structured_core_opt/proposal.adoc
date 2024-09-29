@@ -12,6 +12,7 @@
 :sectanchors:
 :sectnums:
 :sectnumlevels: 10
+:partnums:
 :source-highlighter: rouge
 :source-language: {CPP}
 :toc: left
@@ -741,13 +742,17 @@ include::test_success-vendor.json[]
 Wording is relative to
 link:https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p3342r0.pdf[P3342R0 Working Draft, Standard for C++ Ecosystem].
 
-NOTE: Replace 7 Structured Parameters Core Options [strctparamopt] with
+NOTE: Replace _7 Structured Parameters Core Options_ [strctparamopt] with
 <<strctopt-core>> below.
 
 include::wording-strctopt-core.adoc[leveloffset=1]
 
+NOTE: Insert <<strctopt-core-jschm-annex>> (below) after _Annex B_.
 
-= Colophon
+include::wording-strctopt-core-jschm.adoc[leveloffset=1]
+
+
+= Colophone
 
 == License
 
