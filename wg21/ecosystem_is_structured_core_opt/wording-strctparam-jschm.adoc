@@ -1,0 +1,11 @@
+[#strctparam-json-schema-spec,reftext=strctparamjschm.spec]
+= JSON Schema Specification [.right]#[<<strctparam-json-schema-spec>>]#
+:texroot: ecosystem.tex
+:leveldedent: -1
+
+[source,json]
+----
+include::std_param-1.0.0.json[]
+----
+
+:leveldedent: 0

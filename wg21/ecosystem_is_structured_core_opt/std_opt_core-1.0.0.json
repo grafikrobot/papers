@@ -1,5 +1,184 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://isocpp.org/release/schema/std_opt_core-1.0.0.json",
-  "title": "Structured Core Options Version 1.0.0 JSON Schema"
+  "$id": "std_opt_core-1.0.0",
+  "title": "Structured Core Options Version 1.0.0 JSON Schema",
+  "anyOf": [
+    { "$ref": "#/$opt/Std.Source" },
+    { "$ref": "#/$opt/Std.Output" },
+    { "$ref": "#/$opt/Std.IncludeDirs" },
+    { "$ref": "#/$opt/Std.LibraryDirs" },
+    { "$ref": "#/$opt/Std.Define" },
+    { "$ref": "#/$opt/Std.Undef" },
+    { "$ref": "#/$opt/Std.Language" },
+    { "$ref": "#/$opt/Std.Optimization" },
+    { "$ref": "#/$opt/Std.Vendor" }
+  ],
+  "$opt": {
+    "Std.Source": {
+      "properties": {
+        "std.source": {
+          "description": "The source files to process.",
+          "type": "array",
+          "items": {
+            "description": "A file to process.",
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "language": { "$ref": "#/$opt/Std.Language" }
+            },
+            "additionalProperties": false,
+            "required": ["name"]
+          }
+        },
+        "source": {
+          "$ref": "#/$opt/Std.Source/properties/std.source"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Std.Output": {
+      "properties": {
+        "std.output": {
+          "description": "The output files to generate.",
+          "type": "array",
+          "items": {
+            "description": "An output file.",
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "kind": {}
+            },
+            "additionalProperties": false,
+            "required": ["name"]
+          }
+        },
+        "output": {
+          "$ref": "#/$opt/Std.Output/properties/std.output"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Std.IncludeDirs": {
+      "properties": {
+        "std.include_dirs": {
+          "description": "Include directories.",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "include_dirs": {
+          "$ref": "#/$opt/Std.IncludeDirs/properties/std.include_dirs"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Std.LibraryDirs": {
+      "properties": {
+        "std.library_dirs": {
+          "description": "Library directories.",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "library_dirs": {
+          "$ref": "#/$opt/Std.LibraryDirs/properties/std.library_dirs"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Std.Define": {
+      "properties": {
+        "std.define": {
+          "description": "Define preprocessor symbols.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "value": {
+                "type": ["number", "integer", "string", "boolean", "null"]
+              }
+            },
+            "additionalProperties": false,
+            "required": ["name", "value"]
+          }
+        },
+        "define": {
+          "$ref": "#/$opt/Std.Define/properties/std.define"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Std.Undef": {
+      "properties": {
+        "std.undef": {
+          "description": "Undefine preprocessor symbols.",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "undef": {
+          "$ref": "#/$opt/Std.Undef/properties/std.undef"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Std.Language": {
+      "properties": {
+        "std.language": {
+          "description": "The language to interpret sources for.",
+          "type": "string",
+          "enum": [
+            "c++",
+            "c",
+            "assembly",
+            "objective-c",
+            "objective-c++",
+            "fortran",
+            "go",
+            "d",
+            "ada"
+          ]
+        },
+        "language": {
+          "$ref": "#/$opt/Std.Language/properties/std.language"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Std.Optimization": {
+      "properties": {
+        "std.optimization": {
+          "description": "The optimizations to apply to different stages of the processing.",
+          "type": "object",
+          "properties": {
+            "compile": {
+              "type": "string",
+              "enum": ["off", "minimal", "speed", "space", "debug"]
+            },
+            "link": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "optimization": {
+          "$ref": "#/$opt/Std.Optimization/properties/std.optimization"
+        }
+      }
+    },
+    "Std.Vendor": {
+      "properties": {
+        "std.vendor": {
+          "description": "Vendor defined specifications.",
+          "type": "object",
+          "patterProperties": {
+            "^[a-z]+$": {
+              "type": "object"
+            }
+          }
+        },
+        "vendor": {
+          "$ref": "#/$opt/Std.Vendor/properties/std.vendor"
+        }
+      }
+    }
+  }
 }

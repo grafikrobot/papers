@@ -742,17 +742,28 @@ include::test_success-vendor.json[]
 Wording is relative to
 link:https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p3342r0.pdf[P3342R0 Working Draft, Standard for C++ Ecosystem].
 
+== Edit 1
+
 NOTE: Replace _7 Structured Parameters Core Options_ [strctparamopt] with
 <<strctopt-core>> below.
 
-include::wording-strctopt-core.adoc[leveloffset=1]
+include::wording-strctopt-core.adoc[leveloffset=2]
+
+== Edit 2
 
 NOTE: Insert <<strctopt-core-jschm-annex>> (below) after _Annex B_.
 
-include::wording-strctopt-core-jschm.adoc[leveloffset=1]
+include::wording-strctopt-core-jschm.adoc[leveloffset=2]
+
+== Edit 3
+
+NOTE: Replace _B.2 JSON Schema Specification_ [strctparamjschm.spec] with
+<<strctparam-json-schema-spec> below.
+
+include::wording-strctparam-jschm.adoc[leveloffset=2]
 
 
-= Colophone
+= Colophon
 
 == License
 

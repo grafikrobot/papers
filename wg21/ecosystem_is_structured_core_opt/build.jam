@@ -38,26 +38,37 @@ html $(name)_$(xxxx).html : proposal.adoc
 	;
 install html : $(name)_$(xxxx).html : <location>. ;
 
-# actions json-validate
-# {
-# 	check-jsonschema -v --traceback-mode=full --schemafile "$(>[2])" "$(>[1])" && echo "passed" > "$(<)"
-# }
-
-# local validations ;
-# for local json in [ glob example-*.json ]
-# {
-# 	validations += [ make $(json:B:S=.check)
-# 		: $(json) std_opt-1.0.0.json
-# 		: @json-validate ] ;
-# 	explicit $(json:B:S=.check) ;
-# }
-# alias validate : $(validations) ;
-
 _ = " " ;
+
+toolset.flags json-validate FLAGS : <flags> ;
+actions json-validate
+{
+	check-jsonschema -v --traceback-mode=full --schemafile$(_)"$(>[2])" "$(FLAGS)" "$(>[1])" && echo "passed" > "$(<)"
+}
+
+rule json-schema-check ( json schema ? : r * )
+{
+	return [ make $(json:B:S=.check) : $(json) $(schema)
+		: @json-validate : $(r) ] ;
+}
+
+local validations ;
+validations +=
+	[ json-schema-check "std_opt_core-1.0.0.json"
+		: <flags>--check-metaschema ] ;
+for local json in [ glob test_success-*.json example-*.json ]
+{
+	validations += [ make $(json:B:S=.check)
+		: $(json) std_opt_core-1.0.0.json
+		: @json-validate ] ;
+	explicit $(json:B:S=.check) ;
+}
+alias validate : $(validations) ;
+
 toolset.flags asciidoctor-latexcore FLAGS : <flags> ;
 actions asciidoctor-latexcore
 {
-	asciidoctor $(FLAGS) -o$(_)"$(<:D=)" -D$(_)"$(<:D)" "$(>)" --trace
+	asciidoctor -o$(_)"$(<:D=)" -D$(_)"$(<:D)" $(FLAGS) "$(>)" --trace
 }
 
 for local wording in [ glob wording-*.adoc ]
