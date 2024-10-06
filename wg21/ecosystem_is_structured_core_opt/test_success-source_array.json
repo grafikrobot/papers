@@ -11,7 +11,7 @@
     },
     {
       "name": "api.i",
-      "language": "c"
+      "language": { "name": "c" }
     }
   ]
 }

@@ -2,7 +2,7 @@
   "source": [
     {
       "name": "main.cpp",
-      "language": "c++"
+      "language": { "name": "c++" }
     }
   ]
 }

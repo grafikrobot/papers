@@ -1,3 +1,4 @@
+[.ins.text-justify]
 [#strctparam-json-schema-spec,reftext=strctparamjschm.spec]
 = JSON Schema Specification [.right]#[<<strctparam-json-schema-spec>>]#
 :texroot: ecosystem.tex

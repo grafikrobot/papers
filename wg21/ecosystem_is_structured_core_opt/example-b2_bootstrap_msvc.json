@@ -70,11 +70,8 @@
     { "name": "user32.lib" }
   ],
   "output": [{ "name": "b2", "kind": "exec" }],
-  "define": [{ "name": "NDEBUG" }],
-  "language": {
-    "name": "c++",
-    "standard": "11"
-  },
+  "define": [{ "name": "NDEBUG", "value": null }],
+  "language": { "name": "c++", "standard": "11" },
   "optimization": {
     "compile": "minimal",
     "link": true,

@@ -849,7 +849,7 @@ pre.rouge .ss {
 <span id="author" class="author">René Ferdinand Rivera Morell</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> P3335R2,</span>
-<span id="revdate">2024-10-03</span>
+<span id="revdate">2024-10-06</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -859,8 +859,9 @@ pre.rouge .ss {
 <li><a href="#_abstract">1. Abstract</a></li>
 <li><a href="#_revision_history">2. Revision History</a>
 <ul class="sectlevel2">
-<li><a href="#_revision_1_september_2024">2.1. Revision 1 (September 2024)</a></li>
-<li><a href="#_revision_0_july_2024">2.2. Revision 0 (July 2024)</a></li>
+<li><a href="#_revision_2_october_2024">2.1. Revision 2 (October 2024)</a></li>
+<li><a href="#_revision_1_september_2024">2.2. Revision 1 (September 2024)</a></li>
+<li><a href="#_revision_0_july_2024">2.3. Revision 0 (July 2024)</a></li>
 </ul>
 </li>
 <li><a href="#_motivation">3. Motivation</a></li>
@@ -908,16 +909,16 @@ pre.rouge .ss {
 </li>
 <li><a href="#_edit_2">7. Edit 2</a>
 <ul class="sectlevel2">
-<li><a href="#strctopt-core-jschm-annex">7.1. Annex C</a>
-<ul class="sectlevel3">
-<li><a href="#strctopt-core-jschm">7.1.1. Structured Core Options JSON Schema <span class="right">[strctoptcorejschm]</span></a></li>
-</ul>
-</li>
+<li><a href="#strctparam-json-schema-spec">7.1. JSON Schema Specification <span class="right">[strctparamjschm.spec]</span></a></li>
 </ul>
 </li>
 <li><a href="#_edit_3">8. Edit 3</a>
 <ul class="sectlevel2">
-<li><a href="#strctparam-json-schema-spec">8.1. JSON Schema Specification <span class="right">[strctparamjschm.spec]</span></a></li>
+<li><a href="#strctopt-core-jschm-annex">8.1. Annex C</a>
+<ul class="sectlevel3">
+<li><a href="#strctopt-core-jschm">8.1.1. Structured Core Options JSON Schema <span class="right">[strctoptcorejschm]</span></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -936,7 +937,8 @@ pre.rouge .ss {
 <style>
 /* Insertions: Marked by green underlined text. */
 
-.sectionbody>div>.ins {
+.sectionbody > div > .ins,
+.sectionbody > .ins {
 	text-decoration: underline solid green;
 	text-underline-offset: 0.3em;
 }
@@ -948,7 +950,7 @@ span.ins {
 
 /* Deletions: Marked by red strikeout text. */
 
-.sectionbody>div>.del {
+.sectionbody > div > .del {
 	text-decoration: line-through solid red;
 }
 
@@ -995,7 +997,7 @@ specifying the caption symbol properties:
 
 .admonitionblock .icon .title {
 	font-size: 2.5em;
-	text-shadow: 1px 1px 2px rgba(0, 0, 0, .5);
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .caution .icon .title {
@@ -1020,11 +1022,11 @@ specifying the caption symbol properties:
 
 /* ??? */
 
-.def>.content :first-child {
+.def > .content :first-child {
 	margin-left: 0;
 }
 
-.def>.content>* {
+.def > .content > * {
 	margin-left: 3em;
 }
 
@@ -1049,7 +1051,7 @@ Document #:
 Date: 
 </td>
 <td class="hdlist2">
-<p>2024-10-03</p>
+<p>2024-10-06</p>
 </td>
 </tr>
 <tr>
@@ -1103,14 +1105,20 @@ for C&#43;&#43; compiler front ends.</p>
 <h2 id="_revision_history"><a class="anchor" href="#_revision_history"></a>2. Revision History</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_revision_1_september_2024"><a class="anchor" href="#_revision_1_september_2024"></a>2.1. Revision 1 (September 2024)</h3>
+<h3 id="_revision_2_october_2024"><a class="anchor" href="#_revision_2_october_2024"></a>2.1. Revision 2 (October 2024)</h3>
+<div class="paragraph">
+<p>Added wording and corresponding JSON Schema changes.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_revision_1_september_2024"><a class="anchor" href="#_revision_1_september_2024"></a>2.2. Revision 1 (September 2024)</h3>
 <div class="paragraph">
 <p>Per feedback from telecon discussion: remove <code>debug</code> option, remove <code>safe</code>
 optimization value, avoid file names as keys, use only singly-typed values.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_revision_0_july_2024"><a class="anchor" href="#_revision_0_july_2024"></a>2.2. Revision 0 (July 2024)</h3>
+<h3 id="_revision_0_july_2024"><a class="anchor" href="#_revision_0_july_2024"></a>2.3. Revision 0 (July 2024)</h3>
 <div class="paragraph">
 <p>Initial text.</p>
 </div>
@@ -1583,11 +1591,8 @@ the special Windows embedded manifest for the executable.</p>
     </span><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user32.lib"</span><span class="w"> </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
   </span><span class="nl">"output"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b2"</span><span class="p">,</span><span class="w"> </span><span class="nl">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exec"</span><span class="w"> </span><span class="p">}],</span><span class="w">
-  </span><span class="nl">"define"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NDEBUG"</span><span class="w"> </span><span class="p">}],</span><span class="w">
-  </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c++"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"standard"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"define"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NDEBUG"</span><span class="p">,</span><span class="w"> </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="p">}],</span><span class="w">
+  </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c++"</span><span class="p">,</span><span class="w"> </span><span class="nl">"standard"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11"</span><span class="w"> </span><span class="p">},</span><span class="w">
   </span><span class="nl">"optimization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"compile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"minimal"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"link"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
@@ -1743,7 +1748,7 @@ the file.</p>
   </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"main.cpp"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c++"</span><span class="w">
+      </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c++"</span><span class="w"> </span><span class="p">}</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span></code></pre>
@@ -1764,7 +1769,7 @@ the file.</p>
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api.i"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c"</span><span class="w">
+      </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c"</span><span class="w"> </span><span class="p">}</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span></code></pre>
@@ -2279,7 +2284,7 @@ recognize.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c++"</span><span class="w">
+  </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c++"</span><span class="w"> </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span></code></pre>
 </div>
 </div>
@@ -2458,7 +2463,7 @@ in this specification is not present in the existing specification it is added.<
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"optimization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"compile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"safe"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"compile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"debug"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"link"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
     </span><span class="nl">"vendor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nl">"msvc"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -2494,18 +2499,9 @@ in this specification is not present in the existing specification it is added.<
 <div class="sect1">
 <h2 id="_edit_1"><a class="anchor" href="#_edit_1"></a>6. Edit 1</h2>
 <div class="sectionbody">
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">ℹ</div>
-</td>
-<td class="content">
-Replace <em>7 Structured Parameters Core Options</em> [strctparamopt] with
-<a href="#strctopt-core">strctopt.core</a> below.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>Replace <em>7 Structured Parameters Core Options</em> ([strctparamopt]) with
+[<a href="#strctopt-core">strctopt.core</a>] below.</p>
 </div>
 <div class="sect2 ins text-justify">
 <h3 id="strctopt-core"><a class="anchor" href="#strctopt-core"></a>6.1. Structured Core Options <span class="right">[<a href="#strctopt-core">strctopt.core</a>]</span></h3>
@@ -2566,242 +2562,12 @@ pathnames that a C&#43;&#43; preprocessor uses to search for inclusion.</p>
 <div class="sect1">
 <h2 id="_edit_2"><a class="anchor" href="#_edit_2"></a>7. Edit 2</h2>
 <div class="sectionbody">
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">ℹ</div>
-</td>
-<td class="content">
-Insert <a href="#strctopt-core-jschm-annex">strctoptcorejschm</a> (below) after <em>Annex B</em>.
-</td>
-</tr>
-</table>
-</div>
-<div class="sect2 ignore">
-<h3 id="strctopt-core-jschm-annex"><a class="anchor" href="#strctopt-core-jschm-annex"></a>7.1. Annex C</h3>
-<div class="sect3 infannex ins text-justify">
-<h4 id="strctopt-core-jschm"><a class="anchor" href="#strctopt-core-jschm"></a>7.1.1. Structured Core Options JSON Schema <span class="right">[<a href="#strctopt-core-jschm">strctoptcorejschm</a>]</span></h4>
-<div class="sect4">
-<h5 id="strctopt-core-jschm-g"><a class="anchor" href="#strctopt-core-jschm-g"></a>7.1.1.1. General <span class="right">[<a href="#strctopt-core-jschm-g">strctoptcorejschm.general</a>]</span></h5>
 <div class="paragraph">
-<p>This Annex defines the structured parameter core options schema
-<span class="iref">([<a href="#strctopt-core">strctopt.core</a>])</span> in terms os a <em>JSON Schema</em>.</p>
+<p>Replace <em>B.2 JSON Schema Specification</em> ([strctparamjschm.spec]) with
+[<a href="#strctparam-json-schema-spec">strctparamjschm.spec</a>] below.</p>
 </div>
-</div>
-<div class="sect4">
-<h5 id="strctopt-core-jschm-s"><a class="anchor" href="#strctopt-core-jschm-s"></a>7.1.1.2. JSON Schema Specification <span class="right">[<a href="#strctopt-core-jschm-s">strctoptcorejschm.spec</a>]</span></h5>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://json-schema.org/draft/2020-12/schema"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"std_opt_core-1.0.0"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Structured Core Options Version 1.0.0 JSON Schema"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"anyOf"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.Source"</span><span class="w"> </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.Output"</span><span class="w"> </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.IncludeDirs"</span><span class="w"> </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.LibraryDirs"</span><span class="w"> </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.Define"</span><span class="w"> </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.Undef"</span><span class="w"> </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.Language"</span><span class="w"> </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.Optimization"</span><span class="w"> </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.Vendor"</span><span class="w"> </span><span class="p">}</span><span class="w">
-  </span><span class="p">],</span><span class="w">
-  </span><span class="nl">"$opt"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"Std.Source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"std.source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The source files to process."</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"array"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A file to process."</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-              </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">},</span><span class="w">
-              </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.Language"</span><span class="w"> </span><span class="p">}</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"name"</span><span class="p">]</span><span class="w">
-          </span><span class="p">}</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.Source/properties/std.source"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"Std.Output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"std.output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The output files to generate."</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"array"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"An output file."</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-              </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">},</span><span class="w">
-              </span><span class="nl">"kind"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"name"</span><span class="p">]</span><span class="w">
-          </span><span class="p">}</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nl">"output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.Output/properties/std.output"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"Std.IncludeDirs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"std.include_dirs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Include directories."</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"array"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">}</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nl">"include_dirs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.IncludeDirs/properties/std.include_dirs"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"Std.LibraryDirs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"std.library_dirs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Library directories."</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"array"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">}</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nl">"library_dirs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.LibraryDirs/properties/std.library_dirs"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"Std.Define"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"std.define"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Define preprocessor symbols."</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"array"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-              </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">},</span><span class="w">
-              </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"number"</span><span class="p">,</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="s2">"boolean"</span><span class="p">,</span><span class="w"> </span><span class="s2">"null"</span><span class="p">]</span><span class="w">
-              </span><span class="p">}</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"name"</span><span class="p">,</span><span class="w"> </span><span class="s2">"value"</span><span class="p">]</span><span class="w">
-          </span><span class="p">}</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nl">"define"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.Define/properties/std.define"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"Std.Undef"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"std.undef"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Undefine preprocessor symbols."</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"array"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">}</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nl">"undef"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.Undef/properties/std.undef"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"Std.Language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"std.language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The language to interpret sources for."</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"c++"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"c"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"assembly"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"objective-c"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"objective-c++"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"fortran"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"go"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"d"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"ada"</span><span class="w">
-          </span><span class="p">]</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.Language/properties/std.language"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"Std.Optimization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"std.optimization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The optimizations to apply to different stages of the processing."</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"compile"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-              </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"off"</span><span class="p">,</span><span class="w"> </span><span class="s2">"minimal"</span><span class="p">,</span><span class="w"> </span><span class="s2">"speed"</span><span class="p">,</span><span class="w"> </span><span class="s2">"space"</span><span class="p">,</span><span class="w"> </span><span class="s2">"debug"</span><span class="p">]</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="nl">"link"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-              </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"boolean"</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-          </span><span class="p">},</span><span class="w">
-          </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nl">"optimization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.Optimization/properties/std.optimization"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"Std.Vendor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"std.vendor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Vendor defined specifications."</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"patterProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"^[a-z]+$"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-              </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-          </span><span class="p">}</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nl">"vendor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.Vendor/properties/std.vendor"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span></code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_edit_3"><a class="anchor" href="#_edit_3"></a>8. Edit 3</h2>
-<div class="sectionbody">
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">ℹ</div>
-</td>
-<td class="content">
-Replace <em>B.2 JSON Schema Specification</em> [strctparamjschm.spec] with
-&lt;&lt;strctparam-json-schema-spec&gt; below.
-</td>
-</tr>
-</table>
-</div>
-<div class="sect2">
-<h3 id="strctparam-json-schema-spec"><a class="anchor" href="#strctparam-json-schema-spec"></a>8.1. JSON Schema Specification <span class="right">[<a href="#strctparam-json-schema-spec">strctparamjschm.spec</a>]</span></h3>
+<div class="sect2 ins text-justify">
+<h3 id="strctparam-json-schema-spec"><a class="anchor" href="#strctparam-json-schema-spec"></a>7.1. JSON Schema Specification <span class="right">[<a href="#strctparam-json-schema-spec">strctparamjschm.spec</a>]</span></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
@@ -2819,24 +2585,49 @@ Replace <em>B.2 JSON Schema Specification</em> [strctparamjschm.spec] with
       </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The Structured Parameters format version."</span><span class="p">,</span><span class="w">
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Version"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"arguments"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"patternProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"(std\\.)?arguments"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Application direct arguments."</span><span class="p">,</span><span class="w">
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"array"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Application structured options."</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"(std\\.)?options"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"anyOf"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.Param"</span><span class="w"> </span><span class="p">},</span><span class="w">
-        </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"std_opt_core-1.0.0.json"</span><span class="w"> </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"propertyName"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Name"</span><span class="w">
+      </span><span class="nl">"patternProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"(std\\.)?param"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Param"</span><span class="w"> </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"(std\\.)?source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"std_opt_core-1.0.0.json#/$defs/Std.Source"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"(std\\.)?output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"std_opt_core-1.0.0.json#/$defs/Std.Output"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"(std\\.)?include_dirs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"std_opt_core-1.0.0.json#/$defs/Std.IncludeDirs"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"(std\\.)?library_dirs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"std_opt_core-1.0.0.json#/$defs/Std.LibraryDirs"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"(std\\.)?define"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"std_opt_core-1.0.0.json#/$defs/Std.Define"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"(std\\.)?undef"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"std_opt_core-1.0.0.json#/$defs/Std.Undef"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"(std\\.)?language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"std_opt_core-1.0.0.json#/$defs/Std.Language"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"(std\\.)?optimization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"std_opt_core-1.0.0.json#/$defs/Std.Optimization"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"(std\\.)?vendor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"std_opt_core-1.0.0.json#/$defs/Std.Vendor"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="nl">"oneOf"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"arguments"</span><span class="p">]</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"options"</span><span class="p">]</span><span class="w"> </span><span class="p">}],</span><span class="w">
   </span><span class="nl">"$defs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"Version"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -2850,25 +2641,167 @@ Replace <em>B.2 JSON Schema Specification</em> [strctparamjschm.spec] with
     </span><span class="nl">"StringOrArray"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="s2">"array"</span><span class="p">],</span><span class="w">
       </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">}</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nl">"$opt"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="p">},</span><span class="w">
     </span><span class="nl">"Std.Param"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Recursive reference to one or more structured parameters files."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"std.param"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Recursive reference to one or more structured parameters files."</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"pre"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/StringOrArray"</span><span class="w"> </span><span class="p">},</span><span class="w">
-            </span><span class="nl">"post"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/StringOrArray"</span><span class="w"> </span><span class="p">}</span><span class="w">
-          </span><span class="p">},</span><span class="w">
-          </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-        </span><span class="p">}</span><span class="w">
+        </span><span class="nl">"pre"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/StringOrArray"</span><span class="w"> </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"post"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/StringOrArray"</span><span class="w"> </span><span class="p">}</span><span class="w">
       </span><span class="p">},</span><span class="w">
-      </span><span class="nl">"param"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$opt/Std.Param/properties/std.param"</span><span class="w"> </span><span class="p">}</span><span class="w">
+      </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_edit_3"><a class="anchor" href="#_edit_3"></a>8. Edit 3</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Insert [<a href="#strctopt-core-jschm-annex">strctoptcorejschm</a>] (below) after <em>Annex B</em>.</p>
+</div>
+<div class="sect2 ignore">
+<h3 id="strctopt-core-jschm-annex"><a class="anchor" href="#strctopt-core-jschm-annex"></a>8.1. Annex C</h3>
+<div class="sect3 infannex ins text-justify">
+<h4 id="strctopt-core-jschm"><a class="anchor" href="#strctopt-core-jschm"></a>8.1.1. Structured Core Options JSON Schema <span class="right">[<a href="#strctopt-core-jschm">strctoptcorejschm</a>]</span></h4>
+<div class="sect4">
+<h5 id="strctopt-core-jschm-g"><a class="anchor" href="#strctopt-core-jschm-g"></a>8.1.1.1. General <span class="right">[<a href="#strctopt-core-jschm-g">strctoptcorejschm.general</a>]</span></h5>
+<div class="paragraph">
+<p>This Annex defines the structured parameter core options schema
+<span class="iref">([<a href="#strctopt-core">strctopt.core</a>])</span> in terms os a <em>JSON Schema</em>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="strctopt-core-jschm-s"><a class="anchor" href="#strctopt-core-jschm-s"></a>8.1.1.2. JSON Schema Specification <span class="right">[<a href="#strctopt-core-jschm-s">strctoptcorejschm.spec</a>]</span></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://json-schema.org/draft/2020-12/schema"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"std_opt_core-1.0.0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Structured Core Options Version 1.0.0 JSON Schema"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"patternProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"(std\\.)?source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Source"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"(std\\.)?output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Output"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"(std\\.)?include_dirs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.IncludeDirs"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"(std\\.)?library_dirs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.LibraryDirs"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"(std\\.)?define"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Define"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"(std\\.)?undef"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Undef"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"(std\\.)?language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Language"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"(std\\.)?optimization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Optimization"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"(std\\.)?vendor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Vendor"</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"$defs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"Std.Source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The source files to process."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"array"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A file to process."</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"patternProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"(std\\.)?name"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"(std\\.)?language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Language"</span><span class="w"> </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"(std\\.)?kind"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Kind"</span><span class="w"> </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"Std.Output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The output files to generate."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"array"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"An output file."</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"patternProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"(std\\.)?name"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"(std\\.)?kind"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Kind"</span><span class="w"> </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"Std.IncludeDirs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Include directories."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"array"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"Std.LibraryDirs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Library directories."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"array"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"Std.Define"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Define preprocessor symbols."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"array"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"patternProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"(std\\.)?name"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"(std\\.)?value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"number"</span><span class="p">,</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="s2">"boolean"</span><span class="p">,</span><span class="w"> </span><span class="s2">"null"</span><span class="p">]</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"Std.Undef"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Undefine preprocessor symbols."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"array"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"Std.Language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The language to interpret sources for."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"patternProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"(std\\.)?name"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"c++"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"c"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"assembly"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"objective-c"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"objective-c++"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"fortran"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"go"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"d"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"ada"</span><span class="w">
+          </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"Std.Optimization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The optimizations to apply to different stages of the processing."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"patternProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"(std\\.)?compile"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"off"</span><span class="p">,</span><span class="w"> </span><span class="s2">"minimal"</span><span class="p">,</span><span class="w"> </span><span class="s2">"speed"</span><span class="p">,</span><span class="w"> </span><span class="s2">"space"</span><span class="p">,</span><span class="w"> </span><span class="s2">"debug"</span><span class="p">]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"(std\\.)?link"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"boolean"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"Std.Vendor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Vendor defined specifications."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"patterProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"^[a-z]+$"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"Std.Kind"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The kind of data a source of output is."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"exec"</span><span class="p">,</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w"> </span><span class="s2">"dynamic_lib"</span><span class="p">,</span><span class="w"> </span><span class="s2">"archive_lib"</span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>

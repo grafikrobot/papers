@@ -7,6 +7,7 @@ http://www.boost.org/LICENSE_1_0.txt)
 
 import asciidoctor ;
 import toolset ;
+import feature ;
 
 local name = ecosystem_is_structured_core_opt ;
 local docn = P3335 ;
@@ -20,6 +21,7 @@ project /wg21_$(name)
 
 path-constant CSS : ../../stylesheets ;
 
+# Check that any sample programs work.
 local samples ;
 for local sample in [ glob sample*.cpp ]
 {
@@ -28,6 +30,7 @@ for local sample in [ glob sample*.cpp ]
 }
 alias samples : $(samples) ;
 
+# Build HTML paper.
 html $(name)_$(xxxx).html : proposal.adoc
 	:
 		<dependency>samples
@@ -40,31 +43,7 @@ install html : $(name)_$(xxxx).html : <location>. ;
 
 _ = " " ;
 
-toolset.flags json-validate FLAGS : <flags> ;
-actions json-validate
-{
-	check-jsonschema -v --traceback-mode=full --schemafile$(_)"$(>[2])" "$(FLAGS)" "$(>[1])" && echo "passed" > "$(<)"
-}
-
-rule json-schema-check ( json schema ? : r * )
-{
-	return [ make $(json:B:S=.check) : $(json) $(schema)
-		: @json-validate : $(r) ] ;
-}
-
-local validations ;
-validations +=
-	[ json-schema-check "std_opt_core-1.0.0.json"
-		: <flags>--check-metaschema ] ;
-for local json in [ glob test_success-*.json example-*.json ]
-{
-	validations += [ make $(json:B:S=.check)
-		: $(json) std_opt_core-1.0.0.json
-		: @json-validate ] ;
-	explicit $(json:B:S=.check) ;
-}
-alias validate : $(validations) ;
-
+# Build LaTex wording edits.
 toolset.flags asciidoctor-latexcore FLAGS : <flags> ;
 actions asciidoctor-latexcore
 {
@@ -79,3 +58,54 @@ for local wording in [ glob wording-*.adoc ]
 		: <use>../../asciidoctor-latexcore//latexcore <location>.
 		;
 }
+
+# Validate any JSON samples and tests against respective schemas.
+local validations ;
+feature.feature json-validate-baseuri : : free ;
+feature.feature json-validate-schemafile : : free ;
+toolset.flags json-validate FLAGS : <flags> ;
+toolset.flags json-validate BASEURI : <json-validate-baseuri> ;
+toolset.flags json-validate SCHEMAFILE : <json-validate-schemafile> ;
+actions json-validate
+{
+	check-jsonschema --verbose --traceback-mode=full "--baseuri=$(BASEURI)" "--schemafile=$(SCHEMAFILE)" "$(FLAGS)" "$(>[1])" && echo "passed" > "$(<)"
+}
+
+rule json-schema-check ( json schema ? : r * )
+{
+	return [ make $(json:B:S=.check)
+		: $(json)
+		: @json-validate
+		: $(r) <json-validate-schemafile>$(schema)
+			<dependency>$(schema) ] ;
+}
+
+path-constant HERE : . ;
+
+# * Validate basic tests and examples that use this schema.
+for local json in [ glob test_success-*.json example-*.json ]
+{
+	local validation = [ json-schema-check $(json) std_opt_core-1.0.0.json ] ;
+	validations += $(validation) ;
+}
+# * Validate standalone full tests and examples.
+for local json in [ glob test_full-*.json ]
+{
+	validations +=
+		[ json-schema-check $(json)
+			: 	<dependency>std_opt_core-1.0.0.json
+				<dependency>std_param-1.0.0.json
+				<json-validate-schemafile>std_param-1.0.0.json
+				# <flags>--base-uri=file://$(HERE)
+			] ;
+}
+# * Validate the schemas.
+validations +=
+	[ json-schema-check "std_opt_core-1.0.0.json"
+		: <flags>--check-metaschema ]
+	[ json-schema-check "std_param-1.0.0.json"
+		: <flags>--check-metaschema ]
+	;
+
+explicit $(validations) ;
+alias validate : $(validations) ;

@@ -1,6 +1,6 @@
 {
   "optimization": {
-    "compile": "safe",
+    "compile": "debug",
     "link": true,
     "vendor": {
       "msvc": {

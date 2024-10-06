@@ -13,24 +13,49 @@
       "description": "The Structured Parameters format version.",
       "type": "string",
       "$ref": "#/$defs/Version"
-    },
-    "arguments": {
+    }
+  },
+  "patternProperties": {
+    "(std\\.)?arguments": {
       "description": "Application direct arguments.",
       "type": "array",
       "items": { "type": "string" }
     },
-    "options": {
-      "description": "Application structured options.",
+    "(std\\.)?options": {
       "type": "object",
-      "anyOf": [
-        { "$ref": "#/$opt/Std.Param" },
-        { "$ref": "std_opt_core-1.0.0.json" }
-      ],
-      "propertyName": {
-        "$ref": "#/$defs/Name"
+      "patternProperties": {
+        "(std\\.)?param": { "$ref": "#/$defs/Std.Param" },
+        "(std\\.)?source": {
+          "$ref": "std_opt_core-1.0.0.json#/$defs/Std.Source"
+        },
+        "(std\\.)?output": {
+          "$ref": "std_opt_core-1.0.0.json#/$defs/Std.Output"
+        },
+        "(std\\.)?include_dirs": {
+          "$ref": "std_opt_core-1.0.0.json#/$defs/Std.IncludeDirs"
+        },
+        "(std\\.)?library_dirs": {
+          "$ref": "std_opt_core-1.0.0.json#/$defs/Std.LibraryDirs"
+        },
+        "(std\\.)?define": {
+          "$ref": "std_opt_core-1.0.0.json#/$defs/Std.Define"
+        },
+        "(std\\.)?undef": {
+          "$ref": "std_opt_core-1.0.0.json#/$defs/Std.Undef"
+        },
+        "(std\\.)?language": {
+          "$ref": "std_opt_core-1.0.0.json#/$defs/Std.Language"
+        },
+        "(std\\.)?optimization": {
+          "$ref": "std_opt_core-1.0.0.json#/$defs/Std.Optimization"
+        },
+        "(std\\.)?vendor": {
+          "$ref": "std_opt_core-1.0.0.json#/$defs/Std.Vendor"
+        }
       }
     }
   },
+  "additionalProperties": false,
   "oneOf": [{ "required": ["arguments"] }, { "required": ["options"] }],
   "$defs": {
     "Version": {
@@ -44,22 +69,15 @@
     "StringOrArray": {
       "type": ["string", "array"],
       "items": { "type": "string" }
-    }
-  },
-  "$opt": {
+    },
     "Std.Param": {
+      "description": "Recursive reference to one or more structured parameters files.",
+      "type": "object",
       "properties": {
-        "std.param": {
-          "description": "Recursive reference to one or more structured parameters files.",
-          "type": "object",
-          "properties": {
-            "pre": { "$ref": "#/$defs/StringOrArray" },
-            "post": { "$ref": "#/$defs/StringOrArray" }
-          },
-          "additionalProperties": false
-        }
+        "pre": { "$ref": "#/$defs/StringOrArray" },
+        "post": { "$ref": "#/$defs/StringOrArray" }
       },
-      "param": { "$ref": "#/$opt/Std.Param/properties/std.param" }
+      "additionalProperties": false
     }
   }
 }

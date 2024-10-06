@@ -1,0 +1,7 @@
+{
+  "$schema": "https://cplusplus.github.io/ecosystem-is/std_param-1.0.0.json",
+  "version": "1",
+  "options": {
+    "source": [{ "name": "bindjam.cpp" }]
+  }
+}

@@ -53,6 +53,10 @@ for {CPP} compiler front ends.
 
 == Revision History
 
+=== Revision 2 (October 2024)
+
+Added wording and corresponding JSON Schema changes.
+
 === Revision 1 (September 2024)
 
 Per feedback from telecon discussion: remove `debug` option, remove `safe`
@@ -744,23 +748,23 @@ link:https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p3342r0.pdf[P3342R
 
 == Edit 1
 
-NOTE: Replace _7 Structured Parameters Core Options_ [strctparamopt] with
-<<strctopt-core>> below.
+Replace _7 Structured Parameters Core Options_ ([strctparamopt]) with
+[<<strctopt-core>>] below.
 
 include::wording-strctopt-core.adoc[leveloffset=2]
 
 == Edit 2
 
-NOTE: Insert <<strctopt-core-jschm-annex>> (below) after _Annex B_.
+Replace _B.2 JSON Schema Specification_ ([strctparamjschm.spec]) with
+[<<strctparam-json-schema-spec>>] below.
 
-include::wording-strctopt-core-jschm.adoc[leveloffset=2]
+include::wording-strctparam-jschm.adoc[leveloffset=2]
 
 == Edit 3
 
-NOTE: Replace _B.2 JSON Schema Specification_ [strctparamjschm.spec] with
-<<strctparam-json-schema-spec> below.
+Insert [<<strctopt-core-jschm-annex>>] (below) after _Annex B_.
 
-include::wording-strctparam-jschm.adoc[leveloffset=2]
+include::wording-strctopt-core-jschm.adoc[leveloffset=2]
 
 
 = Colophon
