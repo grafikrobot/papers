@@ -849,7 +849,7 @@ pre.rouge .ss {
 <span id="author" class="author">René Ferdinand Rivera Morell</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> P3335R2,</span>
-<span id="revdate">2024-10-14</span>
+<span id="revdate">2024-10-15</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -1054,9 +1054,9 @@ specifying the caption symbol properties:
 
 /* Use plain admonition labels. */
 .wording .admonitionblock .icon .title {
-	font-size: inherit;
-	text-shadow: inherit;
-	color: inherit;
+	font-size: inherit !important;
+	text-shadow: inherit !important;
+	color: inherit !important;
 }
 </style>
 <div class="hdlist">
@@ -1074,7 +1074,7 @@ Document #:
 Date: 
 </td>
 <td class="hdlist2">
-<p>2024-10-14</p>
+<p>2024-10-15</p>
 </td>
 </tr>
 <tr>
@@ -1246,7 +1246,7 @@ example to specify the <code>language</code> of a source file:</p>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<div class="title">ℹ</div>
 </td>
 <td class="content">
 Previously we had proposed using a multi-stage scheme to simplify the
@@ -1268,7 +1268,7 @@ JSON parsers.
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<div class="title">ℹ</div>
 </td>
 <td class="content">
 Previously we had proposed using a multi-stage scheme to simplify the
@@ -1645,7 +1645,7 @@ the special Windows embedded manifest for the executable.</p>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<div class="title">ℹ</div>
 </td>
 <td class="content">
 In the tables below compiler drivers or front ends we list the
@@ -2510,7 +2510,7 @@ current and future behavior of applications.</p>
 </div>
 </div>
 </div>
-<div class="sect1 wording">
+<div class="sect1">
 <h2 id="_edit_1"><a class="anchor" href="#_edit_1"></a>6. Edit 1</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -2592,6 +2592,10 @@ determination of the source kind by the application.</p>
 specified in the structured parameters options field
 <span class="iref">([strctparam.schema.opts])</span>.</p>
 </div>
+<div class="paragraph">
+<p>A source object can have a vendor field
+<a href="#strctopt-core-vendor">([strctopt.core.vendor])</a>.</p>
+</div>
 </div>
 </div>
 <div class="sect3 text-justify">
@@ -2624,6 +2628,10 @@ specified in the structured parameters options field
 <div class="paragraph">
 <p>Specifying a kind field for output shall replace any other
 determination of the output kind by the application.</p>
+</div>
+<div class="paragraph">
+<p>An output object can have a vendor field
+<a href="#strctopt-core-vendor">([strctopt.core.vendor])</a>.</p>
 </div>
 </div>
 </div>
@@ -2785,6 +2793,10 @@ when the value is <code>false</code>.</p>
 <div class="paragraph">
 <p>For a <code>true</code> value the application behavior is unspecified.</p>
 </div>
+<div class="paragraph">
+<p>An optimization object can have a vendor field
+<a href="#strctopt-core-vendor">([strctopt.core.vendor])</a>.</p>
+</div>
 </div>
 </div>
 <div class="sect3 text-justify">
@@ -2816,7 +2828,7 @@ appear.</p>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<div class="title">ℹ</div>
 </td>
 <td class="content">
 It is up to application vendors to agree on the name fields.
@@ -2828,7 +2840,7 @@ It is up to application vendors to agree on the name fields.
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<div class="title">ℹ</div>
 </td>
 <td class="content">
 It is up to application vendors to document the schema of the field
@@ -2906,7 +2918,7 @@ collection, of linkable objects.</p>
 </div>
 </div>
 </div>
-<div class="sect1 wording">
+<div class="sect1">
 <h2 id="_edit_2"><a class="anchor" href="#_edit_2"></a>7. Edit 2</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -3005,7 +3017,7 @@ collection, of linkable objects.</p>
 </div>
 </div>
 </div>
-<div class="sect1 wording">
+<div class="sect1">
 <h2 id="_edit_3"><a class="anchor" href="#_edit_3"></a>8. Edit 3</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -3052,7 +3064,8 @@ collection, of linkable objects.</p>
         </span><span class="nl">"patternProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="nl">"(std\\.)?name"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">},</span><span class="w">
           </span><span class="nl">"(std\\.)?language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Language"</span><span class="w"> </span><span class="p">},</span><span class="w">
-          </span><span class="nl">"(std\\.)?kind"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Kind"</span><span class="w"> </span><span class="p">}</span><span class="w">
+          </span><span class="nl">"(std\\.)?kind"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Kind"</span><span class="w"> </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"(std\\.)?vendor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Vendor"</span><span class="w"> </span><span class="p">}</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
       </span><span class="p">}</span><span class="w">
@@ -3065,7 +3078,8 @@ collection, of linkable objects.</p>
         </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"patternProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="nl">"(std\\.)?name"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">},</span><span class="w">
-          </span><span class="nl">"(std\\.)?kind"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Kind"</span><span class="w"> </span><span class="p">}</span><span class="w">
+          </span><span class="nl">"(std\\.)?kind"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Kind"</span><span class="w"> </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"(std\\.)?vendor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Vendor"</span><span class="w"> </span><span class="p">}</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
       </span><span class="p">}</span><span class="w">
@@ -3118,7 +3132,8 @@ collection, of linkable objects.</p>
         </span><span class="p">},</span><span class="w">
         </span><span class="nl">"(std\\.)?link"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"boolean"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"(std\\.)?vendor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Vendor"</span><span class="w"> </span><span class="p">}</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nl">"Std.Vendor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">

@@ -69,6 +69,9 @@ Specifying a kind field for a source shall replace a kind field
 specified in the structured parameters options field
 [.iref]#([strctparam.schema.opts])#.
 
+A source object can have a vendor field
+<<strctopt-core-vendor,([strctopt.core.vendor])>>.
+
 [.text-justify]
 [#strctopt-core-out,reftext=strctopt.core.out]
 == Output [.right]#[<<strctopt-core-out>>]#
@@ -100,6 +103,9 @@ An output object can have a kind field
 
 Specifying a kind field for output shall replace any other
 determination of the output kind by the application.
+
+An output object can have a vendor field
+<<strctopt-core-vendor,([strctopt.core.vendor])>>.
 
 [.text-justify]
 [#strctopt-core-incd,reftext=strctopt.core.incd]
@@ -246,6 +252,9 @@ An application shall not perform optimizations for linked output generation
 when the value is `false`.
 
 For a `true` value the application behavior is unspecified.
+
+An optimization object can have a vendor field
+<<strctopt-core-vendor,([strctopt.core.vendor])>>.
 
 [.text-justify]
 [#strctopt-core-vendor,reftext=strctopt.core.vendor]

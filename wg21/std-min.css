@@ -109,7 +109,7 @@ specifying the caption symbol properties:
 
 /* Use plain admonition labels. */
 .wording .admonitionblock .icon .title {
-	font-size: inherit;
-	text-shadow: inherit;
-	color: inherit;
+	font-size: inherit !important;
+	text-shadow: inherit !important;
+	color: inherit !important;
 }

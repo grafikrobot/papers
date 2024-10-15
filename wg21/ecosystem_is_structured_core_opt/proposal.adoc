@@ -17,6 +17,11 @@
 :source-language: {CPP}
 :toc: left
 :toclevels: 3
+:caution-caption: ⚑
+:important-caption: ‼
+:note-caption: ℹ
+:tip-caption: ☀
+:warning-caption: ⚠
 :table-caption: Table
 :opt: opt
 :pp: ++
@@ -745,7 +750,6 @@ An important goal in the wording below is to minimize how much application
 behavior is mandated. As specifying more than absolutely needed can impede
 current and future behavior of applications.
 
-[.wording]
 == Edit 1
 
 Replace _7 Structured Parameters Core Options_ ([strctparamopt]) with
@@ -753,7 +757,6 @@ Replace _7 Structured Parameters Core Options_ ([strctparamopt]) with
 
 include::wording-strctopt-core.adoc[leveloffset=2]
 
-[.wording]
 == Edit 2
 
 Replace _B.2 JSON Schema Specification_ ([strctparamjschm.spec]) with
@@ -761,7 +764,6 @@ Replace _B.2 JSON Schema Specification_ ([strctparamjschm.spec]) with
 
 include::wording-strctparam-jschm.adoc[leveloffset=2]
 
-[.wording]
 == Edit 3
 
 Insert [<<strctopt-core-jschm-annex>>] (below) after _Annex B_.

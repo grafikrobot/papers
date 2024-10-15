@@ -45,7 +45,8 @@ This Annex defines the structured parameter core options schema
         "patternProperties": {
           "(std\\.)?name": { "type": "string" },
           "(std\\.)?language": { "$ref": "#/$defs/Std.Language" },
-          "(std\\.)?kind": { "$ref": "#/$defs/Std.Kind" }
+          "(std\\.)?kind": { "$ref": "#/$defs/Std.Kind" },
+          "(std\\.)?vendor": { "$ref": "#/$defs/Std.Vendor" }
         },
         "additionalProperties": false
       }
@@ -58,7 +59,8 @@ This Annex defines the structured parameter core options schema
         "type": "object",
         "patternProperties": {
           "(std\\.)?name": { "type": "string" },
-          "(std\\.)?kind": { "$ref": "#/$defs/Std.Kind" }
+          "(std\\.)?kind": { "$ref": "#/$defs/Std.Kind" },
+          "(std\\.)?vendor": { "$ref": "#/$defs/Std.Vendor" }
         },
         "additionalProperties": false
       }
@@ -111,7 +113,8 @@ This Annex defines the structured parameter core options schema
         },
         "(std\\.)?link": {
           "type": "boolean"
-        }
+        },
+        "(std\\.)?vendor": { "$ref": "#/$defs/Std.Vendor" }
       }
     },
     "Std.Vendor": {
