@@ -8,7 +8,7 @@
 :leveldedent: 1
 
 [.infannex]
-[.ins.text-justify]
+[.text-justify]
 [#strctopt-core-jschm,reftext=strctoptcorejschm]
 == Structured Core Options JSON Schema [.right]#[<<strctopt-core-jschm>>]#
 

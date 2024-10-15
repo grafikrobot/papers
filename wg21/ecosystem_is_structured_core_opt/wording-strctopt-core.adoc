@@ -1,4 +1,4 @@
-[.ins.text-justify]
+[.text-justify]
 [#strctopt-core,reftext=strctopt.core]
 = Structured Core Options [.right]#[<<strctopt-core>>]#
 :copyright: Copyright {docyear} René Ferdinand Rivera Morell
@@ -20,7 +20,7 @@ An application that implements the `std.strctopt.core` capability shall include
 the `std.strctopt.core` field and version value in the introspection JSON
 text output [.iref]#([intspct.schema.cap])#.
 
-[.ins.text-justify]
+[.text-justify]
 [#strctopt-core-src,reftext=strctopt.core.src]
 == Source [.right]#[<<strctopt-core-src>>]#
 
@@ -37,7 +37,7 @@ The application shall add the given sources to the set of files to process.
 
 The sources given shall be appended to existing sources in the order given.
 
-[.ins.text-justify]
+[.text-justify]
 [#strctopt-core-srcobj,reftext=strctopt.core.srcobj]
 === Source Object [.right]#[<<strctopt-core-srcobj>>]#
 
@@ -69,7 +69,7 @@ Specifying a kind field for a source shall replace a kind field
 specified in the structured parameters options field
 [.iref]#([strctparam.schema.opts])#.
 
-[.ins.text-justify]
+[.text-justify]
 [#strctopt-core-out,reftext=strctopt.core.out]
 == Output [.right]#[<<strctopt-core-out>>]#
 
@@ -83,7 +83,7 @@ specified in the structured parameters options field
   Specifies the output files to generated when processing sources
   <<strctopt-core-src,([strctopt.core.src])>>.
 
-[.ins.text-justify]
+[.text-justify]
 [#strctopt-core-outobj,reftext=strctopt.core.outobj]
 === Output Object [.right]#[<<strctopt-core-outobj>>]#
 
@@ -101,7 +101,7 @@ An output object can have a kind field
 Specifying a kind field for output shall replace any other
 determination of the output kind by the application.
 
-[.ins.text-justify]
+[.text-justify]
 [#strctopt-core-incd,reftext=strctopt.core.incd]
 == Include Directories [.right]#[<<strctopt-core-incd>>]#
 
@@ -120,7 +120,7 @@ searched by the header inclusion of a {CPP} preprocessor.
 The directories given shall be appended to the existing include search
 directories in the order given.
 
-[.ins.text-justify]
+[.text-justify]
 [#strctopt-core-libd,reftext=strctopt.core.libd]
 == Library Directories [.right]#[<<strctopt-core-libd>>]#
 
@@ -138,7 +138,7 @@ searched for libraries.
 The directories given shall be appended to the existing library search
 directories in the order given.
 
-[.ins.text-justify]
+[.text-justify]
 [#strctopt-core-def,reftext=strctopt.core.def]
 == Define Preprocessor Symbols [.right]#[<<strctopt-core-def>>]#
 
@@ -151,7 +151,7 @@ directories in the order given.
 [.flddesc]#_Description_:#
   Specifies preprocessor symbols to define during processing of sources.
 
-[.ins.text-justify]
+[.text-justify]
 [#strctopt-core-def-sym,reftext=strctopt.core.def.sym]
 === Preprocessor Symbol Definition Object [.right]#[<<strctopt-core-def-sym>>]#
 
@@ -185,7 +185,7 @@ A `false` value shall be converted to a string value of `0`.
 
 A `null` value shall not convert and the application default value will be used.
 
-[.ins.text-justify]
+[.text-justify]
 [#strctopt-core-undef,reftext=strctopt.core.undef]
 == Undefine Preprocessor Symbols [.right]#[<<strctopt-core-undef>>]#
 
@@ -203,7 +203,7 @@ The application shall indicate an error for invalid symbols.
 The application shall evaluate this option after any `std.define`
 <<strctopt-core-def,([strctopt.core.def])>> options.
 
-[.ins.text-justify]
+[.text-justify]
 [#strctopt-core-opt,reftext=strctopt.core.opt]
 == Optimization [.right]#[<<strctopt-core-opt>>]#
 
@@ -217,7 +217,7 @@ The application shall evaluate this option after any `std.define`
 The application shall replace each existing field in the optimization object
 <<strcopt-core-optojb,([strctopt-core-optobj])>>.
 
-[.ins.text-justify]
+[.text-justify]
 [#strctopt-core-optobj,reftext=strctopt.core.optobj]
 === Optimization Object [.right]#[<<strctopt-core-optobj>>]#
 
@@ -247,7 +247,7 @@ when the value is `false`.
 
 For a `true` value the application behavior is unspecified.
 
-[.ins.text-justify]
+[.text-justify]
 [#strctopt-core-vendor,reftext=strctopt.core.vendor]
 == Vendor [.right]#[<<strctopt-core-vendor>>]#
 
@@ -262,7 +262,7 @@ For a `true` value the application behavior is unspecified.
 An application shall apply the vendor option semantics in the context they
 appear.
 
-[.ins.text-justify]
+[.text-justify]
 [#strctopt-core-vendorobj,reftext=strctopt.core.vendorobj]
 === Vendor Object [.right]#[<<strctopt-core-vendorobj>>]#
 
@@ -277,7 +277,7 @@ NOTE: It is up to application vendors to agree on the name fields.
 NOTE: It is up to application vendors to document the schema of the field
 values.
 
-[.ins.text-justify]
+[.text-justify]
 [#strctopt-core-lang,reftext=strctopt.core.lang]
 == Language [.right]#[<<strctopt-core-lang>>]#
 
@@ -288,7 +288,7 @@ values.
   <<strctopt-core-langobj,([strctop.core.langobj])>> +
 [.flddesc]#_Description_:# The language to interpret the source as.
 
-[.ins.text-justify]
+[.text-justify]
 [#strctopt-core-langobj,reftext=strctopt.core.langobj]
 === Language Object [.right]#[<<strctopt-core-langobj>>]#
 
@@ -303,7 +303,7 @@ A language object shall have a `name` field.
 Only a value of `c++` specifies that source text
 <<strctopt-core-src,([strctopt.core.src])>> is {CPP} ISO language.
 
-[.ins.text-justify]
+[.text-justify]
 [#strctopt-core-kind,reftext=strctopt.core.kind]
 == Kind [.right]#[<<strctopt-core-kind>>]#
 
@@ -315,7 +315,7 @@ Only a value of `c++` specifies that source text
   The kind, or format, of the source file corresponding to the output
   file <<strctopt-core-out,([strctopt.core.out])>>.
 
-[.ins.text-justify]
+[.text-justify]
 [#strctopt-core-kindobj,reftext=strctopt.core.kindobj]
 === Kind Object [.right]#[<<strctopt-core-kindobj>>]#
 
