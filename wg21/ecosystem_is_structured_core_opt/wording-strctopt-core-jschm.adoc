@@ -1,6 +1,8 @@
 [.ignore]
 [#strctopt-core-jschm-annex,reftext=strctoptcorejschm]
 = Annex C
+:copyright: Copyright {docyear} René Ferdinand Rivera Morell
+:license: Creative Commons Attribution 4.0 International License (CC BY 4.0)
 :texroot: ecosystem.tex
 
 :leveldedent: 1
@@ -16,9 +18,6 @@
 
 This Annex defines the structured parameter core options schema
 [.iref]#([<<strctopt-core,strctopt.core>>])# in terms os a _JSON Schema_.
-
-// This _JSON Schema_ can be referenced as the `$schema` field with URI value of
-// `"https://raw.githubusercontent.com/cplusplus/ecosystem-is/release/schema/std_opt_core-1.0.0.json"`.
 
 
 [#strctopt-core-jschm-s,reftext=strctoptcorejschm.spec]

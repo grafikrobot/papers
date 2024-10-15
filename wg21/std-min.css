@@ -98,3 +98,18 @@ specifying the caption symbol properties:
 .imageblock svg {
 	width: 100% !important;
 }
+
+/* ToC wording tweaks.
+*/
+
+/* Don't show section tags in ToC. */
+#toc .right {
+	display: none;
+}
+
+/* Use plain admonition labels. */
+.wording .admonitionblock .icon .title {
+	font-size: inherit;
+	text-shadow: inherit;
+	color: inherit;
+}

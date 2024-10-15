@@ -849,7 +849,7 @@ pre.rouge .ss {
 <span id="author" class="author">René Ferdinand Rivera Morell</span><br>
 <span id="email" class="email"><a href="mailto:grafikrobot@gmail.com">grafikrobot@gmail.com</a></span><br>
 <span id="revnumber"> P3335R2,</span>
-<span id="revdate">2024-10-06</span>
+<span id="revdate">2024-10-14</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -901,8 +901,16 @@ pre.rouge .ss {
 <li><a href="#strctopt-core">6.1. Structured Core Options <span class="right">[strctopt.core]</span></a>
 <ul class="sectlevel3">
 <li><a href="#strctopt-core-pre">6.1.1. Preamble <span class="right">[strctopt.core.pre]</span></a></li>
-<li><a href="#strctopt-core-inc">6.1.2. Include Directories <span class="right">[strctopt.core.inc]</span></a></li>
-<li><a href="#strctopt-core-xxx">6.1.3. Xxx <span class="right">[strctopt.core.xxx]</span></a></li>
+<li><a href="#strctopt-core-src">6.1.2. Source <span class="right">[strctopt.core.src]</span></a></li>
+<li><a href="#strctopt-core-out">6.1.3. Output <span class="right">[strctopt.core.out]</span></a></li>
+<li><a href="#strctopt-core-incd">6.1.4. Include Directories <span class="right">[strctopt.core.incd]</span></a></li>
+<li><a href="#strctopt-core-libd">6.1.5. Library Directories <span class="right">[strctopt.core.libd]</span></a></li>
+<li><a href="#strctopt-core-def">6.1.6. Define Preprocessor Symbols <span class="right">[strctopt.core.def]</span></a></li>
+<li><a href="#strctopt-core-undef">6.1.7. Undefine Preprocessor Symbols <span class="right">[strctopt.core.undef]</span></a></li>
+<li><a href="#strctopt-core-opt">6.1.8. Optimization <span class="right">[strctopt.core.opt]</span></a></li>
+<li><a href="#strctopt-core-vendor">6.1.9. Vendor <span class="right">[strctopt.core.vendor]</span></a></li>
+<li><a href="#strctopt-core-lang">6.1.10. Language <span class="right">[strctopt.core.lang]</span></a></li>
+<li><a href="#strctopt-core-kind">6.1.11. Kind <span class="right">[strctopt.core.kind]</span></a></li>
 </ul>
 </li>
 </ul>
@@ -1035,6 +1043,21 @@ specifying the caption symbol properties:
 .imageblock svg {
 	width: 100% !important;
 }
+
+/* ToC wording tweaks.
+*/
+
+/* Don't show section tags in ToC. */
+#toc .right {
+	display: none;
+}
+
+/* Use plain admonition labels. */
+.wording .admonitionblock .icon .title {
+	font-size: inherit;
+	text-shadow: inherit;
+	color: inherit;
+}
 </style>
 <div class="hdlist">
 <table>
@@ -1051,7 +1074,7 @@ Document #:
 Date: 
 </td>
 <td class="hdlist2">
-<p>2024-10-06</p>
+<p>2024-10-14</p>
 </td>
 </tr>
 <tr>
@@ -1223,7 +1246,7 @@ example to specify the <code>language</code> of a source file:</p>
 <table>
 <tr>
 <td class="icon">
-<div class="title">ℹ</div>
+<div class="title">Note</div>
 </td>
 <td class="content">
 Previously we had proposed using a multi-stage scheme to simplify the
@@ -1245,7 +1268,7 @@ JSON parsers.
 <table>
 <tr>
 <td class="icon">
-<div class="title">ℹ</div>
+<div class="title">Note</div>
 </td>
 <td class="content">
 Previously we had proposed using a multi-stage scheme to simplify the
@@ -1622,7 +1645,7 @@ the special Windows embedded manifest for the executable.</p>
 <table>
 <tr>
 <td class="icon">
-<div class="title">ℹ</div>
+<div class="title">Note</div>
 </td>
 <td class="content">
 In the tables below compiler drivers or front ends we list the
@@ -1745,12 +1768,7 @@ the file.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"main.cpp"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c++"</span><span class="w"> </span><span class="p">}</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
+  </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"main.cpp"</span><span class="p">,</span><span class="w"> </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c++"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}]</span><span class="w">
 </span><span class="p">}</span></code></pre>
 </div>
 </div>
@@ -1758,19 +1776,10 @@ the file.</p>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"main.cpp"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"utils.cpp"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"algo.cpp"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api.i"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c"</span><span class="w"> </span><span class="p">}</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"main.cpp"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"utils.cpp"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"algo.cpp"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api.i"</span><span class="p">,</span><span class="w"> </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span></code></pre>
 </div>
@@ -2491,12 +2500,17 @@ in this specification is not present in the existing specification it is added.<
 <div class="openblock partintro">
 <div class="content">
 <div class="paragraph">
-<p>Wording is relative to
-<a href="https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p3342r0.pdf">P3342R0 Working Draft, Standard for C++ Ecosystem</a>.</p>
+<p>Wording is relative to P3342R0 Working Draft, Standard for C&#43;&#43; Ecosystem.
+<sup class="footnote" id="_footnote_P3342R0">[<a id="_footnoteref_6" class="footnote" href="#_footnotedef_6" title="View footnote.">6</a>]</sup></p>
+</div>
+<div class="paragraph">
+<p>An important goal in the wording below is to minimize how much application
+behavior is mandated. As specifying more than absolutely needed can impede
+current and future behavior of applications.</p>
 </div>
 </div>
 </div>
-<div class="sect1">
+<div class="sect1 wording">
 <h2 id="_edit_1"><a class="anchor" href="#_edit_1"></a>6. Edit 1</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -2509,11 +2523,11 @@ in this specification is not present in the existing specification it is added.<
 <h4 id="strctopt-core-pre"><a class="anchor" href="#strctopt-core-pre"></a>6.1.1. Preamble <span class="right">[<a href="#strctopt-core-pre">strctopt.core.pre</a>]</span></h4>
 <div class="paragraph">
 <p>This clause describes the schema and semantics of core structured options
-<span class="iref">([strctopt.schema.struct])</span> for C&#43;&#43; compiler front-ends.</p>
+<span class="iref">([strctopt.schema.struct])</span> for C&#43;&#43; compiler front-end applications.</p>
 </div>
 <div class="paragraph">
-<p>This clause specifies the <code>std.strctopt.core</code> capability <span class="iref">([intspct.cap])</span>
-vresion <code>1.0.0</code>.</p>
+<p>This clause specifies the <code>std.strctopt.core</code> capability
+<span class="iref">([intspct.cap])</span> version <code>1.0.0</code>.</p>
 </div>
 <div class="paragraph">
 <p>An application can implement this capability.</p>
@@ -2525,41 +2539,374 @@ text output <span class="iref">([intspct.schema.cap])</span>.</p>
 </div>
 </div>
 <div class="sect3 ins text-justify">
-<h4 id="strctopt-core-inc"><a class="anchor" href="#strctopt-core-inc"></a>6.1.2. Include Directories <span class="right">[<a href="#strctopt-core-inc">strctopt.core.inc</a>]</span></h4>
-<div class="paragraph">
-<p>The <code>std.include</code> option defines an option to specify a list of directory
-pathnames that a C&#43;&#43; preprocessor uses to search for inclusion.</p>
-</div>
-<div class="paragraph">
-<p>The <code>std.include</code> option shall have the following fields.</p>
-</div>
+<h4 id="strctopt-core-src"><a class="anchor" href="#strctopt-core-src"></a>6.1.2. Source <span class="right">[<a href="#strctopt-core-src">strctopt.core.src</a>]</span></h4>
 <div class="paragraph itemdescr">
-<p><span class="fldname"><em>Name</em>:</span> <code>name</code><br>
-<span class="fldtype"><em>Type</em>:</span> <code>string</code><br>
-<span class="fldval"><em>Value</em>:</span> <code>std.include</code><br>
-<span class="flddesc"><em>Description</em>:</span> The name of the option.</p>
-</div>
-<div class="paragraph itemdescr">
-<p><span class="fldname"><em>Name</em>:</span> <code>files</code><br>
-<span class="fldtype"><em>Type</em>:</span> <code>string</code> or <code>array</code><br>
-<span class="fldval"><em>Value</em>:</span>
-  (for <code>string</code>) A pathname to a directory.<br>
-<span class="fldval"><em>Value</em>:</span>
-  (for <code>array</code>) A list of pathname <code>string</code> items to directories.<br>
+<p><span class="fldname"><em>Name</em>:</span> <code>std.source</code> or <code>source</code><br>
+<span class="fldtype"><em>Type</em>:</span> <code>array</code><br>
+<span class="fldval"><em>Value</em>:</span> The value shall be a JSON <code>array</code>. The items in the <code>array</code>
+  shall be of JSON <code>object</code> items specifying source objects
+  <a href="#strctopt-core-srcobj">([strctopt.core.srcobj])</a>.<br>
 <span class="flddesc"><em>Description</em>:</span>
-  One or more entries to directories that are appended in the order given to
-  the list of directories searched by the header inclusion of a C&#43;&#43;
-  preprocessor.</p>
+  Defines a list of source files for an application to process.</p>
+</div>
+<div class="paragraph">
+<p>The application shall add the given sources to the set of files to process.</p>
+</div>
+<div class="paragraph">
+<p>The sources given shall be appended to existing sources in the order given.</p>
+</div>
+<div class="sect4 ins text-justify">
+<h5 id="strctopt-core-srcobj"><a class="anchor" href="#strctopt-core-srcobj"></a>6.1.2.1. Source Object <span class="right">[<a href="#strctopt-core-srcobj">strctopt.core.srcobj</a>]</span></h5>
+<div class="paragraph">
+<p>A source object shall have a <code>name</code> field.</p>
+</div>
+<div class="paragraph itemdescr">
+<p><span class="fldname"><em>Name</em>:</span> <code>std.name</code> or <code>name</code><br>
+<span class="fldtype"><em>Type</em>:</span> <code>string</code><br>
+<span class="fldval"><em>Value</em>:</span> A pathname to a file.<br>
+<span class="flddesc"><em>Description</em>:</span> The pathname of the source file.</p>
+</div>
+<div class="paragraph">
+<p>A source object can have a language field
+<a href="#strctopt-core-lang">([strctopt.core.lang])</a>.</p>
+</div>
+<div class="paragraph">
+<p>Specifying a language field for a source shall replace any other
+determination of the source language by the application.</p>
+</div>
+<div class="paragraph">
+<p>Specifying a language field for a source shall replace a language field
+specified in the structured parameters options field
+<span class="iref">([strctparam.schema.opts])</span>.</p>
+</div>
+<div class="paragraph">
+<p>A source object can have a kind field
+<a href="#strctopt-core-kind">([strctopt.core.kind])</a>.</p>
+</div>
+<div class="paragraph">
+<p>Specifying a kind field for a source shall replace any other
+determination of the source kind by the application.</p>
+</div>
+<div class="paragraph">
+<p>Specifying a kind field for a source shall replace a kind field
+specified in the structured parameters options field
+<span class="iref">([strctparam.schema.opts])</span>.</p>
+</div>
 </div>
 </div>
 <div class="sect3 ins text-justify">
-<h4 id="strctopt-core-xxx"><a class="anchor" href="#strctopt-core-xxx"></a>6.1.3. Xxx <span class="right">[<a href="#strctopt-core-xxx">strctopt.core.xxx</a>]</span></h4>
-
+<h4 id="strctopt-core-out"><a class="anchor" href="#strctopt-core-out"></a>6.1.3. Output <span class="right">[<a href="#strctopt-core-out">strctopt.core.out</a>]</span></h4>
+<div class="paragraph itemdescr">
+<p><span class="fldname"><em>Name</em>:</span> <code>std.output</code> or <code>output</code><br>
+<span class="fldtype"><em>Type</em>:</span> <code>array</code><br>
+<span class="fldval"><em>Value</em>:</span> The value shall be a JSON <code>array</code>. The items in the <code>array</code>
+  shall be JSON <code>object</code> items specifying output objects
+  <a href="#strctopt-core-outobj">([strctopt-core-outobj])</a>.<br>
+<span class="flddesc"><em>Description</em>:</span>
+  Specifies the output files to generated when processing sources
+  <a href="#strctopt-core-src">([strctopt.core.src])</a>.</p>
+</div>
+<div class="sect4 ins text-justify">
+<h5 id="strctopt-core-outobj"><a class="anchor" href="#strctopt-core-outobj"></a>6.1.3.1. Output Object <span class="right">[<a href="#strctopt-core-outobj">strctopt.core.outobj</a>]</span></h5>
+<div class="paragraph">
+<p>An output object shall have a <code>name</code> field.</p>
+</div>
+<div class="paragraph itemdescr">
+<p><span class="fldname"><em>Name</em>:</span> <code>std.name</code> or <code>name</code><br>
+<span class="fldtype"><em>Type</em>:</span> <code>string</code><br>
+<span class="fldval"><em>Value</em>:</span> A pathname to a file.<br>
+<span class="flddesc"><em>Description</em>:</span> The name of the output file.</p>
+</div>
+<div class="paragraph">
+<p>An output object can have a kind field
+<a href="#strctopt-core-kind">([strctopt.core.kind])</a>.</p>
+</div>
+<div class="paragraph">
+<p>Specifying a kind field for output shall replace any other
+determination of the output kind by the application.</p>
+</div>
+</div>
+</div>
+<div class="sect3 ins text-justify">
+<h4 id="strctopt-core-incd"><a class="anchor" href="#strctopt-core-incd"></a>6.1.4. Include Directories <span class="right">[<a href="#strctopt-core-incd">strctopt.core.incd</a>]</span></h4>
+<div class="paragraph itemdescr">
+<p><span class="fldname"><em>Name</em>:</span> <code>std.include_dirs</code> or <code>include_dirs</code><br>
+<span class="fldtype"><em>Type</em>:</span> <code>array</code><br>
+<span class="fldval"><em>Value</em>:</span> The value shall be a JSON <code>array</code>. The items in the <code>array</code>
+  shall be JSON <code>string</code> items of pathnames to directories.<br>
+<span class="flddesc"><em>Description</em>:</span>
+  One or more entries to directories that are searched by the header inclusion
+  of a C&#43;&#43; preprocessor.</p>
+</div>
+<div class="paragraph">
+<p>The application shall add the given directories to the set of directories
+searched by the header inclusion of a C&#43;&#43; preprocessor.</p>
+</div>
+<div class="paragraph">
+<p>The directories given shall be appended to the existing include search
+directories in the order given.</p>
+</div>
+</div>
+<div class="sect3 ins text-justify">
+<h4 id="strctopt-core-libd"><a class="anchor" href="#strctopt-core-libd"></a>6.1.5. Library Directories <span class="right">[<a href="#strctopt-core-libd">strctopt.core.libd</a>]</span></h4>
+<div class="paragraph itemdescr">
+<p><span class="fldname"><em>Name</em>:</span> <code>std.library_dirs</code> or <code>library_dirs</code><br>
+<span class="fldtype"><em>Type</em>:</span> <code>array</code><br>
+<span class="fldval"><em>Value</em>:</span> The value shall be a JSON <code>array</code>. The items in the <code>array</code>
+  shall be JSON <code>string</code> items of pathnames to directories.<br>
+<span class="flddesc"><em>Description</em>:</span>
+  One or more entries to directories that are searched for libraries.</p>
+</div>
+<div class="paragraph">
+<p>The application shall add the given directories to the set of directories
+searched for libraries.</p>
+</div>
+<div class="paragraph">
+<p>The directories given shall be appended to the existing library search
+directories in the order given.</p>
+</div>
+</div>
+<div class="sect3 ins text-justify">
+<h4 id="strctopt-core-def"><a class="anchor" href="#strctopt-core-def"></a>6.1.6. Define Preprocessor Symbols <span class="right">[<a href="#strctopt-core-def">strctopt.core.def</a>]</span></h4>
+<div class="paragraph itemdescr">
+<p><span class="fldname"><em>Name</em>:</span> <code>std.define</code> or <code>define</code><br>
+<span class="fldtype"><em>Type</em>:</span> <code>array</code><br>
+<span class="fldval"><em>Value</em>:</span> The value shall be a JSON <code>array</code>. The items in the <code>array</code>
+  shall be JSON <code>object</code> items specifying preprocessor symbol definition
+  objects <a href="#strctopt-core-def-sym">([strctopt.core.def.sym])</a>.<br>
+<span class="flddesc"><em>Description</em>:</span>
+  Specifies preprocessor symbols to define during processing of sources.</p>
+</div>
+<div class="sect4 ins text-justify">
+<h5 id="strctopt-core-def-sym"><a class="anchor" href="#strctopt-core-def-sym"></a>6.1.6.1. Preprocessor Symbol Definition Object <span class="right">[<a href="#strctopt-core-def-sym">strctopt.core.def.sym</a>]</span></h5>
+<div class="paragraph itemdescr">
+<p><span class="fldname"><em>Name</em>:</span> <code>std.name</code> or <code>name</code><br>
+<span class="fldtype"><em>Type</em>:</span> <code>string</code><br>
+<span class="fldval"><em>Value</em>:</span> A valid preprocessor symbol.<br>
+<span class="flddesc"><em>Description</em>:</span>
+  The field specifies the preprocessor symbol to define.</p>
+</div>
+<div class="paragraph">
+<p>The symbol shall be valid for the consuming application.</p>
+</div>
+<div class="paragraph">
+<p>The application shall indicate an error for invalid symbols.</p>
+</div>
+<div class="paragraph itemdescr">
+<p><span class="fldname"><em>Name</em>:</span> <code>std.value</code> or <code>value</code><br>
+<span class="fldtype"><em>Type</em>:</span> <code>number</code>, <code>string</code>, <code>boolean</code>, or <code>null</code><br>
+<span class="fldval"><em>Value</em>:</span> A valid preprocessor define value.<br>
+<span class="flddesc"><em>Description</em>:</span>
+  The field specifies the value to assign to the preprocessor symbol.</p>
+</div>
+<div class="paragraph">
+<p>The value shall be valid for the consuming application.</p>
+</div>
+<div class="paragraph">
+<p>A <code>number</code> value shall be converted to a string value.</p>
+</div>
+<div class="paragraph">
+<p>A `string`value shall be used as given.</p>
+</div>
+<div class="paragraph">
+<p>A <code>true</code> value shall be converted to a string value of <code>1</code>.</p>
+</div>
+<div class="paragraph">
+<p>A <code>false</code> value shall be converted to a string value of <code>0</code>.</p>
+</div>
+<div class="paragraph">
+<p>A <code>null</code> value shall not convert and the application default value will be used.</p>
+</div>
+</div>
+</div>
+<div class="sect3 ins text-justify">
+<h4 id="strctopt-core-undef"><a class="anchor" href="#strctopt-core-undef"></a>6.1.7. Undefine Preprocessor Symbols <span class="right">[<a href="#strctopt-core-undef">strctopt.core.undef</a>]</span></h4>
+<div class="paragraph itemdescr">
+<p><span class="fldname"><em>Name</em>:</span> <code>std.undef</code> or <code>undef</code><br>
+<span class="fldtype"><em>Type</em>:</span> <code>array</code><br>
+<span class="fldval"><em>Value</em>:</span> The value shall be a JSON <code>array</code>. The items in the <code>array</code>
+  shall be of JSON <code>string</code> defining preprocessor symbol names.<br>
+<span class="flddesc"><em>Description</em>:</span> Specifies preprocessor symbols to "undefine".</p>
+</div>
+<div class="paragraph">
+<p>The symbols shall be valid for the consuming application.</p>
+</div>
+<div class="paragraph">
+<p>The application shall indicate an error for invalid symbols.</p>
+</div>
+<div class="paragraph">
+<p>The application shall evaluate this option after any <code>std.define</code>
+<a href="#strctopt-core-def">([strctopt.core.def])</a> options.</p>
+</div>
+</div>
+<div class="sect3 ins text-justify">
+<h4 id="strctopt-core-opt"><a class="anchor" href="#strctopt-core-opt"></a>6.1.8. Optimization <span class="right">[<a href="#strctopt-core-opt">strctopt.core.opt</a>]</span></h4>
+<div class="paragraph itemdescr">
+<p><span class="fldname"><em>Name</em>:</span> <code>std.optimization</code> or <code>optimization</code><br>
+<span class="fldtype"><em>Type</em>:</span> <code>string</code><br>
+<span class="fldval"><em>Value</em>:</span> An optimization object item
+  <a href="#strcopt-core-optojb">([strctopt-core-optobj])</a><br>
+<span class="flddesc"><em>Description</em>:</span> The optimization to apply when generating the output.</p>
+</div>
+<div class="paragraph">
+<p>The application shall replace each existing field in the optimization object
+<a href="#strcopt-core-optojb">([strctopt-core-optobj])</a>.</p>
+</div>
+<div class="sect4 ins text-justify">
+<h5 id="strctopt-core-optobj"><a class="anchor" href="#strctopt-core-optobj"></a>6.1.8.1. Optimization Object <span class="right">[<a href="#strctopt-core-optobj">strctopt.core.optobj</a>]</span></h5>
+<div class="paragraph">
+<p>An optimization object can have any of <code>compile</code> and <code>link</code> fields.</p>
+</div>
+<div class="paragraph itemdescr">
+<p><span class="fldname"><em>Name</em>:</span> <code>compile</code><br>
+<span class="fldtype"><em>Type</em>:</span> <code>string</code><br>
+<span class="fldval"><em>Value</em>:</span> <code>off</code>, <code>minimal</code>, <code>speed</code>, <code>space</code>, or <code>debug</code><br>
+<span class="flddesc"><em>Description</em>:</span>
+  The amount or type of optimization to apply to the generated output.</p>
+</div>
+<div class="paragraph">
+<p>An application shall not perform optimization when given the <code>off</code> value.</p>
+</div>
+<div class="paragraph">
+<p>For <code>minimal</code>,<code>speed</code>, <code>space</code>, and <code>debug</code> values the application behavior is
+unspecified.</p>
+</div>
+<div class="paragraph itemdescr">
+<p><span class="fldname"><em>Name</em>:</span> <code>link</code><br>
+<span class="fldtype"><em>Type</em>:</span> <code>boolean</code><br>
+<span class="fldval"><em>Value</em>:</span> <code>true</code> or <code>false</code><br>
+<span class="flddesc"><em>Description</em>:</span>
+  Specify if optimizations that happen for linked output generation happen.</p>
+</div>
+<div class="paragraph">
+<p>An application shall not perform optimizations for linked output generation
+when the value is <code>false</code>.</p>
+</div>
+<div class="paragraph">
+<p>For a <code>true</code> value the application behavior is unspecified.</p>
+</div>
+</div>
+</div>
+<div class="sect3 ins text-justify">
+<h4 id="strctopt-core-vendor"><a class="anchor" href="#strctopt-core-vendor"></a>6.1.9. Vendor <span class="right">[<a href="#strctopt-core-vendor">strctopt.core.vendor</a>]</span></h4>
+<div class="paragraph itemdescr">
+<p><span class="fldname"><em>Name</em>:</span> <code>std.vendor</code> or <code>vendor</code><br>
+<span class="fldtype"><em>Type</em>:</span> <code>object</code><br>
+<span class="fldval"><em>Value</em>:</span> A vendor object
+  <a href="#strctopt-core-vendorobj">strctopt.core.vendorobj</a><br>
+<span class="flddesc"><em>Description</em>:</span>
+  Specifies vendor defined options to apply in the context they appear.</p>
+</div>
+<div class="paragraph">
+<p>An application shall apply the vendor option semantics in the context they
+appear.</p>
+</div>
+<div class="sect4 ins text-justify">
+<h5 id="strctopt-core-vendorobj"><a class="anchor" href="#strctopt-core-vendorobj"></a>6.1.9.1. Vendor Object <span class="right">[<a href="#strctopt-core-vendorobj">strctopt.core.vendorobj</a>]</span></h5>
+<div class="paragraph">
+<p>A vendor object can have any number of fields.</p>
+</div>
+<div class="paragraph">
+<p>The name of a field is unspecified.</p>
+</div>
+<div class="paragraph">
+<p>The value of a field is unspecified.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+It is up to application vendors to agree on the name fields.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+It is up to application vendors to document the schema of the field
+values.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect3 ins text-justify">
+<h4 id="strctopt-core-lang"><a class="anchor" href="#strctopt-core-lang"></a>6.1.10. Language <span class="right">[<a href="#strctopt-core-lang">strctopt.core.lang</a>]</span></h4>
+<div class="paragraph itemdescr">
+<p><span class="fldname"><em>Name</em>:</span> <code>language</code><br>
+<span class="fldtype"><em>Type</em>:</span> <code>object</code><br>
+<span class="fldval"><em>Value</em>:</span> A language object
+  <a href="#strctopt-core-langobj">([strctop.core.langobj])</a><br>
+<span class="flddesc"><em>Description</em>:</span> The language to interpret the source as.</p>
+</div>
+<div class="sect4 ins text-justify">
+<h5 id="strctopt-core-langobj"><a class="anchor" href="#strctopt-core-langobj"></a>6.1.10.1. Language Object <span class="right">[<a href="#strctopt-core-langobj">strctopt.core.langobj</a>]</span></h5>
+<div class="paragraph">
+<p>A language object shall have a <code>name</code> field.</p>
+</div>
+<div class="paragraph itemdescr">
+<p><span class="fldname"><em>Name</em>:</span> <code>std.name</code> or <code>name</code><br>
+<span class="fldtype"><em>Type</em>:</span> <code>string</code><br>
+<span class="fldval"><em>Value</em>:</span> One of: <code>c++</code> or an application defined value.<br>
+<span class="flddesc"><em>Description</em>:</span> Specifies the source text language.</p>
+</div>
+<div class="paragraph">
+<p>Only a value of <code>c++</code> specifies that source text
+<a href="#strctopt-core-src">([strctopt.core.src])</a> is C&#43;&#43; ISO language.</p>
+</div>
+</div>
+</div>
+<div class="sect3 ins text-justify">
+<h4 id="strctopt-core-kind"><a class="anchor" href="#strctopt-core-kind"></a>6.1.11. Kind <span class="right">[<a href="#strctopt-core-kind">strctopt.core.kind</a>]</span></h4>
+<div class="paragraph itemdescr">
+<p><span class="fldname"><em>Name</em>:</span> <code>kind</code><br>
+<span class="fldtype"><em>Type</em>:</span> <code>string</code><br>
+<span class="fldval"><em>Value</em>:</span> A kind item <a href="#strctopt-core-kind">([strctopt.core.kind])</a><br>
+<span class="flddesc"><em>Description</em>:</span>
+  The kind, or format, of the source file corresponding to the output
+  file <a href="#strctopt-core-out">([strctopt.core.out])</a>.</p>
+</div>
+<div class="sect4 ins text-justify">
+<h5 id="strctopt-core-kindobj"><a class="anchor" href="#strctopt-core-kindobj"></a>6.1.11.1. Kind Object <span class="right">[<a href="#strctopt-core-kindobj">strctopt.core.kindobj</a>]</span></h5>
+<div class="paragraph itemdescr">
+<p><span class="fldname"><em>Name</em>:</span> <code>std.name</code> or <code>name</code><br>
+<span class="fldtype"><em>Type</em>:</span> <code>string</code><br>
+<span class="fldval"><em>Value</em>:</span> One of: <code>text</code>, <code>exec</code>, <code>object</code>, <code>dynamic_lib</code>,
+  <code>archive_lib</code><br>
+<span class="flddesc"><em>Description</em>:</span> The kind, or format, of source and output files.</p>
+</div>
+<div class="paragraph">
+<p>A <code>text</code> value specifies that the source or output is textual.</p>
+</div>
+<div class="paragraph">
+<p>A <code>exec</code> value specifies that the source or output is an executable program.</p>
+</div>
+<div class="paragraph">
+<p>A <code>object</code> value specifies that the source or output is a linkable object.</p>
+</div>
+<div class="paragraph">
+<p>A <code>dynamic_lib</code> value specifies that the source or output is dynamically
+linkable.</p>
+</div>
+<div class="paragraph">
+<p>A <code>archive_lib</code> value specifies that the source or output is an archive, or
+collection, of linkable objects.</p>
 </div>
 </div>
 </div>
 </div>
-<div class="sect1">
+</div>
+</div>
+<div class="sect1 wording">
 <h2 id="_edit_2"><a class="anchor" href="#_edit_2"></a>7. Edit 2</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -2658,7 +3005,7 @@ pathnames that a C&#43;&#43; preprocessor uses to search for inclusion.</p>
 </div>
 </div>
 </div>
-<div class="sect1">
+<div class="sect1 wording">
 <h2 id="_edit_3"><a class="anchor" href="#_edit_3"></a>8. Edit 3</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -2690,9 +3037,10 @@ pathnames that a C&#43;&#43; preprocessor uses to search for inclusion.</p>
     </span><span class="nl">"(std\\.)?library_dirs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.LibraryDirs"</span><span class="w"> </span><span class="p">},</span><span class="w">
     </span><span class="nl">"(std\\.)?define"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Define"</span><span class="w"> </span><span class="p">},</span><span class="w">
     </span><span class="nl">"(std\\.)?undef"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Undef"</span><span class="w"> </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"(std\\.)?language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Language"</span><span class="w"> </span><span class="p">},</span><span class="w">
     </span><span class="nl">"(std\\.)?optimization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Optimization"</span><span class="w"> </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"(std\\.)?vendor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Vendor"</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="nl">"(std\\.)?vendor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Vendor"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"(std\\.)?language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Language"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"(std\\.)?kind"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/Std.Kind"</span><span class="w"> </span><span class="p">}</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nl">"$defs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"Std.Source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -2756,18 +3104,7 @@ pathnames that a C&#43;&#43; preprocessor uses to search for inclusion.</p>
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"patternProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"(std\\.)?name"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"c++"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"c"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"assembly"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"objective-c"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"objective-c++"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"fortran"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"go"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"d"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"ada"</span><span class="w">
-          </span><span class="p">]</span><span class="w">
+          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
         </span><span class="p">}</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
@@ -2796,7 +3133,7 @@ pathnames that a C&#43;&#43; preprocessor uses to search for inclusion.</p>
     </span><span class="nl">"Std.Kind"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The kind of data a source of output is."</span><span class="p">,</span><span class="w">
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"exec"</span><span class="p">,</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w"> </span><span class="s2">"dynamic_lib"</span><span class="p">,</span><span class="w"> </span><span class="s2">"archive_lib"</span><span class="p">]</span><span class="w">
+      </span><span class="nl">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"text"</span><span class="p">,</span><span class="w"> </span><span class="s2">"exec"</span><span class="p">,</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w"> </span><span class="s2">"dynamic_lib"</span><span class="p">,</span><span class="w"> </span><span class="s2">"archive_lib"</span><span class="p">]</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span></code></pre>
@@ -2836,6 +3173,9 @@ Commons, PO Box 1866, Mountain View, CA 94042, USA.</p>
 </div>
 <div class="footnote" id="_footnotedef_5">
 <a href="#_footnoteref_5">5</a>. B2 User Manual (<a href="https://www.bfgroup.xyz/b2/manual/release/index.html" class="bare">https://www.bfgroup.xyz/b2/manual/release/index.html</a>)
+</div>
+<div class="footnote" id="_footnotedef_6">
+<a href="#_footnoteref_6">6</a>. P3342R0; Working Draft, Standard for C&#43;&#43; Ecosystem(<a href="https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p3342r0.pdf" class="bare">https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p3342r0.pdf</a>)
 </div>
 </div>
 </body>

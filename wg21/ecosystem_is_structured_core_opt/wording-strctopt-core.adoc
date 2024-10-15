@@ -1,16 +1,18 @@
 [.ins.text-justify]
 [#strctopt-core,reftext=strctopt.core]
 = Structured Core Options [.right]#[<<strctopt-core>>]#
+:copyright: Copyright {docyear} René Ferdinand Rivera Morell
+:license: Creative Commons Attribution 4.0 International License (CC BY 4.0)
 :texroot: ecosystem.tex
 
 [#strctopt-core-pre,reftext=strctopt.core.pre]
 == Preamble [.right]#[<<strctopt-core-pre>>]#
 
 This clause describes the schema and semantics of core structured options
-[.iref]#([strctopt.schema.struct])# for {CPP} compiler front-ends.
+[.iref]#([strctopt.schema.struct])# for {CPP} compiler front-end applications.
 
-This clause specifies the `std.strctopt.core` capability [.iref]#([intspct.cap])#
-vresion `1.0.0`.
+This clause specifies the `std.strctopt.core` capability
+[.iref]#([intspct.cap])# version `1.0.0`.
 
 An application can implement this capability.
 
@@ -19,32 +21,319 @@ the `std.strctopt.core` field and version value in the introspection JSON
 text output [.iref]#([intspct.schema.cap])#.
 
 [.ins.text-justify]
-[#strctopt-core-inc,reftext=strctopt.core.inc]
-== Include Directories [.right]#[<<strctopt-core-inc>>]#
-
-The `std.include` option defines an option to specify a list of directory
-pathnames that a {CPP} preprocessor uses to search for inclusion.
-
-The `std.include` option shall have the following fields.
+[#strctopt-core-src,reftext=strctopt.core.src]
+== Source [.right]#[<<strctopt-core-src>>]#
 
 [.itemdescr]
-[.fldname]#_Name_:# `name` +
-[.fldtype]#_Type_:# `string` +
-[.fldval]#_Value_:# `std.include` +
-[.flddesc]#_Description_:# The name of the option.
-
-[.itemdescr]
-[.fldname]#_Name_:# `files` +
-[.fldtype]#_Type_:# `string` or `array` +
-[.fldval]#_Value_:#
-  (for `string`) A pathname to a directory. +
-[.fldval]#_Value_:#
-  (for `array`) A list of pathname `string` items to directories. +
+[.fldname]#_Name_:# `std.source` or `source` +
+[.fldtype]#_Type_:# `array` +
+[.fldval]#_Value_:# The value shall be a JSON `array`. The items in the `array`
+  shall be of JSON `object` items specifying source objects
+  <<strctopt-core-srcobj,([strctopt.core.srcobj])>>. +
 [.flddesc]#_Description_:#
-  One or more entries to directories that are appended in the order given to
-  the list of directories searched by the header inclusion of a {CPP}
-  preprocessor.
+  Defines a list of source files for an application to process.
+
+The application shall add the given sources to the set of files to process.
+
+The sources given shall be appended to existing sources in the order given.
 
 [.ins.text-justify]
-[#strctopt-core-xxx,reftext=strctopt.core.xxx]
-== Xxx [.right]#[<<strctopt-core-xxx>>]#
+[#strctopt-core-srcobj,reftext=strctopt.core.srcobj]
+=== Source Object [.right]#[<<strctopt-core-srcobj>>]#
+
+A source object shall have a `name` field.
+
+[.itemdescr]
+[.fldname]#_Name_:# `std.name` or `name` +
+[.fldtype]#_Type_:# `string` +
+[.fldval]#_Value_:# A pathname to a file. +
+[.flddesc]#_Description_:# The pathname of the source file.
+
+A source object can have a language field
+<<strctopt-core-lang,([strctopt.core.lang])>>.
+
+Specifying a language field for a source shall replace any other
+determination of the source language by the application.
+
+Specifying a language field for a source shall replace a language field
+specified in the structured parameters options field
+[.iref]#([strctparam.schema.opts])#.
+
+A source object can have a kind field
+<<strctopt-core-kind,([strctopt.core.kind])>>.
+
+Specifying a kind field for a source shall replace any other
+determination of the source kind by the application.
+
+Specifying a kind field for a source shall replace a kind field
+specified in the structured parameters options field
+[.iref]#([strctparam.schema.opts])#.
+
+[.ins.text-justify]
+[#strctopt-core-out,reftext=strctopt.core.out]
+== Output [.right]#[<<strctopt-core-out>>]#
+
+[.itemdescr]
+[.fldname]#_Name_:# `std.output` or `output` +
+[.fldtype]#_Type_:# `array` +
+[.fldval]#_Value_:# The value shall be a JSON `array`. The items in the `array`
+  shall be JSON `object` items specifying output objects
+  <<strctopt-core-outobj,([strctopt-core-outobj])>>. +
+[.flddesc]#_Description_:#
+  Specifies the output files to generated when processing sources
+  <<strctopt-core-src,([strctopt.core.src])>>.
+
+[.ins.text-justify]
+[#strctopt-core-outobj,reftext=strctopt.core.outobj]
+=== Output Object [.right]#[<<strctopt-core-outobj>>]#
+
+An output object shall have a `name` field.
+
+[.itemdescr]
+[.fldname]#_Name_:# `std.name` or `name` +
+[.fldtype]#_Type_:# `string` +
+[.fldval]#_Value_:# A pathname to a file. +
+[.flddesc]#_Description_:# The name of the output file.
+
+An output object can have a kind field
+<<strctopt-core-kind,([strctopt.core.kind])>>.
+
+Specifying a kind field for output shall replace any other
+determination of the output kind by the application.
+
+[.ins.text-justify]
+[#strctopt-core-incd,reftext=strctopt.core.incd]
+== Include Directories [.right]#[<<strctopt-core-incd>>]#
+
+[.itemdescr]
+[.fldname]#_Name_:# `std.include_dirs` or `include_dirs` +
+[.fldtype]#_Type_:# `array` +
+[.fldval]#_Value_:# The value shall be a JSON `array`. The items in the `array`
+  shall be JSON `string` items of pathnames to directories. +
+[.flddesc]#_Description_:#
+  One or more entries to directories that are searched by the header inclusion
+  of a {CPP} preprocessor.
+
+The application shall add the given directories to the set of directories
+searched by the header inclusion of a {CPP} preprocessor.
+
+The directories given shall be appended to the existing include search
+directories in the order given.
+
+[.ins.text-justify]
+[#strctopt-core-libd,reftext=strctopt.core.libd]
+== Library Directories [.right]#[<<strctopt-core-libd>>]#
+
+[.itemdescr]
+[.fldname]#_Name_:# `std.library_dirs` or `library_dirs` +
+[.fldtype]#_Type_:# `array` +
+[.fldval]#_Value_:# The value shall be a JSON `array`. The items in the `array`
+  shall be JSON `string` items of pathnames to directories. +
+[.flddesc]#_Description_:#
+  One or more entries to directories that are searched for libraries.
+
+The application shall add the given directories to the set of directories
+searched for libraries.
+
+The directories given shall be appended to the existing library search
+directories in the order given.
+
+[.ins.text-justify]
+[#strctopt-core-def,reftext=strctopt.core.def]
+== Define Preprocessor Symbols [.right]#[<<strctopt-core-def>>]#
+
+[.itemdescr]
+[.fldname]#_Name_:# `std.define` or `define` +
+[.fldtype]#_Type_:# `array` +
+[.fldval]#_Value_:# The value shall be a JSON `array`. The items in the `array`
+  shall be JSON `object` items specifying preprocessor symbol definition
+  objects <<strctopt-core-def-sym,([strctopt.core.def.sym])>>. +
+[.flddesc]#_Description_:#
+  Specifies preprocessor symbols to define during processing of sources.
+
+[.ins.text-justify]
+[#strctopt-core-def-sym,reftext=strctopt.core.def.sym]
+=== Preprocessor Symbol Definition Object [.right]#[<<strctopt-core-def-sym>>]#
+
+[.itemdescr]
+[.fldname]#_Name_:# `std.name` or `name` +
+[.fldtype]#_Type_:# `string` +
+[.fldval]#_Value_:# A valid preprocessor symbol. +
+[.flddesc]#_Description_:#
+  The field specifies the preprocessor symbol to define.
+
+The symbol shall be valid for the consuming application.
+
+The application shall indicate an error for invalid symbols.
+
+[.itemdescr]
+[.fldname]#_Name_:# `std.value` or `value` +
+[.fldtype]#_Type_:# `number`, `string`, `boolean`, or `null` +
+[.fldval]#_Value_:# A valid preprocessor define value. +
+[.flddesc]#_Description_:#
+  The field specifies the value to assign to the preprocessor symbol.
+
+The value shall be valid for the consuming application.
+
+A `number` value shall be converted to a string value.
+
+A `string`value shall be used as given.
+
+A `true` value shall be converted to a string value of `1`.
+
+A `false` value shall be converted to a string value of `0`.
+
+A `null` value shall not convert and the application default value will be used.
+
+[.ins.text-justify]
+[#strctopt-core-undef,reftext=strctopt.core.undef]
+== Undefine Preprocessor Symbols [.right]#[<<strctopt-core-undef>>]#
+
+[.itemdescr]
+[.fldname]#_Name_:# `std.undef` or `undef` +
+[.fldtype]#_Type_:# `array` +
+[.fldval]#_Value_:# The value shall be a JSON `array`. The items in the `array`
+  shall be of JSON `string` defining preprocessor symbol names. +
+[.flddesc]#_Description_:# Specifies preprocessor symbols to "undefine".
+
+The symbols shall be valid for the consuming application.
+
+The application shall indicate an error for invalid symbols.
+
+The application shall evaluate this option after any `std.define`
+<<strctopt-core-def,([strctopt.core.def])>> options.
+
+[.ins.text-justify]
+[#strctopt-core-opt,reftext=strctopt.core.opt]
+== Optimization [.right]#[<<strctopt-core-opt>>]#
+
+[.itemdescr]
+[.fldname]#_Name_:# `std.optimization` or `optimization` +
+[.fldtype]#_Type_:# `string` +
+[.fldval]#_Value_:# An optimization object item
+  <<strcopt-core-optojb,([strctopt-core-optobj])>> +
+[.flddesc]#_Description_:# The optimization to apply when generating the output.
+
+The application shall replace each existing field in the optimization object
+<<strcopt-core-optojb,([strctopt-core-optobj])>>.
+
+[.ins.text-justify]
+[#strctopt-core-optobj,reftext=strctopt.core.optobj]
+=== Optimization Object [.right]#[<<strctopt-core-optobj>>]#
+
+An optimization object can have any of `compile` and `link` fields.
+
+[.itemdescr]
+[.fldname]#_Name_:# `compile` +
+[.fldtype]#_Type_:# `string` +
+[.fldval]#_Value_:# `off`, `minimal`, `speed`, `space`, or `debug` +
+[.flddesc]#_Description_:#
+  The amount or type of optimization to apply to the generated output.
+
+An application shall not perform optimization when given the `off` value.
+
+For `minimal`,`speed`, `space`, and `debug` values the application behavior is
+unspecified.
+
+[.itemdescr]
+[.fldname]#_Name_:# `link` +
+[.fldtype]#_Type_:# `boolean` +
+[.fldval]#_Value_:# `true` or `false` +
+[.flddesc]#_Description_:#
+  Specify if optimizations that happen for linked output generation happen.
+
+An application shall not perform optimizations for linked output generation
+when the value is `false`.
+
+For a `true` value the application behavior is unspecified.
+
+[.ins.text-justify]
+[#strctopt-core-vendor,reftext=strctopt.core.vendor]
+== Vendor [.right]#[<<strctopt-core-vendor>>]#
+
+[.itemdescr]
+[.fldname]#_Name_:# `std.vendor` or `vendor` +
+[.fldtype]#_Type_:# `object` +
+[.fldval]#_Value_:# A vendor object
+  <<strctopt-core-vendorobj,strctopt.core.vendorobj>> +
+[.flddesc]#_Description_:#
+  Specifies vendor defined options to apply in the context they appear.
+
+An application shall apply the vendor option semantics in the context they
+appear.
+
+[.ins.text-justify]
+[#strctopt-core-vendorobj,reftext=strctopt.core.vendorobj]
+=== Vendor Object [.right]#[<<strctopt-core-vendorobj>>]#
+
+A vendor object can have any number of fields.
+
+The name of a field is unspecified.
+
+The value of a field is unspecified.
+
+NOTE: It is up to application vendors to agree on the name fields.
+
+NOTE: It is up to application vendors to document the schema of the field
+values.
+
+[.ins.text-justify]
+[#strctopt-core-lang,reftext=strctopt.core.lang]
+== Language [.right]#[<<strctopt-core-lang>>]#
+
+[.itemdescr]
+[.fldname]#_Name_:# `language` +
+[.fldtype]#_Type_:# `object` +
+[.fldval]#_Value_:# A language object
+  <<strctopt-core-langobj,([strctop.core.langobj])>> +
+[.flddesc]#_Description_:# The language to interpret the source as.
+
+[.ins.text-justify]
+[#strctopt-core-langobj,reftext=strctopt.core.langobj]
+=== Language Object [.right]#[<<strctopt-core-langobj>>]#
+
+A language object shall have a `name` field.
+
+[.itemdescr]
+[.fldname]#_Name_:# `std.name` or `name` +
+[.fldtype]#_Type_:# `string` +
+[.fldval]#_Value_:# One of: `c++` or an application defined value. +
+[.flddesc]#_Description_:# Specifies the source text language.
+
+Only a value of `c++` specifies that source text
+<<strctopt-core-src,([strctopt.core.src])>> is {CPP} ISO language.
+
+[.ins.text-justify]
+[#strctopt-core-kind,reftext=strctopt.core.kind]
+== Kind [.right]#[<<strctopt-core-kind>>]#
+
+[.itemdescr]
+[.fldname]#_Name_:# `kind` +
+[.fldtype]#_Type_:# `string` +
+[.fldval]#_Value_:# A kind item <<strctopt-core-kind,([strctopt.core.kind])>> +
+[.flddesc]#_Description_:#
+  The kind, or format, of the source file corresponding to the output
+  file <<strctopt-core-out,([strctopt.core.out])>>.
+
+[.ins.text-justify]
+[#strctopt-core-kindobj,reftext=strctopt.core.kindobj]
+=== Kind Object [.right]#[<<strctopt-core-kindobj>>]#
+
+[.itemdescr]
+[.fldname]#_Name_:# `std.name` or `name` +
+[.fldtype]#_Type_:# `string` +
+[.fldval]#_Value_:# One of: `text`, `exec`, `object`, `dynamic_lib`,
+  `archive_lib` +
+[.flddesc]#_Description_:# The kind, or format, of source and output files.
+
+A `text` value specifies that the source or output is textual.
+
+A `exec` value specifies that the source or output is an executable program.
+
+A `object` value specifies that the source or output is a linkable object.
+
+A `dynamic_lib` value specifies that the source or output is dynamically
+linkable.
+
+A `archive_lib` value specifies that the source or output is an archive, or
+collection, of linkable objects.

@@ -1,17 +1,8 @@
 {
   "source": [
-    {
-      "name": "main.cpp"
-    },
-    {
-      "name": "utils.cpp"
-    },
-    {
-      "name": "algo.cpp"
-    },
-    {
-      "name": "api.i",
-      "language": { "name": "c" }
-    }
+    { "name": "main.cpp" },
+    { "name": "utils.cpp" },
+    { "name": "algo.cpp" },
+    { "name": "api.i", "language": { "name": "c" } }
   ]
 }

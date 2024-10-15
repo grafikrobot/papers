@@ -1,6 +1,8 @@
 [.ins.text-justify]
 [#strctparam-json-schema-spec,reftext=strctparamjschm.spec]
 = JSON Schema Specification [.right]#[<<strctparam-json-schema-spec>>]#
+:copyright: Copyright {docyear} René Ferdinand Rivera Morell
+:license: Creative Commons Attribution 4.0 International License (CC BY 4.0)
 :texroot: ecosystem.tex
 :leveldedent: -1
 

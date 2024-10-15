@@ -1,5 +1,8 @@
 %!TEX root = ecosystem.tex
 
+% Copyright 2024 René Ferdinand Rivera Morell
+% Creative Commons Attribution 4.0 International License (CC BY 4.0)
+
 
 % Structured Core Options JSON Schema
 \infannex[strctoptcorejschm]{Structured Core Options JSON Schema}
@@ -27,9 +30,10 @@ This Annex defines the structured parameter core options schema
     "(std\\.)?library_dirs": { "$ref": "#/$defs/Std.LibraryDirs" },
     "(std\\.)?define": { "$ref": "#/$defs/Std.Define" },
     "(std\\.)?undef": { "$ref": "#/$defs/Std.Undef" },
-    "(std\\.)?language": { "$ref": "#/$defs/Std.Language" },
     "(std\\.)?optimization": { "$ref": "#/$defs/Std.Optimization" },
-    "(std\\.)?vendor": { "$ref": "#/$defs/Std.Vendor" }
+    "(std\\.)?vendor": { "$ref": "#/$defs/Std.Vendor" },
+    "(std\\.)?language": { "$ref": "#/$defs/Std.Language" },
+    "(std\\.)?kind": { "$ref": "#/$defs/Std.Kind" }
   },
   "$defs": {
     "Std.Source": {
@@ -93,18 +97,7 @@ This Annex defines the structured parameter core options schema
       "type": "object",
       "patternProperties": {
         "(std\\.)?name": {
-          "type": "string",
-          "enum": [
-            "c++",
-            "c",
-            "assembly",
-            "objective-c",
-            "objective-c++",
-            "fortran",
-            "go",
-            "d",
-            "ada"
-          ]
+          "type": "string"
         }
       }
     },
@@ -133,7 +126,7 @@ This Annex defines the structured parameter core options schema
     "Std.Kind": {
       "description": "The kind of data a source of output is.",
       "type": "string",
-      "enum": ["exec", "object", "dynamic_lib", "archive_lib"]
+      "enum": ["text", "exec", "object", "dynamic_lib", "archive_lib"]
     }
   }
 }

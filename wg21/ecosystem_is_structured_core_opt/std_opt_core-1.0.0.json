@@ -9,9 +9,10 @@
     "(std\\.)?library_dirs": { "$ref": "#/$defs/Std.LibraryDirs" },
     "(std\\.)?define": { "$ref": "#/$defs/Std.Define" },
     "(std\\.)?undef": { "$ref": "#/$defs/Std.Undef" },
-    "(std\\.)?language": { "$ref": "#/$defs/Std.Language" },
     "(std\\.)?optimization": { "$ref": "#/$defs/Std.Optimization" },
-    "(std\\.)?vendor": { "$ref": "#/$defs/Std.Vendor" }
+    "(std\\.)?vendor": { "$ref": "#/$defs/Std.Vendor" },
+    "(std\\.)?language": { "$ref": "#/$defs/Std.Language" },
+    "(std\\.)?kind": { "$ref": "#/$defs/Std.Kind" }
   },
   "$defs": {
     "Std.Source": {
@@ -75,18 +76,7 @@
       "type": "object",
       "patternProperties": {
         "(std\\.)?name": {
-          "type": "string",
-          "enum": [
-            "c++",
-            "c",
-            "assembly",
-            "objective-c",
-            "objective-c++",
-            "fortran",
-            "go",
-            "d",
-            "ada"
-          ]
+          "type": "string"
         }
       }
     },
@@ -115,7 +105,7 @@
     "Std.Kind": {
       "description": "The kind of data a source of output is.",
       "type": "string",
-      "enum": ["exec", "object", "dynamic_lib", "archive_lib"]
+      "enum": ["text", "exec", "object", "dynamic_lib", "archive_lib"]
     }
   }
 }

@@ -30,6 +30,18 @@ module AsciidoctorLaTexCore
 \%!TEX root = #{tex_root}
 ) if tex_root
 
+			copyright = node.attr 'copyright'
+			license = node.attr 'license'
+			if copyright || license
+				if copyright
+					result << %(% #{copyright})
+				end
+				if license
+					result << %(% #{license})
+				end
+				result << %()
+			end
+
 			# section 0
 			result << gen_section_title(node)
 
@@ -57,6 +69,12 @@ module AsciidoctorLaTexCore
 
 		def convert_admonition node
 			result = []
+			name = (node.role) ? (node.role[0]) : (node.attr 'name')
+			result << %(\
+\\begin{#{name}}
+#{node.content}
+\\end{#{name}}
+)
 			result.join LF
 		end
 
@@ -175,7 +193,7 @@ module AsciidoctorLaTexCore
 				root_doc = get_root_document node
 				ref = root_doc.resolve_id(node_refid)
 				iref = ref ? ref.xreftext : node.text
-				%(\\iref{#{iref}})
+				%(\\iref{#{texify_iref(iref)}})
 			else
 				logger.warn %(unknown anchor type: #{node.type.inspect})
 				nil
@@ -224,8 +242,7 @@ module AsciidoctorLaTexCore
 				if IGNORED_SCOPES.include?(role?(node))
 					nil
 				elsif role?(node, 'iref')
-					%(\\iref{#{texify(node.text)
-						.sub(/^\(\[/,'').sub(/\]\)$/,'')}})
+					%(\\iref{#{texify_iref(node.text)}})
 				elsif role?(node, 'fldname')
 					%(\\pnum \\fldname)
 				elsif role?(node, 'fldtype')
@@ -248,6 +265,10 @@ module AsciidoctorLaTexCore
 			str = str
 				.gsub(/&#([0-9]+);/){ $1.to_i.chr(Encoding::UTF_8) }
 				.rstrip
+		end
+
+		def texify_iref str
+			str = texify(str).sub(/^\(\[/,'').sub(/\]\)$/,'')
 		end
 
 		def get_root_document node
