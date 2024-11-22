@@ -4,6 +4,7 @@
     { "name": "_WIN32_WINNT", "value": "0x0600" },
     { "name": "_GNU_SOURCE", "value": true },
     { "name": "U_USING_ICU_NAMESPACE", "value": false },
-    { "name": "NOMINMAX", "value": null }
+    { "name": "NOMINMAX", "value": null },
+    { "name": "NDEBUG" }
   ]
 }

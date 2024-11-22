@@ -53,6 +53,11 @@ for {CPP} compiler front ends.
 
 == Revision History
 
+=== Revision 3 (November 2024)
+
+Removed `std.` prefixes from keys. Changed `null` define value equate to `1`.
+Made define value optional with a value of `1`.
+
 === Revision 2 (October 2024)
 
 Added wording and corresponding JSON Schema changes.
@@ -319,7 +324,7 @@ exhaustively precise. That is left for future wording.
 |===
 
 Key::
-Use `std.source` or shortened `source`.
+Use `source`.
 
 Value::
 An `array` of <<Source Object>> values.
@@ -381,7 +386,7 @@ include::test_success-source_array.json[]
 |===
 
 Key::
-Use `std.output` or shortened `output`.
+Use `output`.
 
 Value::
 An `array` of <<Output Object>> values.
@@ -435,7 +440,7 @@ include::test_success-output.json[]
 |===
 
 Key::
-Use `std.include_dirs` or shortened `include_dirs`.
+Use `include_dirs`.
 
 Value::
 An `array` of `string`-s. Each `string` is a pathname of which interpretation
@@ -479,7 +484,7 @@ include::test_success-include_dirs_array.json[]
 |===
 
 Key::
-Use `std.library_dirs` or shortened `library_dirs`.
+Use `library_dirs`.
 
 Value::
 An `array` of `string`-s. Each `string` is a pathname of which interpretation
@@ -523,7 +528,7 @@ include::test_success-library_dirs_array.json[]
 |===
 
 Key::
-Use `std.define` or shortened `define`.
+Use `define`.
 
 Value::
 An `array` of <<Preprocessor Symbol>> values.
@@ -539,14 +544,15 @@ already exists.
 
 ===== Preprocessor Symbol
 
-A preprocessor symbol specifies a `name` and `value`. The `value` defined by the
-preprocessor is converted as follows based on the type of JSON value given:
+A preprocessor symbol specifies a `name` and an optional `value`. The `value`
+defined by the preprocessor is converted as follows based on the type of JSON
+value given:
 
 * JSON `number` is converted to a string and pasted.
 * JSON `string` is used directly.
 * JSON `boolean` is converted as `true` => `1` and `false` => `0`.
-* JSON `null` converts to nothing, and hence the default implementation value
-  should be used.
+* JSON `null` is converted to `1`.
+* No value is converted to `1`.
 
 *Examples*
 
@@ -573,7 +579,7 @@ include::test_success-define.json[]
 |===
 
 Key::
-Use `std.undef` or shortened `undef`.
+Use `undef`.
 
 Value::
 The option would be either a single `string` or an `array` of `string`-s. Each
@@ -615,7 +621,7 @@ include::test_success-undef.json[]
 |===
 
 Key::
-Use `std.language` or shortened `language`.
+Use `language`.
 
 Value::
 The option value is a single `string` indicating the name of a language.
@@ -657,7 +663,7 @@ The language in this specification replaces an existing language specification.
 |===
 
 Key::
-Use `std.optimization` or shortened `optimization`.
+Use `optimization`.
 
 Value::
 An <<Optimization Object>>.
@@ -710,7 +716,7 @@ manage for some environments. To allow for easier destructuring we introduce
 a `vendor` option.
 
 Key::
-Use `std.vendor` or shortened `vendor`.
+Use `vendor`.
 
 Value::
 The option contains a single `object` with tool defined keys and values. The
@@ -740,6 +746,21 @@ in this specification is not present in the existing specification it is added.
 include::test_success-vendor.json[]
 ----
 
+== Polls
+
+=== SG15: P3335R2 (2024-11-21)
+
+Modify P3335R2 such that a defines value of null is 1 instead of impl defined,
+a define lacking a value is 1, and remove the std. prefix and then forward to
+EWG for inclusion in the initial Ecosystem IS. Also modify P3342 (the Ecosystem
+IS draft) to include the wording in P3335R2 as modified above.
+
+[options="header,autowidth",cols="^0,^0,^0,^0,^0"]
+|===
+| SF | F | N | A | SA
+| 7  | 0 | 1 | 0 | 0
+|===
+
 
 = Wording
 
@@ -752,21 +773,22 @@ current and future behavior of applications.
 
 == Edit 1
 
-Replace _7 Structured Parameters Core Options_ ([strctparamopt]) with
-[<<strctopt-core>>] below.
+Replace _7 Structured Parameters Core Options_ [strctparamopt] with
+<<strctopt.core,[strctopt.core]>> below.
 
 include::wording-strctopt-core.adoc[leveloffset=2]
 
 == Edit 2
 
-Replace _B.2 JSON Schema Specification_ ([strctparamjschm.spec]) with
-[<<strctparam-json-schema-spec>>] below.
+Replace _B.2 JSON Schema Specification_ [strctparamjschm.spec] with
+<<strctparam.json.schema.spec,[strctparam.json.schema.spec]>> below.
 
 include::wording-strctparam-jschm.adoc[leveloffset=2]
 
 == Edit 3
 
-Insert [<<strctopt-core-jschm-annex>>] (below) after _Annex B_.
+Insert <<strctopt.core.jschm.annex,[strctopt.core.jschm.annex]>> (below) after
+_Annex B_.
 
 include::wording-strctopt-core-jschm.adoc[leveloffset=2]
 

@@ -16,40 +16,40 @@
     }
   },
   "patternProperties": {
-    "(std\\.)?arguments": {
+    "arguments": {
       "description": "Application direct arguments.",
       "type": "array",
       "items": { "type": "string" }
     },
-    "(std\\.)?options": {
+    "options": {
       "type": "object",
       "patternProperties": {
-        "(std\\.)?param": { "$ref": "#/$defs/Std.Param" },
-        "(std\\.)?source": {
+        "param": { "$ref": "#/$defs/Std.Param" },
+        "source": {
           "$ref": "std_opt_core-1.0.0.json#/$defs/Std.Source"
         },
-        "(std\\.)?output": {
+        "output": {
           "$ref": "std_opt_core-1.0.0.json#/$defs/Std.Output"
         },
-        "(std\\.)?include_dirs": {
+        "include_dirs": {
           "$ref": "std_opt_core-1.0.0.json#/$defs/Std.IncludeDirs"
         },
-        "(std\\.)?library_dirs": {
+        "library_dirs": {
           "$ref": "std_opt_core-1.0.0.json#/$defs/Std.LibraryDirs"
         },
-        "(std\\.)?define": {
+        "define": {
           "$ref": "std_opt_core-1.0.0.json#/$defs/Std.Define"
         },
-        "(std\\.)?undef": {
+        "undef": {
           "$ref": "std_opt_core-1.0.0.json#/$defs/Std.Undef"
         },
-        "(std\\.)?language": {
+        "language": {
           "$ref": "std_opt_core-1.0.0.json#/$defs/Std.Language"
         },
-        "(std\\.)?optimization": {
+        "optimization": {
           "$ref": "std_opt_core-1.0.0.json#/$defs/Std.Optimization"
         },
-        "(std\\.)?vendor": {
+        "vendor": {
           "$ref": "std_opt_core-1.0.0.json#/$defs/Std.Vendor"
         }
       }

@@ -11,7 +11,7 @@ import feature ;
 
 local name = ecosystem_is_structured_core_opt ;
 local docn = P3335 ;
-local docr = R2 ;
+local docr = R3 ;
 local xxxx = $(docn)$(docr) ;
 
 project /wg21_$(name)
@@ -40,24 +40,6 @@ html $(name)_$(xxxx).html : proposal.adoc
 		<flags>--attribute=rouge-style=base16.solarized
 	;
 install html : $(name)_$(xxxx).html : <location>. ;
-
-_ = " " ;
-
-# Build LaTex wording edits.
-toolset.flags asciidoctor-latexcore FLAGS : <flags> ;
-actions asciidoctor-latexcore
-{
-	asciidoctor -o$(_)"$(<:D=)" -D$(_)"$(<:D)" $(FLAGS) "$(>)" --trace
-}
-
-for local wording in [ glob wording-*.adoc ]
-{
-	make $(name)_$(xxxx)_$(wording:B).tex
-		: $(wording)
-		: @asciidoctor-latexcore
-		: <use>../../asciidoctor-latexcore//latexcore <location>.
-		;
-}
 
 # Validate any JSON samples and tests against respective schemas.
 local validations ;

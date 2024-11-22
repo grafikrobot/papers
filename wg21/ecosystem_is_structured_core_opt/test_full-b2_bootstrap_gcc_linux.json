@@ -85,7 +85,7 @@
       "debug": false,
       "static": true
     },
-    "std.param": {
+    "param": {
       "post": "more.json"
     }
   }
