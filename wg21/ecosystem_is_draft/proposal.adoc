@@ -1,4 +1,4 @@
-= WITHDRAWN: {CPP} Ecosystem IS Open License
+= WITHDRAWN: Working Draft, Standard for {CPP} Ecosystem
 :copyright: Copyright {docyear} René Ferdinand Rivera Morell
 :license: Creative Commons Attribution 4.0 International License (CC BY 4.0)
 :email: grafikrobot@gmail.com
@@ -36,18 +36,9 @@ Reply-to: :: {email}
 Copyright: :: {copyright}, {license}
 
 
-== Abstract
-
-In this paper, we advocate for the {CPP} Ecosystem IS (EcoIS) to adopt a CC-BY
-license for the development and publication of the standard in order to allow
-for seamless use of the standard by the community and to facilitate community
-contributions back to the standard. We outline the proposals and explain how it
-fits within the current copyright policy of the ISO.
-
-
 == Revision History
 
-=== Revision 1 (December 2024)
+=== Revision 2 (December 2024)
 
 Withdrawn.
 

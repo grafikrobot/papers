@@ -11,7 +11,7 @@ import feature ;
 
 local name = ecosystem_is_structured_core_opt ;
 local docn = P3335 ;
-local docr = R3 ;
+local docr = R4 ;
 local xxxx = $(docn)$(docr) ;
 
 project /wg21_$(name)
@@ -33,7 +33,7 @@ alias samples : $(samples) ;
 # Build HTML paper.
 html $(name)_$(xxxx).html : proposal.adoc
 	:
-		<dependency>samples
+		# <dependency>samples
 		<flags>--attribute=docnumber=$(docn)
 		<flags>--attribute=revnumber=$(docn)$(docr)
 		<flags>--attribute=stylesheet=$(CSS)/golo.css
@@ -91,3 +91,4 @@ validations +=
 
 explicit $(validations) ;
 alias validate : $(validations) ;
+explicit validate ;

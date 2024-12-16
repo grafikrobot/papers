@@ -7,9 +7,9 @@ http://www.boost.org/LICENSE_1_0.txt)
 
 import asciidoctor ;
 
-local name = ecosystem_is_open_license ;
-local docn = P3339 ;
-local docr = R1 ;
+local name = ecosystem_is_draft ;
+local docn = P3342 ;
+local docr = R2 ;
 local xxxx = $(docn)$(docr) ;
 
 project /wg21_$(name)
@@ -19,35 +19,11 @@ project /wg21_$(name)
 
 path-constant CSS : ../../stylesheets ;
 
-local samples ;
-for local sample in [ glob sample*.cpp ]
-{
-    samples += [ run $(sample) ] ;
-    explicit $(sample) ;
-}
-alias samples : $(samples) ;
-
 html $(name)_$(xxxx).html : proposal.adoc
 	:
-		<dependency>samples
 		<flags>--attribute=docnumber=$(docn)
 		<flags>--attribute=revnumber=$(docn)$(docr)
 		<flags>--attribute=stylesheet=$(CSS)/golo.css
 		<flags>--attribute=rouge-style=base16.solarized
 	;
 install html : $(name)_$(xxxx).html : <location>. ;
-
-# actions json-validate
-# {
-# 	check-jsonschema -v --traceback-mode=full --schemafile "$(>[2])" "$(>[1])" && echo "passed" > "$(<)"
-# }
-
-# local validations ;
-# for local json in [ glob example-*.json ]
-# {
-# 	validations += [ make $(json:B:S=.check)
-# 		: $(json) std_opt-1.0.0.json
-# 		: @json-validate ] ;
-# 	explicit $(json:B:S=.check) ;
-# }
-# alias validate : $(validations) ;

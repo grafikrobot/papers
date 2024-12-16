@@ -9,7 +9,7 @@ import asciidoctor ;
 
 local name = ecosystem_is ;
 local docn = P2656 ;
-local docr = R3 ;
+local docr = R4 ;
 local xxxx = $(docn)$(docr) ;
 
 project /wg21_$(name)
@@ -29,7 +29,7 @@ alias samples : $(samples) ;
 
 html $(name)_$(xxxx).html : proposal.adoc
 	:
-		<dependency>samples
+		# <dependency>samples
 		<flags>--attribute=docnumber=$(docn)
 		<flags>--attribute=revnumber=$(docn)$(docr)
 		<flags>--attribute=stylesheet=$(CSS)/golo.css
